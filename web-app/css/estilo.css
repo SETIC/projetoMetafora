@@ -1,0 +1,18 @@
+body { 
+	font-size: 140%; 
+	}
+h5#rodape {
+	text-align: right;
+    margin-top: 6%;
+    margin-right: 1%;
+	}
+div#menu-lateral {
+    width: 15%;
+    height: 5%;
+    margin-left: -8%;
+    position: fixed;
+    }
+div#conteudo {
+    margin-left: 10%;
+    margin-top: 2%; 
+    }
