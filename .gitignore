@@ -28,3 +28,10 @@
 
 # "temporary" build files
 /target
+/grails-app/
+
+
+/target-eclipse
+/test
+/wrapper
+/src
