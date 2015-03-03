@@ -59,11 +59,11 @@ class GrupoController {
 				if (grupo.save(flush:true)){
 
 					def grupos = Grupo.findAll()
-					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, ok : "Grupo cadastrado com sucesso!"])
+					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, ok : "Grupo cadastrado com sucesso!", perm2:perm2])
 				}else{
 
 					def grupos = Grupo.findAll()
-					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, erro : "Erro ao Salvar!"])
+					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, erro : "Erro ao Salvar!", perm2:perm2])
 				}
 
 
@@ -94,7 +94,7 @@ class GrupoController {
 						p.grupo = grupo
 						if (!p.save(flush:true)){
 
-							render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)"])
+							render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)", perm2:perm2])
 						}
 
 
@@ -305,11 +305,11 @@ class GrupoController {
 				if (grupo.save(flush:true)){
 
 					def grupos = Grupo.findAll()
-					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, ok : "Grupo atualizado com sucesso!"])
+					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, ok : "Grupo atualizado com sucesso!", perm2:perm2])
 				}else{
 
 					def grupos = Grupo.findAll()
-					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, erro : "Erro ao Atualizar!"])
+					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, erro : "Erro ao Atualizar!", perm2:perm2])
 				}
 
 
@@ -363,7 +363,7 @@ class GrupoController {
 								p.grupo = grupo
 								if (!p.save(flush:true)){
 
-									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)"])
+									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)", , perm2:perm2])
 								}
 							}
 
@@ -380,7 +380,7 @@ class GrupoController {
 								per.grupo = grupo
 								if (!per.save(flush:true)){
 
-									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)", perm2:perm2])
+									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar!", perm2:perm2])
 								}
 
 							}

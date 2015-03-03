@@ -204,7 +204,7 @@ class UsuarioController {
 
 
 				if(!usuario.save(flush:true)){
-					render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, erro:"Erro ao salvar usuário."])
+					render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, erro:"Erro ao salvar usuário.", perm2:perm2])
 				}
 
 				def	gruposUsadosBanco = GrupoUsuario.findAllByUsuario(Usuario.get(Integer.parseInt(params.idUsuario)))
