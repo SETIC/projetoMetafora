@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<title>Professor . Módulo Pessoal</title>
+<title>Notas . Módulo Acadêmico</title>
 <meta name="layout" content="public" />
 </head>
 <body>
@@ -19,28 +19,59 @@ function printDiv(id)
   newWin.close();
 }
 </script>
-	<script>
-       function deletar(id) {
-        var resposta = confirm("Deseja exluir este Professor?");
-
-        if (resposta == true){
-        location.href="/projetoMetafora/professor/deletar/"+id }
-
-       }
- </script>
 	<section class="content-header">
 		<h1>
-			Professores <small>Visualização e Gerenciamento</small>
+			Notas <small>Visualização e Gerenciamento</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
-			<li><g:link controller="Professor" action="listar">Professores</g:link></li>
+			<li><g:link controller="Professor" action="listar">Notas</g:link></li>
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
 		<div>
+			<g:form controller="Notas" action="salvar" class="form">
+				<fieldset>
+					<div class="form-heading">
+						<label>Nome</label>
+						<div class="controls">
+							<g:textField class="form-control" required="true" name="nome"
+								value="" />
+						</div>
+					</div>
+					<br>
+					<div class="form-heading">
+						<label>Turma</label>
+						<div class="controls">
+						<div id="teste"></div>
+						
+							<select class="form-control" name="turma" id="comboTurma">
+							</select>
+						</div>
+					</div>
+					<br>
+					<br>
+					<div class="form-heading">
+					<label>Disciplinas</label>
+					<div class="controls">
+						<g:select class="form-control selectpicker"
+							data-live-search="true" 
+							name="disciplinaProf" multiple="multiple"
+							from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
+							value="${id}" optionKey="id" optionValue="disciplina" />
+					</div>
+				</div>
+				<br>
+				</fieldset>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary btn-flat">
+						<i class="fa fa-save"></i> Salvar
+					</button>
+					<input type="reset" class="btn btn btn-flat" value="Limpar">
+				</div>
+			</g:form>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
 					${ok}
@@ -56,12 +87,13 @@ function printDiv(id)
 				<thead>
 					<tr>
 						<th style="width: 65px;"></th>
-						<th style="width: 280px;">Nome</th>
-						<th style="width: 60px;">CPF</th>
-						<th style="width:;">Matricula</th>
-						<th style="width:;">Data de Nascimento</th>
-						<th style="width:;">Sexo</th>
-						<th style="width:;">Estado Civil</th>
+						<th>Alunos</th>
+						<th>1º Bimestre</th>
+						<th>2º Bimestre</th>
+						<th>3º Bimestre</th>
+						<th>4º Bimestre</th>
+						<th>Prova Final</th>
+						<th>Situação</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -106,7 +138,7 @@ function printDiv(id)
 							<td><g:formatDate format="dd/MM/yyyy"
 									date="${pessoa.dataDeNascimento}" /></td>
 							<td>
-								${pessoaFisica.sexo} 
+								${pessoaFisica.sexo}
 							</td>
 							<td>
 								${cidadao.estadoCivil}

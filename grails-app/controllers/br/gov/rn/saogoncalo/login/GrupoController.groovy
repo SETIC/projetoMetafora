@@ -12,8 +12,6 @@ class GrupoController {
 	def index() {
 	}
 
-
-
 	def deletar(int id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -29,6 +27,7 @@ class GrupoController {
 			if (perm2) {
 				Grupo.deleteAll(Grupo.get(id))
 
+				
 				redirect(action:"listar" )
 			}
 		}
@@ -134,7 +133,7 @@ class GrupoController {
 				props.setProperty("password", "bgt54rfvcde3")
 
 
-				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes_delete", props)
+				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 
 

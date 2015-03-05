@@ -20,12 +20,12 @@ class Pessoa {
 		dataDeNascimento blank:false,nullable:true
 		cpfCnpj blank:true, nullable:true, unique:true	
 		escid nullable: true, unique:false, blank:true 
-		escIdDestino nullable: true, unique:false, blank:true
-		
+		escIdDestino  unique:false		
 		
 	}
 	static mapping = {
 		table name: "pessoa", schema:"cadastro_unico_pessoal"
+		escIdDestino defaultValue: 0
 		version false
 		id generator: 'sequence', params:[sequence:'cadastro_unico_pessoal.pessoa_id_seq']
 	}
