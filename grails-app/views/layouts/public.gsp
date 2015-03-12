@@ -15,16 +15,15 @@
 
 <link href="${resource(dir: 'css', file: 'dataTables.bootstrap.css')}" rel="stylesheet">
 
-<link href="${resource(dir: 'css', file: 'bootstrap.min-3-2-0.css')}" rel="stylesheet">
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Ionicons -->
-<link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+<link href="${resource(dir: 'css', file: 'ionicons.min.css')}" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="${resource(dir: 'css', file: 'font-awesome.min.css')}" rel="stylesheet">
 
 <!-- Morris chart -->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
 <link href="${resource(dir: 'css/morris', file: 'morris.css')}" rel="stylesheet">
 
 <!-- jvectormap -->
@@ -170,6 +169,22 @@
 									class="fa fa-area-chart"></i> Professores</g:link></li>
 						</ul>
 					</li>
+					<li class="treeview">
+						<a href="#"> 
+							<i class="fa fa-book"></i>
+								<span>Professor</span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li><g:link controller="Disciplina" action="listar"><i
+									class="fa fa-file-text-o"></i> Atividades</g:link></li>
+							<li><g:link controller="Horario" action="listar"><i
+									class="fa fa-clock-o"></i> Turmas</g:link></li>
+							<li><g:link controller="Matricula" action="listar"><i
+									class="fa fa-list-alt"></i> Notas</g:link></li>
+							<li><g:link controller="Sala" action="listar"><i
+									class="fa fa-home"></i> Presenças</g:link></li>
+						</ul></li>
 				</ul>
 				
 			</section>

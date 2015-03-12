@@ -5,30 +5,25 @@
 <meta name="layout" content="public" />
 </head>
 <body>
-	<script>
-		function deletar(id) {
-			var resposta = confirm("Deseja exluir está Transferência ?");
-
-			if (resposta == true) {
-				location.href = "/projetoMetafora/transferencia/deletar/" + id
-			}
-
-		}
-	</script>
-	<script>
-		function printDiv(id) {
-			var divToPrint = document.getElementById(id);
-			newWin = window.open("");
-			newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-			newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-			newWin.document.write(" ");
-			newWin.document.write(divToPrint.outerHTML);
-			newWin.print();
-			newWin.close();
-		}
-	</script>
-
 	<section class="content-header">
+		<script>
+			function cancelar(id) {
+				var resposta = confirm("Deseja exluir está Transferência ?");
+	
+				if (resposta == true) {
+					location.href = "/projetoMetafora/transferencia/cancelarTransferencia/" + id
+				}
+	
+			}
+			function aceitar(id) {
+				var resposta = confirm("Deseja aceitar está Transferência ?");
+	
+				if (resposta == true) {
+					location.href = "/projetoMetafora/transferencia/aceitarTransferencia/" + id
+				}
+	
+			}
+		</script>
 		<h1>
 			Transferência <small>Visualização e Gerenciamento</small>
 		</h1>
@@ -79,19 +74,18 @@
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
-												<g:if test="${perm2}">
-											<li class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff" href="/projetoMetafora/transferencia/aceitarTransferencia/${pessoa.id}" 
+
+											<li class="btn btn-success btn-xs btn-flat" onclick="aceitar(${pessoa.id})"><a
+												style="color: #fff" 
 												title="Aceitar Transferência">
 													<span class="glyphicon glyphicon-ok"></span>
 											</a></li>
 
-											<li class="btn btn-danger btn-xs btn-flat"><a
-												style="color: #fff" href="/projetoMetafora/transferencia/cancelarTransferencia/${pessoa.id}" 
+											<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
+												style="color: #fff" 
 												title="Cancelar Transferência">
 													<span class="glyphicon glyphicon-remove"></span>
 											</a></li>
-											</g:if>
 											
 										</ul>
 									</div>
@@ -152,15 +146,11 @@
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
-											<g:if test="${perm2}">
-											
-											<li class="btn btn-danger btn-xs btn-flat"><a
-												style="color: #fff" href="/projetoMetafora/transferencia/cancelarTransferencia/${pessoa.id}" title="Cancelar Transferência"
+											<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
+												style="color: #fff" title="Cancelar Transferência"
 												id="${pessoa.id}">
 													<span class="glyphicon glyphicon-remove"></span>
 											</a></li>
-											</g:if>
-											
 										</ul>
 									</div>
 								</td>

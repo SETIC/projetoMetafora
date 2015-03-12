@@ -97,51 +97,46 @@ function printDiv(id)
 					</tr>
 				</thead>
 				<tbody>
-					<g:each in='${professores?}'>
-						<g:set var="pessoa"
-							value="${it.funcionario.cidadao.pessoaFisica.pessoa}" />
-						<g:set var="funcionario" value="${it.funcionario }" />
-						<g:set var="pessoaFisica"
-							value="${it.funcionario.cidadao.pessoaFisica}" />
-						<g:set var="cidadao" value="${it.funcionario.cidadao}" />
+					<g:each in='${notas?}'>
+						
 						<tr class='linha_registro'>
 							<td>
 								<div style="margin-left: -35px" class="opcoes">
 									<ul style="display: inline">
 										
-										<g:if test="${perm2}">
+										
 										<li class="btn btn-primary btn-xs btn-flat"><a
 											style="color: #fff"
-											href="/projetoMetafora/professor/editarProfessor/${pessoa.id}"><span
+											href=""><span
 												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${pessoa.id})"
+										<li onclick="deletar()"
 											class="btn btn-danger btn-xs btn-flat"><span
 											class="glyphicon glyphicon-remove"></span></li>
-										</g:if>
+										
 										
 										<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
-											href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
+											href=""><span
 												class="glyphicon glyphicon-eye-open"></span></a></li>
 									</ul>
 
 								</div>
 							</td>
 							<td>
-								${pessoa.nome}
+								${it.observacao}
 							</td>
 							<td>
-								${pessoa.cpfCnpj}
+								${it.pontuacao}
 							</td>
 							<td>
-								${funcionario.matricula}
-							</td>
-							<td><g:formatDate format="dd/MM/yyyy"
-									date="${pessoa.dataDeNascimento}" /></td>
-							<td>
-								${pessoaFisica.sexo}
+								${it. }
 							</td>
 							<td>
-								${cidadao.estadoCivil}
+									
+							<td>
+								
+							</td>
+							<td>
+								
 							</td>
 						</tr>
 					</g:each>

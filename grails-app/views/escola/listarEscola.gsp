@@ -123,10 +123,11 @@ function printDiv(id)
 			
 			<!-- Button trigger modal -->
 			
-				<g:if test="${perm2}">
+			<g:if test="${perm2}"> 
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
 				data-target="#myModal"><i class="fa fa-plus"></i> Nova Escola</button>
 				</g:if>
+
 				
 			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
