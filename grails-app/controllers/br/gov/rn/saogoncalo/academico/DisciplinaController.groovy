@@ -179,4 +179,15 @@ class DisciplinaController {
 			}
 		}
 	}
+	
+	
+	def editarAtividade(long id){
+
+				Atividade atividades = Atividade.get(id)
+				render (view:"/atividade/editarAtividade.gsp", model:[escolas:escolas])
+	
+	}
+	
+	
+	
 }

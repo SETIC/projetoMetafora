@@ -221,7 +221,7 @@ class GrupoController {
 				props.setProperty("password", "bgt54rfvcde3")
 
 
-				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes_delete", props)
+				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 
 
@@ -249,7 +249,7 @@ class GrupoController {
 
 							"  FROM pg_tables pg " +
 							"	 where upper(schemaname) in ('LOGIN', 'CADASTRO_UNICO_PESSOAL', 'EDUCACAO_ACADEMICO') " +
-							" and upper(tablename) in ('ALUNO', 'PROFESSOR', 'ESCOLA', 'FUNCIONARIO','DISCIPLINA', 'HORARIO', 'MATRICULA', 'SALA', 'SERIE', 'TURMA', 'GRUPO', 'USUARIO') " +
+							" and upper(tablename) in ('ALUNO', 'PROFESSOR', 'ESCOLA', 'FUNCIONARIO','DISCIPLINA', 'HORARIO', 'MATRICULA', 'SALA', 'SERIE', 'TURMA', 'GRUPO', 'USUARIO', 'ATIVIDADE', 'NOTA') " +
 							" order by pg.schemaname");
 
 					schemas = sql.rows("SELECT distinct upper(schemaname) as schemaname FROM pg_tables where schemaname in ('login', 'cadastro_unico_pessoal', 'educacao_academico') " +
@@ -294,8 +294,6 @@ class GrupoController {
 				def permission
 				def permissao_id
 
-				println("Params aqui o: " + params)
-
 				def grupo = Grupo.get(Integer.parseInt(params.gruposid))
 
 				grupo.nome = params.nome
@@ -324,20 +322,12 @@ class GrupoController {
 						permission = obj.substring( obj.indexOf('#')-1 ,obj.indexOf('#') )
 						permissao_id = obj.substring(obj.indexOf('#')+1,obj.size())
 
-						//				println("Esquemas: "+esquem+"\n")
-						//
-						//				println("Tabelas: "+table+"\n")
-						//
-						//				println("Permissoe: "+permission+"\n")
-						//
-						//				println("permissao_id: " + permissao_id+"\n")
-
-
-						//salvando no banco cada objeto
-
+				
 						//delete
+						
+						println ("PERM ID delete --- " +permissao_id + "TABLE ----" +  table + "ESQ ----" +  esquem)
+						
 						if (permissao_id != '') {
-							//println ("PERMISSÃO ID --- "+permissao_id)
 							def perm = Permissao.get(Long.parseLong(permissao_id))
 							if (perm.permissao != '0' && permission == '0'){
 
@@ -345,10 +335,8 @@ class GrupoController {
 
 							}
 
-
 						}
 
-						println ("NUMERO DE PERMISSAO --- " +permission )
 						//update
 						if (permission != '0' && permission != '' && permissao_id != '' && permissao_id != '0' ){
 
@@ -362,7 +350,7 @@ class GrupoController {
 								p.grupo = grupo
 								if (!p.save(flush:true)){
 
-									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permiss�o)", , perm2:perm2])
+									render(view:"/grupo/listarGrupo.gsp", model:[erro : "Erro ao Salvar! (Permissão)", , perm2:perm2])
 								}
 							}
 

@@ -151,7 +151,7 @@ function printDiv(id)
 									</div>
 									<br>
 									<div class="form-heading">
-										<label>Data do Terminio</label>
+										<label>Data de Término</label>
 										<div class="controls">
 											<g:formatDate format="yyyy-MM-dd" date="${date}" />
 											<g:datePicker noSelection="['':'']" precision="day"

@@ -9,6 +9,8 @@ class Atividade {
 	Date dataInicio
 	Date dataFim
 	String descricaoAtividade
+	String tipoAtividade
+	String bimestre
 	
 	static belongsTo = [turmaDisciplina:TurmaDisciplina]
 	
@@ -19,6 +21,7 @@ class Atividade {
 		nomeAtividade blank:false, nullable:false
 		notaMaxima blank:false, nullable:false
 		pesoAtividade blank:false, nullable:false
+		bimestre blank:false, nullable:false
 		
     }
 	

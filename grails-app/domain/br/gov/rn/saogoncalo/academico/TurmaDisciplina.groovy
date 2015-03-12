@@ -15,6 +15,7 @@ class TurmaDisciplina {
 		dataInicio nullable:false, blank:false
 		dataTermino nullable:false, blank:false
 	}
+	
 	static mapping = {
 	table name: "turma_disciplina", schema:"educacao_academico"
 	version false

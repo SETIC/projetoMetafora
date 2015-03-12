@@ -67,7 +67,7 @@
 								</div>
 							</td>
 							<td>
-								teste
+								${it.pessoa.nome}
 							</td>
 							<td>
 								${it.username}
