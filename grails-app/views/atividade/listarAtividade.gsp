@@ -56,9 +56,9 @@ function printDiv(id)
 				<thead>
 					<tr>
 						<th style="width: 80px;">Funcões</th>
-						<th style="width: 350px;">Nome da atividade</th>
-						<th style="width: 80px;">Nota Máxima</th>
-						<th style="width: 80px;">Turma</th>
+						<th style="width: 300px;">Nome da atividade</th>
+						<th style="width: 40px;">Nota Máxima</th>
+						<th style="width: 80px;">Turma - Disciplina</th>
 						<th style="width: 110px;">Data de Início</th>
 						<th style="width: 80px;">Data de Término</th>
 						<th style="width: 100px; text-align: center;">Bimestre</th>
@@ -78,7 +78,7 @@ function printDiv(id)
 										
 										<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/aluno/editarAluno/${it.id}"><span
+												href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
 													class="glyphicon glyphicon-pencil"></span></a></li>
 											
 											
@@ -102,13 +102,13 @@ function printDiv(id)
 									${it.notaMaxima}
 								</td>
 								<td>
-									${it.turmaDisciplina.turma.turma}
+									${it.turmaDisciplina.turma.turma} - ${it.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 								</td>
 								<td>
-									${it.dataInicio}
+									<g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dataInicio}"/>
 								</td>
 								<td>
-									${it.dataFim}
+									<g:formatDate format="dd-MM-yyyy HH:mm" date="${it.dataFim}"/>
 								</td>
 								<td>
 									${it.bimestre}
@@ -174,12 +174,10 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Tipo</label>
 										<div class="controls">
-											<select class="form-control" name="tipoAtividade">
-											
+											<select class="form-control" name="tipoAtividade">										
 												<option value="avaliacao">AVALIAÇÃO</option>
 												<option value="apresentacao">APRESENTAÇÃO</option>
 												<option value="trabalho">TRABALHO</option>
-												<option value="teste">TESTE</option>
 											</select>
 										</div>
 									</div>

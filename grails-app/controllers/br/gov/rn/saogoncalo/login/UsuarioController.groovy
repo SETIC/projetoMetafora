@@ -41,7 +41,7 @@ class UsuarioController {
 		}else{
 
 			def escolaA = Escola.findById(usuarioA.pessoa.escid)
-			session.maxInactiveInterval = 300
+			session.maxInactiveInterval = 3000
 			session["user"] = user
 			session["pass"] = pass
 			session["usid"] = usuarioA.id
