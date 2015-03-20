@@ -56,7 +56,7 @@ function printDiv(id)
 				<thead>
 					<tr>
 						<th style="width: 80px;">Funcões</th>
-						<th style="width: 350px;">Nome da atividade</th>
+						<th style="width: 250px;">Nome da atividade</th>
 						<th style="width: 80px;">Nota Máxima</th>
 						<th style="width: 80px;">Turma</th>
 						<th style="width: 110px;">Data de Início</th>
@@ -78,7 +78,7 @@ function printDiv(id)
 										
 										<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/aluno/editarAluno/${it.id}"><span
+												href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
 													class="glyphicon glyphicon-pencil"></span></a></li>
 											
 											
@@ -92,6 +92,11 @@ function printDiv(id)
 												href="/projetoMetafora/atividade/verInfoAtividade/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 												
+												<li title="Lançar Notas" class="btn btn-warning btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/atividade/lancarNota/${it.id}"><span
+													class="glyphicon glyphicon-th-list"></span></a></li>
+	
 										</ul>
 									</div>
 								</td>
@@ -102,13 +107,16 @@ function printDiv(id)
 									${it.notaMaxima}
 								</td>
 								<td>
-									${it.turmaDisciplina.turma.turma}
+									${it.turmaDisciplina.turma.turma} - 
+									${it.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina }
 								</td>
 								<td>
-									${it.dataInicio}
+								<g:formatDate format="dd-MM-yyyy" date="${it.dataInicio}"/>
+									
 								</td>
 								<td>
-									${it.dataFim}
+								<g:formatDate format="dd-MM-yyyy" date="${it.dataFim}"/>
+									
 								</td>
 								<td>
 									${it.bimestre}
@@ -127,7 +135,7 @@ function printDiv(id)
 				<i class="fa fa-plus"></i> Nova Atividade
 			</button>
 			
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-default btn-flat" onClick="printDiv('example')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 
@@ -175,11 +183,10 @@ function printDiv(id)
 										<label>Tipo</label>
 										<div class="controls">
 											<select class="form-control" name="tipoAtividade">
-											
-												<option value="avaliacao">AVALIAÇÃO</option>
-												<option value="apresentacao">APRESENTAÇÃO</option>
-												<option value="trabalho">TRABALHO</option>
-												<option value="teste">TESTE</option>
+												<option value="AVALIAÇÃO">AVALIAÇÃO</option>
+												<option value="APRESENTAÇÃO">APRESENTAÇÃO</option>
+												<option value="TRABALHO">TRABALHO</option>
+												<option value="TESTE">TESTE</option>
 											</select>
 										</div>
 									</div>
@@ -187,26 +194,31 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Descrição</label>
 										<div class="controls">
-											<textarea class="form-control" name="descricaoAtividade" rows="3" placeholder="Descreva a atividade"></textarea>
+											<textarea class="form-control" name="descricaoAtividade" 
+											rows="3" placeholder="Descreva a atividade"></textarea>
 										</div>
 									</div>
 									<br>
-									<div class="row">
-										<div class="col-xs-6">
-											<label>Data de Início</label>
-											<g:datePicker name="dataInicio"  class="form-control"/>
-					                   
-					                    </div>
-					                    <div class="col-xs-6">
-											<label>Data de Término</label>
-					                   	<g:datePicker name="dataFim"  class="form-control"/>
-					                     </div>				                    
+									<div class="form-heading">
+										<label>Data de Início</label><br/>
+										<g:formatDate format="yyyy-MM-dd" date="${date}" />
+										<g:datePicker name="dataInicio" noSelection="['':'']" 
+										precision="day"  class="form-control"/>
+										
+				
 					                </div>
+					                <br>
+					                <div class="form-heading">
+										<label>Data de Término</label><br/>
+										<g:formatDate format="yyyy-MM-dd" date="${date}" />
+					                	<g:datePicker name="dataFim" noSelection="['':'']" precision="day"
+					                	  class="form-control"/>					                	
+					                </div>				                    
 					                <br>
 									<div class="row">
 										<div class="col-xs-4">
-											<label>Nota Máxima</label>
-					                      	<input type="number" name="notaMaxima" class="form-control" placeholder="">
+											<label>Nota Máxima (0.1 a 10)</label>
+					                      	<input type="number" name="notaMaxima" min="0.1" max="10" step="0.1" class="form-control" placeholder="">
 					                    </div>
 					                    <div class="col-xs-4">
 											<label>Peso</label>
@@ -215,10 +227,10 @@ function printDiv(id)
 					                    <div class="col-xs-4">
 											<label>Bimestre</label>
 					                      	<select class="form-control" name="bimestre">
-												<option value="1">1º Bimestre</option>
-												<option value="2">2º Bimestre</option>
-												<option value="3">3º Bimestre</option>
-												<option value="4">4º Bimestre</option>
+												<option value="1º BIMESTRE">1º BIMESTRE</option>
+												<option value="2º BIMESTRE">2º BIMESTRE</option>
+												<option value="3º BIMESTRE">3º BIMESTRE</option>
+												<option value="4º BIMESTRE">4º BIMESTRE</option>
 											</select>
 					                    </div>
 					                </div>
@@ -228,8 +240,9 @@ function printDiv(id)
 									<button type="submit" class="btn btn-primary btn-flat">
 										<i class="fa fa-save"></i> Cadastrar
 									</button>
-									<input type="reset" class="btn btn btn-flat" value="Limpar">
-
+									<button type="button" class="btn btn-danger btn-flat" data-dismiss="modal">
+										<i class="fa fa-close"></i> Cancelar
+									</button>
 								</div>
 							</g:form>
 						</div>

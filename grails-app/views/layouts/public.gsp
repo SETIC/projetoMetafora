@@ -53,7 +53,6 @@
 
 <link href="${resource(dir: 'css', file: 'AdminLTE.css')}"
 	rel="stylesheet">
-
 </head>
 <body class="skin-blue">
 	<!-- header logo: style can be found in header.less -->
@@ -174,7 +173,7 @@
 							<li><g:link controller="Layout" action="index">
 									<i class="fa fa-area-chart"></i> Professores</g:link></li>
 						</ul></li>
-					<g:if test="${perm2}">
+		
 
 						<li class="treeview"><a href="#"> <i class="fa fa-user"></i>
 								<span>Professor</span> <i class="fa fa-angle-left pull-right"></i>
@@ -182,14 +181,14 @@
 							<ul class="treeview-menu">
 								<li><g:link controller="Atividade" action="listar">
 										<i class="fa fa-file-text-o"></i> Atividades</g:link></li>
-								<li><g:link controller="Horario" action="listar">
+								<li><g:link controller="Nota" action="notasTurma">
 										<i class="fa fa-sitemap"></i> Turmas</g:link></li>
 								<li><g:link controller="Matricula" action="listar">
 										<i class="fa fa-list-alt"></i> Notas</g:link></li>
 								<li><g:link controller="Sala" action="listar">
 										<i class="fa fa-check-square-o"></i> Presenças</g:link></li>
 							</ul></li>
-					</g:if>
+				
 				</ul>
 
 			</section>

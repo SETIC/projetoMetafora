@@ -51,24 +51,49 @@
 					${erro}
 				</div>
 			</g:if>
-			<div style="margin-left: 120px">
-				<g:form controller="Aluno" action="listar" class="form-horizontal">
-					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
+			<div style="margin-left: 120px" class="col-sm-10">
+				<g:form controller="Atividade" action="salvarNota" class="form-horizontal">
+					<g:hiddenField type="number" name="atividadeId" value="${atividade.id}" />
 					<fieldset id="print">
 						<div class="form-group">
-							<div class="col-sm-10">
-								<h4 style="font-weight: bold;">Descobrimento do Brasil</h4>
+							<div class="col-sm-6">
+								<h4 style="font-weight: bold;">${atividade.nomeAtividade }</h4>
 							</div>
 						</div>
 						<br>
-						<div class="form-group">
+						<div class="row">
+							<div class="col-sm-2" style="text-align: justify;">
+								<label>Tipo de Atividade </label>
+								<h5>${atividade.tipoAtividade.toUpperCase()}</h5>	
+							</div>
+							<div class="col-sm-1" style="text-align: justify;">
+								<label>Bimestre </label>
+								<h5>${atividade.bimestre}</h5>	
+							</div>
+							<div class="col-sm-1" style="text-align: justify;">
+								<label>Nota Máxima </label>
+								<h5>${atividade.notaMaxima}</h5>	
+							</div>
+							<div class="col-sm-2" style="text-align: justify;">
+								<label>Peso da Atividade </label>
+								<h5>${atividade.pesoAtividade}</h5>	
+							</div>
+							<div class="col-sm-2" style="text-align: justify;">
+								<label>Data de Início </label>
+								<h5><g:formatDate format="dd/MM/yyyy"
+										date="${atividade.dataInicio}" /></h5>	
+							</div>
+							<div class="col-sm-2" style="text-align: justify;">
+								<label>Data de Termino </label>
+								<h5><g:formatDate format="dd/MM/yyyy"
+										date="${atividade.dataFim}" /></h5>	
+							</div>
+						</div>
+						<br/>
+						<div class="row">
 							<div class="col-sm-10" style="text-align: justify;">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uma pesquisa sobre a descoberta, ou descobrimento do Brasil que refere-se à chegada, em 22 de abril 
-								de 1500, da frota comandada por Pedro Álvares Cabral ao território onde hoje se localiza o 
-								Brasil. O termo "descobrir" é utilizado nesse caso em uma perspectiva eurocêntrica, 
-								referindo-se estritamente à chegada de europeus, mais especificamente portugueses, às 
-								terras de "Vera Cruz", o atual Brasil, que já eram habitadas por vários povos indígenas. 
-								Tal descoberta faz parte dos descobrimentos portugueses.</p>	
+								<label>Descrição </label>
+								<h5>${atividade.descricaoAtividade}</h5>	
 							</div>
 						</div>
 						<br>
@@ -79,19 +104,57 @@
 										<tr>
 											<th>Aluno</th>
 											<th>Nota</th>
+											<th>Observação</th>
 										</tr>
 									</thead>
-									<tbody>		
+									<tbody>	
+										
+										<%
+										def sizeMatriculas =  alunos.id
+										def notasMatId = notas.matricula.id
+										 %>
+										 
+										<g:each in="${alunos}" var="aluno">
+										
 										<tr class='linha_registro'>
 											<td>
-												ROBERTO MANAIA DOS SANTOS JUNIOR
+												${aluno.aluno.cidadao.pessoaFisica.pessoa.nome}
 											</td>
-											<td>
-												<div class="col-xs-3">
-							                      	<input type="text" class="form-control" placeholder="">
-							                    </div>
-											</td>
+											<g:if test="${notasMatId.contains(aluno.id)}">		
+													<%
+													def index = notasMatId.indexOf(aluno.id)
+													 %>
+													
+														<td>
+															<div class="col-xs-5">
+											                      	<input name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
+											                    </div>
+															</td>
+															<td>
+																<div class="col-xs-12">
+											                      	<input name="mat-${aluno.id}" type="text" value="${notas[index].observacao}" class="form-control">
+											                    </div>
+															</td>
+											</g:if>
+											<g:else>
+											
+													<td>
+													<div class="col-xs-5">
+									                      	<input name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="0" step="0.1" class="form-control">
+									                    </div>
+													</td>
+													<td>
+														<div class="col-xs-12">
+									                      	<input name="mat-${aluno.id}" type="text" class="form-control">
+									                    </div>
+													</td>
+											</g:else>
+
 										</tr>
+										
+										</g:each>
+
+										
 									</tbody>
 								</table>
 							</div>
@@ -99,12 +162,15 @@
 						<br>
 					</fieldset>
 					<div style="margin: 0 28% auto">
+						<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDiv('example')" type="button">
+							<i class="glyphicon glyphicon-print"></i> Imprimir
+						</button>
 						<button class="btn btn-success btn-flat">
 							<i class="glyphicon glyphicon-ok"></i> Lançar Notas
 						</button>
 						<ul style="display: inline-block; margin-left: -30px">
 							<li class="btn btn-danger btn-flat"><a style="color: #fff;"
-								href="/projetoMetafora/atividade/listar/">Cancelar</a></li>
+								href="/projetoMetafora/atividade/listar/"><i class="fa fa-close"></i> Cancelar</a></li>
 						</ul>
 					</div>
 					<br>

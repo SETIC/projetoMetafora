@@ -32,46 +32,39 @@ function printDiv(id)
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
 		<div>
-			<g:form controller="Notas" action="salvar" class="form">
-				<fieldset>
-					<div class="form-heading">
-						<label>Nome</label>
-						<div class="controls">
-							<g:textField class="form-control" required="true" name="nome"
-								value="" />
-						</div>
-					</div>
-					<br>
+			<div class="row">
+				<div class="col-sm-2">
 					<div class="form-heading">
 						<label>Turma</label>
 						<div class="controls">
-						<div id="teste"></div>
-						
-							<select class="form-control" name="turma" id="comboTurma">
-							</select>
+							${turmaDisciplina[0].turma.turma}					
 						</div>
 					</div>
 					<br>
-					<br>
+				</div>
+			
+				<div class="col-sm-2">
 					<div class="form-heading">
-					<label>Disciplinas</label>
-					<div class="controls">
-						<g:select class="form-control selectpicker"
-							data-live-search="true" 
-							name="disciplinaProf" multiple="multiple"
-							from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
-							value="${id}" optionKey="id" optionValue="disciplina" />
+					<label>Série</label>
+						<div class="controls">
+							${turmaDisciplina[0].turma.serie.serie}	
+						</div>
 					</div>
+					<br>
 				</div>
-				<br>
-				</fieldset>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary btn-flat">
-						<i class="fa fa-save"></i> Salvar
-					</button>
-					<input type="reset" class="btn btn btn-flat" value="Limpar">
+			
+			
+				<div class="col-sm-2">
+					<div class="form-heading">
+					<label>Disciplina</label>
+						<div class="controls">
+							${turmaDisciplina[0].disciplinaLecionadaPorProfessor.disciplina.disciplina}	
+						</div>
+					</div>
+					<br>
 				</div>
-			</g:form>
+			</div>	<br/>
+			
 			<g:if test="${ok}">
 				<div class="alert alert-success">
 					${ok}
@@ -83,10 +76,8 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!professores?.isEmpty()})"></g:if>
 				<thead>
 					<tr>
-						<th style="width: 65px;"></th>
 						<th>Alunos</th>
 						<th>1º Bimestre</th>
 						<th>2º Bimestre</th>
@@ -96,51 +87,34 @@ function printDiv(id)
 						<th>Situação</th>
 					</tr>
 				</thead>
-				<tbody>
-					<g:each in='${notas?}'>
-						
-						<tr class='linha_registro'>
+				<tbody>		
+				
+				<g:each in="${alunos}" var="aluno">
+					<tr class='linha_registro'>
 							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href=""><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar()"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										
-										
-										<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
-											href=""><span
-												class="glyphicon glyphicon-eye-open"></span></a></li>
-									</ul>
-
-								</div>
+								${aluno.aluno.cidadao.pessoaFisica.pessoa.nome}
 							</td>
 							<td>
-								${it.observacao}
+								sdfgsdfgsdfgsdfg
 							</td>
 							<td>
-								${it.pontuacao}
+								safsafasf
 							</td>
 							<td>
-								
+								asfasfsaf	
+							<td>
+								asfasf
 							</td>
 							<td>
-									
-							<td>
-								
+								asfasfasfasf
 							</td>
 							<td>
-								
+								asfasfasfasf
 							</td>
 						</tr>
-					</g:each>
-
+				</g:each>
+								
+						
 				</tbody>
 			</table>
 		

@@ -61,52 +61,51 @@ function printDiv(id)
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Nome da atividade</label>
 							<div class="col-s-10">
-								${atividade.nomeAtividade }
+								<h5>${atividade.nomeAtividade }</h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Nota Máxima</label>
 							<div class="col-s-10">
-								${atividade.notaMaxima }
+								<h5>${atividade.notaMaxima }</h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Turma</label>
 							<div class="col-s-10">
-								${atividade.turmaDisciplina.turma.turma }
+								<h5>${atividade.turmaDisciplina.turma.turma }</h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputData3" class="col-sm-2 control-label">Data
+							<label for="inputDataInicio3" class="col-sm-2 control-label">Data
 								de início</label>
-							<div class="col-sm-10">
-								<g:formatDate format="dd/MM/yyyy - HH:mm" date="${atividade.dataInicio}" />
+							<div class="col-s-10">
+								<h5><g:formatDate format="dd/MM/yyyy - HH:mm" date="${atividade.dataInicio}" /></h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputData3" class="col-sm-2 control-label">Data
+							<label for="inputDataFim" class="col-sm-2 control-label">Data
 								de Término</label>
-							<div class="col-sm-10">
-							<g:formatDate format="dd/MM/yyyy - HH:mm" date="${atividade.dataFim}" />
-							
+							<div class="col-s-10">
+								<h5><g:formatDate format="dd/MM/yyyy - HH:mm" date="${atividade.dataFim}" /></h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">Bimestre</label>
-							<div class="col-sm-10">
-								${atividade.bimestre}
+							<div class="col-s-10">
+								<h5>${atividade.bimestre}</h5>
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">Descrição da atividade</label>
-							<div class="col-sm-10">
-								${atividade.descricaoAtividade}
+							<div class="col-s-10">
+								<h5>${atividade.descricaoAtividade}</h5>
 							</div>
 						</div>
 						<br>					
@@ -117,12 +116,11 @@ function printDiv(id)
 							<i class="glyphicon glyphicon-print"></i> Imprimir
 						</button>
 						<ul style="display: inline-block; margin-left: -30px">
-							<li class="btn btn-info btn-flat"><a
-								href="/projetoMetafora/escola/listar/">Voltar</a></li>
+							<li class="btn btn-info btn-flat"><a style="color: #fff;"
+								href="/projetoMetafora/atividade/listar/">Voltar</a></li>
 						</ul>
 					</div>
 				</g:form>
-			
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function() {

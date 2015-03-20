@@ -56,6 +56,7 @@ class EscolaController {
 			}
 		}
 	}
+	
 	def editarEscola(long id){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Escola", act:"listar"])
