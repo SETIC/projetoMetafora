@@ -231,6 +231,8 @@ function printDiv(id)
 												<option value="2º BIMESTRE">2º BIMESTRE</option>
 												<option value="3º BIMESTRE">3º BIMESTRE</option>
 												<option value="4º BIMESTRE">4º BIMESTRE</option>
+												<option value="RECUPERACAO">RECUPERAÇÃO</option>
+												<option value="PROVA FINAL">PROVA FINAL</option>
 											</select>
 					                    </div>
 					                </div>

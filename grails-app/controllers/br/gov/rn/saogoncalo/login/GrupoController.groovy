@@ -160,17 +160,6 @@ class GrupoController {
 
 					schemas = [["schemaname":"CADASTRO_UNICO_PESSOAL"], ["schemaname":"EDUCACAO_ACADEMICO"], ["schemaname":"LOGIN"]]
 
-
-					/*	tabelas = sql.rows(" SELECT upper(schemaname) as schemaname, upper(tablename) tabela FROM pg_tables where schemaname in ('login', 'cadastro_unico_pessoal', 'educacao_academico') " +
-					 "    and tablename in ('aluno', 'professor', 'escola', 'funcionario','disciplina', 'horario', 'matricula', 'sala', 'serie', 'turma', 'grupo', 'usuario') " +
-					 "  order by schemaname " )
-					 schemas = sql.rows("SELECT distinct upper(schemaname) as schemaname FROM pg_tables where schemaname in ('login', 'cadastro_unico_pessoal', 'educacao_academico') " +
-					 "order by upper(schemaname)")*/
-
-					//				println("Tabelas --- " + tabelas)
-					//				println("Schemas --- " + schemas)
-
-
 				}catch(SQLException ex){
 					println ex.getMessage()
 				}
@@ -262,9 +251,6 @@ class GrupoController {
 					sql.close()
 					conn.close()
 				}
-
-				//-----------
-				//println ("Permissoes: - " + permissoes )
 
 
 				render (view:"/grupo/editarGrupo.gsp", model:[grupos:grupos, permissoes:permissoes, tabelas:tabelas, schemas:schemas])
