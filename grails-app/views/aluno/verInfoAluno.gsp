@@ -30,7 +30,12 @@ function printDiv(id)
   newWin.document.write(" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos, para os fins que se fizerem necessários, que ");
   newWin.document.write("${alunos.cidadao.pessoaFisica.pessoa.nome[0]}");
   newWin.document.write(" é aluno(a) vinculado à esta escola, no ");
-  newWin.document.write("${alunos.matricula.turma.serie.serie[0][0]}");
+  //newWin.document.write("${alunos.matricula.turma.serie.serie}");
+  newWin.document.write("${series.serie[0]}");
+  newWin.document.write(" Turma " );
+  newWin.document.write("${turmas.turma[0]}");
+
+  
   newWin.document.write(".");
   newWin.document.write("</p>");
   newWin.document.write("<p style='text-align:center;margin-top:15%;'>__________________________________");
@@ -183,7 +188,7 @@ newWin.print();
 							<label for="inputnumeroDeInscricao3"
 								class="col-sm-2 control-label">Número de Inscrição</label>
 							<div class="col-sm-10">
-								${it.numeroDeInscricao} -- ${alunos.matricula.turma.serie.serie}
+								${it.numeroDeInscricao}
 								
 							</div>
 						</div>
