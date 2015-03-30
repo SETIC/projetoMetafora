@@ -184,6 +184,8 @@ class AlunoController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
+			
+			
 
 			if (perm1 || perm2)
 			{

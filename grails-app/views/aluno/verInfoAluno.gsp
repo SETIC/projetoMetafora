@@ -51,6 +51,8 @@ function printDiv(id)
 
   var now = new Date();
 
+  
+
   meses = new Array(12);
 
   meses[0] = "Janeiro";
