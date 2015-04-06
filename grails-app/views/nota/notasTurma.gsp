@@ -64,6 +64,7 @@ function printDiv(id)
 				<tbody>
 					<g:each in="${turmaDisciplina}" var="td">
 					   <g:hiddenField name="turmaDisciplinaId" value="${td.id}" />
+					   
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
@@ -78,7 +79,7 @@ function printDiv(id)
 												
 												<li title="Boletins" class="btn btn-warning btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/nota/boletim/${td.id}"><span
+												href="/projetoMetafora/nota/boletim?turma=${td.turma.id}&turmadisciplina=${td.id}"><span
 													class="glyphicon glyphicon-th-list"></span></a></li>
 	
 										</ul>
@@ -93,7 +94,7 @@ function printDiv(id)
 									${td.turma.serie.serie} 
 								</td>
 								<td>
-									${td.disciplinaLecionadaPorProfessor.disciplina.disciplina }
+									${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 								</td>
 							</tr>
 						
