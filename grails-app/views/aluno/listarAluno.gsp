@@ -93,7 +93,7 @@ function printDiv(id)
 											
 									
 											
-											<li title="Transferir Aluno" data-toggle="tooltip"
+											<li title="Transferir Aluno" data-toggle="tooltip"											
 											data-placement="top" class="btn btn-warning btn-xs btn-flat"><a style="color: #fff"
 												href="/projetoMetafora/aluno/transferencia/${pessoa.id}"><span
 													class="glyphicon glyphicon-arrow-right"></span></a></li>

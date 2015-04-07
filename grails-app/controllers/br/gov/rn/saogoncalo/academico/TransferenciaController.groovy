@@ -1,4 +1,5 @@
 package br.gov.rn.saogoncalo.academico
+import grails.converters.JSON
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
@@ -202,5 +203,17 @@ class TransferenciaController {
 				render(view:"/error403.gsp")
 			}
 		}
+		
 	}
+	def  getMatriculaByIdParaRelatorio(long id){
+		
+		def matricula = Matricula.get(id)
+		
+		def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "serie":matricula.turma.serie.serie,
+			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo]
+		
+		render( result as JSON)
+		
+		}
+	
 }
