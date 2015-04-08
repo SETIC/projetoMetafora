@@ -142,14 +142,18 @@
 						<div class="form-group">
 							<label for="inputbimestre" class="col-sm-2 control-label">Bimestre</label>
 							<div class="col-sm-10">
+D
 								<g:if test="${atividade.bimestre == '1º BIMESTRE' }">
+
 									<select class="form-control" name="bimestre"
 										style="width: 300px">
 										<option value="${atividade.bimestre}" selected>1°
 											BIMESTRE</option>
+
 										<option value="2º BIMESTRE">2° BIMESTRE</option>
 										<option value="3º BIMESTRE">3° BIMESTRE</option>
 										<option value="4º BIMESTRE">4° BIMESTRE</option>
+
 									</select>
 								</g:if>
 								<g:elseif test="${atividade.bimestre== '' }">
@@ -158,6 +162,7 @@
 										<option value="${atividade.bimestre}" selected>
 											${atividade.bimestre}
 										</option>
+
 										<option value="1º BIMESTRE" selected>1° BIMESTRE</option>
 										<option value="2º BIMESTRE">2° BIMESTRE</option>
 										<option value="3º BIMESTRE">3° BIMESTRE</option>
@@ -173,6 +178,7 @@
 											BIMESTRE</option>
 										<option value="3º BIMESTRE">3° BIMESTRE</option>
 										<option value="4º BIMESTRE">4° BIMESTRE</option>
+
 									</select>
 
 								</g:elseif>
@@ -186,6 +192,7 @@
 										<option value="${atividade.bimestre}" selected>3°
 											BIMESTRE</option>
 										<option value="4º BIMESTRE">4° BIMESTRE</option>
+
 									</select>
 
 								</g:elseif>
@@ -194,9 +201,11 @@
 									<select class="form-control" name="bimestre"
 										style="width: 300px">
 
+
 										<option value="1º BIMESTRE">1° BIMESTRE</option>
 										<option value="2º BIMESTRE">2° BIMESTRE</option>
 										<option value="3º BIMESTRE">3° BIMESTRE</option>
+
 										<option value="${atividade.bimestre}" selected>4°
 											BIMESTRE</option>
 									</select>

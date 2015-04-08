@@ -51,6 +51,7 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
+
 			<div class="box box-white">
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
@@ -72,6 +73,7 @@ function printDiv(id)
 									<td>
 										<div style="margin-left: -35px" class="opcoes">
 											
+
 											
 											<ul style="display: inline">
 												
@@ -82,7 +84,7 @@ function printDiv(id)
 													href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 												
-												
+
 												<li title="Remover Atividade" onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
@@ -129,6 +131,7 @@ function printDiv(id)
 					</tbody>
 				</table>
 			</div>
+
 			<!-- Button trigger modal -->
 			
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -183,11 +186,13 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Tipo</label>
 										<div class="controls">
+
 											<select class="form-control" name="tipoAtividade">
 												<option value="AVALIAÇÃO">AVALIAÇÃO</option>
 												<option value="APRESENTAÇÃO">APRESENTAÇÃO</option>
 												<option value="TRABALHO">TRABALHO</option>
 												<option value="TESTE">TESTE</option>
+
 											</select>
 										</div>
 									</div>

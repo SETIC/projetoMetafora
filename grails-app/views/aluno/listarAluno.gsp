@@ -86,6 +86,7 @@ function printDiv(id)
 													style="color: #fff"
 													href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
+
 												
 												
 												<li title="Remover Aluno" onclick="deletar(${pessoa.id})"

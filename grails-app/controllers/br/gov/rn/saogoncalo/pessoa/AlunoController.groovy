@@ -1,6 +1,8 @@
 package br.gov.rn.saogoncalo.pessoa
 
 import br.gov.rn.saogoncalo.academico.Matricula
+import br.gov.rn.saogoncalo.academico.Serie
+import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 class AlunoController {
@@ -36,10 +38,10 @@ class AlunoController {
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
 
-		
-		def user = session["user"]
-		def pass = session["pass"]
-			
+
+			def user = session["user"]
+			def pass = session["pass"]
+
 			def usuario = new UsuarioController()
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
@@ -85,8 +87,8 @@ class AlunoController {
 		}
 
 	}
-	
-	
+
+
 	def listar() {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -156,7 +158,7 @@ class AlunoController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-			
+
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 			if (perm2){
@@ -182,16 +184,35 @@ class AlunoController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
+			
+			
 
 			if (perm1 || perm2)
 			{
+				//def alunos = Aluno.executeQuery("select a from Matricula m, Pessoa p, Aluno a"
+				//			+ " where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' and p.id = " + id.toString().toLong() )
 
+				def alunos = Aluno.executeQuery("select a from Matricula m, Pessoa p, Aluno a, " +
+						" Turma t, Serie s " +
+						" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
+						" and t.id = m.turma.id and s.id = t.serie.id " + 
+						" and p.id = " + id.toString().toLong())
 				
+				def series = Serie.executeQuery("select s from Matricula m, Pessoa p, Aluno a, " +
+						" Turma t, Serie s " +
+						" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
+						" and t.id = m.turma.id and s.id = t.serie.id " + 
+						" and p.id = " + id.toString().toLong())
+				
+				def turmas = Turma.executeQuery("select t from Matricula m, Pessoa p, Aluno a, " +
+					" Turma t, Serie s " +
+					" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
+					" and t.id = m.turma.id and s.id = t.serie.id " +
+					" and p.id = " + id.toString().toLong())
 
 
-				Aluno alunos = Aluno.get(id)
-
-				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos])
+				println("Alunos ----- " + alunos)
+				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos, series:series, turmas:turmas])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -212,7 +233,7 @@ class AlunoController {
 
 			if (perm2)
 			{
-				
+
 				Pessoa pessoa = new Pessoa(params)
 
 				pessoa.escid = session["escid"]

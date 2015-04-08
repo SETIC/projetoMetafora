@@ -7,20 +7,105 @@
 <body>
 
 	<script>
-function printDiv(id)
-{
 
-  var divToPrint=document.getElementById(id);
-  newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-  newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
-  newWin.print();
-  newWin.close();
-  
-}
+	function changeIdMatriculaParaRelatorio(idMatricula){
+		document.getElementById("idMatriculaParaRelatorio").value = idMatricula;
+	}
+
+	function geraRelatorio(){
+
+	var cod = document.getElementById("tipoRelatorio").value;
+		
+	switch (cod){
+	case '1':
+		printRelatorioDeclaracaoVinculo()
+		break;
+	default:
+		break;
+		
+	}
+
+		}
+	
+	function printRelatorioDeclaracaoVinculo()
+	{
+
+		var endereco = "localhost";
+        var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+        var divToPrint  = document.getElementById("reportPrint");
+        divToPrint.style.visibility = "visible";
+        
+        divToPrint.innerHtml = "";
+        
+        $.ajax({
+            type: "GET",
+            url: "http://"+endereco+":8080/projetoMetafora/matricula/getMatriculaByIdParaRelatorio/"+idMatricula,
+            dataType: "json",
+            success: function(result){
+	 
+        divToPrint.innerHTML += "<style=''>";
+        divToPrint.innerHTML  += "<img src='http://"+endereco+":8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>";
+        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>";
+        divToPrint.innerHTML  += "<h4 style='margin-top:-50px;text-align:center'>SÃO GONÇALO DO AMARANTE</h4></br>"; 	
+        divToPrint.innerHTML  += "<hr><br/><br/>";
+        divToPrint.innerHTML  += "<h3 style='text-align:center;margin-top:15%;'>DECLARAÇÃO</h3><br/><br/>";
+        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:10%;line-height:200%;'>";
+        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
+        divToPrint.innerHTML  += result.nomeAluno+",";
+        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
+      
+        divToPrint.innerHTML  += result.serie+" e na";
+        divToPrint.innerHTML  += " Turma " ;
+        divToPrint.innerHTML  += result.turma+", do ano letivo de "+result.anoLetivo+", desta escola.";
+
+        divToPrint.innerHTML  += "</p>";
+        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:15%;'>________________________________________";
+        divToPrint.innerHTML  += "<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>";
+        divToPrint.innerHTML  += "</p>";
+        divToPrint.innerHTML  += "<style type='text/css' >";
+        //divToPrint.innerHTML  += "body{font-family:Arial;}";
+        //divToPrint.innerHTML  += "img{margin-lefth: 10px;}";
+       // divToPrint.innerHTML  += "label{text-transform: uppercase; font-weight:bold; }";
+        divToPrint.innerHTML  += "</style>";
+        divToPrint.innerHTML  += " ";
+
+          	  var now = new Date();
+
+          	  meses = new Array(12);
+
+          	  meses[0] = "Janeiro";
+          	  meses[1] = "Fevereiro";
+          	  meses[2] = "Março";
+          	  meses[3] = "Abril";
+          	  meses[4] = "Maio";
+          	  meses[5] = "Junho";
+          	  meses[6] = "Julho";
+          	  meses[7] = "Agosto";
+          	  meses[8] = "Setembro";
+          	  meses[9] = "Outubro";
+          	  meses[10] = "Novembro";
+          	  meses[11] = "Dezembro";
+          	  
+          	divToPrint.innerHTML  += "<p style='font-size:12px;margin-top:10%; margin-left:55%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
+
+          	newWin = window.open();
+          	newWin.document.write(divToPrint.outerHTML);
+          	divToPrint.innerHTML = "";
+          	divToPrint.style.visibility = "hidden";
+          	
+          	newWin.print();
+          	
+          	factory.printing.header = "";
+          	factory.printing.footer = "";
+          	
+          	newWin.close();
+            
+            }
+        });
+
+	}
 </script>
+
 	<script type="text/javascript">
        function deletar(id) {
         var resposta = confirm("Deseja exluir esta Matrícula?");
@@ -32,6 +117,7 @@ function printDiv(id)
        
 
  </script>
+
 	<section class="content-header">
 		<h1>
 			Matrículas <small>Visualização e Gerenciamento</small>
@@ -55,6 +141,7 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
+
 			<div class="box box-white">
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
@@ -79,6 +166,7 @@ function printDiv(id)
 											
 											
 											<g:if test="${perm2}">
+
 											<li class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
@@ -114,6 +202,9 @@ function printDiv(id)
 					</tbody>
 				</table>
 			</div>	
+
+
+
 			<script type="text/javascript">
 				function mudarEscola(){
 		    	  
@@ -173,137 +264,174 @@ function printDiv(id)
 
 
 		</script>
-		
+
 
 			<!-- Button trigger modal -->
-				<g:if test="${perm2}">
-			<button class="btn btn-primary btn-flat" data-toggle="modal"
-				data-target="#myModal">
-				<i class="fa fa-plus"></i> Realizar Matrícula
-			</button>
+			<g:if test="${perm2}">
+				<button class="btn btn-primary btn-flat" data-toggle="modal"
+					data-target="#myModal">
+					<i class="fa fa-plus"></i> Realizar Matrícula
+				</button>
 			</g:if>
+
 			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
-			<!-- Modal -->
 
 
-	<g:if test="${perm2}">
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="relatorioModal" tabindex="-1"
+				role="dialog" aria-labelledby="relatorioModalLabel"
+				aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 							</button>
-							<h4 class="modal-title" id="myModalLabel">Matrícula</h4>
+							<h4 class="modal-title" id="relatorioModalLabel">Relatórios</h4>
 						</div>
 						<div class="modal-body">
-						
-						
+							<form action="" method="POST">
 
-						
-						
-						
-							<g:form controller="Matricula" action="salvar" class="form"
-								name="formHorario">
-								<fieldset>
-									<div class="form-heading">
-										<label>Aluno</label>
-										<div class="controls">
-
-											<select id="aluno" name="aluno" class="form-control selectpicker" data-live-search="true">
-												<g:each in='${alunos}'>
-
-													<option value="${it.id}">
-														${it.cidadao.pessoaFisica.pessoa.nome}
-													</option>
-
-												</g:each>
-											</select>
-
-										</div>
-									</div>
-									<br>
 
 								<div class="form-heading">
-										<label>Escola</label>
-										<div class="controls ">
-										
-										<select class="form-control selectpicker" data-live-search="true" name="escolas"
-												id="comboEscola"  onchange="mudarEscola();">
-													<g:each in="${escolas}" >
-														<option value="0" disabled="disabled" selected="selected">
-														Selecione uma escola
-													</option>
-													<option value="${it.id}">
-														${it.pessoaJuridica.razaoSocial}
-													</option>
-													</g:each>
-												</select>
-	
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Série</label>
-										<div class="controls">
-											
-											<select id="comboSerie" name="series" class="form-control " onchange="mudarSerie()">
-												<g:each in='${series?}'>
-													<option value="${it.id}">
-														${it.serie}
-													</option>
-												</g:each>
-											</select>
-											
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Turma</label>
-										<div class="controls">
-										<div id="teste"></div>
-										
-											<select class="form-control" name="turma" id="comboTurma">
-											</select>
-										</div>
-									</div>
-									<br>
+									<label>Tipo de Relatório</label>
 									<div class="controls">
-										<label>Nº Matrícula</label>
-										<g:textField class="form-control" 
-											name="matricula" value="" />
+										<select
+											class="form-control selectpicker" name="tipoRelatorio"
+											id="tipoRelatorio">
+											<option value="1">Declaração de Vínculo</option>
+										</select> <br /> <br /> <br />
+										<button class="btn btn-danger btn-flat"
+											onclick="geraRelatorio(); return false;">
+											<i class="glyphicon glyphicon-print"></i> Gerar Relatório
+										</button>
 									</div>
-									<br>
-
-							<div class="form-heading">
-										<label>Data da matrícula</label>
-										<div class="controls">
-											<g:formatDate format="yyyy-MM-dd" date="${date}" />
-											<g:datePicker noSelection="['':'']" precision="day"
-												class="form-control" required="true" name="dataDaMatricula"
-												value="" />
-										</div>
-									</div>
-									<br>
-
-								</fieldset>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary btn-flat">
-										<i class="fa fa-save"></i> Matricular
-									</button>
-									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
-							</g:form>
+
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-	</g:if>
+
+
+			<!-- Modal -->
+			<g:if test="${perm2}">
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Matrícula</h4>
+							</div>
+							<div class="modal-body">
+
+								<g:form controller="Matricula" action="salvar" class="form"
+									name="formHorario">
+									<fieldset>
+										<div class="form-heading">
+											<label>Aluno</label>
+											<div class="controls">
+
+												<select id="aluno" name="aluno"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${alunos}'>
+
+														<option value="${it.id}">
+															${it.cidadao.pessoaFisica.pessoa.nome}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Escola</label>
+											<div class="controls ">
+
+												<select class="form-control selectpicker"
+													data-live-search="true" name="escolas" id="comboEscola"
+													onchange="mudarEscola();">
+													<g:each in="${escolas}">
+														<option value="0" disabled="disabled" selected="selected">
+															Selecione uma escola</option>
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Série</label>
+											<div class="controls">
+
+												<select id="comboSerie" name="series" class="form-control "
+													onchange="mudarSerie()">
+													<g:each in='${series?}'>
+														<option value="${it.id}">
+															${it.serie}
+														</option>
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Turma</label>
+											<div class="controls">
+												<div id="teste"></div>
+
+												<select class="form-control" name="turma" id="comboTurma">
+												</select>
+											</div>
+										</div>
+										<br>
+										<div class="controls">
+											<label>Nº Matrícula</label>
+											<g:textField class="form-control" name="matricula" value="" />
+										</div>
+										<br>
+
+										<div class="form-heading">
+											<label>Data da matrícula</label>
+											<div class="controls">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" required="true" name="dataDaMatricula"
+													value="" />
+											</div>
+										</div>
+										<br>
+
+									</fieldset>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary btn-flat">
+											<i class="fa fa-save"></i> Matricular
+										</button>
+										<input type="reset" class="btn btn btn-flat" value="Limpar">
+									</div>
+								</g:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</g:if>
 		</div>
-	
 	</section>
+	<div id="reportPrint" style="visibility: hidden;"></div>
+	<object id="factory" style="display:none"
+  classid="clsid:1663ed61-23eb-11d2-b92f-008048fdd814"
+  codebase="http://[your path here]/smsx.cab#Version=7,5,0,20">
+</object>
 </body>
 </html>
