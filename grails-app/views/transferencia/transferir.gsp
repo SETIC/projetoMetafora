@@ -5,7 +5,7 @@
 <meta name="layout" content="public" />
 </head>
 <body>
-<script type="text/javascript">
+	<script type="text/javascript">
 function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
@@ -20,36 +20,55 @@ function printDiv(id)
   newWin.document.write("<hr><br/><br/> ");
   newWin.document.write("<h3 style='text-align:center;margin-top:10px;'>TERMO DE RESPONSABILIDADE PARA TRANSFERÊNCIA</h3><br/><br/> ");
   newWin.document.write("<p align='Justify' style='center;margin-top:20px;line-height:200%;  font-family: sans-serif;margin-left: 25px;margin-right: 25px;'> ");
-  newWin.document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que  o aluno " +nomeAluno); 
-  newWin.document.write(", está sendo transferido para ");	
-  newWin.document.write(itemSelecionado);
+  newWin.document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que  o aluno "); 
+  newWin.document.write("<b>"+nomeAluno+"</b>");
+  newWin.document.write(", está sendo transferido para a ");	
+  newWin.document.write("<b>"+itemSelecionado+"<b>");
+  newWin.document.write(". ");
   newWin.document.write(" ");
-  newWin.document.write(" ");
-  newWin.document.write(" ");
+  newWin.document.write("<p style='text-align:center;margin-top:15%;'>________________________________________");
+  newWin.document.write("<h4 style='text-align:center'>ASSINATURA DO RESPOSÁVEL</h4><br/><br/>");
+  
   newWin.document.write(" ");
   newWin.document.write("</p> ");
   
+  Hoje = new Date();
+  Data = Hoje.getDate();
+  Dia = Hoje.getDay();
+  Mes = Hoje.getMonth();
+  Ano = Hoje.getFullYear();
+  
+  if(Data < 10) {
+      Data = "0" + Data;
+  }
+  NomeDia = new Array(7)
+  NomeDia[0] = "domingo"
+  NomeDia[1] = "segunda-feira"
+  NomeDia[2] = "terça-feira"
+  NomeDia[3] = "quarta-feira"
+  NomeDia[4] = "quinta-feira"
+  NomeDia[5] = "sexta-feira"
+  NomeDia[6] = "sábado"
 
-  var now = new Date();
+  NomeMes = new Array(12)
+  NomeMes[0] = "Janeiro"
+  NomeMes[1] = "Fevereiro"
+  NomeMes[2] = "Março"
+  NomeMes[3] = "Abril"
+  NomeMes[4] = "Maio"
+  NomeMes[5] = "Junho"
+  NomeMes[6] = "Julho"
+  NomeMes[7] = "Agosto"
+  NomeMes[8] = "Setembro"
+  NomeMes[9] = "Outubro"
+  NomeMes[10] = "Novembro"
+  NomeMes[11] = "Dezembro"
 
-	  meses = new Array(12);
-
-	  meses[0] = "Janeiro";
-	  meses[1] = "Fevereiro";
-	  meses[2] = "Março";
-	  meses[3] = "Abril";
-	  meses[4] = "Maio";
-	  meses[5] = "Junho";
-	  meses[6] = "Julho";
-	  meses[7] = "Agosto";
-	  meses[8] = "Setembro";
-	  meses[9] = "Outubro";
-	  meses[10] = "Novembro";
-	  meses[11] = "Dezembro";
+	  //divToPrint +=document.write("São Paulo, "+ Data + " de " + NomeMes[Mes] + " de " + Ano);
 	  
-	divToPrint.innerHTML  += "<p style='font-size:12px;margin-top:1px; margin-left:55%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
+  //newWin.innerHTML  += "<p style='font-size:12px;margin-top:1px; margin-left:55%;'><br/>Gerado dia " +Data + " de " +NomeMes[Mes]  + " de " + Ano + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
 
-  newWin.document.write(divToPrint.outerHTML);
+  newWin.document.write("<p style='font-size:12px;margin-top:100px; margin-left:55%;'>"+"Gerado dia, " +Data + " de " +NomeMes[Mes]  + " de " + Ano + " às " + Hoje.getHours()+":"+Hoje.getMinutes()+" pelo SISEduc"+"</p>");
   newWin.print();
   newWin.close();
 }
@@ -124,13 +143,13 @@ function printDiv(id)
 					</div>
 					<br>
 				</fieldset>
-				<div style="margin: 0 17% auto; margin-right:-20px;">
-				
+				<div style="margin: 0 17% auto; margin-right: -20px;">
+
 					<button type="button" class="btn btn-danger btn-flat"
 						onclick="printDiv(print)">
 						<i class="glyphicon glyphicon-print"></i> Gerar Relatório
 					</button>
-				
+
 					<button type="submit" class="btn btn-primary btn-flat">
 						<i class="glyphicon glyphicon-arrow-right"></i> Concluir
 					</button>
