@@ -7,7 +7,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"usuario/Login")
+        "/"(view:"usuario/login")
         "500"(view:'/error')
 		"404"(view:'/error404')
 	}

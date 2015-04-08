@@ -50,53 +50,54 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!disciplinas?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 50px;"></th>
-						<th style="width: 550px;">Disciplina</th>
-						<th style="width: 550px;">Carga Horária</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${disciplinas?}'>
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-										<g:if test="${perm2 }">
-										
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/disciplina/editarDisciplina/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>	
-											</g:if>
-											
-											
-									</ul>
-								</div>
-							</td>
-
-							<td>
-								${it.disciplina}
-
-							</td>
-							<td>
-								${it.cargaHoraria}
-							</td>
-
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!disciplinas?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 50px;"></th>
+							<th style="width: 550px;">Disciplina</th>
+							<th style="width: 550px;">Carga Horária</th>
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-			
+					</thead>
+					<tbody>
+						<g:each in='${disciplinas?}'>
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											
+											<g:if test="${perm2 }">
+											
+											
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/disciplina/editarDisciplina/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>	
+												</g:if>
+												
+												
+										</ul>
+									</div>
+								</td>
+	
+								<td>
+									${it.disciplina}
+	
+								</td>
+								<td>
+									${it.cargaHoraria}
+								</td>
+	
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 			
 										<g:if test="${perm2 }">

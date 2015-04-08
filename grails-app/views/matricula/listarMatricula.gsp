@@ -55,63 +55,65 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!matricula?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 50px;"></th>
-						<th style="width: 280px;">Nome do Aluno</th>
-						<th style="width: 60px;">Data da Matrícula</th>
-						<th style="width: 320px;">Nome da Escola</th>
-						<th style="width: 40px;">Série</th>
-						<th style="width: 60px;">Turma</th>
-
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${matricula?}'>
-
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-										
-										<g:if test="${perm2}">
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-											
-											</g:if>
-											
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${it.aluno.cidadao.pessoaFisica.pessoa.nome}
-							</td>
-							<td><g:formatDate format="dd/MM/yyyy"
-									date="${it.dataDaMatricula}" /></td>
-							<td>
-								${it.turma.escola.pessoaJuridica.pessoa.nome}
-							</td>
-							<td>
-								${it.turma.serie.serie}
-							</td>
-							<td>
-								${it.turma.turma}
-							</td>
-
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!matricula?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 50px;"></th>
+							<th style="width: 280px;">Nome do Aluno</th>
+							<th style="width: 60px;">Data da Matrícula</th>
+							<th style="width: 320px;">Nome da Escola</th>
+							<th style="width: 40px;">Série</th>
+							<th style="width: 60px;">Turma</th>
+	
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<g:each in='${matricula?}'>
+	
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											
+											
+											<g:if test="${perm2}">
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+												
+												</g:if>
+												
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${it.aluno.cidadao.pessoaFisica.pessoa.nome}
+								</td>
+								<td><g:formatDate format="dd/MM/yyyy"
+										date="${it.dataDaMatricula}" /></td>
+								<td>
+									${it.turma.escola.pessoaJuridica.pessoa.nome}
+								</td>
+								<td>
+									${it.turma.serie.serie}
+								</td>
+								<td>
+									${it.turma.turma}
+								</td>
+	
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>	
 			<script type="text/javascript">
 				function mudarEscola(){
 		    	  

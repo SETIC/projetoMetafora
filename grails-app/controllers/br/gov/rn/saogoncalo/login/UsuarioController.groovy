@@ -28,7 +28,7 @@ class UsuarioController {
 		if (verificarAutenticacao(user, pass)) {
 			redirect(controller:params.ctl, action:params.act)
 		}else{
-			render(view:"/usuario/login.gsp", model:[erro:"Usuário ou senha não encontrado!"])
+			render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}
 	}
 
@@ -67,7 +67,7 @@ class UsuarioController {
 		def usuarioA = Usuario.findByUsernameAndSenha(usuario, senha)
 		if(usuarioA == null){
 
-			render(view:"/usuario/validarUsuario.gsp", model:[erro:"Usuário ou senha não encontrado!"])
+			render(view:"/usuario/validarUsuario.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}else{
 			render(view:"/index.gsp")
 		}

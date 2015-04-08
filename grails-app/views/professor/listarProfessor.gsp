@@ -51,72 +51,73 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!professores?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 65px;"></th>
-						<th style="width: 280px;">Nome</th>
-						<th style="width: 60px;">CPF</th>
-						<th style="width:;">Matricula</th>
-						<th style="width:;">Data de Nascimento</th>
-						<th style="width:;">Sexo</th>
-						<th style="width:;">Estado Civil</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${professores?}'>
-						<g:set var="pessoa"
-							value="${it.funcionario.cidadao.pessoaFisica.pessoa}" />
-						<g:set var="funcionario" value="${it.funcionario }" />
-						<g:set var="pessoaFisica"
-							value="${it.funcionario.cidadao.pessoaFisica}" />
-						<g:set var="cidadao" value="${it.funcionario.cidadao}" />
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-										<g:if test="${perm2}">
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/professor/editarProfessor/${pessoa.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${pessoa.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										</g:if>
-										
-										<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
-											href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
-												class="glyphicon glyphicon-eye-open"></span></a></li>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${pessoa.nome}
-							</td>
-							<td>
-								${pessoa.cpfCnpj}
-							</td>
-							<td>
-								${funcionario.matricula}
-							</td>
-							<td><g:formatDate format="dd/MM/yyyy"
-									date="${pessoa.dataDeNascimento}" /></td>
-							<td>
-								${pessoaFisica.sexo} 
-							</td>
-							<td>
-								${cidadao.estadoCivil}
-							</td>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!professores?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 65px;"></th>
+							<th style="width: 280px;">Nome</th>
+							<th style="width: 60px;">CPF</th>
+							<th style="width:;">Matricula</th>
+							<th style="width:;">Data de Nascimento</th>
+							<th style="width:;">Sexo</th>
+							<th style="width:;">Estado Civil</th>
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-		
+					</thead>
+					<tbody>
+						<g:each in='${professores?}'>
+							<g:set var="pessoa"
+								value="${it.funcionario.cidadao.pessoaFisica.pessoa}" />
+							<g:set var="funcionario" value="${it.funcionario }" />
+							<g:set var="pessoaFisica"
+								value="${it.funcionario.cidadao.pessoaFisica}" />
+							<g:set var="cidadao" value="${it.funcionario.cidadao}" />
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											
+											<g:if test="${perm2}">
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/professor/editarProfessor/${pessoa.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${pessoa.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+											</g:if>
+											
+											<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
+												href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li>
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${pessoa.nome}
+								</td>
+								<td>
+									${pessoa.cpfCnpj}
+								</td>
+								<td>
+									${funcionario.matricula}
+								</td>
+								<td><g:formatDate format="dd/MM/yyyy"
+										date="${pessoa.dataDeNascimento}" /></td>
+								<td>
+									${pessoaFisica.sexo} 
+								</td>
+								<td>
+									${cidadao.estadoCivil}
+								</td>
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 			<button class="btn btn-primary btn-flat" data-toggle="modal"

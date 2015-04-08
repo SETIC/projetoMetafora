@@ -15,95 +15,59 @@
 			<li class="active">Painel</li>
 		</ol>
 	</section>
-
 	<!-- Main content -->
-	<section class="content">
-
-		<!-- Small boxes (Stat box) -->
-		<div class="row">
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-aqua">
-					<div class="inner">
-						<h3>${quantAlunos}</h3>
-						<p>Alunos Cadastrados</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-graduation-cap"></i>
-					</div>
-					<g:link controller="Aluno" action="listar" class="small-box-footer"> Listar Alunos <i
-						class="fa fa-arrow-circle-right"></i>
-					</g:link>
-				</div>
-			</div>
-			<!-- ./col -->
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-green">
-					<div class="inner">
-						<h3>${quantEscolas}</h3>
-						<p>Escolas Cadastradas</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-university"></i>
-					</div>
-					<g:link controller="Escola" action="listar" class="small-box-footer"> Listar Escolas <i
-						class="fa fa-arrow-circle-right"></i>
-					</g:link>
-				</div>
-			</div>
-			<!-- ./col -->
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-yellow">
-					<div class="inner">
-						<h3>${quantProfessores}</h3>
-						<p>Professores Cadastrados</p>
-					</div>
-					<div class="icon">
-						<i class="ion ion-person-add"></i>
-					</div>
-					<g:link controller="Professor" action="listar" class="small-box-footer"> Listar Professores <i
-						class="fa fa-arrow-circle-right"></i>
-					</g:link>
-				</div>
-			</div>
-			<!-- ./col -->
-			<div class="col-lg-3 col-xs-6">
-				<!-- small box -->
-				<div class="small-box bg-red">
-					<div class="inner">
-						<h3>${quantFuncionarios}</h3>
-						<p>Funcionários Cadastrados</p>
-					</div>
-					<div class="icon">
-						<i class="fa fa-male"></i>
-					</div>
-					<g:link controller="Funcionario" action="listar" class="small-box-footer"> Listar Funcionários <i
-						class="fa fa-arrow-circle-right"></i>
-					</g:link>
-				</div>
-			</div>
-			<!-- ./col -->
-		</div>
-		<!-- /.row -->
-
-		<!-- Main row -->
-		<div class="row">
-			<!-- Left col -->
-			<section class="col-lg-7 connectedSortable">
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+      	<g:link class="link-black" controller="Aluno" action="listar">
+	        <div class="col-md-3 col-sm-6 col-xs-12">
+	          <div class="info-box">
+	            <span class="info-box-icon bg-aqua"><i class="fa fa-graduation-cap"></i></span>
+	            <div class="info-box-content">
+	              <span class="info-box-text">Alunos</span>
+	              <span class="info-box-number">${quantAlunos}</span>
+	            </div><!-- /.info-box-content -->
+	          </div><!-- /.info-box -->
+	        </div><!-- /.col -->
+        </g:link>
+        
+        <g:link class="link-black" controller="Escola" action="listar">
+	        <div class="col-md-3 col-sm-6 col-xs-12">
+	          <div class="info-box">
+	            <span class="info-box-icon bg-red"><i class="fa fa-university"></i></span>
+	            <div class="info-box-content">
+	              <span class="info-box-text">Escolas</span>
+	              <span class="info-box-number">${quantEscolas}</span>
+	            </div><!-- /.info-box-content -->
+	          </div><!-- /.info-box -->
+	        </div><!-- /.col -->
+		</g:link>
 		
-
-			</section>
-			<!-- /.Left col -->
-			<!-- right col (We are only adding the ID to make the widgets sortable)-->
-			<section class="col-lg-5 connectedSortable">
-				<!-- /.box -->
-			</section>
-			<!-- right col -->
-		</div>
-		<!-- /.row (main row) -->
-	</section>
-	<!-- /.content -->
+		<g:link class="link-black" controller="Professores" action="listar">
+	        <div class="col-md-3 col-sm-6 col-xs-12">
+	          <div class="info-box">
+	            <span class="info-box-icon bg-green"><i class="ion ion-person-add"></i></span>
+	            <div class="info-box-content">
+	              <span class="info-box-text">Professores</span>
+	              <span class="info-box-number">${quantProfessores}</span>
+	            </div><!-- /.info-box-content -->
+	          </div><!-- /.info-box -->
+	        </div><!-- /.col -->
+        </g:link>
+        
+        <g:link class="link-black" controller="Funcionario" action="listar">
+	        <div class="col-md-3 col-sm-6 col-xs-12">
+	          <div class="info-box">
+	            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+	            <div class="info-box-content">
+	              <span class="info-box-text">Funcionários</span>
+	              <span class="info-box-number">${quantFuncionarios}</span>
+	            </div><!-- /.info-box-content -->
+	          </div><!-- /.info-box -->
+	        </div><!-- /.col -->
+	    </g:link>
+	       
+	  </div><!-- /.row -->
+    </section><!-- /.content -->	
 </body>
 </html>
