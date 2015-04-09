@@ -61,7 +61,7 @@
       
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></a>
+        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
@@ -104,7 +104,7 @@
                       <a href="#" class="btn btn-default btn-flat">Meus Dados</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sair</a>
+                      <g:link controller="Usuario" action="deslogar" class="btn btn-default btn-flat">Sair</g:link>
                     </div>
                   </li>
                 </ul>

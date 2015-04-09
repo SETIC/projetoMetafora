@@ -58,9 +58,9 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 80px;">Funcões</th>
-							<th style="width: 250px;">Nome da atividade</th>
+							<th style="width: 150px;">Nome da atividade</th>
 							<th style="width: 80px;">Nota Máxima</th>
-							<th style="width: 80px;">Turma</th>
+							<th style="width: 150px;">Turma</th>
 							<th style="width: 110px;">Data de Início</th>
 							<th style="width: 80px;">Data de Término</th>
 							<th style="width: 100px; text-align: center;">Bimestre</th>
