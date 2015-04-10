@@ -175,7 +175,11 @@
 												class="btn btn-danger btn-xs btn-flat"><span
 												class="glyphicon glyphicon-remove"></span></li>
 												
-												</g:if>
+												</g:if> 
+											<li data-toggle="modal" data-target="#relatorioModal"
+											onclick="changeIdMatriculaParaRelatorio(${it.id});"
+											class="btn btn-warning btn-xs btn-flat"><span
+											class="glyphicon glyphicon-file"></span></li>
 												
 										</ul>
 	
