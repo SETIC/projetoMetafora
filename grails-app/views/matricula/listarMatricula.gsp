@@ -88,7 +88,7 @@
           	  
           	divToPrint.innerHTML  += "<p style='font-size:12px;margin-top:10%; margin-left:55%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
 
-          	newWin = window.open();
+          	var newWin = window.open();
           	newWin.document.write(divToPrint.outerHTML);
           	divToPrint.innerHTML = "";
           	divToPrint.style.visibility = "hidden";
@@ -299,6 +299,7 @@
 
 
 								<div class="form-heading">
+									<input type="hidden" id="idMatriculaParaRelatorio"/>
 									<label>Tipo de Relatório</label>
 									<div class="controls">
 										<select
