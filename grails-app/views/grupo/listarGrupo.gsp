@@ -54,56 +54,50 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="example" class="table table-striped table-hover">
-				<g:if test="${!grupos?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 55px;"></th>
-						<th style="width: 280px;">Nome</th>
-						<th style="width: 60px;">Descrição</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${grupos?}'>
-
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										<g:if test="${perm2}">
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/grupo/editarGrupo/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-											
-											</g:if>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${it.nome}
-							</td>
-							<td>
-								${it.descricao}
-							</td>
+			<div class="box box-white">
+				<table id="example" class="table table-striped table-hover">
+					<g:if test="${!grupos?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 55px;"></th>
+							<th style="width: 280px;">Nome</th>
+							<th style="width: 60px;">Descrição</th>
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-			<script type="text/javascript">
-			$(document).ready(function() {
-				$('#example').DataTable();
-				var tabela = $('#example').dataTable();
-				// Ordena por nome e "desempata" com o id
-				tabela.fnSort([ [ 1, 'asc' ] ]);
-			});
-		</script>
+					</thead>
+					<tbody>
+						<g:each in='${grupos?}'>
+	
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											<g:if test="${perm2}">
+											
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/grupo/editarGrupo/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+												
+												</g:if>
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${it.nome}
+								</td>
+								<td>
+									${it.descricao}
+								</td>
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 				<g:if test="${perm2}">
 			<button class="btn btn-primary btn-flat" data-toggle="modal"

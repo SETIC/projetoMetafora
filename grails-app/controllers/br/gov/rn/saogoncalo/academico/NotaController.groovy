@@ -25,17 +25,19 @@ class NotaController {
 
 		def date = new Date()
 		def formatAno = new SimpleDateFormat("yyyy")
-		def anoAtual = formatAno.format(date);
+		def anoAtual = formatAno.format(date)
 
 		def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 		def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 
 
+		//render (view:"/nota/notasTurma.gsp", model:[turmaDisciplina:td)
 		render (view:"/nota/notasTurma.gsp", model:[turmaDisciplina:td])
 	}
 
-	
+
 	def boletim(int id){
+
 
 		def p = Professor.get(Long.parseLong(session['pesid'].toString()))
 		def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
@@ -44,13 +46,14 @@ class NotaController {
 
 		def date = new Date()
 		def formatAno = new SimpleDateFormat("yyyy")
-		def anoAtual = formatAno.format(date);
+		def anoAtual = formatAno.format(date)
 
 		def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 
-		def td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(id, dlpp, turmas)
+		//def td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(id, dlpp, turmas)
+		def td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
 
-		def t = td[0].turma
+		//def t = td[0].turma
 
 
 		def notas
@@ -68,9 +71,6 @@ class NotaController {
 		try {
 			notas = sql.rows(consultaMediaAritmetica())
 
-
-			println("Notas  ---- " + notas)
-
 			render (view:"/nota/listarNota.gsp", model:[notas:notas, turmaDisciplina:td])
 		}catch(SQLException ex){
 			println ex.getMessage()
@@ -81,43 +81,58 @@ class NotaController {
 		}
 	}
 
+
+
+
+
 	def consultaMediaAritmetica(){
-		return " select n.matricula_id, p.nome,  "+
-		 
-		 "( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
-		  "  where nn.atividade_id = aa.id "+
-		   "   and aa.bimestre = '1º BIMESTRE'  "+
-		    "  and nn.matricula_id = n.matricula_id ) as nota1, "+
-		 " ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
-		  "  where nn.atividade_id = aa.id  "+
-		   "   and aa.bimestre = '2º BIMESTRE'  "+
-		    "  and nn.matricula_id = n.matricula_id ) as nota2, "+
-		" ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
-		 "   where nn.atividade_id = aa.id "+
-		  "    and aa.bimestre = '3º BIMESTRE' "+
-		   "   and nn.matricula_id = n.matricula_id ) as nota3, "+
-		" ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
-		 "   where nn.atividade_id = aa.id "+
-		  "    and aa.bimestre = '4º BIMESTRE'  "+
-		   "   and nn.matricula_id = n.matricula_id ) as nota4, "+
-		
-	"	 (select nn.pontuacao from educacao_academico.atividade aa, educacao_academico.nota nn "+
-	"	    where nn.atividade_id = aa.id  "+
-	"	      and aa.bimestre = 'RECUPERACAO' "+
-	"	      and aa.turma_disciplina_id = " + params.id  +
-	"	      and nn.matricula_id = n.matricula_id ) as notaRecuperacao, "+
-		      
-	"	 (select nn.pontuacao from educacao_academico.atividade aa, educacao_academico.nota nn "+
-	"	    where nn.atividade_id = aa.id  "+
-	"	      and aa.bimestre = 'PROVA FINAL' "+
-	"	      and aa.turma_disciplina_id = " + params.id  +
-	"	      and nn.matricula_id = n.matricula_id ) as provaFinal "+
-		
-	"	 from educacao_academico.atividade a, educacao_academico.nota n, educacao_academico.matricula m, cadastro_unico_pessoal.pessoa p "+
-	"	 where n.atividade_id = a.id " +
-	"	  and a.turma_disciplina_id = " + params.id  +
-	"	  and p.id = m.aluno_id "+
-	"	  and n.matricula_id = m.id "+
-	"	  group by n.matricula_id, p.nome "
+
+		return 	" select m.id, p.nome, "+
+				"		( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id "+
+				"		      and aa.bimestre = '1º BIMESTRE' "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as nota1, "+
+				
+				"		  ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id  "+
+				"		      and aa.bimestre = '2º BIMESTRE'  "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as nota2, "+
+				
+				"		 ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id "+
+				"		      and aa.bimestre = '3º BIMESTRE' "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as nota3, "+
+				
+				"		 ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id "+
+				"		      and aa.bimestre = '4º BIMESTRE' "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as nota4, "+
+
+				"		 (select nn.pontuacao from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id  "+
+				"		      and aa.bimestre = 'RECUPERACAO' "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as notaRecuperacao, "+
+
+				"		 (select nn.pontuacao from educacao_academico.atividade aa, educacao_academico.nota nn "+
+				"		    where nn.atividade_id = aa.id "+
+				"		      and aa.bimestre = 'PROVA FINAL' "+
+				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
+				"		      and nn.matricula_id = m.id ) as provaFinal "+
+
+				" from educacao_academico.matricula m "+
+				"  left join educacao_academico.nota n on n.matricula_id = m.id "+
+				"  left join educacao_academico.atividade a on n.atividade_id = a.id "+
+				" inner join cadastro_unico_pessoal.pessoa p on p.id = m.aluno_id "+
+				"  left join educacao_academico.turma_disciplina td on a.turma_disciplina_id = td.id "+
+
+				" where m.turma_id = " + params.turma +
+				" group by m.id, p.nome "
+
+
 	}
 }

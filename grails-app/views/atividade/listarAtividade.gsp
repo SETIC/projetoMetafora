@@ -51,83 +51,87 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!alunos?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 80px;">Funcões</th>
-						<th style="width: 250px;">Nome da atividade</th>
-						<th style="width: 80px;">Nota Máxima</th>
-						<th style="width: 80px;">Turma</th>
-						<th style="width: 110px;">Data de Início</th>
-						<th style="width: 80px;">Data de Término</th>
-						<th style="width: 100px; text-align: center;">Bimestre</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${atividade?}'>
-					
-							<tr class='linha_registro'>
-								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										
-										
-										<ul style="display: inline">
-											
-									
-										
-										<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											
-											
-											<li title="Remover Atividade" onclick="deletar(${it.id})"
-												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
 
-												
-											<li title="Ver detalhes da Atividade" class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/atividade/verInfoAtividade/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-												
-												<li title="Lançar Notas" class="btn btn-warning btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/atividade/lancarNota/${it.id}"><span
-													class="glyphicon glyphicon-th-list"></span></a></li>
-	
-										</ul>
-									</div>
-								</td>
-								<td>
-									${it.nomeAtividade}
-								</td>
-								<td>
-									${it.notaMaxima}
-								</td>
-								<td>
-									${it.turmaDisciplina.turma.turma} - 
-									${it.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina }
-								</td>
-								<td>
-								<g:formatDate format="dd-MM-yyyy" date="${it.dataInicio}"/>
-									
-								</td>
-								<td>
-								<g:formatDate format="dd-MM-yyyy" date="${it.dataFim}"/>
-									
-								</td>
-								<td>
-									${it.bimestre}
-								</td>
-							</tr>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!alunos?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 80px;">Funcões</th>
+							<th style="width: 150px;">Nome da atividade</th>
+							<th style="width: 80px;">Nota Máxima</th>
+							<th style="width: 150px;">Turma</th>
+							<th style="width: 110px;">Data de Início</th>
+							<th style="width: 80px;">Data de Término</th>
+							<th style="width: 100px; text-align: center;">Bimestre</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${atividade?}'>
 						
-					</g:each>
+								<tr class='linha_registro'>
+									<td>
+										<div style="margin-left: -35px" class="opcoes">
+											
 
-				</tbody>
-			</table>
-			
+											
+											<ul style="display: inline">
+												
+										
+											
+											<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+												
+
+												<li title="Remover Atividade" onclick="deletar(${it.id})"
+													class="btn btn-danger btn-xs btn-flat"><span
+													class="glyphicon glyphicon-remove"></span></li>
+	
+													
+												<li title="Ver detalhes da Atividade" class="btn btn-success btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/atividade/verInfoAtividade/${it.id}"><span
+														class="glyphicon glyphicon-eye-open"></span></a></li>
+													
+													<li title="Lançar Notas" class="btn btn-warning btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/atividade/lancarNota/${it.id}"><span
+														class="glyphicon glyphicon-th-list"></span></a></li>
+		
+											</ul>
+										</div>
+									</td>
+									<td>
+										${it.nomeAtividade}
+									</td>
+									<td>
+										${it.notaMaxima}
+									</td>
+									<td>
+										${it.turmaDisciplina.turma.turma} - 
+										${it.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina }
+									</td>
+									<td>
+									<g:formatDate format="dd-MM-yyyy" date="${it.dataInicio}"/>
+										
+									</td>
+									<td>
+									<g:formatDate format="dd-MM-yyyy" date="${it.dataFim}"/>
+										
+									</td>
+									<td>
+										${it.bimestre}
+									</td>
+								</tr>
+							
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
+
 			<!-- Button trigger modal -->
 			
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -182,11 +186,13 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Tipo</label>
 										<div class="controls">
+
 											<select class="form-control" name="tipoAtividade">
 												<option value="AVALIAÇÃO">AVALIAÇÃO</option>
 												<option value="APRESENTAÇÃO">APRESENTAÇÃO</option>
 												<option value="TRABALHO">TRABALHO</option>
 												<option value="TESTE">TESTE</option>
+
 											</select>
 										</div>
 									</div>

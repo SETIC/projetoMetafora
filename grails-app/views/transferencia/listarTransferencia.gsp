@@ -55,67 +55,67 @@
 			<!-- /.box-header -->
 
 
-
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!transferencias?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 5%;"></th>
-						<th style="width: 28%;">Aluno</th>
-						<th style="width: 6%;">Status</th>
-						<th style="width: 33%;">Escola Origem</th>
-						<th style="width: 33%;">Escola Destino</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${alunos?}' var="pessoa">
-						<g:if test='${pessoa.escIdDestino == sessaoEscId }'>
-							<tr class='linha_registro'>
-								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
-
-											<li class="btn btn-success btn-xs btn-flat" onclick="aceitar(${pessoa.id})"><a
-												style="color: #fff" 
-												title="Aceitar Transferência">
-													<span class="glyphicon glyphicon-ok"></span>
-											</a></li>
-
-											<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
-												style="color: #fff" 
-												title="Cancelar Transferência">
-													<span class="glyphicon glyphicon-remove"></span>
-											</a></li>
-											
-										</ul>
-									</div>
-								</td>
-								<td>
-									${pessoa.nome}
-								</td>
-								<td><span class="label label-warning">Pendente</span></td>
-								<g:each in='${escolas}' var="escola">
-									<g:if test='${pessoa.escid == escola.id}'>
-										<td>
-											${escola.pessoaJuridica.pessoa.nome}
-										</td>
-									</g:if>
-								</g:each>
-								<g:each in='${escolas}' var="escola">
-									<g:if test='${pessoa.escIdDestino == escola.id}'>
-										<td>
-											${escola.pessoaJuridica.pessoa.nome}
-										</td>
-									</g:if>
-								</g:each>
-
-							</tr>
-						</g:if>
-					</g:each>
-
-				</tbody>
-			</table>
-
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!transferencias?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 5%;"></th>
+							<th style="width: 28%;">Aluno</th>
+							<th style="width: 6%;">Status</th>
+							<th style="width: 33%;">Escola Origem</th>
+							<th style="width: 33%;">Escola Destino</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${alunos?}' var="pessoa">
+							<g:if test='${pessoa.escIdDestino == sessaoEscId }'>
+								<tr class='linha_registro'>
+									<td>
+										<div style="margin-left: -35px" class="opcoes">
+											<ul style="display: inline">
+	
+												<li class="btn btn-success btn-xs btn-flat" onclick="aceitar(${pessoa.id})"><a
+													style="color: #fff" 
+													title="Aceitar Transferência">
+														<span class="glyphicon glyphicon-ok"></span>
+												</a></li>
+	
+												<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
+													style="color: #fff" 
+													title="Cancelar Transferência">
+														<span class="glyphicon glyphicon-remove"></span>
+												</a></li>
+												
+											</ul>
+										</div>
+									</td>
+									<td>
+										${pessoa.nome}
+									</td>
+									<td><span class="label label-warning">Pendente</span></td>
+									<g:each in='${escolas}' var="escola">
+										<g:if test='${pessoa.escid == escola.id}'>
+											<td>
+												${escola.pessoaJuridica.pessoa.nome}
+											</td>
+										</g:if>
+									</g:each>
+									<g:each in='${escolas}' var="escola">
+										<g:if test='${pessoa.escIdDestino == escola.id}'>
+											<td>
+												${escola.pessoaJuridica.pessoa.nome}
+											</td>
+										</g:if>
+									</g:each>
+	
+								</tr>
+							</g:if>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 
 
 
@@ -127,58 +127,59 @@
 			<!-- /.box-header -->
 
 
-
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!transferencias?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 5%;"></th>
-						<th style="width: 28%;">Aluno</th>
-						<th style="width: 6%;">Status</th>
-						<th style="width: 33%;">Escola Origem</th>
-						<th style="width: 33%;">Escola Destino</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${alunos?}' var="pessoa">
-						<g:if test='${pessoa.escIdDestino != sessaoEscId }'>
-							<tr class='linha_registro'>
-								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
-											<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
-												style="color: #fff" title="Cancelar Transferência"
-												id="${pessoa.id}">
-													<span class="glyphicon glyphicon-remove"></span>
-											</a></li>
-										</ul>
-									</div>
-								</td>
-								<td>
-									${pessoa.nome}
-								</td>
-								<td><span class="label label-warning">Pendente</span></td>
-								<g:each in='${escolas}' var="escola">
-									<g:if test='${pessoa.escid == escola.id}'>
-										<td>
-											${escola.pessoaJuridica.pessoa.nome}
-										</td>
-									</g:if>
-								</g:each>
-								<g:each in='${escolas}' var="escola">
-									<g:if test='${pessoa.escIdDestino == escola.id}'>
-										<td>
-											${escola.pessoaJuridica.pessoa.nome}
-										</td>
-									</g:if>
-								</g:each>
-
-							</tr>
-						</g:if>
-					</g:each>
-
-				</tbody>
-			</table>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!transferencias?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 5%;"></th>
+							<th style="width: 28%;">Aluno</th>
+							<th style="width: 6%;">Status</th>
+							<th style="width: 33%;">Escola Origem</th>
+							<th style="width: 33%;">Escola Destino</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${alunos?}' var="pessoa">
+							<g:if test='${pessoa.escIdDestino != sessaoEscId }'>
+								<tr class='linha_registro'>
+									<td>
+										<div style="margin-left: -35px" class="opcoes">
+											<ul style="display: inline">
+												<li class="btn btn-danger btn-xs btn-flat" onclick="cancelar(${pessoa.id})"><a
+													style="color: #fff" title="Cancelar Transferência"
+													id="${pessoa.id}">
+														<span class="glyphicon glyphicon-remove"></span>
+												</a></li>
+											</ul>
+										</div>
+									</td>
+									<td>
+										${pessoa.nome}
+									</td>
+									<td><span class="label label-warning">Pendente</span></td>
+									<g:each in='${escolas}' var="escola">
+										<g:if test='${pessoa.escid == escola.id}'>
+											<td>
+												${escola.pessoaJuridica.pessoa.nome}
+											</td>
+										</g:if>
+									</g:each>
+									<g:each in='${escolas}' var="escola">
+										<g:if test='${pessoa.escIdDestino == escola.id}'>
+											<td>
+												${escola.pessoaJuridica.pessoa.nome}
+											</td>
+										</g:if>
+									</g:each>
+	
+								</tr>
+							</g:if>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 </body>

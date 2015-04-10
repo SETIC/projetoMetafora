@@ -36,7 +36,9 @@ class AtividadeController {
 				def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 				def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 
+
 				def atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+
 
 
 				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade])
@@ -59,7 +61,6 @@ class AtividadeController {
 			def perm1 = usuario.getPermissoes(user, pass , "EDUCACAO_ACADEMICO", "ATIVIDADE", "1")
 			def perm2 = usuario.getPermissoes(user, pass,  "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
-
 			if (perm1 || perm2) {
 
 				def p = Professor.get(Long.parseLong(session['pesid'].toString()))
@@ -81,6 +82,7 @@ class AtividadeController {
 
 				else
 					render(view:"/atividade/listarAtividade.gsp", model:[atividade:atividade, erro:msg, turmaDisciplina:td, dataAtual:dataAtual])
+
 			}
 		}
 	}
@@ -97,7 +99,6 @@ class AtividadeController {
 
 
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
-
 
 			if (perm2) {
 
@@ -212,7 +213,6 @@ class AtividadeController {
 			def perm1 = usuario.getPermissoes(user, pass , "EDUCACAO_ACADEMICO", "ATIVIDADE", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
-
 			if (perm1 || perm2) {
 
 				Atividade atividade = Atividade.get(id)
@@ -259,11 +259,13 @@ class AtividadeController {
 
 			def usuario = new UsuarioController()
 
-
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
 
 			if (perm2) {
+
+
+
 
 				def p = Professor.get(Long.parseLong(session['pesid'].toString()))
 				def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
@@ -277,8 +279,7 @@ class AtividadeController {
 				def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 
 				Atividade atividade = Atividade.get(id)
-				
-				println "--"+atividade.bimestre+"--"
+
 
 				render (view:"/atividade/editarAtividade.gsp", model:[atividade:atividade,turmaDisciplina:td])
 			}

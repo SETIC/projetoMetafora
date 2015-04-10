@@ -208,7 +208,6 @@
 										<option value="CASADO(A)">CASADO(A)</option>
 										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
 									</select>
-
 								</g:else>
 
 							</div>

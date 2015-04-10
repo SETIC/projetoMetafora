@@ -14,19 +14,99 @@
 </script>
 </head>
 <body>
-
-	<script>
-function printDiv(id)
+<script>
+function printDive(id)
 {
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
+  newWin.document.write("<style=''>");
+  newWin.document.write("<img src='/projetoMetafora/static/images/brasao.jpg;' style='width:80px;float:left;margin-top:-9px;'>");
+  newWin.document.write("<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center;'>TERMO DE RESPONSABILIDADE</h4>");
+  newWin.document.write("<hr><br/><br/>");
+  newWin.document.write("<h3 style='text-align:center;margin-top:15%;'>TRANSFERÊNCIA DE ALUNO</h3><br/><br/>");
+  newWin.document.write("<p align='Justify' style='center;margin-top:15%;line-height:200%;'>");
+  newWin.document.write(" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos, para os fins que se fizerem necessários, que ");
+
+  newWin.document.write(" é aluno(a) vinculado à esta escola, no ");
+ 
+  newWin.document.write(".");
+  newWin.document.write("</p>");
+  newWin.document.write("<p style='text-align:center;margin-top:15%;'>__________________________________");
+  newWin.document.write("<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>");
+  newWin.document.write("</p>");
+  newWin.document.write("<style type='text/css' >");
+  newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
+  newWin.document.write("body{font-family:Arial;}");
+  newWin.document.write("img{margin-lefth: 10px;}");
+  newWin.document.write("label{text-transform: uppercase; font-weight:bold; }");
+  newWin.document.write("</style>");
   newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
-  newWin.print();
+
+  var now = new Date();
+
+  meses = new Array(12);
+
+  meses[0] = "Janeiro";
+  meses[1] = "Fevereiro";
+  meses[2] = "Março";
+  meses[3] = "Abril";
+  meses[4] = "Maio";
+  meses[5] = "Junho";
+  meses[6] = "Julho";
+  meses[7] = "Agosto";
+  meses[8] = "Setembro";
+  meses[9] = "Outubro";
+  meses[10] = "Novembro";
+  meses[11] = "Dezembro";
+  
+  newWin.document.write ("<p style='font-size:11px;margin-top:10%; margin-left:65%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</p>");
+
+newWin.print();
   newWin.close();
 }
+</script>
+
+	<script>
+	function printDiv(id)
+	{
+	  var divToPrint=document.getElementById(id);
+	  newWin= window.open("");
+	  newWin.document.write("<style=''>");
+	  newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
+	  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DA ESCOLA");
+	  newWin.document.write("<hr>");
+	  newWin.document.write("</br>");
+	  newWin.document.write("<style type='text/css' >");
+	  newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
+	  newWin.document.write("body{font-family:Arial;}");
+	  newWin.document.write("img{margin-lefth: 10px;}");
+	  newWin.document.write("label{text-transform: uppercase; font-weight:bold; }");
+	  newWin.document.write("</style>");
+	  newWin.document.write(" ");
+	  newWin.document.write(divToPrint.outerHTML);
+	  var now = new Date();
+
+	  meses = new Array(12);
+
+	  meses[0] = "Janeiro";
+	  meses[1] = "Fevereiro";
+	  meses[2] = "Março";
+	  meses[3] = "Abril";
+	  meses[4] = "Maio";
+	  meses[5] = "Junho";
+	  meses[6] = "Julho";
+	  meses[7] = "Agosto";
+	  meses[8] = "Setembro";
+	  meses[9] = "Outubro";
+	  meses[10] = "Novembro";
+	  meses[11] = "Dezembro";
+	  
+	  newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
+
+	newWin.print();
+	  newWin.close();
+	}
 </script>
 
 	<section class="content-header">

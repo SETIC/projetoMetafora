@@ -51,56 +51,59 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				
-				<thead>
-					<tr>
-						<th style="width: 10px;">Funcões</th>
-						<th style="width: 350px;">Turma</th>
-						<th style="width: 350px;">Série</th>
-						<th style="width: 350px;">Disciplina</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in="${turmaDisciplina}" var="td">
-					   <g:hiddenField name="turmaDisciplinaId" value="${td.id}" />
-							<tr class='linha_registro'>
-								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										
-										
-										<ul style="display: inline">
-												
-											<li title="Nova Atividade" class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/atividade/listar/${td.id}"><span
-													class="glyphicon glyphicon-plus"></span></a></li>
-												
-												<li title="Boletins" class="btn btn-warning btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/nota/boletim/${td.id}"><span
-													class="glyphicon glyphicon-th-list"></span></a></li>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					
+					<thead>
+						<tr>
+							<th style="width: 10px;">Funcões</th>
+							<th style="width: 350px;">Turma</th>
+							<th style="width: 350px;">Série</th>
+							<th style="width: 350px;">Disciplina</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in="${turmaDisciplina}" var="td">
+						   <g:hiddenField name="turmaDisciplinaId" value="${td.id}" />
+						   
+								<tr class='linha_registro'>
+									<td>
+										<div style="margin-left: -35px" class="opcoes">
+											
+											
+											<ul style="display: inline">
+													
+												<li title="Nova Atividade" class="btn btn-success btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/atividade/listar/${td.id}"><span
+														class="glyphicon glyphicon-plus"></span></a></li>
+													
+													<li title="Boletins" class="btn btn-warning btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/nota/boletim?turma=${td.turma.id}&turmadisciplina=${td.id}"><span
+														class="glyphicon glyphicon-th-list"></span></a></li>
+		
+											</ul>
+										</div>
+									</td>
+									
 	
-										</ul>
-									</div>
-								</td>
-								
-
-								<td>
-									${td.turma.turma} 
-								</td>
-								<td>
-									${td.turma.serie.serie} 
-								</td>
-								<td>
-									${td.disciplinaLecionadaPorProfessor.disciplina.disciplina }
-								</td>
-							</tr>
-						
-							</g:each>
-
-				</tbody>
-			</table>
+									<td>
+										${td.turma.turma} 
+									</td>
+									<td>
+										${td.turma.serie.serie} 
+									</td>
+									<td>
+										${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
+									</td>
+								</tr>
+							
+								</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 </body>

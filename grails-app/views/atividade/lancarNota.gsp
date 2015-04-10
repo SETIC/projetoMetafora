@@ -127,7 +127,7 @@
 													
 														<td>
 															<div class="col-xs-5">
-											                      	<input name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
+											                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
 											                    </div>
 															</td>
 															<td>
@@ -140,7 +140,7 @@
 											
 													<td>
 													<div class="col-xs-5">
-									                      	<input name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="0" step="0.1" class="form-control">
+									                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="0" step="0.1" class="form-control">
 									                    </div>
 													</td>
 													<td>

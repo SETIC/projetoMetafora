@@ -51,92 +51,95 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!alunos?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 80px;">Funções</th>
-						<th style="width: 350px;">Nome</th>
-						<th style="width: 80px;">CPF</th>
-						<th style="width: 80px;">Data de Nascimento</th>
-						<th style="width: 110px;">Sexo</th>
-						<th style="width: 80px;">Estado Civil</th>
-						<th style="width: 100px; text-align: center;">Situação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${alunos?}'>
-						<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
-						<g:set var="cidadao" value="${it.cidadao}" />
-						<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!alunos?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 100px;">Funções</th>
+							<th style="width: 350px;">Nome</th>
+							<th style="width: 80px;">CPF</th>
+							<th style="width: 80px;">Data de Nascimento</th>
+							<th style="width: 110px;">Sexo</th>
+							<th style="width: 80px;">Estado Civil</th>
+							<th style="width: 100px; text-align: center;">Situação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${alunos?}'>
+							<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
+							<g:set var="cidadao" value="${it.cidadao}" />
+							<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
+	
+							<g:if test="${escolaid == escid}">
+	
+								<tr class='linha_registro'>
+									<td>
+										<div style="margin-left: -35px" class="opcoes">
+											
+											
+											<ul style="display: inline">
+												
+										<g:if test="${perm2}">
+											
+											<li title="Editar Aluno" class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
 
-						<g:if test="${escolaid == escid}">
-
-							<tr class='linha_registro'>
-								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										
-										
-										<ul style="display: inline">
-											
-									<g:if test="${perm2}">
-										
-										<li title="Editar Aluno" class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											
-											
-											<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
-												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
-											
-									
-											
-											<li title="Transferir Aluno" data-toggle="tooltip"
-											data-placement="top" class="btn btn-warning btn-xs btn-flat"><a style="color: #fff"
-												href="/projetoMetafora/aluno/transferencia/${pessoa.id}"><span
-													class="glyphicon glyphicon-arrow-right"></span></a></li>
-									
-									</g:if>
+												
+												
+												<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
+													class="btn btn-danger btn-xs btn-flat"><span
+													class="glyphicon glyphicon-remove"></span></li>
+												
 										
 												
-											<li title="Ver detalhes de Aluno" class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/aluno/verInfoAluno/${pessoa.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-												
-										</ul>
-									</div>
-								</td>
-								<td>
-									${pessoa.nome}
-								</td>
-								<td>
-									${pessoa.cpfCnpj}
-								</td>
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${pessoa.dataDeNascimento}" /></td>
-								<td>
-									${pessoaFisica.sexo}
-								</td>
-								<td>
-									${cidadao.estadoCivil}
-								</td>
-								<td style="text-align: center;">
-									<g:if test="${pessoa.status == 'Ativo'}">
-										<span class="label label-success">Ativo</span>
-									</g:if>
-									<g:else>
-										<span class="label label-danger">Inativo</span>
-									</g:else>
-								</td>
-							</tr>
-						</g:if>
-					</g:each>
-
-				</tbody>
-			</table>
+												<li title="Transferir Aluno" data-toggle="tooltip"
+												data-placement="top" class="btn btn-warning btn-xs btn-flat"><a style="color: #fff"
+													href="/projetoMetafora/aluno/transferencia/${pessoa.id}"><span
+														class="glyphicon glyphicon-arrow-right"></span></a></li>
+										
+										</g:if>
+											
+													
+												<li title="Ver detalhes de Aluno" class="btn btn-success btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/aluno/verInfoAluno/${pessoa.id}"><span
+														class="glyphicon glyphicon-eye-open"></span></a></li>
+													
+											</ul>
+										</div>
+									</td>
+									<td>
+										${pessoa.nome}
+									</td>
+									<td>
+										${pessoa.cpfCnpj}
+									</td>
+									<td><g:formatDate format="dd/MM/yyyy"
+											date="${pessoa.dataDeNascimento}" /></td>
+									<td>
+										${pessoaFisica.sexo}
+									</td>
+									<td>
+										${cidadao.estadoCivil}
+									</td>
+									<td style="text-align: center;">
+										<g:if test="${pessoa.status == 'Ativo'}">
+											<span class="label label-success">Ativo</span>
+										</g:if>
+										<g:else>
+											<span class="label label-danger">Inativo</span>
+										</g:else>
+									</td>
+								</tr>
+							</g:if>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>	
 			
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">

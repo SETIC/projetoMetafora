@@ -16,17 +16,7 @@
 <body>
 
 	<script>
-function printDiv(id)
-{
-  var divToPrint=document.getElementById(id);
-  newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-  newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
-  newWin.print();
-  newWin.close();
-}
+
 </script>
 
 	<section class="content-header">
@@ -73,10 +63,7 @@ function printDiv(id)
 							<label for="inputData3" class="col-sm-2 control-label">Data
 								de Nascimento</label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" required="true" name="dataDeNascimento"
-									value="${pessoa.dataDeNascimento}" disabled="disabled" />
+								<g:formatDate format="dd/MM/yyyy" date="${pessoa.dataDeNascimento}" />
 							</div>
 						</div>
 						<br>
@@ -148,6 +135,7 @@ function printDiv(id)
 								class="col-sm-2 control-label">Número de Inscrição</label>
 							<div class="col-sm-10">
 								${it.numeroDeInscricao}
+								
 							</div>
 						</div>
 						<br>

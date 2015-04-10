@@ -16,7 +16,7 @@
 <body>
 
 	<script>
-function printDiv(id)
+/*function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
@@ -25,6 +25,44 @@ function printDiv(id)
   newWin.document.write(" ");
   newWin.document.write(divToPrint.outerHTML);
   newWin.print();
+  newWin.close();
+}*/
+function printDiv(id)
+{
+  var divToPrint=document.getElementById(id);
+  newWin= window.open("");
+  newWin.document.write("<style=''>");
+  newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DAS ATIVIDADES</h4>");
+  newWin.document.write("<hr>");
+  newWin.document.write("<style type='text/css' >");
+  newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
+  newWin.document.write("body{font-family:Arial;}");
+  newWin.document.write("img{margin-lefth: 10px;}");
+  newWin.document.write("label{text-transform: uppercase; font-weight:bold; }");
+  newWin.document.write("</style>");
+  newWin.document.write(" ");
+  newWin.document.write(divToPrint.outerHTML);
+  var now = new Date();
+
+  meses = new Array(12);
+
+  meses[0] = "Janeiro";
+  meses[1] = "Fevereiro";
+  meses[2] = "Março";
+  meses[3] = "Abril";
+  meses[4] = "Maio";
+  meses[5] = "Junho";
+  meses[6] = "Julho";
+  meses[7] = "Agosto";
+  meses[8] = "Setembro";
+  meses[9] = "Outubro";
+  meses[10] = "Novembro";
+  meses[11] = "Dezembro";
+  
+  newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
+
+newWin.print();
   newWin.close();
 }
 </script>
