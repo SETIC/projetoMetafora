@@ -434,9 +434,6 @@
 		</div>
 	</section>
 	<div id="reportPrint" style="visibility: hidden;"></div>
-	<object id="factory" style="display:none"
-  classid="clsid:1663ed61-23eb-11d2-b92f-008048fdd814"
-  codebase="http://[your path here]/smsx.cab#Version=7,5,0,20">
-</object>
+	
 </body>
 </html>

@@ -189,30 +189,11 @@ class AlunoController {
 
 			if (perm1 || perm2)
 			{
-				//def alunos = Aluno.executeQuery("select a from Matricula m, Pessoa p, Aluno a"
-				//			+ " where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' and p.id = " + id.toString().toLong() )
-
-				def alunos = Aluno.executeQuery("select a from Matricula m, Pessoa p, Aluno a, " +
-						" Turma t, Serie s " +
-						" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
-						" and t.id = m.turma.id and s.id = t.serie.id " + 
-						" and p.id = " + id.toString().toLong())
 				
-				def series = Serie.executeQuery("select s from Matricula m, Pessoa p, Aluno a, " +
-						" Turma t, Serie s " +
-						" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
-						" and t.id = m.turma.id and s.id = t.serie.id " + 
-						" and p.id = " + id.toString().toLong())
+				def alunos = Aluno.get(id)
 				
-				def turmas = Turma.executeQuery("select t from Matricula m, Pessoa p, Aluno a, " +
-					" Turma t, Serie s " +
-					" where m.aluno.id = p.id and a.id = p.id and m.status ='Ativo' " +
-					" and t.id = m.turma.id and s.id = t.serie.id " +
-					" and p.id = " + id.toString().toLong())
-
-
-				println("Alunos ----- " + alunos)
-				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos, series:series, turmas:turmas])
+				
+				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos])
 			}else{
 				render(view:"/error403.gsp")
 			}
