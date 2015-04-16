@@ -17,6 +17,8 @@ class AuthController {
 					" a.id = p.id and "+
 					" p.cpfCnpj = '"+ documento +"' and "+
 					" p.id = c.id and "+
+					
+					
 					" m.status = 'Ativo' and "+
 					" p.dataDeNascimento = '"+ data +"') "+
 

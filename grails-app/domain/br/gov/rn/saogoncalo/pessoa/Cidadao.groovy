@@ -5,6 +5,7 @@ package br.gov.rn.saogoncalo.pessoa
 class Cidadao {
 	PessoaFisica pessoaFisica
 	String nacionalidade
+	String rgNumero
 	String estadoCivil
 	String profissao
 	
@@ -12,6 +13,7 @@ class Cidadao {
 		nacionalidade blank:false, nullable:true
 		estadoCivil blank:false, nullable:false
 		profissao blank:false, nullable:true
+		rgNumero blank:true, nullable:true
 		
 	}
 	

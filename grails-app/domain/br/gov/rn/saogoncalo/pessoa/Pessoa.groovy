@@ -12,7 +12,6 @@ class Pessoa {
 	int escid
 	int escIdDestino = 0
 	
-	//static hasOne = [escola:Escola]
 	
 	static constraints = {
 		
