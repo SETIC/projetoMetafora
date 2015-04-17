@@ -1,5 +1,6 @@
 package br.gov.rn.saogoncalo.login
 
+import grails.converters.JSON
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
 
@@ -372,6 +373,37 @@ class UsuarioController {
 			return true
 		else
 			return false
+	}
+
+	
+	def getAllPermissoes(){
+		
+		def permissoes = []
+		def grupos = getGrupos(session["user"], session["pass"])
+
+		def permissaoU
+
+		for (grupoId in grupos) {
+			def grupo = Grupo.get(grupoId)
+			def perm = Permissao.findAllByGrupo(grupo)
+
+			for (permi in perm) {
+
+				def schema = permi.esquema
+				def tabela = permi.tabela
+				def per = permi.permissao
+
+				permissaoU = [schema, tabela, per]
+
+				def permissao = permissaoU
+				permissoes.add(permissao)
+				permissao = []
+			}
+
+		}
+
+		return permissoes
+		
 	}
 
 }

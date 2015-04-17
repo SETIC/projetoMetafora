@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -64,7 +65,6 @@
   </head>
   <body class="skin-blue">
     <div class="wrapper">
-      
       <header class="main-header">
         <!-- Logo -->
         <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link>
@@ -89,7 +89,6 @@
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
                       ${session["user"]} - ${session["escname"]}
-                      <small>Member since Nov. 2012</small>
                     </p>
                   </li>
                   <!-- Menu Body 
@@ -143,36 +142,14 @@
                 <i class="fa fa-dashboard"></i> <span>Painel</span>
               </g:link>
             </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i>
-                <span>Pessoal</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><g:link controller="Aluno" action="listar"><i class="fa fa-graduation-cap"></i> Alunos</g:link></li>
-				<li><g:link controller="Escola" action="listar"><i class="fa fa-university"></i> Escolas</g:link></li>
-				<li><g:link controller="Funcionario" action="listar"><i class="fa fa-male"></i> Funcionários</g:link></li>
-				<li><g:link controller="Professor" action="listar"><i class="fa fa-user"></i> Professores</g:link></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-book"></i>
-                <span>Acadêmico</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><g:link controller="Disciplina" action="listar"><i class="fa fa-file-text-o"></i> Disciplinas</g:link></li>
-				<li><g:link controller="Horario" action="listar"><i class="fa fa-clock-o"></i> Horários</g:link></li>
-				<li><g:link controller="Matricula" action="listar"><i class="fa fa-list-alt"></i> Matriculas</g:link></li>
-				<li><g:link controller="Sala" action="listar"><i class="fa fa-home"></i> Salas</g:link></li>
-				<li><g:link controller="Serie" action="listar"><i class="fa fa-signal"></i> Series</g:link></li>
-				<li><g:link controller="Turma" action="listar"><i class="fa fa-sitemap"></i> Turmas</g:link></li>
-				<li><g:link controller="Transferencia" action="listar"><i class="glyphicon glyphicon-transfer"></i> Transferência</g:link></li>
-              </ul>
-            </li>
-            <li class="treeview">
+           
+            
+            <g:include controller="buildLeftMenu" action="montarMenu" />
+            
+   
+
+			
+           <!--  <li class="treeview">
               <a href="#">
                 <i class="fa fa-cubes"></i> <span>Programas</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -183,7 +160,9 @@
 				<li><g:link controller="Layout" action="index"><i class="fa fa-list-alt"></i> Mais Educação</g:link></li>
 				<li><g:link controller="Layout" action="index"><i class="fa fa-home"></i> Bolsa Família</g:link></li>
               </ul>
-            </li>
+            </li> 
+            
+            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-globe"></i> <span>Georeferenciamento</span>
@@ -196,18 +175,12 @@
 				<li><g:link controller="Layout" action="index"><i class="fa fa-area-chart"></i> Professores</g:link></li>
               </ul>
             </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user"></i> <span>Professor</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><g:link controller="Atividade" action="listar"><i class="fa fa-file-text-o"></i> Atividades</g:link></li>
-				<li><g:link controller="Nota" action="notasTurma"><i class="fa fa-sitemap"></i> Turmas</g:link></li>
-				<li><g:link controller="#" action="#"><i class="fa fa-list-alt"></i> Notas</g:link></li>
-				<li><g:link controller="#" action="#"><i class="fa fa-check-square-o"></i> Presenças</g:link></li>
-              </ul>
-            </li>
+            
+             -->
+            
+          
+            
+            
           </ul>
         </section>
         <!-- /.sidebar -->

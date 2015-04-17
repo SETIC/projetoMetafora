@@ -48,7 +48,7 @@ function codeAddress() {
 	try{
 		$.ajax({
 	        type: "GET",
-	        url: "http://192.168.1.247:8080/projetoMetafora/localizacao/getEndereco",
+	        url: "http://localhost:8080/projetoMetafora/localizacao/getEndereco",
 	        dataType: "json",
 	        success: function(result){
 	           

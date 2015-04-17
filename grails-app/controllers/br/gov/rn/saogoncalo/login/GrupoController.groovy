@@ -133,7 +133,7 @@ class GrupoController {
 				props.setProperty("password", "bgt54rfvcde3")
 
 
-				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 
 
@@ -210,7 +210,7 @@ class GrupoController {
 				props.setProperty("password", "bgt54rfvcde3")
 
 
-				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 
 
@@ -294,9 +294,6 @@ class GrupoController {
 					def grupos = Grupo.findAll()
 					render(view:"/grupo/listarGrupo.gsp", model:[grupos:grupos, erro : "Erro ao Atualizar!", perm2:perm2])
 				}
-
-
-
 
 				for (int i=0; i<tr.size();i++){
 
