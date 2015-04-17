@@ -81,18 +81,18 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <g:img dir="img" file="photo-profile-default-gray.png" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">${session["user"]}</span>
+                  <span class="hidden-xs">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
-                      ${session["user"]} - ${session["escname"]}
-                      <small>Member since Nov. 2012</small>
+                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}
+                      <small>${session["escname"]}</small>
                     </p>
                   </li>
-                  <!-- Menu Body 
+                  <!--Menu Body 
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
                       <a href="#">Followers</a>
@@ -129,9 +129,8 @@
               <g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-              <p>${session["user"]}</p>
+              <p style="margin-top: 10.5px;">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</p>
               
-
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>
