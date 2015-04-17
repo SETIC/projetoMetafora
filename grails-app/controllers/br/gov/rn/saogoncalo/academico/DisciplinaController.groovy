@@ -94,7 +94,7 @@ class DisciplinaController {
 				Disciplina disciplinas = Disciplina.get(id)
 				render (view:"/disciplina/editarDisciplina.gsp", model:[disciplinas:disciplinas])
 			}else{
-				render("nao tem permissão")
+				render(view:"/error403.gsp")
 			}
 		}
 	}

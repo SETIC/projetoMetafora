@@ -203,8 +203,8 @@
               <ul class="treeview-menu">
                 <li><g:link controller="Atividade" action="listar"><i class="fa fa-file-text-o"></i> Atividades</g:link></li>
 				<li><g:link controller="Nota" action="notasTurma"><i class="fa fa-sitemap"></i> Turmas</g:link></li>
-				<li><g:link controller="#" action="#"><i class="fa fa-list-alt"></i> Notas</g:link></li>
-				<li><g:link controller="#" action="#"><i class="fa fa-check-square-o"></i> Presenças</g:link></li>
+				<!-- <li><g:link controller="#" action="#"><i class="fa fa-list-alt"></i> Notas</g:link></li>
+				     <li><g:link controller="#" action="#"><i class="fa fa-check-square-o"></i> Presenças</g:link></li> -->
               </ul>
             </li>
           </ul>
