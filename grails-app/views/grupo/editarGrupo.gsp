@@ -58,54 +58,63 @@
 						</div>
 					</div>
 					<br>
-					<section class="sidebar">	
-						<label>Permissões</label>						
-							<ul class="sidebar-menu">
-								<g:each in='${schemas?}' var="schema">
-								<li class="treeview">
-									<a href="#">
-										<i class="fa fa-users"></i><span>${schema.schemaname}</span> 
-										<i class="fa fa-angle-left pull-right"></i>
-									</a>
-									<ul class="treeview-menu">
-										<g:each in='${tabelas?}' var="table">	
-										<g:if test="${table.schemaname == schema.schemaname}">
-										<li class="editar-li">
-											<i class="fa fa-graduation-cap"></i> ${table.tabela}
-											<div style="margin-top: -3.5%; margin-left: 60%; padding: 2%;" class="radio">
-											  	<label class="radio-inline">
-											  	<g:if test="${table.permissao == '1' }">	
-											  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}" checked> L
-												</g:if>
-												<g:else>
-													<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}"> L
-												</g:else>
-												</label>
-												<label class="radio-inline">
-												<g:if test="${table.permissao == '2' }">
-											  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}" checked> E
-												</g:if>
-												<g:else>
-													<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}"> E
-												</g:else>
-												</label>
-												<label class="radio-inline">
-												<g:if test="${table.permissao == '0' }">
-											  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}" checked> N
-												</g:if>
-												<g:else>
-													<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}"> N
-												</g:else>
-												</label>
-											</div>
-										</li>
-										</g:if>
-										</g:each>			
-									</ul>
-								</li>
-								</g:each>
-							</ul>				
-					</section>	
+					<div class="box box-solid" style="width: 80%;">
+					    <div class="box-header with-border">
+					      <h3 class="box-title">Permissões</h3>
+					    </div>
+					    <div class="box-body">
+					      <div class="box-group" id="accordion">
+					        <g:each in='${schemas?}' var="schema">
+					            <div class="panel box box-primary">
+						          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne${schema.schemaname}" aria-expanded="false" class="collapsed">	
+						          	<div class="box-header with-border">
+						                <h4 class="box-title">
+						                    ${schema.schemaname.replaceAll("_"," ")}
+						                </h4>
+						            </div>
+					              </a>
+					              <div id="collapseOne${schema.schemaname}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+					                <div class="box-body">
+					                    <g:each in='${tabelas?}' var="table"> 
+								          <g:if test="${table.schemaname == schema.schemaname}">
+									          <li class="editar-li">
+									            ${table.tabela}
+									            <div style="margin-top: -3.5%; margin-left: 60%; padding: 2%;" class="radio">
+									                <label class="radio-inline">
+									                <g:if test="${table.permissao == '1' }">  
+									                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}" checked> L
+									              </g:if>
+									              <g:else>
+									                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}"> L
+									              </g:else>
+									              </label>
+									              <label class="radio-inline">
+									              <g:if test="${table.permissao == '2' }">
+									                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}" checked> E
+									              </g:if>
+									              <g:else>
+									                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}"> E
+									              </g:else>
+									              </label>
+									              <label class="radio-inline">
+									              <g:if test="${table.permissao == '0' }">
+									                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}" checked> N
+									              </g:if>
+									              <g:else>
+									                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}"> N
+									              </g:else>
+									              </label>
+									            </div>
+									          </li>
+								          </g:if>
+								    	</g:each>  
+					                </div>
+					              </div>
+					            </div>
+					        </g:each>        
+					      </div>
+					    </div>
+					</div>	
 					<br>
 					</fieldset>
 					<div style="margin: 0 15% auto">

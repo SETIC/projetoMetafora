@@ -28,7 +28,7 @@ class ProfessorController {
 				def professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
 				render (view:"/professor/listarProfessor.gsp", model:[professores:professores, perm2:perm2])
 			}else{
-				render "não tem permissão"
+				render(view:"/error403.gsp")
 			}
 		}
 	}

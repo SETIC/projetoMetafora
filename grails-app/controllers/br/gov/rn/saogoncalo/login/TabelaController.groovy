@@ -17,7 +17,6 @@ class TabelaController {
 
 				def conexao = Sql.newInstance("jdbc:postgresql://localhost:5667/db_sgg_testes","admin_db_sr","bgt54rfvcde3","org.postgresql.Driver")
 
-				def listaTabelas = conexao.eachRow("SELECT schemaname, tablename tabela FROM pg_tables")
 			}else{
 				render(view:"/error403.gsp")
 			}
