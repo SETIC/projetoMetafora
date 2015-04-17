@@ -230,6 +230,7 @@ class MatriculaController {
 
 
 				Matricula matriculaM = new Matricula(params)
+				matriculaM.status = 'Ativo'
 
 				def turma = Turma.findById(params.turma)
 				def matriculados = Matricula.findAllByTurma(turma)

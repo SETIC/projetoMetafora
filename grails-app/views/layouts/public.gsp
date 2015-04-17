@@ -54,6 +54,12 @@
     		color: #000 !important;
     		text-shadow: .5px .5px 1px #808080;
     	}
+    	.no-active{
+    		pointer-events: none;
+    		cursor: default;
+    		color: #767676 !important;
+    		background-color: #E5E5E5;
+    	}
     </style>
   </head>
   <body class="skin-blue">
@@ -74,19 +80,19 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <g:img dir="img" file="user2-160x160.jpg" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <g:img dir="img" file="photo-profile-default-gray.png" class="user-image" alt="User Image"/>
+                  <span class="hidden-xs">${session["user"]}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                  	<g:img dir="img" file="user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                  	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
-                      Alexander Pierce - Web Developer
+                      ${session["user"]} - ${session["escname"]}
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
-                  <!-- Menu Body -->
+                  <!-- Menu Body 
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
                       <a href="#">Followers</a>
@@ -97,11 +103,11 @@
                     <div class="col-xs-4 text-center">
                       <a href="#">Friends</a>
                     </div>
-                  </li>
+                  </li> -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Meus Dados</a>
+                      <a href="#" class="btn btn-default btn-flat no-active">Meus Dados</a>
                     </div>
                     <div class="pull-right">
                       <g:link controller="Usuario" action="deslogar" class="btn btn-default btn-flat">Sair</g:link>
@@ -120,10 +126,11 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <g:img dir="img" file="user2-160x160.jpg" class="img-circle" alt="User Image"/>
+              <g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>${session["user"]}</p>
+              
 
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>

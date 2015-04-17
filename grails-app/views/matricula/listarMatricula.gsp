@@ -88,7 +88,7 @@
           	  
           	divToPrint.innerHTML  += "<p style='font-size:12px;margin-top:10%; margin-left:55%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
 
-          	newWin = window.open();
+          	var newWin = window.open();
           	newWin.document.write(divToPrint.outerHTML);
           	divToPrint.innerHTML = "";
           	divToPrint.style.visibility = "hidden";
@@ -299,6 +299,7 @@
 
 
 								<div class="form-heading">
+									<input type="hidden" id="idMatriculaParaRelatorio"/>
 									<label>Tipo de Relatório</label>
 									<div class="controls">
 										<select
@@ -433,9 +434,6 @@
 		</div>
 	</section>
 	<div id="reportPrint" style="visibility: hidden;"></div>
-	<object id="factory" style="display:none"
-  classid="clsid:1663ed61-23eb-11d2-b92f-008048fdd814"
-  codebase="http://[your path here]/smsx.cab#Version=7,5,0,20">
-</object>
+	
 </body>
 </html>
