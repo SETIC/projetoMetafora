@@ -16,7 +16,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-	var endereco ="localhost";
+	var endereco ="192.168.1.247";
 		function deletar(id) {
 			var resposta = confirm("Deseja exluir este Horário?");
 

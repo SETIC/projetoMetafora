@@ -5,14 +5,14 @@ dataSource {
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
 
     //username = "admin_db_sgg"
-    //password = "vfr43edcxsw2"
+   // password = "vfr43edcxsw2"
 	
 	//usando esse
-	//username = "admin_db_sr"
-	//password = "bgt54rfvcde3"
+	username = "admin_db_sr"
+	password = "bgt54rfvcde3"
 	
-	username = "postgres"
-	password = "123"
+	//username = "postgres"
+	//password = "123"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -41,9 +41,9 @@ environments {
 			
 			dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
 			
-			url = "jdbc:postgresql://192.168.1.247:5432/db_sgg_testes"
 			//url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
-			//url = "jdbc:postgresql://localhost:5432/db_sgg_testes"
+			//url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
+			  url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
         }
     }
     test {
@@ -60,7 +60,7 @@ environments {
 			//password = "bgt54rfvcde3"			
             dbCreate = "update"
             //url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
-			  url = "jdbc:postgresql://localhost:5432/db_sgg_testes"
+			  url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
 			
 			}
 			 }
