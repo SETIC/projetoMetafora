@@ -111,10 +111,22 @@ class SalaController {
 
 			if (perm1 || perm2) {
 
-				def sala = Sala.executeQuery(" select s from Sala as s " +
-						"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
+				def escolas
+				def sala
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				if (session["escid"] == 0) {
+
+					sala = Sala.executeQuery(" select s from Sala as s ")
+
+					escolas = Escola.findAll()
+				}else{
+
+					sala = Sala.executeQuery(" select s from Sala as s " +
+							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
+
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				}
+
 
 				render(view:"/sala/listarSala.gsp", model:[sala:sala, escolas:escolas, perm2:perm2])
 			}else{
@@ -138,10 +150,21 @@ class SalaController {
 
 			if (perm1 || perm2) {
 
-				def sala = Sala.executeQuery(" select s from Sala as s " +
-						"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
+				def escolas
+				def sala
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				if (session["escid"] == 0) {
+
+					sala = Sala.executeQuery(" select s from Sala as s ")
+
+					escolas = Escola.findAll()
+				}else{
+
+					sala = Sala.executeQuery(" select s from Sala as s " +
+							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
+
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				}
 
 				//render(view:"/sala/listarSala.gsp", model:[sala:sala, escolas:escolas])
 				if (tipo == "ok"){

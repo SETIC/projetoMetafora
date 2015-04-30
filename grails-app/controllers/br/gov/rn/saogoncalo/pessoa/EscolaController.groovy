@@ -40,7 +40,7 @@ class EscolaController {
 			def usuario = new UsuarioController()
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ESCOLA", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ESCOLA", "2")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ESCOLA", "2") 
 
 
 			if (perm1 || perm2) {

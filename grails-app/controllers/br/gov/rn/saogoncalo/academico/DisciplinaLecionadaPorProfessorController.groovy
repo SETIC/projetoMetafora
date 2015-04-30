@@ -27,7 +27,7 @@ class DisciplinaLecionadaPorProfessorController {
 	//			}else{
 	//				render(view:"/error403.gsp")
 	//			}
-	//		}
+	//		} 
 	//	}
 
 	def getProfessorDisciplinaByTurma(long idTurma) {

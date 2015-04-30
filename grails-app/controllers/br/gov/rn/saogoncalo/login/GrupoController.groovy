@@ -22,7 +22,7 @@ class GrupoController {
 
 			def usuario = new UsuarioController()
 
-			def perm2 = usuario.getPermissoes(user, pass, "LOGIN", "GRUPO", "2")
+			def perm2 = usuario.getPermissoes(user, pass, "LOGIN", "GRUPO", "2") 
 
 			if (perm2) {
 				Grupo.deleteAll(Grupo.get(id))
@@ -50,8 +50,6 @@ class GrupoController {
 				def esquem
 				def table
 				def permission
-
-
 
 				Grupo grupo = new Grupo(params)
 
@@ -361,4 +359,4 @@ class GrupoController {
 		}
 	}
 
-}
+} 

@@ -31,19 +31,45 @@ class MatriculaController {
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
-				def matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
-						"  where t.id = m.turma.id " +
-						"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				def matricula
+				def alunos
+				def escolas
+			
+				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
+
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+							"  where t.id = m.turma.id " +
+							"  and t.anoLetivo = ?",[ano])
+
+					escolas = Escola.findAll()
 
 
-				def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [ano])
+				
+					
+					
+					}else{
+
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+							"  where t.id = m.turma.id " +
+							"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+
+
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+				}
 
 
 				def series = Serie.findAll()
@@ -51,7 +77,6 @@ class MatriculaController {
 				println("Escolas - " + escolas)
 
 				render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, series:series, perm2:perm2])
-
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -77,20 +102,41 @@ class MatriculaController {
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
-				def matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
-						"  where t.id = m.turma.id " +
-						"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+				def matricula
+				def alunos
+				def escolas
+				
+				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+							"  where t.id = m.turma.id " +
+							"  and t.anoLetivo = ?",[ano])
+
+					escolas = Escola.findAll()
 
 
-				def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ? " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [ano])
+				}else{
 
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+							"  where t.id = m.turma.id " +
+							"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+
+
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+				}
 
 				def series = Serie.findAll()
 
@@ -260,18 +306,18 @@ class MatriculaController {
 			}
 		}
 	}
-	
-def  getMatriculaByIdParaRelatorio(long id){
-	
-	def matricula = Matricula.get(id)
-	
-	def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "serie":matricula.turma.serie.serie,
-		"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo]
-	
-	render( result as JSON)
-	
-	}	
-	
+
+	def  getMatriculaByIdParaRelatorio(long id){
+
+		def matricula = Matricula.get(id)
+
+		def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "serie":matricula.turma.serie.serie,
+			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo]
+
+		render( result as JSON)
+
+	}
+
 }
 
 

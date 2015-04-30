@@ -26,7 +26,6 @@ class TransferenciaController {
 			if (perm1 || perm2) {
 				def sessaoEscId = session["escid"]
 
-				println "id da escola logada:" + sessaoEscId
 				//def idAlunos = Aluno.findAll()
 
 				def alunos = Pessoa.findAll("from Pessoa as p where status='Em Transferência' and" +

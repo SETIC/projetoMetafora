@@ -124,9 +124,17 @@ class FuncionarioController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
-
+			def funcionarios
+			
 			if (perm1 || perm2) {
-				def funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				
+				if (session["escid"] == 0)
+				{
+					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
+				}else{
+					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				}
+				
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -148,8 +156,14 @@ class FuncionarioController {
 
 
 			if (perm1 || perm2) {
-				def funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
-				//render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios])
+								
+				if (session["escid"] == "0")
+				{
+					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
+				}else{
+					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				}
+
 				if (tipo == "ok")
 
 					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2])
