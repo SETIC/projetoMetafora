@@ -3,6 +3,7 @@ package br.gov.rn.saogoncalo.login
 class Grupo {
 	String descricao
 	String nome
+	Boolean master
 	
 	static hasMany = [grupoUsuario:GrupoUsuario]
 	
@@ -11,6 +12,7 @@ class Grupo {
 
 		descricao blank:false, nullable:false
 		nome blank:false, nullable:false
+		master blank:true, nullable:true
 	}
 
 	static mapping = {

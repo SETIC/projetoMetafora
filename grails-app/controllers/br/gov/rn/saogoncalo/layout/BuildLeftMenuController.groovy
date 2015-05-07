@@ -94,7 +94,7 @@ class BuildLeftMenuController {
 			menu +='  <li><a href="/projetoMetafora/Turma/listar"><i class="fa fa-sitemap"></i> Turmas</a></li> '
 			verificador = true
 		}
-		if (verificaPerm('EDUCACAO_ACADEMICO', 'TRANSFERENCIA', perm)){
+		if (verificaPerm('CADASTRO_UNICO_PESSOAL', 'ALUNO', perm)){
 			menu +=' <li><a href="/projetoMetafora/Transferencia/listar" ><i class="glyphicon glyphicon-transfer"></i> Transferência</a></li> '
 			verificador = true
 		}

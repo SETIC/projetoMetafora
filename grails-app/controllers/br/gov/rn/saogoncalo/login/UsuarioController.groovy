@@ -37,6 +37,7 @@ class UsuarioController {
 
 		def usuarioA = Usuario.findByUsernameAndSenha(user, pass)
 
+
 		if(usuarioA == null){
 			return false
 		}else{
@@ -49,11 +50,22 @@ class UsuarioController {
 			session["pesid"] = usuarioA.pessoa.id
 			session["pesnome"] = usuarioA.pessoa.nome
 			session["escid"] = usuarioA.pessoa.escid
-			session["escname"] = escolaA.pessoaJuridica.pessoa.nome
+			session["master"] = usuarioA.grupoUsuario.grupo.master //rever pra a situação de ter mais de um grupo
+			
+			
+			
+			if (usuarioA.pessoa.escid == 0)
+			 {
+				//aqui 
+				session["escname"] = "Administração"
+			 }else{
+			 	session["escname"] = escolaA.pessoaJuridica.pessoa.nome
+			 }
+			
 
 
-			println("Escola - " + escolaA.pessoaJuridica.pessoa.nome)
-			println("Nome Pessoa - " + usuarioA.pessoa.nome)
+			//println("Escola - " + escolaA.pessoaJuridica.pessoa.nome)
+			//println("Nome Pessoa - " + usuarioA.pessoa.nome)
 
 			usuario = user
 			senha = pass

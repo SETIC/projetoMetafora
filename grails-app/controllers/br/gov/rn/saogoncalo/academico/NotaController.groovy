@@ -17,19 +17,51 @@ class NotaController {
 		def notas = Nota.findAll()
 		render (view:"/nota/listarNota.gsp", model:[notas:notas])
 	}
+
 	def notasTurma(){
 
-		def p = Professor.get(Long.parseLong(session['pesid'].toString()))
-		def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
-		def escola = Escola.get(session['escid'])
 
-		def date = new Date()
-		def formatAno = new SimpleDateFormat("yyyy")
-		def anoAtual = formatAno.format(date)
+		def p
+		def dlpp
+		def escola
+		def date
+		def formatAno
+		def anoAtual
+		def turmas
+		def td
 
-		def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-		def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 
+		if ((session["escid"] == 0) ) {
+
+			p = Professor.executeQuery(" select pr from Atividade a, TurmaDisciplina td, " +
+					" DisciplinaLecionadaPorProfessor dlpp, " +
+					" Professor pr " +
+					" where td.id = a.turmaDisciplina.id " +
+					" and dlpp.id = td.disciplinaLecionadaPorProfessor.id " +
+					" and pr.id = dlpp.professor.id " )
+
+			dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessorInList(p)
+			escola = Escola.findAll()
+
+			date = new Date()
+			formatAno = new SimpleDateFormat("yyyy")
+			anoAtual = formatAno.format(date)
+
+			turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
+			td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+		}else{
+
+			p = Professor.get(Long.parseLong(session['pesid'].toString()))
+			dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
+			escola = Escola.get(session['escid'])
+
+			date = new Date()
+			formatAno = new SimpleDateFormat("yyyy")
+			anoAtual = formatAno.format(date)
+
+			turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+			td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+		}
 
 		//render (view:"/nota/notasTurma.gsp", model:[turmaDisciplina:td)
 		render (view:"/nota/notasTurma.gsp", model:[turmaDisciplina:td])
@@ -38,22 +70,51 @@ class NotaController {
 
 	def boletim(int id){
 
+		def p
+		def dlpp
+		def escola
+		def date
+		def formatAno
+		def anoAtual
+		def turmas
+		def td
+		
+		if ((session["escid"] == 0) ) {
 
-		def p = Professor.get(Long.parseLong(session['pesid'].toString()))
-		def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
+			p = Professor.executeQuery(" select pr from Atividade a, TurmaDisciplina td, " +
+					" DisciplinaLecionadaPorProfessor dlpp, " +
+					" Professor pr " +
+					" where td.id = a.turmaDisciplina.id " +
+					" and dlpp.id = td.disciplinaLecionadaPorProfessor.id " +
+					" and pr.id = dlpp.professor.id " )
 
-		def escola = Escola.get(session['escid'])
+			dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessorInList(p)
+			escola = Escola.findAll()
 
-		def date = new Date()
-		def formatAno = new SimpleDateFormat("yyyy")
-		def anoAtual = formatAno.format(date)
+			date = new Date()
+			formatAno = new SimpleDateFormat("yyyy")
+			anoAtual = formatAno.format(date)
 
-		def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+			turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
+			td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
+			
+		}else{
 
-		//def td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(id, dlpp, turmas)
-		def td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
+			p = Professor.get(Long.parseLong(session['pesid'].toString()))
+			dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
 
-		//def t = td[0].turma
+			escola = Escola.get(session['escid'])
+
+			date = new Date()
+			formatAno = new SimpleDateFormat("yyyy")
+			anoAtual = formatAno.format(date)
+
+			turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+			td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
+
+
+		}
+
 
 
 		def notas
@@ -93,19 +154,19 @@ class NotaController {
 				"		      and aa.bimestre = '1º BIMESTRE' "+
 				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
 				"		      and nn.matricula_id = m.id ) as nota1, "+
-				
+
 				"		  ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
 				"		    where nn.atividade_id = aa.id  "+
 				"		      and aa.bimestre = '2º BIMESTRE'  "+
 				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
 				"		      and nn.matricula_id = m.id ) as nota2, "+
-				
+
 				"		 ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
 				"		    where nn.atividade_id = aa.id "+
 				"		      and aa.bimestre = '3º BIMESTRE' "+
 				"		      and aa.turma_disciplina_id = " + params.turmadisciplina +
 				"		      and nn.matricula_id = m.id ) as nota3, "+
-				
+
 				"		 ( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
 				"		    where nn.atividade_id = aa.id "+
 				"		      and aa.bimestre = '4º BIMESTRE' "+
@@ -132,7 +193,5 @@ class NotaController {
 
 				" where m.turma_id = " + params.turma +
 				" group by m.id, p.nome "
-
-
 	}
 }

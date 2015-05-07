@@ -23,24 +23,55 @@ class AtividadeController {
 
 
 			if (perm1 || perm2) {
+				
+				def p
+				def dlpp
+				def escola
+				def date
+				def formatData
+				def formatAno
+				def dataAtual
+				def anoAtual
+				def turmas
+				def td
+				def atividade
+
+				if (session["escid"] == 0 ) {
+
+					//existe uma escola valida escid
+					p = Professor.findAll()
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessorInList(p)
+					escola = Escola.findAll()
+					date = new Date()
+					formatData = new SimpleDateFormat("yyyy-MM-dd")
+					formatAno = new SimpleDateFormat("yyyy")
+					dataAtual = formatData.format(date)
+					anoAtual = formatAno.format(date);
+					turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
+					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+
+					println(" teste --- Aqui")
 
 
-				def p = Professor.get(Long.parseLong(session['pesid'].toString()))
-				def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
-				def escola = Escola.get(session['escid'])
-				def date = new Date()
-				def formatData = new SimpleDateFormat("yyyy-MM-dd")
-				def formatAno = new SimpleDateFormat("yyyy")
-				def dataAtual = formatData.format(date)
-				def anoAtual = formatAno.format(date);
-				def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-				def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+				}else{
 
 
-				def atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+					p = Professor.get(Long.parseLong(session['pesid'].toString()))
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
+					escola = Escola.get(session['escid'])
+					date = new Date()
+					formatData = new SimpleDateFormat("yyyy-MM-dd")
+					formatAno = new SimpleDateFormat("yyyy")
+					dataAtual = formatData.format(date)
+					anoAtual = formatAno.format(date);
+					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+				}
 
+				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade, escola:escola, professor:p])
 
-				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade])
 			}
 		}
 	}
@@ -62,26 +93,60 @@ class AtividadeController {
 
 			if (perm1 || perm2) {
 
-				def p = Professor.get(Long.parseLong(session['pesid'].toString()))
-				def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
-				def escola = Escola.get(session['escid'])
-				def date = new Date()
-				def formatData = new SimpleDateFormat("yyyy-MM-dd")
-				def formatAno = new SimpleDateFormat("yyyy")
-				def dataAtual = formatData.format(date)
-				def anoAtual = formatAno.format(date);
-				def turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-				def td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 
-				def atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+
+				def p
+				def dlpp
+				def escola
+				def date
+				def formatData
+				def formatAno
+				def dataAtual
+				def anoAtual
+				def turmas
+				def td
+				def atividade
+
+
+				if (session["escid"] == 0 ) {
+
+					//existe uma escola valida escid
+					p = Professor.findAll()
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessorInList(p)
+					escola = Escola.findAll()
+					date = new Date()
+					formatData = new SimpleDateFormat("yyyy-MM-dd")
+					formatAno = new SimpleDateFormat("yyyy")
+					dataAtual = formatData.format(date)
+					anoAtual = formatAno.format(date);
+					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+
+					println(" teste --- Aqui")
+
+
+				}else{
+
+					p = Professor.get(Long.parseLong(session['pesid'].toString()))
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
+					escola = Escola.get(session['escid'])
+					date = new Date()
+					formatData = new SimpleDateFormat("yyyy-MM-dd")
+					formatAno = new SimpleDateFormat("yyyy")
+					dataAtual = formatData.format(date)
+					anoAtual = formatAno.format(date);
+					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+				}
 
 				if (tipo == "ok")
 
-					render(view:"/atividade/listarAtividade.gsp", model:[atividade:atividade, ok:msg, turmaDisciplina:td, dataAtual:dataAtual])
+					render(view:"/atividade/listarAtividade.gsp", model:[atividade:atividade, ok:msg, turmaDisciplina:td, dataAtual:dataAtual, escola:escola, professor:p])
 
 				else
-					render(view:"/atividade/listarAtividade.gsp", model:[atividade:atividade, erro:msg, turmaDisciplina:td, dataAtual:dataAtual])
-
+					render(view:"/atividade/listarAtividade.gsp", model:[atividade:atividade, erro:msg, turmaDisciplina:td, dataAtual:dataAtual, escola:escola, professor:p])
 			}
 		}
 	}
@@ -119,83 +184,79 @@ class AtividadeController {
 
 
 	def lancarNota(long id) {
-		
+
 		def atividade = Atividade.get(id)
 
-		
+
 		if (atividade.turmaDisciplina.disciplinaLecionadaPorProfessor.professor.id == Long.parseLong(session['pesid'].toString())){
-			
+
 			def alunos = atividade.turmaDisciplina.turma.matricula
-			
+
 			println "MATRICULASSS ----  " + alunos
 			def notas = Nota.findAllByAtividade(atividade)
-			
+
 			println("NOTAS EXISTENTES --- " + notas)
-			
+
 
 			render (view:"/atividade/lancarNota.gsp", model:[alunos:alunos, atividade:atividade, notas:notas])
-			
-		}else
-		{
-			
+		}else {
 		}
-
 	}
-	
+
 	def salvarNota(){
-		
+
 		println "PARAMS SIZE() "+params.size()
-		
+
 		for(int i = 1; i < params.size() -3; i++){
-			
+
 			def idMatricula = Long.parseLong(params.keySet()[i].toString().replaceAll("mat-", ""))
 			def matricula = Matricula.get(idMatricula)
-			
+
 			def idAtividade = Long.parseLong(params.atividadeId)
 			def atividade = Atividade.get(idAtividade)
-				
+
 			def attNota = Nota.findByAtividadeAndMatricula(atividade, matricula)
-			
+
 			def nota = Float.parseFloat(params.get(params.keySet()[i])[0])
 			def descricao = params.get(params.keySet()[i])[1]
-	
+
 			//println "tamanho de att nota ---- " (attNota.size().toString())
-			
+
 			Nota finNota = null
-			
+
 			if (attNota == null){
-				
+
 				def newNota = new Nota()
 				newNota.pontuacao = nota
 				newNota.observacao = descricao
 				newNota.matricula = matricula
 				newNota.atividade = atividade
-				
+
 				finNota = newNota
-				
+
 			}else{
-			
+
 				attNota.pontuacao = nota
 				attNota.observacao = descricao
-				
+
 				finNota = attNota
 			}
-			
-			
+
+
 			if (finNota.save(flush:true)){
-				
+
 				listarMensagem ("Notas da atividade atualizada com sucesso!" , "ok")
 			}else{
-			
-			listarMensagem ("Erro ao atualizar nota!" , "erro")	}
-			
-			
+
+				listarMensagem ("Erro ao atualizar nota!" , "erro")	}
+
+
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 
 
 

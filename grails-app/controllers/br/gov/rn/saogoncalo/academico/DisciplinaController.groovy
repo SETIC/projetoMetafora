@@ -42,7 +42,7 @@ class DisciplinaController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "DISCIPLINA", "2")
 
 			if (perm1 || perm2) {
-				def disciplinas = Disciplina.findAll()
+				def disciplinas = Disciplina.findAll() 
 				//render (view:"/disciplina/listarDisciplina.gsp", model:[disciplinas:disciplinas])
 				if (tipo == "ok")
 
