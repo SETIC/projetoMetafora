@@ -40,7 +40,6 @@ class AtividadeController {
 				def atividade = Atividade.findAllByTurmaDisciplinaInList(td)
 
 
-
 				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade])
 			}
 		}

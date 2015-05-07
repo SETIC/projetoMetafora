@@ -17,11 +17,15 @@ class LayoutController {
 			
 //			if (usuario.getPermissoes(user, pass , "educacao_academico", "turma", "1") ||
 //			(usuario.getPermissoes(user, pass, "educacao_academico", "turma", "2"))) {
-
-				Integer quantAlunos = Aluno.count();
+			
+				def alunos = Aluno.executeQuery("select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
+				def funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				def professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
+				
+				Integer quantAlunos = alunos.size();
 				Integer quantEscolas = Escola.count();
-				Integer quantProfessores = Professor.count();
-				Integer quantFuncionarios = Funcionario.count();
+				Integer quantProfessores = professores.size();
+				Integer quantFuncionarios = funcionarios.size();
 				render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios])
 //			}else{
 //				render(view:"/error403.gsp")
