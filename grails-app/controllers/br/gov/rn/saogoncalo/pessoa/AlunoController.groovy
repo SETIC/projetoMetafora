@@ -68,7 +68,8 @@ class AlunoController {
 
 				def aluno = Aluno.get(params.id)
 				aluno.numeroDeInscricao = params.numeroDeInscricao
-
+				int limit = 10
+				int offSet = 0
 				//def alunos = Aluno.findAll()
 				def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 
