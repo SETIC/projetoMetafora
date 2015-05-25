@@ -7,7 +7,7 @@ class Matricula {
 	String matricula
 	String status
 
-	static hasMany = [nota:Nota]
+	static hasMany = [nota:Nota, frequencia:Frequencia]
 	
 	static belongsTo = [turma:Turma, aluno:Aluno]
 

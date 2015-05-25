@@ -131,7 +131,7 @@ class BuildLeftMenuController {
 		}
 		 
 		if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
-			menu+='<li><a href="/projetoMetafora/Nota/notasTurma" ><i class="fa fa-check-square-o"></i> Frequência</a></li>'
+			menu+='<li><a href="/projetoMetafora/Frequencia/frequencia" ><i class="fa fa-check-square-o"></i> Aula/Frequência</a></li>'
 			verificador = true
 		}
 

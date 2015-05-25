@@ -218,6 +218,7 @@ class AtividadeController {
 			def attNota = Nota.findByAtividadeAndMatricula(atividade, matricula)
 
 			def nota = Float.parseFloat(params.get(params.keySet()[i])[0])
+			
 			def descricao = params.get(params.keySet()[i])[1]
 
 			//println "tamanho de att nota ---- " (attNota.size().toString())

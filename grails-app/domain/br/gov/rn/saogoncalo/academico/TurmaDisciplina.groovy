@@ -5,7 +5,7 @@ class TurmaDisciplina {
 	Date dataInicio
 	Date dataTermino
 		
-	static hasMany = [horario:Horario, atividade:Atividade]
+	static hasMany = [horario:Horario, atividade:Atividade, aula:Aula]
 	
 	static belongsTo = [turma:Turma, disciplinaLecionadaPorProfessor:DisciplinaLecionadaPorProfessor]
 	
