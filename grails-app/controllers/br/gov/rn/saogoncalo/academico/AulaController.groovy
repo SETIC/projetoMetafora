@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.academico
 
-import java.text.SimpleDateFormat;
+import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.pessoa.Pessoa
 
 
 
@@ -8,6 +9,14 @@ class AulaController {
 
 	def index() { }
 
+	def editarAula(long id){
+		Aula aula = Aula.get(id)
+		def idTd = aula.turmaDisciplina.id
+		
+
+		def tiposAula = TipoDeAula.findAll()
+		render (view: "/aula/editarAula.gsp", model:[aula:aula, tipoAula:tiposAula])
+	}
 	def salvar(){
 		println params
 		def aula = new Aula(params)
@@ -17,34 +26,43 @@ class AulaController {
 		}
 	}
 
-	def listarAulaPorTurma(long id){
+	def listarAula(long id){
 
 		def td = TurmaDisciplina.get(id)
 
 		def aula = Aula.findAllByTurmaDisciplina(td)
 
 		def tiposAula = TipoDeAula.findAll()
-		
-		
-		
-	
+
 		render (view: "/aula/listarAula.gsp", model:[turmaDisciplina:td, aula:aula, tipoAula:tiposAula])
 	}
-
-	def listarMensagem(String msg , String tipo, long id){
-
+	
+	def deletar(int id){
 		
-		def td = TurmaDisciplina.get(id)
+		Aula aula = Aula.get(id)
+		def idTd = aula.turmaDisciplina.id
+		Aula.deleteAll(aula)
+		
+		redirect(action:"listarMensagem", params:[msg:"Aula deletada com sucesso!", tipo:"ok", idTd:idTd])
+		
+
+	}
+	
+	def listarMensagem(String msg , String tipo, long idTd){
+		
+		def td = TurmaDisciplina.get(idTd)
 
 		def aula = Aula.findAllByTurmaDisciplina(td)
 
 		def tiposAula = TipoDeAula.findAll()
 
 		if (tipo == "ok")
+
 			render (view: "/aula/listarAula.gsp", model:[turmaDisciplina:td, aula:aula, tipoAula:tiposAula, ok:msg])
 		else
 			render (view: "/aula/listarAula.gsp", model:[turmaDisciplina:td, aula:aula, tipoAula:tiposAula, erro:msg])
 	}
+	
 
 	def cadastrarFaltas(long id) {
 		def aula = Aula.get(id)
@@ -72,7 +90,7 @@ class AulaController {
 			def frequencia = Frequencia.findByAulaAndMatricula(aula, matricula)
 
 			Frequencia frequenciaFinal = null
-				
+
 			if(params.get(params.keySet()[i].toString()) != "0") {
 				if(frequencia == null) {
 					def newFrequencia = new Frequencia()
@@ -85,7 +103,7 @@ class AulaController {
 				}
 				else {
 					frequencia.quantFaltas = Integer.parseInt(params.get(idMatricula.toString() + "-faltas"))
-					
+
 					frequenciaFinal = frequencia
 				}
 
@@ -99,8 +117,6 @@ class AulaController {
 					listarMensagem ("Frequencia atualizada com sucesso!" , "ok", aula.turmaDisciplina.id)
 				}
 			}
-			
-			
 		}
 	}
 }

@@ -9,7 +9,8 @@
 
 	<section class="content-header">
 		<h1>
-			Cadastro de frequencias <small> ${aula.titulo}
+			Cadastro de frequencias <small> 
+			${aula.titulo}
 			</small>
 		</h1>
 		<h5>
