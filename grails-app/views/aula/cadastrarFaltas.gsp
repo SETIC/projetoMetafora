@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="br.gov.rn.saogoncalo.academico.Frequencia"%>
 <%@page import="java.lang.System"%>
 <html lang="pt-br">
 <head>
@@ -9,8 +10,7 @@
 
 	<section class="content-header">
 		<h1>
-			Cadastro de frequencias <small> 
-			${aula.titulo}
+			Cadastro de frequencias <small> ${aula.titulo}
 			</small>
 		</h1>
 		<h5>
@@ -50,23 +50,40 @@
 							</tr>
 						</thead>
 						<tbody>
-
-							<g:each in="${nomeDosAlunos}">
-
+						
+							
+							<%
+								
+								def freqMatId = frequencia.matricula.id;
+							 %>
+													
+							<g:each in="${nomeDosAlunos}" var="mat">
 								<tr class='linha_registro'>
 									<td>
-										${it.aluno.cidadao.pessoaFisica.pessoa.nome}
+										${mat.aluno.cidadao.pessoaFisica.pessoa.nome}
 									</td>
-									<td><g:if test="${it.frequencia.quantFaltas[0]!=null }">
+									<td>
+									
+									<g:if test="${freqMatId.contains(mat.id) }">
+									
+										<g:each in="${frequencia}" var="freq">
+									
+										<g:if test="${freq.matricula.id ==  mat.id}">
 											<input type="number" min="0" max="${aula.quantHorarios}"
-												size="100" value="${it.frequencia.quantFaltas[0]}"
-												name="${it.id}-faltas" />
-										</g:if> <g:if test="${it.frequencia.quantFaltas[0]==null }">
+													size="100" value="${freq.quantFaltas}"
+													name="${mat.id}-faltas" />
+										</g:if>
+									
+									</g:each>							
+									</g:if>
+										<g:else>
 											<input type="number" min="0" max="${aula.quantHorarios}"
-												size="100" value="0" name="${it.id}-faltas" />
-										</g:if></td>
+												size="100" value="0"
+												name="${mat.id}-faltas" />
+										</g:else>
+		
+									</td>
 								</tr>
-
 							</g:each>
 						</tbody>
 					</table>

@@ -44,6 +44,7 @@
 			
 			<div style="margin-left: 120px">
 				<g:form controller="Aula" action="atualizar" class="form">
+				<g:hiddenField type="number" name="id" value="${it?.id}" />
 								<fieldset>
 									<div class="form-heading">
 										<label>Título da Aula</label>
@@ -67,7 +68,7 @@
 											<g:formatDate format="yyyy-MM-dd" date="${date}" />
 											<g:datePicker noSelection="['':'']" precision="day"
 												class="form-control" required="true" name="dataAula"
-												value="" />
+												value="${it.dataAula}" />
 
 										</div>
 									</div><br/>
@@ -92,11 +93,12 @@
 										</div>
 									</div>
 									<br>
-									<input type="hidden" value="" name="turmaDisciplina" />
+									
+									<input type="hidden" value="${it.turmaDisciplina.id}" name="turmaDisciplina" />
 								</fieldset>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
-										<i class="fa fa-save"></i> Cadastrar
+										<i class="fa fa-save"></i> Atualizar
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 

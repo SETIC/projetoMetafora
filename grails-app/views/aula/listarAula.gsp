@@ -50,7 +50,7 @@
 							<th style="width: 350px;">Título da Aula</th>
 							<th style="width: 350px;">Data</th>
 							<th style="width: 350px;">Tipo de Aula</th>
-							<th></th>
+							<th style="width: 150px;">Status da Aula</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -88,7 +88,7 @@
 												<li title="Frequencia"
 													class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff; disabled: true"
-													href="/projetoMetafora/aula/cadastrarFaltas/${it.id}"><span
+													href="/projetoMetafora/aula/carregarFaltas/${it.id}"><span
 														class="glyphicon glyphicon-check"></span></a></li>
 											</g:if>
 											
