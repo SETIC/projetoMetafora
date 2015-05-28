@@ -197,6 +197,96 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
+									
+									<div class="form-heading">
+										<label>Latitude</label>
+										<div class="controls">
+											<g:textField class="form-control" name="latitude"
+												value="" required="false"/>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Longitude</label>
+										<div class="controls">
+											<g:textField class="form-control" name="longitude"
+												value="" required="false"/>
+										</div>
+									</div>
+									<br>
+									
+								
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Logradouro</label>
+											<div class="controls">
+
+												<select id="logradouro" name="lg"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${logradouro}'>
+
+														<option value="${it.id}">
+															${it.tipoLogradouro.tipoLogradouro } ${it.logradouro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Bairro</label>
+											<div class="controls">
+
+												<select id="bairro" name="bairr"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${bairro}'>
+
+														<option value="${it.id}">
+															${it.bairro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>		
+									
+									<div class="form-heading">
+										<label>Número</label>
+										<div class="controls">
+											<g:textField class="form-control" name="numero"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<label>Complemento</label>
+										<div class="controls">
+											<g:textField class="form-control" name="complemento"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<label>CEP</label>
+										<div class="controls">
+											<g:textField class="form-control" name="cep"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>					
+									
+									
+									
 								</fieldset>
 								
 									<button type="submit" class="btn btn-primary btn-flat"> Cadastrar</button>

@@ -48,7 +48,7 @@ function codeAddress() {
 	try{
 		$.ajax({
 	        type: "GET",
-	        url: "http://192.168.1.247:8080/projetoMetafora/localizacao/getEndereco",
+	        url: "http://localhost:8080/projetoMetafora/localizacao/getEndereco",
 	        dataType: "json",
 	        success: function(result){
 	           
@@ -69,9 +69,9 @@ function codeAddress() {
 		    for (i = 0; i < endereco.length; i++){
 		   		geocoder = new google.maps.Geocoder();		
 				geocoder.geocode({'address':endereco[i]}, function(results, status){ 
-					 alert(endereco[i]);
+					 //alert(endereco[i]);
 					if( status == google.maps.GeocoderStatus.OK){
-						alert(status);
+						//alert(status);
 						latlng = results[0].geometry.location;
 						markerInicio = new google.maps.Marker({position: latlng,map: map});		
 						map.setCenter(latlng)

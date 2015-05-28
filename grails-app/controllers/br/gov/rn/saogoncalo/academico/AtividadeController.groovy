@@ -204,11 +204,22 @@ class AtividadeController {
 	def salvarNota(){
 
 		println "PARAMS SIZE() "+params.size()
+		println(" Params aqui ---" + params)
 
-		for(int i = 1; i < params.size() -3; i++){
+		for(int i = 0; i < params.size() -3; i++){
+		
+			def idMat
+			if (params.keySet()[i].toString() != "atividadeId") {
+			idMat = Integer.parseInt(params.keySet()[i].toString().replaceAll("mat-", ""))
+			//def idMatricula = Long.parseLong(params.atividadeId)
+			println(" IdMatricula --- " + idMat)
+			}
 
-			def idMatricula = Long.parseLong(params.keySet()[i].toString().replaceAll("mat-", ""))
-			def matricula = Matricula.get(idMatricula)
+
+			
+			
+			def matricula = Matricula.get(idMat)
+			
 
 			def idAtividade = Long.parseLong(params.atividadeId)
 			def atividade = Atividade.get(idAtividade)

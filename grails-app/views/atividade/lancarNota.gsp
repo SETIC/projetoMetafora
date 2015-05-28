@@ -55,7 +55,7 @@
 			<div style="margin-left: 2px" class="col-sm-12">
 				<div class="box box-white" style="margin-bottom: 2%;">
 					<g:form controller="Atividade" action="salvarNota" class="form-horizontal">
-						<g:hiddenField type="number" name="atividadeId" value="${atividade.id}" />
+					<g:hiddenField type="number" name="atividadeId" value="${atividade.id}"/>
 						<fieldset id="print">
 							<div class="form-group">
 								<div class="col-sm-6">

@@ -1,5 +1,10 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saogoncalo.localizacao.Bairro
+import br.gov.rn.saogoncalo.localizacao.Estado
+import br.gov.rn.saogoncalo.localizacao.Logradouro
+import br.gov.rn.saogoncalo.localizacao.Municipio
+import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 class EscolaController {
@@ -22,12 +27,25 @@ class EscolaController {
 
 
 			if (perm1 || perm2) {
+				
+				
 				def escolas = Escola.findAll()
-				render (view:"/escola/listarEscola.gsp", model:[escolas:escolas, perm2:perm2])
+				
+				def logradouro = Logradouro.findAll()
+								
+				def bairro = Bairro.findAll()
+				
+							
+				
+				
+				render (view:"/escola/listarEscola.gsp", model:[escolas:escolas, perm2:perm2, logradouro:logradouro, bairro:bairro])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
+		
+		
+		
 	}
 	def listarMensagem (String msg, String tipo){
 
@@ -72,9 +90,12 @@ class EscolaController {
 
 			if (perm2) {
 
-
+				def logradouro = Logradouro.findAll()
+								
+				def bairro = Bairro.findAll()
+				
 				Escola escolas = Escola.get(id)
-				render (view:"/escola/editarEscola.gsp", model:[escolas:escolas])
+				render (view:"/escola/editarEscola.gsp", model:[escolas:escolas, logradouro:logradouro, bairro:bairro])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -147,8 +168,32 @@ class EscolaController {
 
 
 			if (perm2) {
+								
 				def pessoa = Pessoa.get(params.id)
+				
+				Bairro bairro = Bairro.get(params.bairro)
+				Logradouro logradouro = Logradouro.get(params.logradouro)
+			
+				Reside reside = new Reside()
+				
+				reside.logradouro = logradouro
+				reside.bairro = bairro
+				reside.pessoa = pessoa
+				reside.numero = params.numero
+				reside.complemento = params.complemento
+				reside.cep = params.cep
+								
+				println("Reside -- " + reside)
+							
+				reside.save(flush:true)
+				
+				println("Reside -- " + reside)
+					
+				/*if(reside.save(flush:true) == false){
 
+						listarMensagem("Erro ao Atualizar!", "erro")
+				}
+*/
 				pessoa.nome = params.nome
 				pessoa.dataDeNascimento = params.dataDeNascimento
 				pessoa.cpfCnpj = params.cpfCnpj
@@ -190,17 +235,32 @@ class EscolaController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
 			
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ESCOLA", "2")
-
 
 			if (perm2)
 			{
 
 				Pessoa pessoa = new Pessoa(params)
+				Bairro bairro = Bairro.get(params.bairro)
+				Logradouro logradouro = Logradouro.get(params.logradouro)
+			
+				Reside reside = new Reside()
+				
+				reside.logradouro = logradouro
+				reside.bairro = bairro
+				reside.pessoa = pessoa
+				reside.numero = params.numero
+				reside.complemento = params.complemento
+				reside.cep = params.cep
+								
+								
+				if(reside.save(flush:true) == false){
 
-
+						listarMensagem("Erro ao Salvar!", "erro")
+				}
+				
+				
 
 				if (pessoa.save(flush:true)){
 					pessoa.errors.each{ println it }
@@ -216,19 +276,9 @@ class EscolaController {
 					if(escola.save(flush:true)){
 						escola.errors.each{ println it }
 
-						//				def escolas = Escola.findAll()
-						//
-						//				render(view:"/escola/listarEscola.gsp", model:[
-						//					escolas:escolas,
-						//					ok : "Escola cadastrada com sucesso!"
-						//
-						//				])
 						listarMensagem("Escola cadastrada com sucesso!", "ok")
 					}else{
-						//				def escolas = Escola.findAll()
-						//				render(view:"cadastrar", model:[
-						//					erro : "Erro ao Salvar!"
-						//				])
+
 						listarMensagem("Erro ao Salvar!", "erro")
 					}
 				}else{
@@ -239,11 +289,6 @@ class EscolaController {
 						erros = "CNPJ J� est� cadastrado no sistema"
 					}
 
-					//			def escolas = Escola.findAll()
-					//			render(view:"/escola/listarEscola.gsp", model:[
-					//				escolas:escolas,
-					//				erro : erros
-					//			])
 					listarMensagem("Erro ao Salvar!", "erro")
 				}
 			}else{
