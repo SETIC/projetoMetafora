@@ -129,6 +129,11 @@ class BuildLeftMenuController {
 			menu+='<li><a href="/projetoMetafora/Nota/notasTurma" ><i class="fa fa-sitemap"></i> Notas Geral</a></li>'
 			verificador = true
 		}
+		 
+		if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+			menu+='<li><a href="/projetoMetafora/Nota/notasTurma" ><i class="fa fa-check-square-o"></i> Frequência</a></li>'
+			verificador = true
+		}
 
 		menu +='</ul>'
 		'</li>'

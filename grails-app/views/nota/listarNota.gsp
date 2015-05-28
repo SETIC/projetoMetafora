@@ -10,10 +10,31 @@
 		function printDiv(id) {
 			var divToPrint = document.getElementById(id);
 			newWin = window.open("");
-			newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-			newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-			newWin.document.write(" ");
+			
+			
+			newWin.document.write("<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
+			newWin.document.write("<h4 style='margin-top:1px;text-align:center'>PREFEITURA DE SÃO GONÇALO DO AMARANTE <br></h4>");
+			newWin.document.write("<h3 style='text-align:center;margin-top:10px;'>GERAÇÃO DE BOLETIM</h3><br/><br/>");
+			newWin.document.write("<hr><br/><br/> ");
 			newWin.document.write(divToPrint.outerHTML);
+			 var now = new Date();
+
+         	  meses = new Array(12);
+
+         	  meses[0] = "Janeiro";
+         	  meses[1] = "Fevereiro";
+         	  meses[2] = "Março";
+         	  meses[3] = "Abril";
+         	  meses[4] = "Maio";
+         	  meses[5] = "Junho";
+         	  meses[6] = "Julho";
+         	  meses[7] = "Agosto";
+         	  meses[8] = "Setembro";
+         	  meses[9] = "Outubro";
+         	  meses[10] = "Novembro";
+         	  meses[11] = "Dezembro";
+
+         	 newWin.document.write("<p style='font-size:12px;margin-top:10%; margin-left:70%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>");
 			newWin.print();
 			newWin.close();
 		}
@@ -76,7 +97,7 @@
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="" class="table table-striped table-hover example">
+				<table id="table" class="table table-striped table-hover example">
 					<thead>
 						<tr>
 							<th>Alunos</th>
@@ -222,7 +243,7 @@
 			</div>
 			<!-- Button trigger modal -->
 			
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('table')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			

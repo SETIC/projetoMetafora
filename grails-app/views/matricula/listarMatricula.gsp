@@ -30,7 +30,7 @@
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
