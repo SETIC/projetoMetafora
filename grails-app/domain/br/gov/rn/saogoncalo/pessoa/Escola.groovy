@@ -6,6 +6,8 @@ import br.gov.rn.saogoncalo.academico.Turma
 class Escola {
 	PessoaJuridica pessoaJuridica
 	String inepDaEscola
+	String latitude
+	String longitude
 	
 	static hasMany = [sala:Sala, turma:Turma]
 	//static belongsTo = [pessoa:Pessoa]

@@ -1,8 +1,10 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import grails.converters.deep.JSON
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
-import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 class AlunoController {
@@ -12,7 +14,30 @@ class AlunoController {
 
 	def cadastrar(){
 	}
+	
+	def buscarCEP(String cep) {
+		String urlCompleta
+		String urlBase = "http://cep.correiocontrol.com.br/"
+			
+		urlCompleta = urlBase + cep + ".json"
+		
+		print urlCompleta
 
+		URL urlReferenteAAPI = new URL(urlCompleta)
+		
+		def dadosReferenteAoCep
+		
+		try {
+			dadosReferenteAoCep = new JsonSlurper().parseText(urlReferenteAAPI.text)
+			print "completo..."
+		} catch(Exception e) {
+			dadosReferenteAoCep = []
+			print "vazio..."
+		}
+		print dadosReferenteAoCep
+		render dadosReferenteAoCep as JSON
+	}
+	
 	def editarAluno(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -107,18 +132,21 @@ class AlunoController {
 
 			if (perm1 || perm2)
 			{
+				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				
+				def series = Serie.findAll()
 
 				def alunos
 				
 				if (session["escid"] == 0)
 				{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ") 
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ", [max:10]) 
 					
 				}else{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
 				} 
 
-				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2, escolas:escolas, series:series])
 			}else{
 				render(view:"/error403.gsp")
 			}
