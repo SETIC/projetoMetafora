@@ -56,6 +56,7 @@ class AtividadeController {
 
 				}else{
 
+
 					p = Professor.get(Long.parseLong(session['pesid'].toString()))
 					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(p)
 					escola = Escola.get(session['escid'])
@@ -70,6 +71,7 @@ class AtividadeController {
 				}
 
 				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade, escola:escola, professor:p])
+
 			}
 		}
 	}

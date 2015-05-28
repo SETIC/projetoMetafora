@@ -30,7 +30,7 @@
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
@@ -215,6 +215,10 @@
 					var endereco = "localhost";
 			        var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+			        var idEscola = document.getElementById("comboEscola").value;
+					var idSerie = document.getElementById("comboSerie").value;
+			        
 			        
 			        $.ajax({
 			            type: "GET",
@@ -251,14 +255,10 @@
 			            	comboTurma.options.length = 0;
 				        if (result.id.length == 0){
 				        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
-				        	comboProfessorDisciplina.options.length = 0;
-				         	comboProfessorDisciplina.options[comboProfessorDisciplina.options.length] = new Option("Selecione uma turma", 0);
-   
 				        }else{
 							for (i=0;i<result.id.length;i++){
 								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 			           		}
-							 mudarTurma();   
 				        }
 			            }
 			        });

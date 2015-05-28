@@ -32,6 +32,12 @@
     <!-- Theme style -->
     <link href="${resource(dir: 'css', file: 'AdminLTE.min.css')}" rel="stylesheet">
     
+    <!-- Form Wizard -->
+    <link href="${resource(dir: 'css', file: 'style-form-wizard.css')}" rel="stylesheet">
+    
+    <!-- Jasny Mask Bootstrap -->
+    <link href="${resource(dir: 'css', file: 'jasny-bootstrap.min.css')}" rel="stylesheet">
+    
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="${resource(dir: 'css', file: 'skins/_all-skins.min.css')}" rel="stylesheet">
@@ -198,10 +204,14 @@
     <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
     <!-- Bootstrap 3.3.2 JS -->
     <g:javascript src="bootstrap.min.js" />
+    <!-- Jasny Mask Bootstrap -->
+    <g:javascript src="jasny-bootstrap.min.js" />
     <!-- FastClick -->
     <g:javascript src="plugins/fastclick/fastclick.min.js" />
     <!-- AdminLTE App -->
     <g:javascript src="app.min.js" />
+    <!-- Script Form Wizard -->
+    <g:javascript src="script-form-wizard.js" />
     <!-- jQuery Data Tables -->
     <g:javascript src="jquery.dataTables.min.js" />
     <!-- Data Tables Bootstrap -->
