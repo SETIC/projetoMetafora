@@ -6,13 +6,6 @@
 <g:javascript src="jquery.js" />
 <g:javascript src="jquery.maskedinput.js" />
 </head>
-<script type="text/javascript">
-	$().ready(function() {
-		$('#cpf').mask('999.999.999-99');
-
-	});
-</script>
-</head>
 <body>
 	<section class="content-header">
 		<h1>
@@ -42,7 +35,7 @@
 			<g:each in='${aula}'>
 			</g:each>
 			
-			<div style="margin-left: 120px">
+			<div>
 				<g:form controller="Aula" action="atualizar" class="form">
 				<g:hiddenField type="number" name="id" value="${it?.id}" />
 								<fieldset>
@@ -76,7 +69,7 @@
 										<label>Quantidade de Horários</label>
 										<div class="controls">
 											<input type="number" class="form-control" name="quantHorarios"
-												min="1" max="6"  value="2" required />
+												min="1" max="6"  value="2" size="50" required />
 										</div>
 									</div>
 									<br>
