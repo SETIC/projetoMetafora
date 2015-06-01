@@ -32,6 +32,7 @@ function printDiv(id)
 		<h1>
 			Alunos <small>Visualização e Gerenciamento</small>
 		</h1>
+
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -52,7 +53,22 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
+			
+				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
+					<div class = "form-group">
+						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+						<div class="col-sm-10">
+							<g:textField class="form-control" id="" name="pesquisa"
+								style="width: 300px" value="${ }" />
+								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="fa fa-save"></i> Buscar
+							</button>
+							
+						</div>
+					</div>
+				</g:form>
 				<table id="" class="table table-striped table-hover example">
+
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -70,44 +86,48 @@ function printDiv(id)
 							<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
 							<g:set var="cidadao" value="${it.cidadao}" />
 							<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
-	
+
 							<g:if test="${escolaid == escid}">
-	
+
 								<tr class='linha_registro'>
 									<td>
 										<div style="margin-left: -35px" class="opcoes">
-											
-											
-											<ul style="display: inline">
-												
-										<g:if test="${perm2}">
-											
-											<li title="Editar Aluno" class="btn btn-primary btn-xs btn-flat"><a
-													style="color: #fff"
-													href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
 
-												
-												
-												<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
-													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
-												
-										
-												
-												<li title="Transferir Aluno" data-toggle="tooltip"
-												data-placement="top" class="btn btn-warning btn-xs btn-flat"><a style="color: #fff"
-													href="/projetoMetafora/aluno/transferencia/${pessoa.id}"><span
-														class="glyphicon glyphicon-arrow-right"></span></a></li>
-										
-										</g:if>
-											
-													
-												<li title="Ver detalhes de Aluno" class="btn btn-success btn-xs btn-flat"><a
+
+											<ul style="display: inline">
+
+												<g:if test="${perm2}">
+
+													<li title="Editar Aluno"
+														class="btn btn-primary btn-xs btn-flat"><a
+														style="color: #fff"
+														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
+															class="glyphicon glyphicon-pencil"></span></a></li>
+
+
+
+													<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
+														class="btn btn-danger btn-xs btn-flat"><span
+														class="glyphicon glyphicon-remove"></span></li>
+
+
+
+													<li title="Transferir Aluno" data-toggle="tooltip"
+														data-placement="top"
+														class="btn btn-warning btn-xs btn-flat"><a
+														style="color: #fff"
+														href="/projetoMetafora/aluno/transferencia/${pessoa.id}"><span
+															class="glyphicon glyphicon-arrow-right"></span></a></li>
+
+												</g:if>
+
+
+												<li title="Ver detalhes de Aluno"
+													class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/aluno/verInfoAluno/${pessoa.id}"><span
 														class="glyphicon glyphicon-eye-open"></span></a></li>
-													
+
 											</ul>
 										</div>
 									</td>
@@ -125,28 +145,26 @@ function printDiv(id)
 									<td>
 										${cidadao.estadoCivil}
 									</td>
-									<td style="text-align: center;">
-										<g:if test="${pessoa.status == 'Ativo'}">
+									<td style="text-align: center;"><g:if
+											test="${pessoa.status == 'Ativo'}">
 											<span class="label label-success">Ativo</span>
-										</g:if>
-										<g:else>
+										</g:if> <g:else>
 											<span class="label label-danger">Inativo</span>
-										</g:else>
-									</td>
+										</g:else></td>
 								</tr>
 							</g:if>
 						</g:each>
-	
+
 					</tbody>
 				</table>
-			</div>	
-			
+			</div>
+
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
-			<button class="btn btn-primary btn-flat" data-toggle="modal"
-				data-target="#myModal">
-				<i class="fa fa-plus"></i> Novo Aluno
-			</button>
+				<button class="btn btn-primary btn-flat" data-toggle="modal"
+					data-target="#myModal">
+					<i class="fa fa-plus"></i> Novo Aluno
+				</button>
 			</g:if>
 			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
@@ -276,6 +294,6 @@ function printDiv(id)
 			</div>
 		</div>
 	</section>
-	
+
 </body>
 </html>
