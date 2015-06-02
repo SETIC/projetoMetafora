@@ -92,6 +92,7 @@ function printDiv(id)
 		<h1>
 			Alunos <small>Visualização e Gerenciamento</small>
 		</h1>
+
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -112,7 +113,22 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
+			
+				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
+					<div class = "form-group">
+						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+						<div class="col-sm-10">
+							<g:textField class="form-control" id="" name="pesquisa"
+								style="width: 300px" value="${ }" />
+								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="fa fa-save"></i> Buscar
+							</button>
+							
+						</div>
+					</div>
+				</g:form>
 				<table id="" class="table table-striped table-hover example">
+
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
 						<tr>

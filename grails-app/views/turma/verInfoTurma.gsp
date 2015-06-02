@@ -7,7 +7,6 @@
 <g:javascript src="jquery.js" />
 <g:javascript src="jquery.maskedinput.js" />
 </head>
-</head>
 <body>
 	<script>
 function printDiv(id)

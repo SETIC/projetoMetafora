@@ -11,13 +11,6 @@
 <g:javascript src="jquery.js" />
 <g:javascript src="jquery.maskedinput.js" />
 </head>
-<script type="text/javascript">
-	$().ready(function() {
-		$('#cpf').mask('999.999.999-99');
-
-	});
-</script>
-</head>
 <body>
 	<section class="content-header">
 		<h1>
