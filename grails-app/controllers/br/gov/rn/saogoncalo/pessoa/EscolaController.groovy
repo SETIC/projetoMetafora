@@ -254,7 +254,7 @@ class EscolaController {
 				reside.complemento = params.complemento
 				reside.cep = params.cep
 								
-								
+
 				if(reside.save(flush:true) == false){
 
 						listarMensagem("Erro ao Salvar!", "erro")

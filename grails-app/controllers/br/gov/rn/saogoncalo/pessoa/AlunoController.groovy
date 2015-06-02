@@ -137,11 +137,15 @@ class AlunoController {
 				
 				def series = Serie.findAll()
 
+				
+				//def pessoas = Pessoa.executeQuery(" select p from Pessoa p " +
+				//			                      "  where p.id not in (select e.id from Escola e) ")
+				
 				def alunos
 				
 				if (session["escid"] == 0)
 				{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ", [max:10]) 
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ") 
 					
 				}else{
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
@@ -288,8 +292,24 @@ class AlunoController {
 					Aluno aluno = new Aluno(params)
 					aluno.cidadao = cidadao
 
-
 					aluno.numeroDeInscricao = year+""+value
+					
+					
+					/*
+					//codigo pra inserir o reside  
+					def reside = new Reside()
+					reside.bairro = Bairro.get(params.bairro)
+					reside.logradouro = Logradouro.get(params.logradouro)
+					reside.pessoa = pessoa
+					reside.numero = params.numero
+					reside.complemento = parmams.complemento
+					reside.cep = params.cep
+					
+					
+					if(reside.save(flush:true)){
+						
+					}
+					*/
 
 					if(aluno.save(flush:true)){
 						aluno.errors.each{println it}
