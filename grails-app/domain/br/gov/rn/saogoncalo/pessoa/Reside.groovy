@@ -10,6 +10,7 @@ class Reside {
 	Bairro bairro
 	Logradouro logradouro
 	Pessoa pessoa
+	String cep
 	
 	
 	static constraints = {

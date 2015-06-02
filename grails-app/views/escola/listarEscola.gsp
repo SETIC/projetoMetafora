@@ -34,8 +34,7 @@ function printDiv(id)
 			Escolas <small>Visualização e Gerenciamento</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li class="active"><g:link controller="Layout" action="index">
-					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
+			<li class="active"><g:link controller="Layout" action="index"><i class="fa fa-dashboard"></i> Inicio</g:link></li>
 			<li><g:link controller="Escola" action="listar">Escolas</g:link></li>
 		</ol>
 	</section>
@@ -52,75 +51,76 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-hover example">
-				<g:if test="${!escolas?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 65px;"></th>
-						<th style="width: 500px;">Nome</th>
-						<th style="width: 200px;">CNPJ</th>
-						<th style="width:;">Data de Fundação</th>
-						<th style="width:;">INEP</th>
-						<th style="width:;">Situação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${escolas?}'>
-						<g:set var="pessoa" value="${it.pessoaJuridica.pessoa}" />
-						<g:set var="pessoaJuridica" value="${it.pessoaJuridica}" />
-						
-						<g:if test="${pessoa.status == 'Ativo'}">
-							<tr class='linha_registro success'>
-						</g:if>
-						<g:else>
-							<tr class='linha_registro'>
-						</g:else>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-											<g:if test="${perm2}">
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/escola/editarEscola/${pessoa.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${pessoa.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										</g:if>
-										
-										<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
-											href="/projetoMetafora/escola/verInfoEscola/${pessoa.id}"><span
-												class="glyphicon glyphicon-eye-open"></span></a></li>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${pessoa.nome}
-							</td>
-							<td>
-								${pessoa.cpfCnpj}
-							</td>
-							<td><g:formatDate format="dd/MM/yyyy"
-									date="${pessoa.dataDeNascimento}" /></td>
-
-							<td>
-								${it.inepDaEscola}
-							</td>
-							<td>
-								<g:if test="${pessoa.status == 'Ativo'}">
-									<span class="label label-success">Ativo</span>
-								</g:if>
-								<g:else>
-									<span class="label label-danger">Inativo</span>
-								</g:else>
-							</td>
-					</g:each>
-
-				</tbody>
-			</table>
-			
+			<div class="box box-white">
+				<table id="" class="table table-hover example">
+					<g:if test="${!escolas?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 65px;"></th>
+							<th style="width: 500px;">Nome</th>
+							<th style="width: 200px;">CNPJ</th>
+							<th style="width:;">Data de Fundação</th>
+							<th style="width:;">INEP</th>
+							<th style="width:;">Situação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${escolas?}'>
+							<g:set var="pessoa" value="${it.pessoaJuridica.pessoa}" />
+							<g:set var="pessoaJuridica" value="${it.pessoaJuridica}" />
+							
+							<g:if test="${pessoa.status == 'Ativo'}">
+								<tr class='linha_registro success'>
+							</g:if>
+							<g:else>
+								<tr class='linha_registro'>
+							</g:else>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											
+												<g:if test="${perm2}">
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/escola/editarEscola/${pessoa.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${pessoa.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+											</g:if>
+											
+											<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
+												href="/projetoMetafora/escola/verInfoEscola/${pessoa.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li>
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${pessoa.nome}
+								</td>
+								<td>
+									${pessoa.cpfCnpj}
+								</td>
+								<td><g:formatDate format="dd/MM/yyyy"
+										date="${pessoa.dataDeNascimento}" /></td>
+	
+								<td>
+									${it.inepDaEscola}
+								</td>
+								<td>
+									<g:if test="${pessoa.status == 'Ativo'}">
+										<span class="label label-success">Ativo</span>
+									</g:if>
+									<g:else>
+										<span class="label label-danger">Inativo</span>
+									</g:else>
+								</td>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 			
 			<g:if test="${perm2}"> 
@@ -197,6 +197,96 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
+									
+									<div class="form-heading">
+										<label>Latitude</label>
+										<div class="controls">
+											<g:textField class="form-control" name="latitude"
+												value="" required="false"/>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Longitude</label>
+										<div class="controls">
+											<g:textField class="form-control" name="longitude"
+												value="" required="false"/>
+										</div>
+									</div>
+									<br>
+									
+								
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Logradouro</label>
+											<div class="controls">
+
+												<select id="logradouro" name="lg"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${logradouro}'>
+
+														<option value="${it.id}">
+															${it.tipoLogradouro.tipoLogradouro } ${it.logradouro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Bairro</label>
+											<div class="controls">
+
+												<select id="bairro" name="bairr"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${bairro}'>
+
+														<option value="${it.id}">
+															${it.bairro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>		
+									
+									<div class="form-heading">
+										<label>Número</label>
+										<div class="controls">
+											<g:textField class="form-control" name="numero"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<label>Complemento</label>
+										<div class="controls">
+											<g:textField class="form-control" name="complemento"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<label>CEP</label>
+										<div class="controls">
+											<g:textField class="form-control" name="cep"
+												value="" required="true"/>
+										</div>
+									</div>
+									<br>					
+									
+									
+									
 								</fieldset>
 								
 									<button type="submit" class="btn btn-primary btn-flat"> Cadastrar</button>

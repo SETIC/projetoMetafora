@@ -173,7 +173,7 @@ class SerieController {
 				seriel.dataDeInicio = params.dataDeInicio
 				seriel.dataDeTermino = params.dataDeTermino
 
-				if (seriel.save(flush:true)){
+				if (seriel.save(flush:true)){ 
 					//			def serie = Serie.findAll()
 					//			render(view:"/serie/listarSerie.gsp", model:[
 					//				serie:serie,

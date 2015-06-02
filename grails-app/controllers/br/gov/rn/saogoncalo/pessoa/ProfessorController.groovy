@@ -24,11 +24,22 @@ class ProfessorController {
 			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
 
+			def professores
+			
 			if (perm1 || perm2) {
-				def professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
+				
+				if (session["escid"] == 0)
+				{
+					professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id ")
+				}else{
+					professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
+				
+				}
+				
+				
 				render (view:"/professor/listarProfessor.gsp", model:[professores:professores, perm2:perm2])
 			}else{
-				render "não tem permissão"
+				render(view:"/error403.gsp")
 			}
 		}
 	}

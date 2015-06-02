@@ -38,47 +38,48 @@
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!usuarios?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 65px;"></th>
-						<th style="width: 280px;">Nome</th>
-						<th style="width: 60px;">Username</th>
-						
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${usuarios?}'>
-						
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/usuario/editarUsuario/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										
-									</ul>
-								</div>
-							</td>
-							<td>
-								teste
-							</td>
-							<td>
-								${it.username}
-							</td>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<g:if test="${!usuarios?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 65px;"></th>
+							<th style="width: 280px;">Nome</th>
+							<th style="width: 60px;">Username</th>
 							
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-			
+					</thead>
+					<tbody>
+						<g:each in='${usuarios?}'>
+							
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/usuario/editarUsuario/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+											
+										</ul>
+									</div>
+								</td>
+								<td>
+									${it.pessoa.nome}
+								</td>
+								<td>
+									${it.username}
+								</td>
+								
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
 				data-target="#myModal">

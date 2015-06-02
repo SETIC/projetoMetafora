@@ -1,5 +1,6 @@
 package br.gov.rn.saogoncalo.login
 
+import grails.converters.JSON
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
 
@@ -28,7 +29,7 @@ class UsuarioController {
 		if (verificarAutenticacao(user, pass)) {
 			redirect(controller:params.ctl, action:params.act)
 		}else{
-			render(view:"/usuario/login.gsp", model:[erro:"Usuário ou senha não encontrado!"])
+			render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}
 	}
 
@@ -36,21 +37,35 @@ class UsuarioController {
 
 		def usuarioA = Usuario.findByUsernameAndSenha(user, pass)
 
+
 		if(usuarioA == null){
 			return false
 		}else{
 
 			def escolaA = Escola.findById(usuarioA.pessoa.escid)
-			session.maxInactiveInterval = 300
+			session.maxInactiveInterval = 10000
 			session["user"] = user
 			session["pass"] = pass
 			session["usid"] = usuarioA.id
 			session["pesid"] = usuarioA.pessoa.id
+			session["pesnome"] = usuarioA.pessoa.nome
 			session["escid"] = usuarioA.pessoa.escid
-			session["escname"] = escolaA.pessoaJuridica.pessoa.nome
+			session["master"] = usuarioA.grupoUsuario.grupo.master //rever pra a situação de ter mais de um grupo
+			
+			
+			
+			if (usuarioA.pessoa.escid == 0)
+			 {
+				//aqui 
+				session["escname"] = "Administração"
+			 }else{
+			 	session["escname"] = escolaA.pessoaJuridica.pessoa.nome
+			 }
+			
 
 
-			println("Escola - " + escolaA.pessoaJuridica.pessoa.nome)
+			//println("Escola - " + escolaA.pessoaJuridica.pessoa.nome)
+			//println("Nome Pessoa - " + usuarioA.pessoa.nome)
 
 			usuario = user
 			senha = pass
@@ -67,7 +82,7 @@ class UsuarioController {
 		def usuarioA = Usuario.findByUsernameAndSenha(usuario, senha)
 		if(usuarioA == null){
 
-			render(view:"/usuario/validarUsuario.gsp", model:[erro:"Usuário ou senha não encontrado!"])
+			render(view:"/usuario/validarUsuario.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}else{
 			render(view:"/index.gsp")
 		}
@@ -372,6 +387,37 @@ class UsuarioController {
 			return true
 		else
 			return false
+	}
+
+	
+	def getAllPermissoes(){
+		
+		def permissoes = []
+		def grupos = getGrupos(session["user"], session["pass"])
+
+		def permissaoU
+
+		for (grupoId in grupos) {
+			def grupo = Grupo.get(grupoId)
+			def perm = Permissao.findAllByGrupo(grupo)
+
+			for (permi in perm) {
+
+				def schema = permi.esquema
+				def tabela = permi.tabela
+				def per = permi.permissao
+
+				permissaoU = [schema, tabela, per]
+
+				def permissao = permissaoU
+				permissoes.add(permissao)
+				permissao = []
+			}
+
+		}
+
+		return permissoes
+		
 	}
 
 }

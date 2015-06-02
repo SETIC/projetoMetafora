@@ -26,7 +26,11 @@
 		<link>
 			<name>.link_to_grails_plugins</name>
 			<type>2</type>
-			<location>C:/Users/ieber.moura/Documents/workspace-ggts-3.6.3.RELEASE/projetoMetafora/target/work/plugins</location>
+<<<<<<< HEAD
+			<location>C:/Users/roberto.manaia/Documents/workspace-ggts-3.6.0.RELEASE/projetoMetafora/target/work/plugins</location>
+=======
+			<location>C:/Users/julia.campos/Documents/workspace/projetoMetafora/target/work/plugins</location>
+>>>>>>> frequencia
 		</link>
 	</linkedResources>
 </projectDescription>

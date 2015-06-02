@@ -25,9 +25,9 @@ class DisciplinaLecionadaPorProfessorController {
 	//				def disciplinaLecionadaPorProfessor = DisciplinaLecionadaPorProfessor.findAll()
 	//				render (view:"/disciplinaPorProfessor/listarDisciplinaPorProfessor.gsp", model:[disciplinaLecionadaPorProfessor:disciplinaLecionadaPorProfessor])
 	//			}else{
-	//				render("não tem permiassão")
+	//				render(view:"/error403.gsp")
 	//			}
-	//		}
+	//		} 
 	//	}
 
 	def getProfessorDisciplinaByTurma(long idTurma) {

@@ -36,25 +36,38 @@ class TurmaController {
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
-				def turmas = Horario.executeQuery(" select t from Turma as t " +
-						"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
+				def turmas
+				def disciplinas
+				def escolas
+				
+				
+				
+				if ((session["escid"] == 0) )
+				{
 
+					 turmas = Horario.executeQuery(" select t from Turma as t " +
+							"  where  t.anoLetivo >= ? ", [ano])
 
+					 escolas = Escola.executeQuery(" select e from Escola e, Pessoa p where p.id = e.id and p.status = 'Ativo' ")
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
 
+				}else{
 
-				//def disciplinas = DisciplinaLecionadaPorProfessor.findAll()
+					 turmas = Horario.executeQuery(" select t from Turma as t " +
+							"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
 
-				def disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
-						"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
+					 escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
+					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
+							"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
 
+				}
 
 
 				render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, perm2:perm2])
 			}else{
-				render ("não possui permissão")
+				render(view:"/error403.gsp")
 			}
 
 		}
@@ -121,27 +134,41 @@ class TurmaController {
 
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
-				def turmas = Horario.executeQuery(" select t from Turma as t " +
+				
+				
+				def turmas
+				def disciplinas
+				def escolas
+
+				if ((session["escid"] == 0))
+				{
+
+					 turmas = Horario.executeQuery(" select t from Turma as t " +
+							"  where  t.anoLetivo >= ? ", [ano])
+
+					 escolas = Escola.findAll()
+
+					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
+
+				}else{
+				
+				 turmas = Horario.executeQuery(" select t from Turma as t " +
 						"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
 
-				println ("Turmas - " + turmas)
+				 escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-
-
-				//def disciplinas = DisciplinaLecionadaPorProfessor.findAll()
-
-				def disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
+				 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
 						"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
+				}
 
-
+				
 				//render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas])
 				if (tipo == "ok")
 					render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, ok:msg, perm2:perm2])
 				else
 					render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, erro:msg, perm2:perm2])
 			}else{
-				render ("não tem permissão")
+				render(view:"/error403.gsp")
 
 
 			}
@@ -185,7 +212,7 @@ class TurmaController {
 				render (view:"/turma/verInfoTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, td:td, dlpp:dlpp, matriculados:matriculados])
 
 			}else{
-				render ("não tem permissão")
+				render(view:"/error403.gsp")
 
 
 			}
@@ -216,7 +243,7 @@ class TurmaController {
 				render (view:"/turma/editarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, td:td, dlpp:dlpp])
 
 			}else{
-				render ("não tem permissão")
+				render(view:"/error403.gsp")
 
 
 			}
@@ -368,10 +395,13 @@ class TurmaController {
 				redirect(action:"listarMessagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 				//listarMessagem("Turma excluída com sucesso", "ok")
 			}else{
-				render ("não tem permissão")
+				render(view:"/error403.gsp")
 			}
 		}
 	}
+
+
+
 	def salvar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Turma", act:"listar"])

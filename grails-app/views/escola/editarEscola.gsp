@@ -6,13 +6,6 @@
 <g:javascript src="jquery.js" />
 <g:javascript src="jquery.maskedinput.js" />
 </head>
-<script type="text/javascript">
-	$().ready(function() {
-		$('#cpf').mask('999.999.999-99');
-
-	});
-</script>
-</head>
 <body>
 	<section class="content-header">
 		<h1>
@@ -100,6 +93,97 @@
 							</div>
 						</div>
 						<br>
+						
+						
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">Latitude</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" name="latitude"
+												style="width: 300px" value="${escolas.latitude}"/>
+										</div>
+									</div>
+									<br>
+									
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">Longitude</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" name="longitude"
+												style="width: 300px" value="${escolas.longitude}"/>
+										</div>
+									</div>
+									<br>
+									
+								
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Logradouro</label>
+											<div class="controls">
+
+												<select id="logr" name="lg"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${logradouro}'>
+
+														<option value="${it.id}">
+															${it.tipoLogradouro.tipoLogradouro } ${it.logradouro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+										<div class="form-heading">
+											<label>Bairro</label>
+											<div class="controls">
+
+												<select id="bair" name="bairr"
+													class="form-control selectpicker" data-live-search="true">
+													<g:each in='${bairro}'>
+
+														<option value="${it.id}">
+															${it.bairro}
+														</option>
+
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+									</div>
+									<br>		
+									
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">Numero</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" name="numero"
+												style="width: 300px" value="${escolas.pessoaJuridica.pessoa.reside.numero[0]}"/>
+										</div>
+									</div>
+									<br>
+									
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">Complemento</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" name="complemento"
+												style="width: 300px" value="${escolas.pessoaJuridica.pessoa.reside.complemento[0]}"/>
+										</div>
+									</div>
+									<br>
+									
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">CEP</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" name="cep"
+												style="width: 300px" value="${escolas.pessoaJuridica.pessoa.reside.cep[0]}"/>
+										</div>
+									</div>
+									<br>
+						
+						
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button type="submit" class="btn btn-primary btn-flat">

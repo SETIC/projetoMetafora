@@ -5,7 +5,7 @@ class TurmaDisciplina {
 	Date dataInicio
 	Date dataTermino
 		
-	static hasMany = [horario:Horario, atividade:Atividade]
+	static hasMany = [horario:Horario, atividade:Atividade, aula:Aula]
 	
 	static belongsTo = [turma:Turma, disciplinaLecionadaPorProfessor:DisciplinaLecionadaPorProfessor]
 	
@@ -15,6 +15,7 @@ class TurmaDisciplina {
 		dataInicio nullable:false, blank:false
 		dataTermino nullable:false, blank:false
 	}
+	
 	static mapping = {
 	table name: "turma_disciplina", schema:"educacao_academico"
 	version false

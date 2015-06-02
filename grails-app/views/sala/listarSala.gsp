@@ -50,49 +50,51 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<thead>
-					<tr>
-						<th style="width: 60px;"></th>
-						<th>Escola</th>
-						<th>Sala</th>
-						<th>Vagas</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${sala?}'>
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-
-										<g:if test="${perm2}">
-											<li class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/sala/editarSala/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${it.id})"
-												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
-										</g:if>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${it.escola.pessoaJuridica.pessoa.nome}
-							</td>
-							<td>
-								${it.sala}
-							</td>
-							<td>
-								${it.vagas}
-							</td>
-
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<thead>
+						<tr>
+							<th style="width: 60px;"></th>
+							<th>Escola</th>
+							<th>Sala</th>
+							<th>Vagas</th>
 						</tr>
-					</g:each>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<g:each in='${sala?}'>
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+	
+											<g:if test="${perm2}">
+												<li class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/sala/editarSala/${it.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+												<li onclick="deletar(${it.id})"
+													class="btn btn-danger btn-xs btn-flat"><span
+													class="glyphicon glyphicon-remove"></span></li>
+											</g:if>
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${it.escola.pessoaJuridica.pessoa.nome}
+								</td>
+								<td>
+									${it.sala}
+								</td>
+								<td>
+									${it.vagas}
+								</td>
+	
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</div>
 
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">		

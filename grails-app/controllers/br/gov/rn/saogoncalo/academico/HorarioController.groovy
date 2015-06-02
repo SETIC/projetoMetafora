@@ -27,12 +27,29 @@ class HorarioController {
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
-				def horarios = Horario.executeQuery(" select h from Horario as h, " +
+				def horarios
+				def escolas
+				
+				if (session["escid"] == 0)
+				{
+					
+					horarios = Horario.executeQuery(" select h from Horario as h, " +
+						"     Sala as s " +
+						"  where s.id = h.sala.id " +
+						"    and h.turmaDisciplina.turma.anoLetivo = ?", [ano])
+
+					escolas = Escola.findAll()
+					
+				}else{
+								
+					horarios = Horario.executeQuery(" select h from Horario as h, " +
 						"     Sala as s " +
 						"  where s.id = h.sala.id " +
 						"   and s.escola.id = ? and h.turmaDisciplina.turma.anoLetivo = ?", [Long.parseLong(session["escid"].toString()), ano])
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				
+				}
 
 				def professores = Professor.findAll()
 				def series = Serie.findAll()
@@ -60,12 +77,29 @@ class HorarioController {
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
-				def horarios = Horario.executeQuery(" select h from Horario as h, " +
+				def horarios
+				def escolas
+				
+				if (session["escid"] == 0)
+				{
+					
+					horarios = Horario.executeQuery(" select h from Horario as h, " +
+						"     Sala as s " +
+						"  where s.id = h.sala.id " +
+						"    and h.turmaDisciplina.turma.anoLetivo = ?", [ano])
+
+					escolas = Escola.findAll()
+					
+				}else{
+								
+					horarios = Horario.executeQuery(" select h from Horario as h, " +
 						"     Sala as s " +
 						"  where s.id = h.sala.id " +
 						"   and s.escola.id = ? and h.turmaDisciplina.turma.anoLetivo = ?", [Long.parseLong(session["escid"].toString()), ano])
 
-				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				
+				}
 
 				def professores = Professor.findAll()
 				def series = Serie.findAll()
@@ -130,7 +164,6 @@ class HorarioController {
 				horarioL.horario = horario
 
 				if (horarioL.save(flush:true)){
-					println("..........CADASTROU..........")
 					//			def horarios = Horario.findAll()
 					//			render(view:"/horario/listarHorario.gsp", model:[horarios:horarios,
 					//				ok : "Horário cadastrado com sucesso!"
@@ -138,7 +171,6 @@ class HorarioController {
 					listarMensagem("Horário cadastrado com sucesso!", "ok")
 				}
 				else{
-					println("..........ERRO..........")
 					def erros = horarioL.errors
 					def horarios = Horario.findAll()
 					def professores = Professor.findAll()

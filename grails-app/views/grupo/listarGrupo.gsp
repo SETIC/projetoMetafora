@@ -54,56 +54,48 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="example" class="table table-striped table-hover">
-				<g:if test="${!grupos?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 55px;"></th>
-						<th style="width: 280px;">Nome</th>
-						<th style="width: 60px;">Descrição</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${grupos?}'>
-
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										<g:if test="${perm2}">
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/grupo/editarGrupo/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-											
-											</g:if>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${it.nome}
-							</td>
-							<td>
-								${it.descricao}
-							</td>
+			<div class="box box-white">
+				<table id="example" class="table table-striped table-hover">
+					<g:if test="${!grupos?.isEmpty()})"></g:if>
+					<thead>
+						<tr>
+							<th style="width: 55px;"></th>
+							<th style="width: 280px;">Nome</th>
+							<th style="width: 60px;">Descrição</th>
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-			<script type="text/javascript">
-			$(document).ready(function() {
-				$('#example').DataTable();
-				var tabela = $('#example').dataTable();
-				// Ordena por nome e "desempata" com o id
-				tabela.fnSort([ [ 1, 'asc' ] ]);
-			});
-		</script>
+					</thead>
+					<tbody>
+						<g:each in='${grupos?}'>
+	
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+											<g:if test="${perm2}">
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/grupo/editarGrupo/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+												</g:if>
+										</ul>
+	
+									</div>
+								</td>
+								<td>
+									${it.nome}
+								</td>
+								<td>
+									${it.descricao}
+								</td>
+							</tr>
+						</g:each>
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 				<g:if test="${perm2}">
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -129,7 +121,7 @@ function printDiv(id)
 						</div>
 						<div class="modal-body">
 							<g:form controller="Grupo" action="salvar" class="form">
-								<fieldset>
+								
 									<div class="form-heading">
 										<label>Nome</label>
 										<div class="controls">
@@ -144,41 +136,64 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>											
-									<section class="sidebar">	
-									<label>Permissões</label>						
-										<ul class="sidebar-menu">
-											<g:each in='${schemas?}' var="schema">
-											<li class="treeview">
-												<a href="#">
-													<i class="fa fa-users"></i><span>${schema.schemaname}</span> 
-													<i class="fa fa-angle-left pull-right"></i>
-												</a>
-												<ul class="treeview-menu">
-													<g:each in='${tabelas?}' var="table">	
-													<g:if test="${table.schemaname == schema.schemaname}">
-													<li><g:link controller="Aluno" action="listar">
-														<i class="fa fa-graduation-cap"></i> ${table.tabela}</g:link>
-														
-														<div style="margin-top: -6.5%; margin-left: 50%; padding: 2%;" class="radio">
-														  	<label class="radio-inline">
-														  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1"> L
-															</label>
-															<label class="radio-inline">
-														  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2"> E
-															</label>
-															<label class="radio-inline">
-														  		<input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0" checked> N
-															</label>
-														</div>
-													</li>
-													</g:if>
-													</g:each>			
-												</ul>
-											</li>
-											</g:each>
-										</ul>				
-									</section>
-								</fieldset>
+									<div class="box box-solid">
+									    <div class="box-header with-border">
+									      <h3 class="box-title">Permissões</h3>
+									    </div>
+									    <div class="box-body">
+									      <div class="box-group" id="accordion">
+									        <g:each in='${schemas?}' var="schema">
+									            <div class="panel box box-primary">
+										          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne${schema.schemaname}" aria-expanded="false" class="collapsed">	
+										          	<div class="box-header with-border">
+										                <h4 class="box-title">
+										                    ${schema.schemaname.replaceAll("_"," ")}
+										                </h4>
+										            </div>
+									              </a>
+									              <div id="collapseOne${schema.schemaname}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+									                <div class="box-body">
+									                    <g:each in='${tabelas?}' var="table"> 
+												          <g:if test="${table.schemaname == schema.schemaname}">
+													          <li class="editar-li">
+													            ${table.tabela}
+													            <div style="margin-top: -3.5%; margin-left: 60%; padding: 2%;" class="radio">
+													                <label class="radio-inline">
+													                <g:if test="${table.permissao == '1' }">  
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}" checked> L
+													              </g:if>
+													              <g:else>
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}"> L
+													              </g:else>
+													              </label>
+													              <label class="radio-inline">
+													              <g:if test="${table.permissao == '2' }">
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}" checked> E
+													              </g:if>
+													              <g:else>
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}"> E
+													              </g:else>
+													              </label>
+													              <label class="radio-inline">
+													              <g:if test="${table.permissao == '0' }">
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}" checked> N
+													              </g:if>
+													              <g:else>
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}"> N
+													              </g:else>
+													              </label>
+													            </div>
+													          </li>
+												          </g:if>
+												    	</g:each>  
+									                </div>
+									              </div>
+									            </div>
+									        </g:each>        
+									      </div>
+									    </div>
+									</div>
+				
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
 										<i class="fa fa-save"></i> Cadastrar

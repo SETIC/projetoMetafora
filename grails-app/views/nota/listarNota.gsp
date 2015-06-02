@@ -7,18 +7,39 @@
 <body>
 
 	<script>
-function printDiv(id)
-{
-  var divToPrint=document.getElementById(id);
-  newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-  newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
-  newWin.print();
-  newWin.close();
-}
-</script>
+
+		function printDiv(id) {
+			var divToPrint = document.getElementById(id);
+			newWin = window.open("");
+			
+			
+			newWin.document.write("<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
+			newWin.document.write("<h4 style='margin-top:1px;text-align:center'>PREFEITURA DE SÃO GONÇALO DO AMARANTE <br></h4>");
+			newWin.document.write("<h3 style='text-align:center;margin-top:10px;'>GERAÇÃO DE BOLETIM</h3><br/><br/>");
+			newWin.document.write("<hr><br/><br/> ");
+			newWin.document.write(divToPrint.outerHTML);
+			 var now = new Date();
+
+         	  meses = new Array(12);
+
+         	  meses[0] = "Janeiro";
+         	  meses[1] = "Fevereiro";
+         	  meses[2] = "Março";
+         	  meses[3] = "Abril";
+         	  meses[4] = "Maio";
+         	  meses[5] = "Junho";
+         	  meses[6] = "Julho";
+         	  meses[7] = "Agosto";
+         	  meses[8] = "Setembro";
+         	  meses[9] = "Outubro";
+         	  meses[10] = "Novembro";
+         	  meses[11] = "Dezembro";
+
+         	 newWin.document.write("<p style='font-size:12px;margin-top:10%; margin-left:70%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>");
+			newWin.print();
+			newWin.close();
+		}
+	</script>
 	<section class="content-header">
 		<h1>
 			Notas <small>Visualização e Gerenciamento</small>
@@ -32,46 +53,39 @@ function printDiv(id)
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
 		<div>
-			<g:form controller="Notas" action="salvar" class="form">
-				<fieldset>
-					<div class="form-heading">
-						<label>Nome</label>
-						<div class="controls">
-							<g:textField class="form-control" required="true" name="nome"
-								value="" />
-						</div>
-					</div>
-					<br>
+			<div class="row">
+				<div class="col-sm-2">
 					<div class="form-heading">
 						<label>Turma</label>
 						<div class="controls">
-						<div id="teste"></div>
-						
-							<select class="form-control" name="turma" id="comboTurma">
-							</select>
+							${turmaDisciplina[0].turma.turma}
 						</div>
 					</div>
 					<br>
-					<br>
+				</div>
+
+				<div class="col-sm-2">
 					<div class="form-heading">
-					<label>Disciplinas</label>
-					<div class="controls">
-						<g:select class="form-control selectpicker"
-							data-live-search="true" 
-							name="disciplinaProf" multiple="multiple"
-							from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
-							value="${id}" optionKey="id" optionValue="disciplina" />
+						<label>Série</label>
+						<div class="controls">
+							${turmaDisciplina[0].turma.serie.serie}
+						</div>
 					</div>
+					<br>
 				</div>
-				<br>
-				</fieldset>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary btn-flat">
-						<i class="fa fa-save"></i> Salvar
-					</button>
-					<input type="reset" class="btn btn btn-flat" value="Limpar">
+
+
+				<div class="col-sm-2">
+					<div class="form-heading">
+						<label>Disciplina</label>
+						<div class="controls">
+							${turmaDisciplina[0].disciplinaLecionadaPorProfessor.disciplina.disciplina}
+						</div>
+					</div>
+					<br>
 				</div>
-			</g:form>
+			</div>
+			<br />
 			<g:if test="${ok}">
 				<div class="alert alert-success">
 					${ok}
@@ -82,243 +96,158 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<g:if test="${!professores?.isEmpty()})"></g:if>
-				<thead>
-					<tr>
-						<th style="width: 65px;"></th>
-						<th>Alunos</th>
-						<th>1º Bimestre</th>
-						<th>2º Bimestre</th>
-						<th>3º Bimestre</th>
-						<th>4º Bimestre</th>
-						<th>Prova Final</th>
-						<th>Situação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${notas?}'>
-						
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -35px" class="opcoes">
-									<ul style="display: inline">
-										
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href=""><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar()"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										
-										
-										<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
-											href=""><span
-												class="glyphicon glyphicon-eye-open"></span></a></li>
-									</ul>
-
-								</div>
-							</td>
-							<td>
-								${it.observacao}
-							</td>
-							<td>
-								${it.pontuacao}
-							</td>
-							<td>
-								${it. }
-							</td>
-							<td>
-									
-							<td>
-								
-							</td>
-							<td>
-								
-							</td>
+			<div class="box box-white">
+				<table id="table" class="table table-striped table-hover example">
+					<thead>
+						<tr>
+							<th>Alunos</th>
+							<th>1º Bimestre</th>
+							<th>2º Bimestre</th>
+							<th>3º Bimestre</th>
+							<th>4º Bimestre</th>
+							<th>Recuperação</th>
+							<th>Prova Final</th>
+							<th>Média Parcial</th>
+							<th>Média Final</th>
+							<th>Situação</th>
 						</tr>
-					</g:each>
-
-				</tbody>
-			</table>
-		
+					</thead>
+					<tbody>
+						<g:each in="${notas}" var="nota">
+	
+							<%
+					def nota1 = 0
+					def nota2 = 0
+					def nota3 = 0
+					def nota4 = 0
+					def notaRecuperacao = 0
+					def notaProvaFinal = 0
+					
+					def situacao = "Em Andamento"
+					def label = "label-primary"
+					def verf = true
+					
+					if (nota.nota1 != null) {nota1 = nota.nota1} else {verf = false}
+					if (nota.nota2 != null) {nota2 = nota.nota2} else {verf = false}
+					if (nota.nota3 != null) {nota3 = nota.nota3} else {verf = false}
+					if (nota.nota4 != null) {nota4 = nota.nota4} else {verf = false}
+					
+					if (nota.notaRecuperacao != null) {notaRecuperacao = nota.notaRecuperacao} else {}
+					if (nota.provaFinal != null) {notaProvaFinal = nota.provaFinal} else {}
+					
+					
+					def notaFinal = ((nota1+nota2+nota3+nota4))
+					
+					def mediaParcial = ((nota1+nota2+nota3+nota4)/4)
+					
+					def mediaRecuperacao = ((nota1+nota2+nota3+nota4+notaRecuperacao)/5)
+					
+					def mediaProvaFinal = ((notaRecuperacao + notaProvaFinal)/2)
+					
+					def soma2 = nota1+nota2+nota3+nota4+notaRecuperacao
+					
+					def resultado3 = notaRecuperacao + notaProvaFinal
+					
+					def mediaFinal = ((soma2 + resultado3)/6)
+					
+					if (verf){
+						if (mediaParcial >= 6){
+							situacao = "Aprovado"
+							label = "label-success"
+						}else{
+							if(notaRecuperacao == 0){
+								situacao = "Recuperação"
+								label = "label-primary"
+							}else{
+								if(mediaRecuperacao >= 6){
+									situacao = "Aprovado"
+									label = "label-success"
+								}
+								else{
+									if(notaProvaFinal == 0){
+										situacao = "Prova Final"
+										label = "label-warning"
+									}else{
+										mediaFinal = mediaProvaFinal
+										if(mediaProvaFinal >= 5){
+											situacao = "Aprovado"
+											label = "label-success"
+										}else{
+											situacao = "Reprovado"
+											label = "label-danger"
+										}
+									}
+								}	
+							}	
+						}		
+					}
+					
+					if (nota.nota1 == null) {nota1 = nota.nota1} 
+					if (nota.nota2 == null) {nota2 = nota.nota2} 
+					if (nota.nota3 == null) {nota3 = nota.nota3}
+					if (nota.nota4 == null) {nota4 = nota.nota4} 
+					 %>
+	
+							<tr class='linha_registro'>
+								<td>
+									${nota.nome}
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota1}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota2}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota3}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota4}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota.notaRecuperacao}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${nota.provaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${mediaParcial}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								<td>
+									<g:formatNumber
+										number="${mediaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</td>
+								
+								<td><span class="label ${label}">${situacao}</span></td>
+							</tr>
+						</g:each>
+	
+	
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
-			<g:if test="${perm2}">
-			<button class="btn btn-primary btn-flat" data-toggle="modal"
-				data-target="#myModal">
-				<i class="fa fa-plus"></i> Novo Professor
-			</button>
-			</g:if>
-
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			
+			<button class="btn btn-danger btn-flat" onClick="printDiv('table')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
-			<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Cadastro de
-								Professor</h4>
-						</div>
-						<div class="modal-body">
-							<g:form controller="Professor" action="salvar" class="form">
-								<fieldset>
-									<div class="form-heading">
-										<label>Nome</label>
-										<div class="controls">
-											<g:textField class="form-control" required="true" name="nome"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Data de Nascimento</label>
-										<div class="controls">
-											<g:formatDate format="yyyy-MM-dd" date="${date}" />
-											<g:datePicker noSelection="['':'']" precision="day"
-												class="form-control" required="true" name="dataDeNascimento"
-												value="" />
-
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>CPF</label>
-										<div class="controls">
-											<g:textField class="form-control" required="true" id="cpf"
-												name="cpfCnpj" value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Número do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNumero" value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Cartório do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoCartorio"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoLivro"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Folha do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcFolhaDoLivro"
-												value="" />
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Sexo</label>
-											<div class="controls">
-												<label class="radio-inline"> <input type="radio"
-													name="sexo" id="inlineRadio1" value="MASCULINO">
-													MASCULINO
-												</label> <label class="radio-inline"> <input type="radio"
-													name="sexo" id="inlineRadio2" value="FEMININO">
-													FEMININO
-												</label>
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Nacionalidade</label>
-											<div class="controls">
-												<g:textField class="form-control" required="true"
-													name="nacionalidade" value="" />
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Estado Civil</label>
-											<div class="controls">
-												<select class="form-control" name="estadoCivil">
-													<option value="null">Selecione...</option>
-													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-													<option value="CASADO(A)">CASADO(A)</option>
-													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-													<option value="VIÚVO(A)">VIÚVO(A)</option>
-												</select>
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Profissão</label>
-											<div class="controls">
-												<g:textField class="form-control" required="true"
-													name="profissao" value="" />
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Carga Horária</label>
-											<div class="controls">
-												<g:textField class="form-control" required=""
-													name="cargaHoraria" value="" />
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Matricula</label>
-											<div class="controls">
-												<g:textField class="form-control" required="true"
-													name="matricula" value="" />
-											</div>
-										</div>
-									</div>
-									<br>
-
-
-
-
-
-
-
-
-
-									<div class="form-heading">
-										<label>Disciplinas</label>
-										<div class="controls">
-											<g:select class="form-control selectpicker"
-												data-live-search="true" 
-												name="disciplinaProf" multiple="multiple"
-												from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
-												value="${id}" optionKey="id" optionValue="disciplina" />
-										</div>
-									</div>
-									<br>
-								</fieldset>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary btn-flat">
-										<i class="fa fa-save"></i> Cadastrar
-									</button>
-									<input type="reset" class="btn btn btn-flat" value="Limpar">
-								</div>
-							</g:form>
-						</div>
-					</div>
-				</div>
+			
 			</div>
-		</div>
 	</section>
 </body>
 </html>

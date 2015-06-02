@@ -6,6 +6,8 @@ import br.gov.rn.saogoncalo.academico.Turma
 class Escola {
 	PessoaJuridica pessoaJuridica
 	String inepDaEscola
+	String latitude
+	String longitude
 	
 	static hasMany = [sala:Sala, turma:Turma]
 	//static belongsTo = [pessoa:Pessoa]
@@ -13,6 +15,8 @@ class Escola {
 	static constraints = {
 	
 		inepDaEscola blank:false, nullable:true , unique:true
+		latitude nullable:true 
+		longitude nullable:true 
 		
 		}
 	

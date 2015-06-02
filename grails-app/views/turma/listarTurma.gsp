@@ -50,65 +50,66 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-			<table id="" class="table table-striped table-hover example">
-				<thead>
-					<tr>
-						<th style="width: 60px;"></th>
-						<th>Escola</th>
-						<th>Série</th>
-						<th>Turma</th>
-						<th>Turno</th>
-						<th>Vagas</th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in='${turmas?}'>
-						<tr class='linha_registro'>
-							<td>
-								<div style="margin-left: -45px" class="opcoes">
-									<ul style="display: inline">
-										
-										<g:if test="${perm2}">
-										
-										<li class="btn btn-primary btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/turma/editarTurma/${it.id}"><span
-												class="glyphicon glyphicon-pencil"></span></a></li>
-										<li onclick="deletar(${it.id})"
-											class="btn btn-danger btn-xs btn-flat"><span
-											class="glyphicon glyphicon-remove"></span></li>
-										
-										
-										</g:if>
-										
-										
-										<li class="btn btn-success btn-xs btn-flat"><a
-											style="color: #fff"
-											href="/projetoMetafora/turma/verInfoTurma/${it.id}"><span
-												class="glyphicon glyphicon-eye-open"></span></a></li>
-									</ul>
-								</div>
-							</td>
-							<td>
-								${it.escola.pessoaJuridica.pessoa.nome}
-							</td>
-							<td>
-								${it.serie.serie}
-							</td>
-							<td>
-								${it.turma}
-							</td>
-							<td>
-								${it.turno}	
-							</td>
-							<td>
-								${it.vagas}
-							</td>
+			<div class="box box-white">
+				<table id="" class="table table-striped table-hover example">
+					<thead>
+						<tr>
+							<th style="width: 60px;"></th>
+							<th>Escola</th>
+							<th>Série</th>
+							<th>Turma</th>
+							<th>Turno</th>
+							<th>Vagas</th>
 						</tr>
-					</g:each>
-				</tbody>
-			</table>
-			
+					</thead>
+					<tbody>
+						<g:each in='${turmas?}'>
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -45px" class="opcoes">
+										<ul style="display: inline">
+											
+											<g:if test="${perm2}">
+											
+											<li class="btn btn-primary btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/turma/editarTurma/${it.id}"><span
+													class="glyphicon glyphicon-pencil"></span></a></li>
+											<li onclick="deletar(${it.id})"
+												class="btn btn-danger btn-xs btn-flat"><span
+												class="glyphicon glyphicon-remove"></span></li>
+											
+											
+											</g:if>
+											
+											
+											<li class="btn btn-success btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/turma/verInfoTurma/${it.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li>
+										</ul>
+									</div>
+								</td>
+								<td>
+									${it.escola.pessoaJuridica.pessoa.nome}
+								</td>
+								<td>
+									${it.serie.serie}
+								</td>
+								<td>
+									${it.turma}
+								</td>
+								<td>
+									${it.turno}	
+								</td>
+								<td>
+									${it.vagas}
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</div>
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 			<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -145,9 +146,10 @@ function printDiv(id)
 											<select class="form-control selectpicker"
 												data-live-search="true" name="escola" id="comboEscola"
 												onchange="mudarEscola();">
-												<g:each in="${escolas}">
-													<option value="0" disabled="disabled" selected="selected">
+												<option value="0" disabled="disabled" selected="selected">
 														Selecione uma escola</option>
+												<g:each in="${escolas}">
+													
 													<option value="${it.id}">
 														${it.pessoaJuridica.razaoSocial}
 													</option>

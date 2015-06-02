@@ -42,7 +42,7 @@ class DisciplinaController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "DISCIPLINA", "2")
 
 			if (perm1 || perm2) {
-				def disciplinas = Disciplina.findAll()
+				def disciplinas = Disciplina.findAll() 
 				//render (view:"/disciplina/listarDisciplina.gsp", model:[disciplinas:disciplinas])
 				if (tipo == "ok")
 
@@ -94,7 +94,7 @@ class DisciplinaController {
 				Disciplina disciplinas = Disciplina.get(id)
 				render (view:"/disciplina/editarDisciplina.gsp", model:[disciplinas:disciplinas])
 			}else{
-				render("nao tem permissão")
+				render(view:"/error403.gsp")
 			}
 		}
 	}
@@ -179,4 +179,15 @@ class DisciplinaController {
 			}
 		}
 	}
+	
+	
+	def editarAtividade(long id){
+
+				Atividade atividades = Atividade.get(id)
+				render (view:"/atividade/editarAtividade.gsp", model:[escolas:escolas])
+	
+	}
+	
+	
+	
 }

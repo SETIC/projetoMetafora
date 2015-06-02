@@ -1,6 +1,10 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import grails.converters.deep.JSON
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 import br.gov.rn.saogoncalo.academico.Matricula
+import br.gov.rn.saogoncalo.academico.Serie
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 class AlunoController {
@@ -10,7 +14,30 @@ class AlunoController {
 
 	def cadastrar(){
 	}
+	
+	def buscarCEP(String cep) {
+		String urlCompleta
+		String urlBase = "http://cep.correiocontrol.com.br/"
+			
+		urlCompleta = urlBase + cep + ".json"
+		
+		print urlCompleta
 
+		URL urlReferenteAAPI = new URL(urlCompleta)
+		
+		def dadosReferenteAoCep
+		
+		try {
+			dadosReferenteAoCep = new JsonSlurper().parseText(urlReferenteAAPI.text)
+			print "completo..."
+		} catch(Exception e) {
+			dadosReferenteAoCep = []
+			print "vazio..."
+		}
+		print dadosReferenteAoCep
+		render dadosReferenteAoCep as JSON
+	}
+	
 	def editarAluno(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -36,10 +63,10 @@ class AlunoController {
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
 
-		
-		def user = session["user"]
-		def pass = session["pass"]
-			
+
+			def user = session["user"]
+			def pass = session["pass"]
+
 			def usuario = new UsuarioController()
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
@@ -85,10 +112,10 @@ class AlunoController {
 		}
 
 	}
-	
-	
-	def listar() {
 
+
+	def listar() {
+		
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -105,17 +132,64 @@ class AlunoController {
 
 			if (perm1 || perm2)
 			{
-				println session["escid"]
+				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+				
+				def series = Serie.findAll()
 
-				def alunos = Aluno.executeQuery("select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
+				
+				//def pessoas = Pessoa.executeQuery(" select p from Pessoa p " +
+				//			                      "  where p.id not in (select e.id from Escola e) ")
+				
+				def alunos
 
-				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+				if (session["escid"] == 0)
+				{
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ", [max: 10, offset: 0])
+
+				}else{
+
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
+				} 
+
+
+				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2, escolas:escolas, series:series])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
+	def pesquisarAlunos(){
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
 
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm1 || perm2){
+
+				def alunos
+				def parametro = params.pesquisa
+				if (session["escid"] == 0){
+					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
+							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					
+					print("print alunossss "+ alunos )
+				}
+
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
 	def listarMensagem(String msg, String tipo) {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -133,7 +207,16 @@ class AlunoController {
 			if (perm1 || perm2)
 			{
 
-				def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
+				def alunos
+
+				if (session["escid"] == 0)
+				{
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ")
+				}else{
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
+				}
+
+
 
 				//render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos])
 				if (tipo == "ok")
@@ -156,7 +239,7 @@ class AlunoController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-			
+
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 			if (perm2){
@@ -183,13 +266,13 @@ class AlunoController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 
+
+
 			if (perm1 || perm2)
 			{
 
-				
+				def alunos = Aluno.get(id)
 
-
-				Aluno alunos = Aluno.get(id)
 
 				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos])
 			}else{
@@ -212,7 +295,7 @@ class AlunoController {
 
 			if (perm2)
 			{
-				
+
 				Pessoa pessoa = new Pessoa(params)
 
 				pessoa.escid = session["escid"]
@@ -241,8 +324,24 @@ class AlunoController {
 					Aluno aluno = new Aluno(params)
 					aluno.cidadao = cidadao
 
-
 					aluno.numeroDeInscricao = year+""+value
+					
+					
+					/*
+					//codigo pra inserir o reside  
+					def reside = new Reside()
+					reside.bairro = Bairro.get(params.bairro)
+					reside.logradouro = Logradouro.get(params.logradouro)
+					reside.pessoa = pessoa
+					reside.numero = params.numero
+					reside.complemento = parmams.complemento
+					reside.cep = params.cep
+					
+					
+					if(reside.save(flush:true)){
+						
+					}
+					*/
 
 					if(aluno.save(flush:true)){
 						aluno.errors.each{println it}
@@ -302,19 +401,40 @@ class AlunoController {
 
 				def aluno = Aluno.get(id)
 
-				def matricula = Matricula.executeQuery(
-						" select m from Matricula m, Aluno a, "+
-						"               Pessoa p, Turma t "+
-						" where a.id = m.aluno.id "+
-						" and a.id = p.id "+
-						" and t.id = m.turma.id "+
-						" and t.escola.id = ? "+
-						" and t.anoLetivo = ? "+
-						" and p.id = ? " +
-						" and m.status = 'Ativo' ", [session["escid"].toString().toLong(), ano, id])
+				def matricula
+				def escolas
 
-				def escolas = Escola.executeQuery("select e from Escola e, Pessoa p where "+
-						" e.id = p.id and p.status = 'Ativo' and e.id != ?", [session["escid"].toString().toLong()])
+				if (session["escid"] == 0)
+				{
+					matricula = Matricula.executeQuery(
+							" select m from Matricula m, Aluno a, "+
+							"               Pessoa p, Turma t "+
+							" where a.id = m.aluno.id "+
+							" and a.id = p.id "+
+							" and t.id = m.turma.id "+
+							" and t.anoLetivo = ? "+
+							" and p.id = ? " +
+							" and m.status = 'Ativo' ", [ano, id])
+
+					escolas = Escola.executeQuery("select e from Escola e, Pessoa p where "+
+							" e.id = p.id and p.status = 'Ativo' ")
+				}else{
+
+					matricula = Matricula.executeQuery(
+							" select m from Matricula m, Aluno a, "+
+							"               Pessoa p, Turma t "+
+							" where a.id = m.aluno.id "+
+							" and a.id = p.id "+
+							" and t.id = m.turma.id "+
+							" and t.escola.id = ? "+
+							" and t.anoLetivo = ? "+
+							" and p.id = ? " +
+							" and m.status = 'Ativo' ", [session["escid"].toString().toLong(), ano, id])
+
+					escolas = Escola.executeQuery("select e from Escola e, Pessoa p where "+
+							" e.id = p.id and p.status = 'Ativo' and e.id != ?", [session["escid"].toString().toLong()])
+
+				}
 
 
 				render (view:"/transferencia/transferir.gsp", model:[aluno:aluno, matricula:matricula, escolas:escolas])
