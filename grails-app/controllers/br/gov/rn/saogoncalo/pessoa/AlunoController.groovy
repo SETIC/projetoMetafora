@@ -68,7 +68,7 @@ class AlunoController {
 
 				def aluno = Aluno.get(params.id)
 				aluno.numeroDeInscricao = params.numeroDeInscricao
-				
+
 				//def alunos = Aluno.findAll()
 				def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 
@@ -90,7 +90,7 @@ class AlunoController {
 
 
 	def listar() {
-
+		
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -109,14 +109,14 @@ class AlunoController {
 			{
 
 				def alunos
-				
+
 				if (session["escid"] == 0)
 				{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ") 
-					
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ", [max: 10, offset: 0])
+
 				}else{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
-				} 
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]], [max: 10, offset: 5])
+				}
 
 				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 			}else{
@@ -124,7 +124,38 @@ class AlunoController {
 			}
 		}
 	}
+	def pesquisarAlunos(){
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
 
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm1 || perm2){
+
+				def alunos
+				def parametro = params.pesquisa
+				if (session["escid"] == 0){
+					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
+							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					
+					print("print alunossss "+ alunos )
+				}
+
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
 	def listarMensagem(String msg, String tipo) {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -146,12 +177,12 @@ class AlunoController {
 
 				if (session["escid"] == 0)
 				{
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ") 
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ")
 				}else{
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
-				} 
-				
-				
+				}
+
+
 
 				//render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos])
 				if (tipo == "ok")
@@ -200,15 +231,15 @@ class AlunoController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
-			
-			
+
+
 
 			if (perm1 || perm2)
 			{
-				
+
 				def alunos = Aluno.get(id)
-				
-				
+
+
 				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos])
 			}else{
 				render(view:"/error403.gsp")
@@ -319,10 +350,10 @@ class AlunoController {
 				int ano = ca.get(Calendar.YEAR)
 
 				def aluno = Aluno.get(id)
-			
+
 				def matricula
 				def escolas
-				
+
 				if (session["escid"] == 0)
 				{
 					matricula = Matricula.executeQuery(
