@@ -14,19 +14,19 @@ class AlunoController {
 
 	def cadastrar(){
 	}
-	
+
 	def buscarCEP(String cep) {
 		String urlCompleta
 		String urlBase = "http://cep.correiocontrol.com.br/"
-			
+
 		urlCompleta = urlBase + cep + ".json"
-		
+
 		print urlCompleta
 
 		URL urlReferenteAAPI = new URL(urlCompleta)
-		
+
 		def dadosReferenteAoCep
-		
+
 		try {
 			dadosReferenteAoCep = new JsonSlurper().parseText(urlReferenteAAPI.text)
 			print "completo..."
@@ -37,7 +37,7 @@ class AlunoController {
 		print dadosReferenteAoCep
 		render dadosReferenteAoCep as JSON
 	}
-	
+
 	def editarAluno(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -115,7 +115,7 @@ class AlunoController {
 
 
 	def listar() {
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -133,13 +133,13 @@ class AlunoController {
 			if (perm1 || perm2)
 			{
 				def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-				
+
 				def series = Serie.findAll()
 
-				
+
 				//def pessoas = Pessoa.executeQuery(" select p from Pessoa p " +
 				//			                      "  where p.id not in (select e.id from Escola e) ")
-				
+
 				def alunos
 
 				if (session["escid"] == 0)
@@ -148,8 +148,8 @@ class AlunoController {
 
 				}else{
 
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
-				} 
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
+				}
 
 
 				render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2, escolas:escolas, series:series])
@@ -180,8 +180,12 @@ class AlunoController {
 				if (session["escid"] == 0){
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-					
+
 					print("print alunossss "+ alunos )
+				}else{
+					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
 				}
 
 				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
@@ -325,23 +329,20 @@ class AlunoController {
 					aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-					
-					
+
+
 					/*
-					//codigo pra inserir o reside  
-					def reside = new Reside()
-					reside.bairro = Bairro.get(params.bairro)
-					reside.logradouro = Logradouro.get(params.logradouro)
-					reside.pessoa = pessoa
-					reside.numero = params.numero
-					reside.complemento = parmams.complemento
-					reside.cep = params.cep
-					
-					
-					if(reside.save(flush:true)){
-						
-					}
-					*/
+					 //codigo pra inserir o reside  
+					 def reside = new Reside()
+					 reside.bairro = Bairro.get(params.bairro)
+					 reside.logradouro = Logradouro.get(params.logradouro)
+					 reside.pessoa = pessoa
+					 reside.numero = params.numero
+					 reside.complemento = parmams.complemento
+					 reside.cep = params.cep
+					 if(reside.save(flush:true)){
+					 }
+					 */
 
 					if(aluno.save(flush:true)){
 						aluno.errors.each{println it}
