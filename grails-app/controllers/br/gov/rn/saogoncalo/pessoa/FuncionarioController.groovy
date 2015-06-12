@@ -5,6 +5,47 @@ import br.gov.rn.saogoncalo.login.UsuarioController
 class FuncionarioController {
 
 	def index() { }
+	
+	
+	
+	
+	def pesquisarFuncionarios(){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm1 || perm2){
+
+				def funcionarios
+				def parametro = params.pesquisa
+				if (session["escid"] == 0){
+					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
+							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+					print("print funcionarios "+ funcionarios )
+				}else{
+					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+				}
+
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
 
 	def editarFuncionario(long id){
 
@@ -130,9 +171,9 @@ class FuncionarioController {
 				
 				if (session["escid"] == 0)
 				{
-					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
+					//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
 				}else{
-					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				//	funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 				}
 				
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, perm2:perm2])
