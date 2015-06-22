@@ -33,3 +33,7 @@
 /test
 /wrapper
 /src
+
+.project
+
+*.log

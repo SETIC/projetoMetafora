@@ -2,7 +2,9 @@ package br.gov.rn.saogoncalo.organizacao
 
 class Cargo {
 
+
 	String cargo
+
 	double moedaSalario
 	
 			static hasMany = [lotacao:Lotacao]
@@ -17,5 +19,9 @@ class Cargo {
 				version false
 				id generator: 'sequence', params:[sequence:'administracao_organizacao.cargo_id_seq']
 			}
-}
+
+		
+		
+	}
+
 

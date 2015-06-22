@@ -6,9 +6,10 @@ class Funcionario {
 	Cidadao cidadao
 	String cargaHoraria
 	String matricula
-	
+
 
 	static hasMany = [lotacao:Lotacao]
+
 	
 	static constraints = {
 	

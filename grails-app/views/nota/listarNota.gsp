@@ -7,6 +7,7 @@
 <body>
 
 	<script>
+
 		function printDiv(id) {
 			var divToPrint = document.getElementById(id);
 			newWin = window.open("");
@@ -85,7 +86,6 @@
 				</div>
 			</div>
 			<br />
-
 			<g:if test="${ok}">
 				<div class="alert alert-success">
 					${ok}
@@ -248,7 +248,6 @@
 			</button>
 			
 			</div>
-	
 	</section>
 </body>
 </html>

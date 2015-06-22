@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,7 +24,7 @@
     
     <!-- Bootstrap Select -->
     <link href="${resource(dir: 'css', file: 'bootstrap-select.css')}" rel="stylesheet">
-	
+
 	<!-- DataTable Bootstrap -->
 	<link href="${resource(dir: 'css', file: 'dataTables.bootstrap.css')}"	rel="stylesheet">
 	

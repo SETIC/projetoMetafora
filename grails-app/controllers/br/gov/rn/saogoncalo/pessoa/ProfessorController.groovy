@@ -10,6 +10,47 @@ class ProfessorController {
 
 	def index() {
 	}
+	
+	def pesquisarProfessores(){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Professor", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm1 || perm2){
+
+				def professores
+				def parametro = params.pesquisa
+				if (session["escid"] == 0){
+					professores = Professor.executeQuery("select a from Pessoa as p , Professor as a "+
+							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+					print("print professores "+ professores )
+				}else{
+					professores = Professor.executeQuery("select a from Pessoa as p , Professor as a "+
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+				}
+
+				render(view:"/professor/listarProfessor.gsp", model:[professores:professores, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+		
+		
+	
 
 	def listar (){
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -30,9 +71,9 @@ class ProfessorController {
 				
 				if (session["escid"] == 0)
 				{
-					professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id ")
+					//professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id ")
 				}else{
-					professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
+					//professores = Professor.executeQuery(" select pr from Pessoa as p, Professor as pr where p.id = pr.id and p.escid = ?",[session["escid"]])
 				
 				}
 				

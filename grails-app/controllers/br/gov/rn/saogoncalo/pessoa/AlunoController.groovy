@@ -5,10 +5,9 @@ import br.gov.rn.saogoncalo.academico.Serie
 import br.gov.rn.saogoncalo.localizacao.Bairro
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
-import grails.converters.deep.JSON
+import br.gov.rn.saogoncalo.pessoa.Parentesco
 import grails.converters.JSON
-import groovy.json.JsonSlurper
-
+import groovy.Json.Slurper
 
 class AlunoController {
 
@@ -154,6 +153,7 @@ class AlunoController {
 					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
 				}
 
+
 				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
@@ -164,6 +164,7 @@ class AlunoController {
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO' ")
+
 
 
 
@@ -200,10 +201,14 @@ class AlunoController {
 					print("print alunossss "+ alunos )
 				}else{
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
-							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+							//"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
 				}
 
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2]) 
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -373,11 +378,19 @@ class AlunoController {
 					 def reside = new Reside()
 					 reside.bairro = bairro
 					 reside.logradouro = logradouro
+
+					/*
+					 //codigo pra inserir o reside  
+					 def reside = new Reside()
+					 reside.bairro = Bairro.get(params.bairro)
+					 reside.logradouro = Logradouro.get(params.logradouro)
+					 
 					 reside.pessoa = pessoa
 					 reside.numero = params.numero
 					 reside.complemento = parmams.complemento
 					 reside.cep = params.cep
 					 if(reside.save(flush:true)){
+
 					 }*/
 
 
@@ -423,10 +436,6 @@ class AlunoController {
 						reside.save(flush:true)
 
 					}
-
-
-
-
 
 					if(aluno.save(flush:true)){
 						aluno.errors.each{println it}

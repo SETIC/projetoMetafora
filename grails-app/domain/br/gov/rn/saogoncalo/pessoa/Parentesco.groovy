@@ -1,10 +1,12 @@
 package br.gov.rn.saogoncalo.pessoa
 
+
 class Parentesco{
 
 		String parentesco
 
 		static belongsTo = [pessoa:Pessoa, pessoaFisica:PessoaFisica]
+
 		
 		static constraints = {
 			parentesco blank:false, nullable:false

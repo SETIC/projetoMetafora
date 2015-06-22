@@ -54,7 +54,6 @@
 			</div>
 			<!-- /.box-header -->
 
-
 			<div class="box box-white">
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!transferencias?.isEmpty()})"></g:if>
@@ -117,16 +116,12 @@
 				</table>
 			</div>
 
-
-
 			<div class="box-header">
 				<h4 class="box-title" style="font-weight: bold;">
 					Transferidos <i class="glyphicon glyphicon-arrow-right"></i>
 				</h4>
 			</div>
 			<!-- /.box-header -->
-
-
 			<div class="box box-white">
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!transferencias?.isEmpty()})"></g:if>

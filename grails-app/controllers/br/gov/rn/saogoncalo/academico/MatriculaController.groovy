@@ -6,10 +6,80 @@ import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
 
+
 class MatriculaController {
 
 	def index() {
 	}
+	
+	
+	
+	def pesquisarMatriculas(){
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm1 || perm2){
+				Calendar ca = Calendar.getInstance()
+				int ano = ca.get(Calendar.YEAR)
+				
+				def matricula
+				def alunos
+				def escolas
+				def parametro = params.pesquisa
+				if (session["escid"] == 0){	
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
+							"  where t.id = m.turma.id " +
+							"    and p.id = m.aluno.id" +
+							"    and t.anoLetivo = ? "+
+							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')",[ano])
+
+					escolas = Escola.findAll()
+
+
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ?  ) and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " , [ano])
+					print("print matriculas "+ matricula )
+				}else{
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+							"  where t.id = m.turma.id " +
+							"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+
+
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+				}
+
+				render(view:"/matricula/listarMatricula.gsp", model:[escolas:escolas, alunos:alunos, matricula:matricula, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+		
+		
+		
+	
 
 
 
@@ -38,37 +108,38 @@ class MatriculaController {
 			
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
 
-					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
-							"  where t.id = m.turma.id " +
-							"  and t.anoLetivo = ?",[ano])
+					//matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+					//		"  where t.id = m.turma.id " +
+					//		"  and t.anoLetivo = ?",[ano])
 
-					escolas = Escola.findAll()
+					//escolas = Escola.findAll()
 
 
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-							"  where p.id = a.id and p.status = 'Ativo' " +
-							"    and a.id not in ( select m.aluno.id " +
-							"  						 from Matricula as m, Turma as t " +
-							" 					    where t.id = m.turma.id " +
-							"   				     	and t.anoLetivo >= ? ) " , [ano])
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+					//		"  where p.id = a.id and p.status = 'Ativo' " +
+					//		"    and a.id not in ( select m.aluno.id " +
+					//		"  						 from Matricula as m, Turma as t " +
+					//		" 					    where t.id = m.turma.id " +
+					//		"   				     	and t.anoLetivo >= ? ) " , [ano])
 				
 					
 					
 					}else{
 
-					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
-							"  where t.id = m.turma.id " +
-							"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+					//matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+					//		"  where t.id = m.turma.id " +
+					//		"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
-					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					//escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
 
-					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
-							"    and a.id not in ( select m.aluno.id " +
-							"  						 from Matricula as m, Turma as t " +
-							" 					    where t.id = m.turma.id " +
-							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+					//		"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+					//		"    and a.id not in ( select m.aluno.id " +
+					//		"  						 from Matricula as m, Turma as t " +
+					//		" 					    where t.id = m.turma.id " +
+					//		"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+							
 				}
 
 

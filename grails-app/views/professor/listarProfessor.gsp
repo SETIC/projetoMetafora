@@ -52,6 +52,20 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
+			
+			<g:form controller ="Professor" action="pesquisarProfessores" class ="form">
+					<div class = "form-group">
+						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+						<div class="col-sm-10">
+							<g:textField class="form-control" id="" name="pesquisa"
+								style="width: 300px" value="${ }" />
+								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="fa fa-save"></i> Buscar
+							</button>
+							
+						</div>
+					</div>
+				</g:form>
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!professores?.isEmpty()})"></g:if>
 					<thead>
@@ -79,16 +93,19 @@ function printDiv(id)
 										<ul style="display: inline">
 											
 											<g:if test="${perm2}">
-											<li class="btn btn-primary btn-xs btn-flat"><a
+											<li title="Editar Professor"
+											    class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/professor/editarProfessor/${pessoa.id}"><span
 													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${pessoa.id})"
+											<li title="Remover Professor"
+											    onclick="deletar(${pessoa.id})"
 												class="btn btn-danger btn-xs btn-flat"><span
 												class="glyphicon glyphicon-remove"></span></li>
 											</g:if>
 											
-											<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
+											<li title="ver detalhes do professor"
+											    class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
 												href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
