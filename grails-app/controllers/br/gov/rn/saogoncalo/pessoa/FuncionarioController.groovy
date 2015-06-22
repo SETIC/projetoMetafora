@@ -1,6 +1,8 @@
 package br.gov.rn.saogoncalo.pessoa
 
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.organizacao.Cargo
+import br.gov.rn.saogoncalo.organizacao.Lotacao
 
 class FuncionarioController {
 
@@ -28,19 +30,21 @@ class FuncionarioController {
 			if (perm1 || perm2){
 
 				def funcionarios
+				def cargos
+				
 				def parametro = params.pesquisa
 				if (session["escid"] == 0){
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-
-					print("print funcionarios "+ funcionarios )
+                    cargos= Cargo.findAll()
+					print("printcargos "+ cargos )
 				}else{
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
 				}
 
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, perm2:perm2])
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargo:cargos,perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -160,8 +164,8 @@ class FuncionarioController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
-
+        
+            def cargos
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
@@ -175,8 +179,8 @@ class FuncionarioController {
 				}else{
 				//	funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 				}
-				
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, perm2:perm2])
+				cargos=Cargo.findAll()
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -194,7 +198,7 @@ class FuncionarioController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
-
+            def funcionarios
 
 			if (perm1 || perm2) {
 								
@@ -248,6 +252,9 @@ class FuncionarioController {
 
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 			if (perm2) {
+				
+				println("params ------ "+params)
+				
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
 
@@ -267,9 +274,23 @@ class FuncionarioController {
 
 					Funcionario funcionario = new Funcionario(params)
 					funcionario.cidadao = cidadao
+									 									
 
 					if(funcionario.save(flush:true)){
 						funcionario.errors.each{ println it }
+						
+						def dataAtual=new Date()
+						Cargo cargo= Cargo.get(params.cargoId)
+						
+						Lotacao lotacao= new Lotacao()
+						 lotacao.cargo = cargo
+						 lotacao.funcionario=funcionario
+						 lotacao.situacao="Ativo"
+						 lotacao.vinculo=params.vinculo
+						 lotacao.funcao=params.funcao
+						 lotacao.dataInicio=dataAtual
+						 lotacao.dataTermino=dataAtual
+						 lotacao.save(flush:true)
 
 						//				def funcionarios = Funcionario.findAll()
 						//				render(view:"/funcionario/listarFuncionario.gsp", model:[
