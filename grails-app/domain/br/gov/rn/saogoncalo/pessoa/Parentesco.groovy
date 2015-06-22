@@ -2,12 +2,12 @@ package br.gov.rn.saogoncalo.pessoa
 
 class Parentesco {
 
-		String tipoParentesco
+		String parentesco
 
 		static hasMany = [pessoa:Pessoa, parentesco:Parentesco]
 		
 		static constraints = {
-			tipoParentesco blank:false, nullable:false
+			parentesco blank:false, nullable:false
 
 		}
 		

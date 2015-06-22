@@ -1,9 +1,13 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saogoncalo.organizacao.Lotacao
+
 class Funcionario {
 	Cidadao cidadao
 	String cargaHoraria
 	String matricula
+	
+	static hasMany=[lotacao:Lotacao]
 	
 	static constraints = {
 	
