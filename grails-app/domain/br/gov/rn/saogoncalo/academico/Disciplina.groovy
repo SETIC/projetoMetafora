@@ -6,7 +6,6 @@ class Disciplina {
 
 	static hasMany = [disciplinaLecionadaPorProfessor:DisciplinaLecionadaPorProfessor, conteudoDisciplina:ConteudoDaDisciplina]
 	
-
 	static constraints = {
 		disciplina blank:false, nullable:false
 		cargaHoraria blank:false, nullable:false

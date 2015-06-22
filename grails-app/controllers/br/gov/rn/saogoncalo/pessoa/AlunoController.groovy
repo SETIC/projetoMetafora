@@ -188,7 +188,7 @@ class AlunoController {
 
 				}
 
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2]) 
 			}else{
 				render(view:"/error403.gsp")
 			}
