@@ -210,6 +210,7 @@
 
 
 			<script type="text/javascript">
+			
 				function mudarEscola(){
 		    	  
 					var endereco = "localhost";

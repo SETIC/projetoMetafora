@@ -67,6 +67,12 @@
     		color: #767676 !important;
     		background-color: #E5E5E5;
     	}
+    	.hidden {
+    		display: none;
+    	}
+    	.visible {
+    		display: block;
+    	}
     </style>
   </head>
   <body class="skin-blue">

@@ -20,7 +20,7 @@ function requestAjax(elementoCep){
 		try{
 			$.ajax({
 		        type: "GET",
-		        url: "http://192.168.1.75:8080/projetoMetafora/aluno/buscarCEP?cep="+cep+"",
+		        url: "http://localhost:8080/projetoMetafora/aluno/buscarCEP?cep="+cep+"",
 		        dataType: "json",
 		        success: function(result){
 			        if(result.length == 0){
@@ -53,6 +53,17 @@ function inputsBuscando(logradouro, bairro, municipio, uf){
 	municipio.disabled = true;
 	uf.value = "Buscando...";
 	uf.disabled = true;			
+}
+
+function inputsHabilitado(){
+	var elementoLogradouro = document.getElementById("iLogradouro");
+	var elementoBairro = document.getElementById("iBairro");
+	var elementoMunicipio = document.getElementById("iMunicipio");
+	var elementoUf = document.getElementById("iUf");
+	elementoLogradouro.disabled = false;
+	elementoBairro.disabled = false;
+	elementoMunicipio.disabled = false;
+	elementoUf.disabled = false;			
 }
 
 function inserirValoresNosInputs(result, logradouro, bairro, municipio, uf){
