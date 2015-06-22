@@ -114,19 +114,22 @@ function printDiv(id)
 			</g:if>
 			<div class="box box-white">
 			
+			
 				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
 					<div class = "form-group">
-						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="${ }" />
-								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
-								<i class="fa fa-save"></i> Buscar
+								<button style="margin-left: 310px; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="glyphicon glyphicon-search"></i> Buscar
 							</button>
 							
 						</div>
 					</div>
 				</g:form>
+				
+				
 				<table id="" class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
