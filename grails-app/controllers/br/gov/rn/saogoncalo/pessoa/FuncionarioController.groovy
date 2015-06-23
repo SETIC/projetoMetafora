@@ -1,8 +1,9 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saoconcalo.organizacao.Cargo
+import br.gov.rn.saoconcalo.organizacao.Lotacao
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.organizacao.Cargo
-import br.gov.rn.saogoncalo.organizacao.Lotacao
+
 
 class FuncionarioController {
 

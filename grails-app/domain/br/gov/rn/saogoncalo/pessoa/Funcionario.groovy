@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import br.gov.rn.saogoncalo.organizacao.Lotacao
+import br.gov.rn.saoconcalo.organizacao.Lotacao
+
 
 class Funcionario {
 	Cidadao cidadao

@@ -1,13 +1,11 @@
 package br.gov.rn.saoconcalo.organizacao
 
-import com.sun.org.apache.xpath.internal.operations.String
-
 class Cargo {
 	
 	String cargo
 	double moedaSalario
 	
-			static belongsTo = [lotacao:Lotacao]
+			static hasMany = [lotacao:Lotacao]
 			
 			static constraints = {
 				cargo blank:false, nullable:false

@@ -7,7 +7,7 @@ import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Parentesco
 import grails.converters.JSON
-import groovy.Json.Slurper
+import groovy.json.JsonSlurper
 
 class AlunoController {
 
@@ -208,7 +208,7 @@ class AlunoController {
 
 				}
 
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2]) 
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -378,42 +378,39 @@ class AlunoController {
 					 def reside = new Reside()
 					 reside.bairro = bairro
 					 reside.logradouro = logradouro
-
-					/*
+					 /*
 					 //codigo pra inserir o reside  
 					 def reside = new Reside()
 					 reside.bairro = Bairro.get(params.bairro)
 					 reside.logradouro = Logradouro.get(params.logradouro)
-					 
 					 reside.pessoa = pessoa
 					 reside.numero = params.numero
 					 reside.complemento = parmams.complemento
 					 reside.cep = params.cep
 					 if(reside.save(flush:true)){
-
 					 }*/
 
 
 
-					
+
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
-					
+
 					def idPai = Pessoa.get(params.idPai)
 					def idMae = Pessoa.get(params.idMae)
-					
+
 					parentescoPai.pessoaFisica = pessoaFisica
 					parentescoPai.pessoa = idPai
 					parentescoPai.parentesco = "PAI"
 					parentescoPai.save(flush:true)
-										
+
 					parentescoMae.pessoaFisica = pessoaFisica
 					parentescoMae.pessoa = idMae
 					parentescoMae.parentesco = "MÃE"
 					parentescoMae.save(flush:true)
-					
+
 					println("Params aqui ---- " + params)
-					
+
 
 					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = ?",[params.bairro])
 					def idLogradouro = Logradouro.executeQuery(" select l " +

@@ -10,8 +10,8 @@ class Lotacao {
 	 Date dataInicio
 	 Date dataTermino
 	 
-	   static hasMany = [cargo:Cargo]
-	   static belongsTo =[funcionario:Funcionario]
+	   static belongsTo =[funcionario:Funcionario, cargo:Cargo]
+	   
 	   static constraints = {
 		   vinculo blank:false, nullable:false
 		   
