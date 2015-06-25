@@ -264,9 +264,6 @@ function printDiv(id)
 								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 							</button>
 							<h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
-
-							<button class="btn btn-primary btn-flat" data-toggle="modal"
-								data-target="#myModal2">teste</button>
 						</div>
 						<div class="modal-body">
 							<div class="main">

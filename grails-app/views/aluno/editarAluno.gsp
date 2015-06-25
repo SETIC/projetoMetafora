@@ -53,27 +53,18 @@
 					<div class="row"
 							style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);">
 							<div class="step">
-								<div id="div1" class="col-md-4 mouse-point activestep"
+								<div id="div1" class="col-md-6 mouse-point activestep"
 									onclick="javascript: resetActive(div1, event, 0, 'step-1');">
 									<div class="row">
 										<span class="fa fa-user"></span>
 										<p>Identificação</p>
 									</div>
 								</div>
-								<div id="div2" class="col-md-4 mouse-point"
-									onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+								<div id="div2" class="col-md-6 mouse-point"
+									onclick="javascript: resetActive(div2, event, 50, 'step-2');">
 									<div class="row">
 										<span class="fa fa-home"></span>
 										<p>Endereço</p>
-									</div>
-								</div>
-								<div id="div3" class="col-md-4 mouse-point"
-									onclick="javascript: resetActive(div3, event, 70, 'step-3');">
-									<div class="row">
-										<span class="fa fa-university"></span>
-										<p>
-											Dados Variáveis <br />(iníco do ano corrente)
-										</p>
 									</div>
 								</div>
 
@@ -88,7 +79,7 @@
 							<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="nome" type="text"
-									style="width: 300px" value="${pessoa.nome }">
+									 value="${pessoa.nome }">
 							</div>
 						</div>
 						<br>
@@ -107,7 +98,7 @@
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">CPF</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" id="cpf" name="cpfCnpj"
-									style="width: 300px" value="${pessoa.cpfCnpj }" />
+									 value="${pessoa.cpfCnpj }" />
 							</div>
 						</div>
 						<br>
@@ -116,7 +107,7 @@
 								do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNumero"
-									style="width: 300px" value="${pessoaFisica.rcNumero }" />
+									 value="${pessoaFisica.rcNumero }" />
 							</div>
 						</div>
 						<br>
@@ -126,7 +117,7 @@
 								Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNomeDoCartorio"
-									style="width: 300px" value="${pessoaFisica.rcNomeDoCartorio }" />
+									 value="${pessoaFisica.rcNomeDoCartorio }" />
 							</div>
 						</div>
 						<br>
@@ -135,7 +126,7 @@
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNomeDoLivro"
-									style="width: 300px" value="${pessoaFisica.rcNomeDoLivro }" />
+									 value="${pessoaFisica.rcNomeDoLivro }" />
 							</div>
 						</div>
 						<br>
@@ -144,7 +135,7 @@
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcFolhaDoLivro"
-									style="width: 300px" value="${pessoaFisica.rcFolhaDoLivro }" />
+									 value="${pessoaFisica.rcFolhaDoLivro }" />
 							</div>
 						</div>
 						<br>
@@ -177,7 +168,7 @@
 							Nome do Pai</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="nomeDoPai"
-									style="width: 300px" value="${ }" />
+									value="${ }" />
 							</div>
 						</div>
 						<br>
@@ -186,7 +177,7 @@
 							Nome da Mãe</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="nomeDaMae"
-									style="width: 300px" value="${ }" />
+									value="${ }" />
 							</div>
 						</div>
 						<br>
@@ -194,8 +185,7 @@
 							<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" required="true"
-									name="nacionalidade" style="width: 300px"
-									value="${cidadao.nacionalidade}" />
+									name="nacionalidade" value="${cidadao.nacionalidade}" />
 							</div>
 						</div>
 						<br>
@@ -204,8 +194,7 @@
 								Civil</label>
 							<div class="col-sm-10">
 								<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
+									<select class="form-control" name="estadoCivil">
 										<option value="${cidadao.estadoCivil}" selected>
 											${cidadao.estadoCivil}
 										</option>
@@ -215,8 +204,7 @@
 									</select>
 								</g:if>
 								<g:elseif test="${cidadao.estadoCivil == '' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
+									<select class="form-control" name="estadoCivil">
 										<option value="${cidadao.estadoCivil}" selected>
 											${cidadao.estadoCivil}
 										</option>
@@ -228,8 +216,7 @@
 
 								</g:elseif>
 								<g:elseif test="${cidadao.estadoCivil == 'CASADO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
+									<select class="form-control" name="estadoCivil">
 										<option value="${cidadao.estadoCivil}" selected>
 											${cidadao.estadoCivil}
 										</option>
@@ -241,8 +228,7 @@
 								</g:elseif>
 
 								<g:elseif test="${cidadao.estadoCivil == 'DIVORCIADO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
+									<select class="form-control" name="estadoCivil">
 										<option value="${cidadao.estadoCivil}" selected>
 											${cidadao.estadoCivil}
 										</option>
@@ -254,8 +240,7 @@
 								</g:elseif>
 
 								<g:else>
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
+									<select class="form-control" name="estadoCivil">
 										<option value="${cidadao.estadoCivil}" selected>
 											${cidadao.estadoCivil}
 										</option>
@@ -269,8 +254,7 @@
 						</div>
 						<br>
 						<div class="form-group" style="margin-top: 3%;">
-							<div class="col-sm-offset-10 col-sm-2"
-								style="margin-left: 87.2%;">
+							<div class="col-sm-offset-5 col-sm-3">
 								<button type="button" class="btn btn-primary btn-flat"
 									onclick="javascript: resetActive(div2, event, 35, 'step-2');">
 									Próximo <i class="fa fa-chevron-circle-right"></i>
@@ -349,79 +333,11 @@
 							</div>
 						</div>
 						<div class="form-group" style="margin-top: 3%;">
-							<div class="col-sm-offset-9 col-sm-3"
-								style="margin-left: 77.5%;">
+						<div class="col-sm-offset-4 col-sm-8">
 								<button type="button" class="btn btn-primary btn-flat"
 									onclick="javascript: resetActive(div1, event, 0, 'step-1');">
 									<i class="fa fa-chevron-circle-left"></i> Anterior
 								</button>
-								<button type="button" class="btn btn-primary btn-flat"
-									onclick="javascript: resetActive(div3, event, 70, 'step-3');">
-									Próximo <i class="fa fa-chevron-circle-right"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="hiddenStepInfo" id="step-3"
-						style="margin-top: 2%;">
-						<h3>Dados Variáveis (iníco do ano corrente)</h3>
-						<div class="form-group">
-							<label for="iEscola" class="col-sm-2 control-label">Escola</label>
-							<div class="col-sm-10">
-								<select class="form-control selectpicker"
-									data-live-search="true" name="escolas" id="comboEscola"
-									onchange="mudarEscola();">
-									<g:each in="${escolas}">
-										<option value="0" disabled="disabled" selected="selected">Selecione
-											uma escola</option>
-										<option value="${it.id}">
-											${it.pessoaJuridica.razaoSocial}
-										</option>
-									</g:each>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="iSerie" class="col-sm-2 control-label">Série</label>
-							<div class="col-sm-10">
-								<select id="comboSerie" name="series" class="form-control"
-									onchange="mudarSerie()">
-									<g:each in='${series?}'>
-										<option value="${it.id}">
-											${it.serie}
-										</option>
-									</g:each>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="iTurma" class="col-sm-2 control-label">Turma</label>
-							<div class="col-sm-10">
-								<div id="teste"></div>
-								<select class="form-control" name="turma" id="comboTurma"></select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputnumeroDeInscricao3"
-								class="col-sm-2 control-label">Número de Inscrição</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="numeroDeInscricao"
-									style="width: 300px" value="${it.numeroDeInscricao}" readonly="readonly"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="iDataDaMatricula" class="col-sm-2 control-label">Data
-								da matrícula</label>
-							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" required="true"
-									name="dataDaMatricula" value="" />
-							</div>
-						</div>
-						<div class="form-group" style="margin-top: 3%;">
-							<div class="col-sm-offset-9 col-sm-3"
-								style="margin-left: 77.5%;">
 								<button type="submit" class="btn btn-primary btn-flat"><i
 										class="fa fa-refresh"></i> Atualizar</button>	
 								<button style="display: inline-block;" type="submit" class="btn btn-default btn-flat">
