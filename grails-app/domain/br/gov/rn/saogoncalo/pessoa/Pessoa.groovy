@@ -1,7 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import grails.plugins.brvalidation.constraint.CpfCnpjConstraint;
-
 import java.util.Date;
 
 class Pessoa {

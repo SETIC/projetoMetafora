@@ -110,8 +110,8 @@ function mudarCombo(){
 												<g:if test="${perm2}">
 
 													<li title="Editar Aluno"
-														class="btn btn-primary btn-xs btn-flat"><a
-														style="color: #fff"
+														class="btn btn-primary btn-xs btn-flat" ><a 
+														style="color: #fff" 
 														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 															class="glyphicon glyphicon-pencil"></span></a></li>
 
@@ -236,6 +236,11 @@ function mudarCombo(){
 										<div class="col-sm-10">
 											<g:textField class="form-control" id="iNomeMae" name="nomeMae"
 												placeholder="Nome" required="true" />
+										</div>
+										<label for="iCpfMae" class="col-sm-2 control-label">CpfMae</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" id="iCpfMae" name="CpfMae"
+												placeholder="CPF" required="true" />
 										</div>
 									</div>
 									<button id="closemodal" type="button"
@@ -453,20 +458,7 @@ function mudarCombo(){
 									</div>
 									<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 										<h3>Endereço</h3>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">Localização/Zona
-												de residência</label>
-											<div class="col-sm-10 radio" style="padding-top: 0px;">
-												<label for="iLocalizacaoUrbana" class="radio-inline">
-													<input type="radio" name="localizacao"
-													id="iLocalizacaoUrbana" value="URBANA" checked>
-													Urbana
-												</label> <label for="iLocalizacaoRural" class="radio-inline">
-													<input type="radio" name="localizacao"
-													id="iLocalizacaoRural" value="RURAL"> Rural
-												</label>
-											</div>
-										</div>
+
 										<div class="form-group">
 											<label for="iCep" class="col-sm-2 control-label">CEP</label>
 											<div id="iDivInputCep" class="col-sm-10">
