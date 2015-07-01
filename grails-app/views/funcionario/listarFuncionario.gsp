@@ -63,7 +63,6 @@ function printDiv(id)
 								type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
-
 						</div>
 					</div>
 				</g:form>
@@ -264,8 +263,7 @@ function printDiv(id)
 													<div class="controls">
 														<select class="form-control selectpicker"
 														data-live-search="true" name="cargoId">
-														<g:each in="${cargos}">
-															
+														  <g:each in="${cargos}">
 															<option value="${it.id}">
 																${it.cargo}
 															</option>

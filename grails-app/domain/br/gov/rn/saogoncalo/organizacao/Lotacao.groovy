@@ -1,4 +1,4 @@
-package br.gov.rn.saoconcalo.organizacao
+package br.gov.rn.saogoncalo.organizacao
 
 import br.gov.rn.saogoncalo.pessoa.Funcionario;
 

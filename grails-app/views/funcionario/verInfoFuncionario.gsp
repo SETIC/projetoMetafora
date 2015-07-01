@@ -152,14 +152,36 @@ newWin.print();
 							</div>
 						</div>
 						<br>
+						
+						<div class="form-group">
+							<label for="inputnacionalidade3" class="col-sm-2 control-label">Vinculo</label>
+							<div class="col-sm-10">
+								${lotacao.vinculo}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputnacionalidade3" class="col-sm-2 control-label">Função</label>
+							<div class="col-sm-10">
+								${lotacao.funcao}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputnacionalidade3" class="col-sm-2 control-label">Cargo</label>
+							<div class="col-sm-10">
+								${lotacao.cargo.cargo}
+							</div>
+						</div>
+						<br>
+
 						<div class="form-group">
 							<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
 								Civil</label>
 							<div class="col-sm-10">
 								
 											${cidadao.estadoCivil}
-									
-
+								
 							</div>
 						</div>
 						<br>

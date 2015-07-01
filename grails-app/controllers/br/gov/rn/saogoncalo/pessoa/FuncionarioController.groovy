@@ -1,8 +1,8 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import br.gov.rn.saoconcalo.organizacao.Cargo
-import br.gov.rn.saoconcalo.organizacao.Lotacao
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.organizacao.Cargo
+import br.gov.rn.saogoncalo.organizacao.Lotacao
 
 
 class FuncionarioController {
@@ -45,7 +45,7 @@ class FuncionarioController {
 
 				}
 
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargo:cargos,perm2:perm2])
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -62,12 +62,18 @@ class FuncionarioController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
+            def lotacao
+			def cargo
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
 			if (perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios])
+				lotacao = Lotacao.findByFuncionario(funcionarios)
+				println ("lotacao "+lotacao)
+				cargo=Cargo.findAll()
+			     
+								
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -91,7 +97,9 @@ class FuncionarioController {
 
 			if (perm1 || perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
-				render (view:"/funcionario/verInfoFuncionario.gsp", model:[funcionarios:funcionarios])
+				Lotacao lotacao=Lotacao.findByFuncionario(funcionarios)
+								
+				render (view:"/funcionario/verInfoFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -153,6 +161,14 @@ class FuncionarioController {
 					//			])
 					listarMensagem("Erro ao atualizar!", "erro")
 				}
+				
+				
+				Lotacao lotacao=Lotacao.findByFuncionario(funcionario)
+				lotacao.vinculo=params.vinculo
+				lotacao.cargo=Cargo.get(params.cargo)
+				lotacao.funcao=params.funcao
+				lotacao.save(flush:true)
+
 			}
 		}
 	}
