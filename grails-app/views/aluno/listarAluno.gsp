@@ -113,8 +113,8 @@ function mudarCombo(){
 												<g:if test="${perm2}">
 
 													<li title="Editar Aluno"
-														class="btn btn-primary btn-xs btn-flat"><a
-														style="color: #fff"
+														class="btn btn-primary btn-xs btn-flat" ><a 
+														style="color: #fff" 
 														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 															class="glyphicon glyphicon-pencil"></span></a></li>
 
@@ -225,6 +225,11 @@ function mudarCombo(){
 										<div class="row">
 											<span class="fa fa-university"></span>
 											<p>Dados Variáveis <br/>(início do ano corrente)</p>
+										</div>
+										<label for="iCpfMae" class="col-sm-2 control-label">CpfMae</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" id="iCpfMae" name="CpfMae"
+												placeholder="CPF" required="true" />
 										</div>
 									</div>
 								</div>
@@ -371,13 +376,182 @@ function mudarCombo(){
 														<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfMae" placeholder="000.000.000-XX" required="true" />
 													</div>
 												</div>
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarMae()">Cancelar</button>
-										        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
-										      </div>
-										    </div>
-										  </div>
+
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNacionalidade"
+													name="nacionalidade" placeholder="Nacionalidade"
+													required="true" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
+												Civil</label>
+											<div class="col-sm-10">
+												<select class="form-control" id="iEstadoCivil"
+													name="estadoCivil">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-10 col-sm-2"
+												style="margin-left: 87.2%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+													Próximo <i class="fa fa-chevron-circle-right"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+										<h3>Endereço</h3>
+
+										<div class="form-group">
+											<label for="iCep" class="col-sm-2 control-label">CEP</label>
+											<div id="iDivInputCep" class="col-sm-10">
+												<g:textField type="number" class="form-control"
+													data-mask="99999-999" name="cep" id="iCep"
+													onfocusout="javascript: requestAjax(this);"
+													placeholder="CEP" />
+												<p id="iMensagemCEP" class="text-danger">Por favor
+													digite um CEP válido.</p>
+											</div>
+										</div>
+										<div class="form-group">
+										
+										
+											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="endereco"
+													id="iLogradouro" placeholder="Logradouro">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNumero" class="col-sm-2 control-label">Número</label>
+											<div class="col-sm-10">
+												<input type="number" class="form-control" name="numero"
+													id="iNumero" placeholder="Número">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iComplemento" class="col-sm-2 control-label">Complemento</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="complemento"
+													id="iComplemento" placeholder="Complemento">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iBairro" class="col-sm-2 control-label">Bairro</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="bairro"
+													id="iBairro" placeholder="Bairro">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iUf" class="col-sm-2 control-label">UF</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="uf" id="iUf"
+													placeholder="Estado">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iMunicipio" class="col-sm-2 control-label">Município</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="municipio"
+													id="iMunicipio" placeholder="Município">
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-9 col-sm-3"
+												style="margin-left: 77.5%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div1, event, 0, 'step-1');">
+													<i class="fa fa-chevron-circle-left"></i> Anterior
+												</button>
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div3, event, 70, 'step-3');">
+													Próximo <i class="fa fa-chevron-circle-right"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
+										<h3>Dados Variáveis (iníco do ano corrente)</h3>
+										<div class="form-group">
+											<label for="iEscola" class="col-sm-2 control-label">Escola</label>
+											<div class="col-sm-10">
+												<select class="form-control selectpicker"
+													data-live-search="true" name="escolas" id="comboEscola"
+													onchange="mudarEscola();">
+													<g:each in="${escolas}">
+														<option value="0" disabled="disabled" selected="selected">Selecione
+															uma escola</option>
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iSerie" class="col-sm-2 control-label">Série</label>
+											<div class="col-sm-10">
+												<select id="comboSerie" name="series" class="form-control"
+													onchange="mudarSerie()">
+													<g:each in='${series?}'>
+														<option value="${it.id}">
+															${it.serie}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iTurma" class="col-sm-2 control-label">Turma</label>
+											<div class="col-sm-10">
+												<div id="teste"></div>
+												<select class="form-control" name="turma" id="comboTurma"></select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNumeroMatricula" class="col-sm-2 control-label">Nº
+												Matrícula</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" name="matricula" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iDataDaMatricula" class="col-sm-2 control-label">Data
+												da matrícula</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" required="true" name="dataDaMatricula"
+													value="" />
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-9 col-sm-3"
+												style="margin-left: 77.5%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+													<i class="fa fa-chevron-circle-left"></i> Anterior
+												</button>
+												<button type="submit" class="btn btn-success btn-flat"
+													onclick="javascript: inputsHabilitado(); resetActive(div4, event, 100, 'step-3');">
+													Finalizar <i class="fa fa-check-circle"></i>
+												</button>
+											</div>
+
 										</div>
 									</div>
 								</div>
