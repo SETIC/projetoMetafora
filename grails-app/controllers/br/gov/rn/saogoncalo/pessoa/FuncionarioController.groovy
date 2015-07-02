@@ -1,8 +1,8 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
-import br.gov.rn.saogoncalo.login.UsuarioController
 
 
 class FuncionarioController {
@@ -26,7 +26,6 @@ class FuncionarioController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
-
 
 			if (perm1 || perm2){
 
@@ -62,12 +61,18 @@ class FuncionarioController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
+            def lotacao
+			def cargo
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
 			if (perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios])
+				lotacao = Lotacao.findByFuncionario(funcionarios)
+				println ("lotacao "+lotacao)
+				cargo=Cargo.findAll()
+			     
+								
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -91,7 +96,9 @@ class FuncionarioController {
 
 			if (perm1 || perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
-				render (view:"/funcionario/verInfoFuncionario.gsp", model:[funcionarios:funcionarios])
+				Lotacao lotacao = Lotacao.findByFuncionario(funcionarios)
+								
+				render (view:"/funcionario/verInfoFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -153,6 +160,14 @@ class FuncionarioController {
 					//			])
 					listarMensagem("Erro ao atualizar!", "erro")
 				}
+				
+				
+				Lotacao lotacao=Lotacao.findByFuncionario(funcionario)
+				lotacao.vinculo=params.vinculo
+				lotacao.cargo=Cargo.get(params.cargo)
+				lotacao.funcao=params.funcao
+				lotacao.save(flush:true)
+
 			}
 		}
 	}

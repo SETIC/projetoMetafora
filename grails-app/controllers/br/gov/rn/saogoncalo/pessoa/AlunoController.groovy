@@ -210,7 +210,7 @@ class AlunoController {
 
 				}
 
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2]) 
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -351,6 +351,7 @@ class AlunoController {
 
 					aluno.numeroDeInscricao = year+""+value
 
+
 					println("Pessoa --- " + params)
 					
 					
@@ -379,17 +380,19 @@ class AlunoController {
 					parentescoPai.pessoa = idPai
 					parentescoPai.parentesco = "PAI"
 					parentescoPai.save(flush:true)
-
+										
 					parentescoMae.pessoaFisica = pessoaFisica
 					parentescoMae.pessoa = idMae
 					parentescoMae.parentesco = "MÃE"
 					parentescoMae.save(flush:true)
+
 					println("Parentesco --- " + params)
 					//endereço
 					
 					//Bairro idBairro = new Bairro()
 					
 					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
+
 					def idLogradouro = Logradouro.executeQuery(" select l " +
 							"  from Logradouro as l, TipoLogradouro as tl " +
 							"  where l.tipoLogradouro.id = tl.id " +
