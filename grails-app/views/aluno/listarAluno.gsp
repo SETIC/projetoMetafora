@@ -69,7 +69,7 @@ function mudarCombo(){
 						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
-								style="width: 300px" value="${}" />
+								style="width: 300px" value="" />
 								<button style="margin-left: 310px; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
 
 								<i class="glyphicon glyphicon-search"></i> Buscar

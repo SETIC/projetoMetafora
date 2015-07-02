@@ -177,7 +177,7 @@
 							Nome do Pai</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="nomeDoPai"
-									style="width: 300px" value="${ }" />
+									style="width: 300px" value=""/>
 							</div>
 						</div>
 						<br>
@@ -186,7 +186,7 @@
 							Nome da Mãe</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="nomeDaMae"
-									style="width: 300px" value="${ }" />
+									style="width: 300px" value=""/>
 							</div>
 						</div>
 						<br>
