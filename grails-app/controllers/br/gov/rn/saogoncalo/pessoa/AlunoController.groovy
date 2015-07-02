@@ -358,19 +358,21 @@ class AlunoController {
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
 
+					Pessoa idPai = new Pessoa()
+					Pessoa idMae = new Pessoa()
 					
 					//alteração de id pai e mae
 					if(params.nomePaiInput == "" || params.nomePaiInput == null){
-						def idPai = Pessoa.get(params.pai)
+						idPai = Pessoa.get(params.pai)
 					}else{
-						def idPai = Pessoa.get(params.nomePaiInput)
+						idPai = Pessoa.get(params.nomePaiInput)
 					}
 					
 					if(params.nomePaiInput == "" || params.nomeMaeInput == null){
-						def idMae = Pessoa.get(params.mae)
-					}else{
+						idMae = Pessoa.get(params.mae)
+					}else{aq
 					 
-						def idMae = Pessoa.get(params.nomeMaeInput)
+						idMae = Pessoa.get(params.nomeMaeInput)
 					}
 
 					parentescoPai.pessoaFisica = pessoaFisica
