@@ -8,8 +8,8 @@ class Pessoa {
 	String status = 'Ativo'
 	int escid
 	int escIdDestino = 0
-	
-	static hasMany = [reside:Reside, parentesco:Parentesco, reside:Reside]
+
+	static hasMany = [reside:Reside, parentesco:Parentesco]
 	
 	static constraints = {
 		

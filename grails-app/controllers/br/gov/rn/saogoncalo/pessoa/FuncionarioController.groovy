@@ -1,8 +1,11 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saogoncalo.organizacao.Cargo
+import br.gov.rn.saogoncalo.organizacao.Lotacao
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
+
 
 
 class FuncionarioController {
@@ -27,6 +30,7 @@ class FuncionarioController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
+
 			if (perm1 || perm2){
 
 				def funcionarios
@@ -45,6 +49,7 @@ class FuncionarioController {
 				}
 
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
+
 			}else{
 				render(view:"/error403.gsp")
 			}

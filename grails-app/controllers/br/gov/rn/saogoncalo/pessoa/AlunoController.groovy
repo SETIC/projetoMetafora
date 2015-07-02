@@ -1,13 +1,13 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import java.text.SimpleDateFormat
 
+import java.text.SimpleDateFormat
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
-import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.localizacao.Bairro
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.pessoa.Parentesco
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 
@@ -376,15 +376,17 @@ class AlunoController {
 						idMae = Pessoa.get(params.nomeMaeInput)
 					}
 
+
 					parentescoPai.pessoaFisica = pessoaFisica
 					parentescoPai.pessoa = idPai
 					parentescoPai.parentesco = "PAI"
 					parentescoPai.save(flush:true)
-										
+
 					parentescoMae.pessoaFisica = pessoaFisica
 					parentescoMae.pessoa = idMae
 					parentescoMae.parentesco = "MÃE"
 					parentescoMae.save(flush:true)
+
 
 					println("Parentesco --- " + params)
 					//endereço
@@ -416,13 +418,16 @@ class AlunoController {
 						reside.bairro = Bairro.get(idBairro.id)
 						reside.logradouro = Logradouro.get(idLogradouro.id)
 						reside.pessoa = Pessoa.get(pessoa.id)
+
 						reside.numero = params.numero
 						reside.complemento = params.complemento
 						reside.cep = params.cep
 						reside.save(flush:true)
+
 						println("salvou reside")
 
 					//}
+
 
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
@@ -521,8 +526,7 @@ class AlunoController {
 			listarMensagem("Erro ao salvar", "erro")
 		}
 	}
-	
-	
+
 	def cadastrarMae(){
 
 		Pessoa pessoa = new Pessoa()
