@@ -8,6 +8,8 @@ class PessoaFisica {
 	String rcFolhaDoLivro
 	String sexo
 
+	static hasMany = [parentesco:Parentesco]
+	
 	static constraints = {
 	
 		rcNumero blank:true, nullable:true
