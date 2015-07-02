@@ -1,7 +1,7 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import br.gov.rn.saoconcalo.organizacao.Cargo
-import br.gov.rn.saoconcalo.organizacao.Lotacao
+import br.gov.rn.saogoncalo.organizacao.Cargo
+import br.gov.rn.saogoncalo.organizacao.Lotacao
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 
@@ -45,7 +45,7 @@ class FuncionarioController {
 
 				}
 
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargo:cargos,perm2:perm2])
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}

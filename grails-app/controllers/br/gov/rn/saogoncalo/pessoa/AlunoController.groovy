@@ -1,11 +1,13 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import java.text.SimpleDateFormat
+
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
+import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.localizacao.Bairro
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.pessoa.Parentesco
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 
@@ -349,55 +351,27 @@ class AlunoController {
 
 					aluno.numeroDeInscricao = year+""+value
 
-
-
-					/*//codigo pra inserir o reside  
-					 def estado = new Estado()
-					 estado.abreviacao = params.uf
-					 estado.estado = params.estado //verificar aqui
-					 //estado.save(flush:true)
-					 def municipio = new Municipio()
-					 municipio.municipio = params.municipio
-					 municipio.estado = estado
-					 //municipio.save(flush:true)
-					 def divisaoAdministrativa = new DivisaoAdministrativa()
-					 divisaoAdministrativa.nome = params.divisaoAdministrativa
-					 divisaoAdministrativa.municipio = municipio
-					 //divisaoAdministrativa.save(flush:true)
-					 def bairro = new Bairro()  
-					 bairro.municipio = municipio
-					 bairro.bairro =	params.bairro
-					 //bairro.save(flush:true)
-					 def tipoLogradouro = new TipoLogradouro()
-					 tipoLogradouro.tipoLogradouro = params.tipoLogradouro
-					 //tipoLogradouro.save(flush:true)
-					 def logradouro = new Logradouro()
-					 logradouro.logradouro = params.logradouro
-					 logradouro.tipoLogradouro = tipoLogradouro
-					 //logradouro.save(flush:true)
-					 def reside = new Reside()
-					 reside.bairro = bairro
-					 reside.logradouro = logradouro
-					 /*
-					 //codigo pra inserir o reside  
-					 def reside = new Reside()
-					 reside.bairro = Bairro.get(params.bairro)
-					 reside.logradouro = Logradouro.get(params.logradouro)
-					 reside.pessoa = pessoa
-					 reside.numero = params.numero
-					 reside.complemento = parmams.complemento
-					 reside.cep = params.cep
-					 if(reside.save(flush:true)){
-					 }*/
-
-
-
-
+					println("Pessoa --- " + params)
+					
+					
+					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
 
-					def idPai = Pessoa.get(params.idPai)
-					def idMae = Pessoa.get(params.idMae)
+					
+					//alteração de id pai e mae
+					if(params.nomePaiInput == "" || params.nomePaiInput == null){
+						def idPai = Pessoa.get(params.pai)
+					}else{
+						def idPai = Pessoa.get(params.nomePaiInput)
+					}
+					
+					if(params.nomePaiInput == "" || params.nomeMaeInput == null){
+						def idMae = Pessoa.get(params.mae)
+					}else{
+					 
+						def idMae = Pessoa.get(params.nomeMaeInput)
+					}
 
 					parentescoPai.pessoaFisica = pessoaFisica
 					parentescoPai.pessoa = idPai
@@ -408,34 +382,68 @@ class AlunoController {
 					parentescoMae.pessoa = idMae
 					parentescoMae.parentesco = "MÃE"
 					parentescoMae.save(flush:true)
-
-					println("Params aqui ---- " + params)
-
-
-					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = ?",[params.bairro])
+					println("Parentesco --- " + params)
+					//endereço
+					
+					//Bairro idBairro = new Bairro()
+					
+					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
 					def idLogradouro = Logradouro.executeQuery(" select l " +
 							"  from Logradouro as l, TipoLogradouro as tl " +
 							"  where l.tipoLogradouro.id = tl.id " +
-							"  and (tl.tipoLogradouro || ' ' || l.logradouro) = ? ", [params.endereco])
+							"  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase() +"'")
 
 
-					if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
+					println("Bairro --- " + params.bairro)
+					println("Logradouro --- " + params.endereco)
+					println("Bairro banco --- " + idBairro.bairro)
+					println("Logradouro banco --- " + idLogradouro.logradouro)
+					
+					
+/*					if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
 						listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
-					}else{
+					}else{*/
 
-						def reside = new Reside()
-						reside.bairro = idBairro
-						reside.logradouro = idLogradouro
-						reside.pessoa = pessoa
+					
+						println("idBairro -- " + idBairro)
+					
+						Reside reside = new Reside()
+						reside.bairro = Bairro.get(idBairro.id)
+						reside.logradouro = Logradouro.get(idLogradouro.id)
+						reside.pessoa = Pessoa.get(pessoa.id)
 						reside.numero = params.numero
 						reside.complemento = params.complemento
 						reside.cep = params.cep
 						reside.save(flush:true)
+						println("salvou reside")
 
-					}
+					//}
 
 					if(aluno.save(flush:true)){
+						println("salvou o aluno kkkkkkk")
+						println("Data --- " + params.datanascimento)
+						
 						aluno.errors.each{println it}
+						
+						println("params matricula ---- " + params)
+						
+						Matricula matriculaM = new Matricula(params)
+						matriculaM.aluno = Aluno.get(aluno.id)
+						matriculaM.turma = Turma.get(Integer.parseInt(params.turma))
+						
+						//formatando a tada para java.util.date
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
+						java.sql.Date data = new java.sql.Date(format.parse(params.dataDaMatricula_day+"/"+params.dataDaMatricula_month+"/"+params.dataDaMatricula_year).getTime())
+						
+						matriculaM.dataDaMatricula = data
+						
+						matriculaM.matricula = params.matricula
+						matriculaM.status = 'Ativo'
+		
+						if(matriculaM.save(flush:true)){
+							
+							println("salvou matricula")
+						}
 
 						/*				def alunos = Aluno.findAll()
 						 render(view:"/aluno/listarAluno.gsp", model:[
@@ -508,6 +516,8 @@ class AlunoController {
 			listarMensagem("Erro ao salvar", "erro")
 		}
 	}
+	
+	
 	def cadastrarMae(){
 
 		Pessoa pessoa = new Pessoa()

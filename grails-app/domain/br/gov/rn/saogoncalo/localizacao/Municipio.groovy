@@ -3,9 +3,9 @@ package br.gov.rn.saogoncalo.localizacao
 class Municipio {
 
 	String municipio
-	Estado estado
 	
 	static hasMany = [bairro:Bairro]
+	static belongsTo = [estado:Estado]
 	
 	static constraints = {
 		municipio blank:false, nullable:false

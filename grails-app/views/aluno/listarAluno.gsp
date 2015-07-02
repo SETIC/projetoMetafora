@@ -48,7 +48,7 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-		
+
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -62,13 +62,14 @@ function mudarCombo(){
 			</g:if>
 			<div class="box box-white">
 
-				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
-					<div class = "form-group">
-						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
+				<g:form controller="Aluno" action="pesquisarAlunos" class="form">
+					<div class="form-group">
+						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="${}" />
-								<button style="margin-left: 310px; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+							<button style="margin-left: 310px; margin-top: -56px;"
+								type="submit" class="btn btn-primary btn-flat">
 								<i class="glyphicon glyphicon-search"></i> Buscar
 
 							</button>
@@ -76,8 +77,8 @@ function mudarCombo(){
 						</div>
 					</div>
 				</g:form>
-				
-				
+
+
 				<table id="" class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
@@ -234,8 +235,8 @@ function mudarCombo(){
 									<div class="form-group">
 										<label for="iNomeMae" class="col-sm-2 control-label">nome</label>
 										<div class="col-sm-10">
-											<g:textField class="form-control" id="iNomeMae" name="nomeMae"
-												placeholder="Nome" required="true" />
+											<g:textField class="form-control" id="iNomeMae"
+												name="nomeMae" placeholder="Nome" required="true" />
 										</div>
 									</div>
 									<button id="closemodal" type="button"
@@ -372,49 +373,54 @@ function mudarCombo(){
 													</label>
 												</div>
 											</div>
-											
-												<div class="form-group">
-													<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
-														do Pai</label>
-													<div class="col-sm-10">
-														<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput"/>
-														<div id="iDivSelectPicker" name="divSelectPicker" class="">
-															<select class="form-control selectpicker"
-																data-live-search="true" name="pai" id="comboPai">
-																<option value="0">Nome do Pai</option>
-																<g:each in="${pHomens}">
-																	<option value="${it.id}">
-																		${it.nome}
-																	</option>
-																</g:each>
-															</select>
-														</div>
-														<button class="btn btn-primary btn-flat" id="btn1" data-toggle="modal" 
-															data-target="#twoModalsExample">Novo</button>
-													</div>
 
+											<div class="form-group">
+												<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
+													do Pai</label>
+												<div class="col-sm-10">
+													<g:textField class="form-control" id="iNomePaiInput"
+														name="nomePaiInput" />
+													<div id="iDivSelectPicker" name="divSelectPicker" class="">
+														<select class="form-control selectpicker"
+															data-live-search="true" name="pai" id="comboPai">
+															<option value="0">Nome do Pai</option>
+															<g:each in="${pHomens}">
+																<option value="${it.id}">
+																	${it.nome}
+																</option>
+															</g:each>
+														</select>
+													</div>
+													<button class="btn btn-primary btn-flat" id="btn1"
+														data-toggle="modal" data-target="#twoModalsExample">Novo</button>
 												</div>
-												
+
+											</div>
+
+
+<!-- teste aqui -->
 
 
 											<div class="form-group">
 												<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
 													da Mãe</label>
 												<div class="col-sm-10">
-												<g:textField class="form-control" id="iNomeMaeInput" name="nomeMaeInput"/>
-												<div id="iDivSelectPicker1" name="divSelectPicker1" class="">
-													<select class="form-control selectpicker"
-														data-live-search="true" name="mae" id="comboMae">
-														<option value="0">Nome da Mãe</option>
-														<g:each in="${pMulheres}">
-															<option value="${it.id}">
-																${it.nome}
-															</option>
-														</g:each>
-													</select>
+													<g:textField class="form-control" id="iNomeMaeInput"
+														name="nomeMaeInput" />
+													<div id="iDivSelectPicker1" name="divSelectPicker1"
+														class="">
+														<select class="form-control selectpicker"
+															data-live-search="true" name="mae" id="comboMae">
+															<option value="0">Nome da Mãe</option>
+															<g:each in="${pMulheres}">
+																<option value="${it.id}">
+																	${it.nome}
+																</option>
+															</g:each>
+														</select>
 													</div>
 													<button class="btn btn-primary btn-flat" id="btn2"
-														data-toggle="modal" data-target="#twoModalsExample1" >Novo</button>
+														data-toggle="modal" data-target="#twoModalsExample1">Novo</button>
 												</div>
 											</div>
 
@@ -479,8 +485,8 @@ function mudarCombo(){
 											</div>
 										</div>
 										<div class="form-group">
-										
-										
+
+
 											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" name="endereco"
@@ -567,6 +573,7 @@ function mudarCombo(){
 												</select>
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label for="iTurma" class="col-sm-2 control-label">Turma</label>
 											<div class="col-sm-10">
@@ -574,6 +581,7 @@ function mudarCombo(){
 												<select class="form-control" name="turma" id="comboTurma"></select>
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label for="iNumeroMatricula" class="col-sm-2 control-label">Nº
 												Matrícula</label>
@@ -639,8 +647,17 @@ function mudarCombo(){
 		            	document.getElementById("iNomePaiInput").className = 'form-control';
 		            	document.getElementById("iNomePaiInput").disabled = true;
 		            	document.getElementById("iNomePaiInput").value = result[result.length-1].nome;
+		            	
+		            	//comboPai = document.getElementById("comboPai");
+		            	//var elem = document.createElement("option");
+						//elem.value = result[result.length-1].id;
+						//elem.text = result[result.length-1].nome;
+						//comboPai.add(elem, comboPai.options[0]);
+						//$(".comboPai").selectpicker("refresh");
 
-		            	$(function() {
+
+		            	$(function(){
+
 							$('#twoModalsExample').modal('hide');
 						});						
 				    } 
@@ -670,8 +687,70 @@ function mudarCombo(){
 					    } 
 			        });
 				}
-					
-		</script>
+
+			
+			function mudarEscola(){
+	    	  
+				var endereco = "localhost";
+		        var comboTurma = document.getElementById("comboTurma");
+		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+		        var idEscola = document.getElementById("comboEscola").value;
+				var idSerie = document.getElementById("comboSerie").value;
+		        
+		        
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
+		            dataType: "json",
+		            success: function(result){
+		            	comboTurma.options.length = 0;
+			        if (result.id.length == 0){
+			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
+			        }else{
+						for (i=0;i<result.id.length;i++){
+							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
+		           		}
+			        }
+		            }
+		        });
+				
+		   }
+
+		  function mudarSerie(){
+			  var endereco = "localhost";
+			   var comboTurma = document.getElementById("comboTurma");
+		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+		        var idEscola = document.getElementById("comboEscola").value;
+				var idSerie = document.getElementById("comboSerie").value;
+
+		        
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
+		            dataType: "json",
+		            success: function(result){
+		            	comboTurma.options.length = 0;
+			        if (result.id.length == 0){
+			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
+			        }else{
+						for (i=0;i<result.id.length;i++){
+							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
+		           		}
+			        }
+		            }
+		        });
+
+		    
+		       }
+
+
+
+
+
+
+			</script>
 	</section>
 
 </body>

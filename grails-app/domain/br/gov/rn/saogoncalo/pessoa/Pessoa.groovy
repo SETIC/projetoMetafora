@@ -1,8 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import grails.plugins.brvalidation.constraint.CpfCnpjConstraint;
-
-import java.util.Date;
 
 class Pessoa {
 	String nome
@@ -12,7 +9,7 @@ class Pessoa {
 	int escid
 	int escIdDestino = 0
 	
-	static hasMany = [reside:Reside, parentesco:Parentesco]
+	static hasMany = [reside:Reside, parentesco:Parentesco, reside:Reside]
 	
 	static constraints = {
 		

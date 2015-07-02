@@ -7,11 +7,10 @@ class Reside {
 	
 	String numero 
 	String complemento	
-	Bairro bairro
-	Logradouro logradouro
-	Pessoa pessoa
 	String cep
 	
+	
+	static belongsTo = [pessoa:Pessoa, bairro:Bairro, logradouro:Logradouro]
 	
 	static constraints = {
 		numero blank:false, nullable:false
