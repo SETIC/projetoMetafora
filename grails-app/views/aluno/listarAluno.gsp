@@ -182,9 +182,9 @@ function mudarCombo(){
 			</button>
 			
 			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document" style="width: 75%;">
-			    <div class="modal-content">
+			    <div class="modal-content" style="padding-left: 15px; padding-right: 15px;">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
@@ -297,33 +297,6 @@ function mudarCombo(){
 										<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarPai">
 										  Novo
 										</button>
-										<!-- Modal -->
-										<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										  <div class="modal-dialog" role="document" style="margin-top: 60%">
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
-										      </div>
-										      <div class="modal-body">
-										        <div class="form-group">
-													<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
-													<div class="col-sm-11">
-														<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="true"/>
-													</div>
-													<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-													<div class="col-sm-11">
-														<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfPai" placeholder="000.000.000-XX" required="true" />
-													</div>
-												</div>
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarPai()">Cancelar</button>
-										        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
-										      </div>
-										    </div>
-										  </div>
-										</div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -344,73 +317,247 @@ function mudarCombo(){
 										<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarMae">
 										  Novo
 										</button>
-										<!-- Modal -->
-										<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-										  <div class="modal-dialog" role="document" style="margin-top: 60%">
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
-										      </div>
-										      <div class="modal-body">
-										        <div class="form-group">
-													<label style="padding-top: 5px;" for="iNomeMae" class="col-sm-1 control-label">Nome:</label>
-													<div class="col-sm-11">
-														<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="true"/>
-													</div>
-													<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-													<div class="col-sm-11">
-														<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfMae" placeholder="000.000.000-XX" required="true" />
-													</div>
-												</div>
-										      </div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarMae()">Cancelar</button>
-										        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
-										      </div>
-										    </div>
-										  </div>
-										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
+									<div class="col-sm-10">
+										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade"	required="true"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil</label>
+									<div class="col-sm-10">
+										<select class="form-control" id="iEstadoCivil" name="estadoCivil">
+											<option value="null" selected disabled>Selecione...</option>
+											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+											<option value="CASADO(A)">CASADO(A)</option>
+											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+											<option value="VIÚVO(A)">VIÚVO(A)</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group" style="margin-top: 3%;">
+									<div class="col-sm-offset-10 col-sm-2" style="margin-left: 87.2%;">
+										<button type="button" class="btn btn-primary btn-flat" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Próximo <i class="fa fa-chevron-circle-right"></i></button>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
-								<div class="col-sm-10">
-									<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade"	required="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil</label>
-								<div class="col-sm-10">
-									<select class="form-control" id="iEstadoCivil" name="estadoCivil">
-										<option value="null" selected disabled>Selecione...</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group" style="margin-top: 3%;">
-								<div class="col-sm-offset-10 col-sm-2" style="margin-left: 87.2%;">
-									<button type="button" class="btn btn-primary btn-flat" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Próximo <i class="fa fa-chevron-circle-right"></i></button>
-								</div>
-							</div>
+							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+										<h3>Endereço</h3>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Localização/Zona
+												de residência</label>
+											<div class="col-sm-10 radio" style="padding-top: 0px;">
+												<label for="iLocalizacaoUrbana" class="radio-inline">
+													<input type="radio" name="localizacao"
+													id="iLocalizacaoUrbana" value="URBANA" checked>
+													Urbana
+												</label> <label for="iLocalizacaoRural" class="radio-inline">
+													<input type="radio" name="localizacao"
+													id="iLocalizacaoRural" value="RURAL"> Rural
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iCep" class="col-sm-2 control-label">CEP</label>
+											<div id="iDivInputCep" class="col-sm-10">
+												<g:textField type="number" class="form-control"
+													data-mask="99999-999" name="cep" id="iCep"
+													onfocusout="javascript: requestAjax(this);"
+													placeholder="CEP" />
+												<p id="iMensagemCEP" class="text-danger">Por favor
+													digite um CEP válido.</p>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="endereco" id="iLogradouro" placeholder="Logradouro">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNumero" class="col-sm-2 control-label">Número</label>
+											<div class="col-sm-10">
+												<input type="number" class="form-control" name="numero"
+													id="iNumero" placeholder="Número">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iComplemento" class="col-sm-2 control-label">Complemento</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="complemento"
+													id="iComplemento" placeholder="Complemento">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iBairro" class="col-sm-2 control-label">Bairro</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="bairro"
+													id="iBairro" placeholder="Bairro">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iUf" class="col-sm-2 control-label">UF</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="uf" id="iUf"
+													placeholder="Estado">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iMunicipio" class="col-sm-2 control-label">Município</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="municipio"
+													id="iMunicipio" placeholder="Município">
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-9 col-sm-3"
+												style="margin-left: 77.5%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div1, event, 0, 'step-1');">
+													<i class="fa fa-chevron-circle-left"></i> Anterior
+												</button>
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div3, event, 70, 'step-3');">
+													Próximo <i class="fa fa-chevron-circle-right"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
+										<h3>Dados Variáveis (iníco do ano corrente)</h3>
+										<div class="form-group">
+											<label for="iEscola" class="col-sm-2 control-label">Escola</label>
+											<div class="col-sm-10">
+												<select class="form-control selectpicker"
+													data-live-search="true" name="escolas" id="comboEscola"
+													onchange="mudarEscola();">
+													<g:each in="${escolas}">
+														<option value="0" disabled="disabled" selected="selected">Selecione
+															uma escola</option>
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iSerie" class="col-sm-2 control-label">Série</label>
+											<div class="col-sm-10">
+												<select id="comboSerie" name="series" class="form-control"
+													onchange="mudarSerie()">
+													<g:each in='${series?}'>
+														<option value="${it.id}">
+															${it.serie}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iTurma" class="col-sm-2 control-label">Turma</label>
+											<div class="col-sm-10">
+												<div id="teste"></div>
+												<select class="form-control" name="turma" id="comboTurma"></select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNumeroMatricula" class="col-sm-2 control-label">Nº
+												Matrícula</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" name="matricula" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iDataDaMatricula" class="col-sm-2 control-label">Data
+												da matrícula</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" required="true" name="dataDaMatricula"
+													value="" />
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-9 col-sm-3"
+												style="margin-left: 77.5%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+													<i class="fa fa-chevron-circle-left"></i> Anterior
+												</button>
+												<button type="submit" class="btn btn-success btn-flat"
+													onclick="javascript: inputsHabilitado(); resetActive(div4, event, 100, 'step-3');">
+													Finalizar <i class="fa fa-check-circle"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 						</div>
 					</g:form>  
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Save</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
 			
-			
-			
-			
+			<!-- Modal -->
+			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document" style="margin-top: 20%">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
+						<div class="col-sm-11">
+							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="true"/>
+						</div>
+						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
+						<div class="col-sm-11">
+							<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfPai" placeholder="000.000.000-XX" required="true" />
+						</div>
+					</div>
+			      </div>
+			      <hr/>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarPai()">Cancelar</button>
+			        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+										
+			<!-- Modal -->
+			<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document" style="margin-top: 20%">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+						<label style="padding-top: 5px;" for="iNomeMae" class="col-sm-1 control-label">Nome:</label>
+						<div class="col-sm-11">
+							<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="true"/>
+						</div>
+						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
+						<div class="col-sm-11">
+							<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfMae" placeholder="000.000.000-XX" required="true" />
+						</div>
+					</div>
+			      </div>
+			      <hr/>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarMae()">Cancelar</button>
+			        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
 		
 		<!-- Script buscar dados de acordo com CEP -->

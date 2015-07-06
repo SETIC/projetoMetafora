@@ -5,7 +5,7 @@
     <title><g:layoutTitle default="SISEDUC . Painel"/></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="${resource(dir: 'css', file: 'bootstrap.min.css')}" rel="stylesheet">
+    <link href="${resource(dir: 'css', file: 'bootstrap.css')}" rel="stylesheet">
     
     <!-- Font Awesome Icons -->
     <link href="${resource(dir: 'css', file: 'font-awesome.min.css')}" rel="stylesheet">
@@ -40,6 +40,11 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="${resource(dir: 'css', file: 'skins/_all-skins.min.css')}" rel="stylesheet">
+    
+     <!-- Bootstrap Models Manager -->
+    <link href="${resource(dir: 'css', file: 'bootstrap-modal-master/css/bootstrap-modal.css')}" rel="stylesheet">
+    
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -208,7 +213,7 @@
     <!-- jQuery 2.1.3 -->
     <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
     <!-- Bootstrap 3.3.2 JS -->
-    <g:javascript src="bootstrap.min.js" />
+    <g:javascript src="bootstrap.js" />
     <!-- Jasny Mask Bootstrap -->
     <g:javascript src="jasny-bootstrap.min.js" />
     <!-- FastClick -->
@@ -240,6 +245,10 @@
     <g:javascript src="plugins/slimScroll/jquery.slimscroll.min.js" />
     <!-- ChartJS 1.0.1 -->
 	<g:javascript src="plugins/chartjs/Chart.min.js" />
+	<!-- Bootstrap Master -->
+	<g:javascript src="bootstrap-modal-master/js/bootstrap-modal.js" />
+	<!-- Bootstrap Master -->
+	<g:javascript src="bootstrap-modal-master/js/bootstrap-modalmanager.js" />
 	
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 	<g:javascript src="dashboard2.js" /> -->
