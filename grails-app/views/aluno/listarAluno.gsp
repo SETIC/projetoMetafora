@@ -412,7 +412,7 @@ function mudarCombo(){
 											</div>
 										</div>
 									</div>
-									<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+									<div  id="step-2" style="margin-top: 2%;">
 										<h3>Endereço</h3>
 
 										<div class="form-group">
@@ -420,8 +420,7 @@ function mudarCombo(){
 											<div id="iDivInputCep" class="col-sm-10">
 												<g:textField type="number" class="form-control"
 													data-mask="99999-999" name="cep" id="iCep"
-													onfocusout="javascript: requestAjax(this);"
-													placeholder="CEP" />
+													placeholder="CEP" id="idCep" />
 												<p id="iMensagemCEP" class="text-danger">Por favor
 													digite um CEP válido.</p>
 											</div>
