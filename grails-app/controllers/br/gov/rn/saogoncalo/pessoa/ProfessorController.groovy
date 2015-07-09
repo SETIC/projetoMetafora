@@ -371,6 +371,7 @@ class ProfessorController {
 
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
+				pessoa.nome = params.nome.toString().toUpperCase()
 
 				if (pessoa.save(flush:true)){
 

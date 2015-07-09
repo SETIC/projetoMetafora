@@ -248,7 +248,7 @@ function printDiv(id)
 															<option value="COMISSIONADO">COMISSIONADO</option>
 															<option value="ESTAGIARIO">ESTAGIARIO</option>
 															<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-														</select>
+												</select>
 											</div>
 											<br>
 											<div class="form-heading">

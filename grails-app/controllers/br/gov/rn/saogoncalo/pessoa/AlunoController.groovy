@@ -2,6 +2,7 @@ package br.gov.rn.saogoncalo.pessoa
 import java.text.SimpleDateFormat
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
+import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.localizacao.Bairro
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
@@ -50,17 +51,17 @@ class AlunoController {
 			def usuario = new UsuarioController()
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
-			Aluno alunos = Aluno.get(id)
-			def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
-					" where p.id not in (select e.id from Escola e) " +
-					" and pf.id = p.id " +
-					" and pf.sexo = 'MASCULINO' ")
+				Aluno alunos = Aluno.get(id)
+				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+						" where p.id not in (select e.id from Escola e) " +
+						" and pf.id = p.id " +
+						" and pf.sexo = 'MASCULINO' ")
 
 
-			def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
-					" where p.id not in (select e.id from Escola e) " +
-					" and pf.id = p.id " +
-					" and pf.sexo = 'FEMININO' ")
+				def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+						" where p.id not in (select e.id from Escola e) " +
+						" and pf.id = p.id " +
+						" and pf.sexo = 'FEMININO' ")
 
 				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres ])
 			}else{
@@ -68,7 +69,7 @@ class AlunoController {
 			}
 		}
 	}
-	
+
 	def atualizar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
@@ -80,20 +81,20 @@ class AlunoController {
 
 			def usuario = new UsuarioController()
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
-				
+
 				//Atualizando a pessoa
-				
+
 				Parentesco parentescoPai = new Parentesco()
 				Parentesco parentescoMae = new Parentesco()
-				
+
 				def pessoa = Pessoa.get(params.id)
 				pessoa.nome = params.nome
 				pessoa.dataDeNascimento = params.dataDeNascimento
 				if (!params.cpfCnpj.trim().equals(''))
-					pessoa.cpfCnpj = params.cpfCnpj	
+					pessoa.cpfCnpj = params.cpfCnpj
 				else
 					pessoa.cpfCnpj = null
-		
+
 
 				def pessoaFisica = PessoaFisica.get(params.id)
 				pessoaFisica.rcNumero = params.rcNumero
@@ -101,94 +102,94 @@ class AlunoController {
 				pessoaFisica.rcNomeDoLivro = params.rcNomeDoLivro
 				pessoaFisica.rcFolhaDoLivro = params.rcFolhaDoLivro
 				pessoaFisica.sexo = params.sexo
-			
+
 				//atualizando parentesco da pessoa
-				
+
 				println("Id Pessoa fisica " + pessoaFisica.id)
 				println("Id Pessoa  " + pessoa)
-				
+
 				//def parentescoPai = Parentesco.executeQuery("select p "+
 				//	" from Parentesco p where p.parentesco ='PAI' and p.pessoaFisica.id = "+ pessoaFisica.id)
-				
-				 parentescoPai = Parentesco.findByParentescoAndPessoaFisica("PAI",pessoaFisica)
-			
-				 //def parentescoMae = Parentesco.executeQuery("select p "+
+
+				parentescoPai = Parentesco.findByParentescoAndPessoaFisica("PAI",pessoaFisica)
+
+				//def parentescoMae = Parentesco.executeQuery("select p "+
 				//	" from Parentesco as p where p.parentesco ='MÃE' and p.pessoaFisica.id = "+ pessoaFisica.id)
-				 
-				 parentescoMae = Parentesco.findByParentescoAndPessoaFisica("MÃE",pessoaFisica)
+
+				parentescoMae = Parentesco.findByParentescoAndPessoaFisica("MÃE",pessoaFisica)
 
 				println("parentesco pai aquiiiiii "+parentescoPai)
 				println("parentesco MAe aquiiiiii "+parentescoMae)
 				//Parentesco parentescoMae = new Parentesco()
 				def idPai
-				def idMae 
-				
+				def idMae
+
 				if(params.nomePaiInput == "" || params.nomePaiInput == null ){
-				 idPai = Pessoa.get(params.pai)
-				 println("if do pai "+idPai)
+					idPai = Pessoa.get(params.pai)
+					println("if do pai "+idPai)
 				}else{
-				 idPai = Pessoa.get(params.nomePaiInput)
-				 println("if do paiInput "+params.nomePaiInput)
+					idPai = Pessoa.get(params.nomePaiInput)
+					println("if do paiInput "+params.nomePaiInput)
 				}
-				
+
 				if(params.nomeMaeInput == "" || params.nomeMaeInput == null ){
 					idMae = Pessoa.get(params.mae)
 					println("if do Mae "+idMae)
-				   }else{
-				   	idMae = Pessoa.get(params.nomeMaeInput)
-					   println("if do maeInput "+params.nomeMaeInput)
-				   }
-				   //println("parentencoPai.parentesco "+parentescoPai.parentesco)
-				   println("idPai "+idPai.nome)
-				   
-	
+				}else{
+					idMae = Pessoa.get(params.nomeMaeInput)
+					println("if do maeInput "+params.nomeMaeInput)
+				}
+				//println("parentencoPai.parentesco "+parentescoPai.parentesco)
+				println("idPai "+idPai.nome)
+
+
 				parentescoPai.pessoa = idPai
 				parentescoPai.save(flush:true)
-				
+
 				parentescoMae.pessoa = idMae
 				parentescoMae.save(flush:true)
-				
+
 				//atualizando reside
 				Bairro bairro = new Bairro()
-				
+
 				bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
-				
+
 				//def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '"+params.bairro.toString().toUpperCase()+"'")
-				
+
 				String t = params.endereco.toString().toUpperCase()
 				String tr = t.substring((t.indexOf(' ')+1), t.length())
 				println("Substring --- " + tr)
-				
-				
-				Logradouro idLogradouro = new Logradouro()
-				
-				idLogradouro = Logradouro.findByLogradouro(tr)
-				
-				/*def idLogradouro = Logradouro.executeQuery(" select l " +
-						"  from Logradouro as l, TipoLogradouro as tl " +
-						"  where l.tipoLogradouro.id = tl.id " +
-						"  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase()+"'")
-				*/
 
-				
-				
+
+				Logradouro idLogradouro = new Logradouro()
+
+				idLogradouro = Logradouro.findByLogradouro(tr)
+
+				/*def idLogradouro = Logradouro.executeQuery(" select l " +
+				 "  from Logradouro as l, TipoLogradouro as tl " +
+				 "  where l.tipoLogradouro.id = tl.id " +
+				 "  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase()+"'")
+				 */
+
+
+
 
 
 				/*if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
-					listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
-				}else{*/
+				 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
+				 }else{*/
 
-					def reside = Reside.findByPessoa(pessoa)
-					println("reside aquillll "+reside )
-					println("idBairro "+bairro)
-					println("idLogradouro "+idLogradouro)
-					reside.bairro = bairro
-					reside.logradouro = idLogradouro
-					reside.pessoa = pessoa
-					reside.numero = params.numero
-					reside.complemento = params.complemento
-					reside.cep = params.cep
-					reside.save(flush:true)
+				def reside = Reside.findByPessoa(pessoa)
+				println("reside aquillll "+reside )
+				println("idBairro "+bairro)
+				println("idLogradouro "+idLogradouro)
+				reside.bairro = bairro
+				reside.logradouro = idLogradouro
+				reside.pessoa = pessoa
+				reside.numero = params.numero
+				reside.complemento = params.complemento
+				reside.cep = params.cep
+				reside.save(flush:true)
 
 				//}
 				//fim do reside
@@ -208,7 +209,7 @@ class AlunoController {
 				if(aluno.save(flush:true)){
 					listarMensagem("Aluno atualizado com sucesso", "ok")
 				}else{
-					
+
 					listarMensagem("Erro ao Atualizar", "erro")
 				}
 			}
@@ -309,7 +310,7 @@ class AlunoController {
 
 				}
 
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2]) 
+				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -400,11 +401,11 @@ class AlunoController {
 
 				Parentesco parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "PAI")
 				Parentesco parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "MÃE")
-				
+
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				
+
 				println("Reside -- " + reside)
-				
+
 
 				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside])
 			}else{
@@ -428,22 +429,39 @@ class AlunoController {
 			if (perm2)
 			{
 
-				Pessoa pessoa = new Pessoa(params)
 
+				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
+				pessoa.nome = params.nome.toString().toUpperCase()
 
 				def reg = Pessoa.executeQuery("SELECT MAX(id) FROM Pessoa")
 				def value = reg[0]+1
 				def year = Calendar.getInstance().get(Calendar.YEAR);
 
 
-
 				if (pessoa.save(flush:true)){
+
 					pessoa.errors.each{println it}
+
+
 
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
+
+
+					/*					PessoaFisica.withTransaction{ status ->
+					 try{
+					 pessoaFisica.save(flush:true)
+					 }catch(Exception exp){
+					 pessoa.errors.reject( 'Erro em pessoa' )
+					 status.setRollbackOnly()
+					 }
+					 }*/
+
+
 					pessoaFisica.save(flush:true)
+
+
 					pessoaFisica.errors.each{println it}
 
 					Cidadao cidadao = new Cidadao(params)
@@ -452,33 +470,33 @@ class AlunoController {
 					cidadao.errors.each{println it}
 
 
-					Aluno aluno = new Aluno(params)
-					aluno.cidadao = cidadao
+					Aluno aluno = new Aluno()
+					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
 
 
 					println("Pessoa --- " + params)
-					
-					
+
+
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
 
 					Pessoa idPai = new Pessoa()
 					Pessoa idMae = new Pessoa()
-					
+
 					//alteração de id pai e mae
 					if(params.nomePaiInput == "" || params.nomePaiInput == null){
 						idPai = Pessoa.get(params.pai)
 					}else{
 						idPai = Pessoa.get(params.nomePaiInput)
 					}
-					
+
 					if(params.nomePaiInput == "" || params.nomeMaeInput == null){
 						idMae = Pessoa.get(params.mae)
 					}else{aq
-					 
+
 						idMae = Pessoa.get(params.nomeMaeInput)
 					}
 
@@ -496,9 +514,9 @@ class AlunoController {
 
 					println("Parentesco --- " + params)
 					//endereço
-					
+
 					//Bairro idBairro = new Bairro()
-					
+
 					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
 
 					def idLogradouro = Logradouro.executeQuery(" select l " +
@@ -511,15 +529,17 @@ class AlunoController {
 					println("Logradouro --- " + params.endereco)
 					println("Bairro banco --- " + idBairro.bairro)
 					println("Logradouro banco --- " + idLogradouro.logradouro)
-					
-					
-/*					if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
-						listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
-					}else{*/
 
-					
+
+					/*					if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
+					 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
+					 }else{*/
+
+
+					if (params.cep != null){
+
 						println("idBairro -- " + idBairro)
-					
+
 						Reside reside = new Reside()
 						reside.bairro = Bairro.get(idBairro.id)
 						reside.logradouro = Logradouro.get(idLogradouro.id)
@@ -528,9 +548,14 @@ class AlunoController {
 						reside.numero = params.numero
 						reside.complemento = params.complemento
 						reside.cep = params.cep
-						reside.save(flush:true)
 
-						println("salvou reside")
+						if (reside.save(flush:true)){
+							println("salvou reside")
+						}else{
+							listarMensagem("Erro ao salvar endereço", "erro")
+						}
+					}
+
 
 					//}
 
@@ -538,27 +563,31 @@ class AlunoController {
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
-						
+
 						aluno.errors.each{println it}
-						
+
 						println("params matricula ---- " + params)
-						
-						Matricula matriculaM = new Matricula(params)
-						matriculaM.aluno = Aluno.get(aluno.id)
-						matriculaM.turma = Turma.get(Integer.parseInt(params.turma))
-						
-						//formatando a tada para java.util.date
-						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
-						java.sql.Date data = new java.sql.Date(format.parse(params.dataDaMatricula_day+"/"+params.dataDaMatricula_month+"/"+params.dataDaMatricula_year).getTime())
-						
-						matriculaM.dataDaMatricula = data
-						
-						matriculaM.matricula = params.matricula
-						matriculaM.status = 'Ativo'
-		
-						if(matriculaM.save(flush:true)){
-							
-							println("salvou matricula")
+
+						if (params.realizarMatricula == "SIM") {
+
+							Matricula matriculaM = new Matricula(params)
+							matriculaM.aluno = Aluno.get(aluno.id)
+							matriculaM.turma = Turma.get(Integer.parseInt(params.turma))
+
+							//formatando a tada para java.util.date
+							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy")
+							java.sql.Date data = new java.sql.Date(format.parse(params.dataDaMatricula_day+"/"+params.dataDaMatricula_month+"/"+params.dataDaMatricula_year).getTime())
+
+							matriculaM.dataDaMatricula = data
+
+							matriculaM.matricula = params.matricula
+							matriculaM.status = 'Ativo'
+
+							if(matriculaM.save(flush:true)){
+
+								println("salvou matricula")
+							}
+
 						}
 
 						/*				def alunos = Aluno.findAll()
@@ -571,7 +600,7 @@ class AlunoController {
 						/*				def alunos = Aluno.findAll()
 						 render(view:"cadastrar", model:[
 						 erro : "Erro ao Salvar!" ])*/
-						listarMensagem("Erro ao salvar", "erro")
+						listarMensagem("Erro ao salvar aluno", "erro")
 					}
 				}else{
 
@@ -601,7 +630,7 @@ class AlunoController {
 		Pessoa pessoa = new Pessoa()
 
 		pessoa.nome = params.nome
-		pessoa.cpfCnpj = params.cpfPai
+		pessoa.cpfCnpj = params.cpf
 
 		if(pessoa.save(flush:true)){
 
@@ -609,7 +638,6 @@ class AlunoController {
 
 			pf.pessoa = pessoa
 			pf.sexo = "MASCULINO"
-			pf.cpfCnpj
 
 			if (pf.save(flush:true)){
 				def vetorPais = []
@@ -635,13 +663,13 @@ class AlunoController {
 		}
 	}
 
-	
+
 	def cadastrarMae(){
 
 		Pessoa pessoa = new Pessoa()
 
-		pessoa.nome = params.nomeMae
-		pessoa.cpfCnpj = params.cpfMae
+		pessoa.nome = params.nome
+		pessoa.cpfCnpj = params.cpf
 
 		if(pessoa.save(flush:true)){
 
@@ -775,6 +803,10 @@ class AlunoController {
 		}
 
 	}
+
+
+
+
 
 
 

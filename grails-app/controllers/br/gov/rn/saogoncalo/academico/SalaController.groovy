@@ -227,8 +227,23 @@ class SalaController {
 				salaL.escola = escola
 
 
+				
+				Sala.withTransaction{ status ->
+					try{
+						
+						salaL.save(flush:true)
+						//def x = 78/0
+						listarMensagem("Sala cadastrada com sucesso", "ok")
+						
+					}catch(Exception exp){
+						//salaL.errors.reject( 'Erro em pessoa' )
+						status.setRollbackOnly()
+						listarMensagem("Erro ao salvar", "erro")
+					} 
+				} 
+				
 
-				if (salaL.save(flush:true)){
+/*				if (salaL.save(flush:true)){
 
 					listarMensagem("Sala cadastrada com sucesso", "ok")
 				}else{
@@ -238,9 +253,14 @@ class SalaController {
 					//
 					//			])
 					listarMensagem("Erro ao salvar", "erro")
-				}
+				}*/
+
+
+
+
 			}else{
 				render(view:"/error403.gsp")
+
 			}
 		}
 	}

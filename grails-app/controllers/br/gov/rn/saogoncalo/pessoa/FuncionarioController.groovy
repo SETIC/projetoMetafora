@@ -2,6 +2,8 @@ package br.gov.rn.saogoncalo.pessoa
 
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
+import com.sun.org.apache.xalan.internal.xsltc.compiler.ForEach;
+
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
@@ -11,12 +13,12 @@ import br.gov.rn.saogoncalo.organizacao.Lotacao
 class FuncionarioController {
 
 	def index() { }
-	
-	
-	
-	
+
+
+
+
 	def pesquisarFuncionarios(){
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
 		}else{
@@ -35,21 +37,19 @@ class FuncionarioController {
 
 				def funcionarios
 				def cargos
-				
+
 				def parametro = params.pesquisa
 				if (session["escid"] == 0){
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-                    cargos= Cargo.findAll()
-					print("printcargos "+ cargos )
 				}else{
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-
 				}
 
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
+				cargos= Cargo.findAll()
 
+				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -66,18 +66,26 @@ class FuncionarioController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-            def lotacao
 			def cargo
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
 			if (perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
-				lotacao = Lotacao.findByFuncionario(funcionarios)
-				println ("lotacao "+lotacao)
-				cargo=Cargo.findAll()
-			     
-								
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo])
+
+				//lotacao = Lotacao.findByFuncionario(funcionarios)
+
+				/*if (lotacao.isEmpty()){
+				 println("lotação null")
+				 }else{
+				 println("lotação valida ")
+				 }*/
+
+
+				//println ("lotacao --- " + lotacao)
+				cargo = Cargo.findAll()
+
+
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,cargo:cargo])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -102,7 +110,7 @@ class FuncionarioController {
 			if (perm1 || perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
 				Lotacao lotacao = Lotacao.findByFuncionario(funcionarios)
-								
+
 				render (view:"/funcionario/verInfoFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao])
 			}else{
 				render(view:"/error403.gsp")
@@ -127,9 +135,9 @@ class FuncionarioController {
 				pessoa.nome = params.nome
 				pessoa.dataDeNascimento = params.dataDeNascimento
 				if (!params.cpfCnpj.trim().equals(''))
-					pessoa.cpfCnpj = params.cpfCnpj
+				pessoa.cpfCnpj = params.cpfCnpj
 				else
-					pessoa.cpfCnpj = null
+				pessoa.cpfCnpj = null
 
 				def pessoaFisica = PessoaFisica.get(params.id)
 				pessoaFisica.rcNumero = params.rcNumero
@@ -165,189 +173,219 @@ class FuncionarioController {
 					//			])
 					listarMensagem("Erro ao atualizar!", "erro")
 				}
-				
-				
-				Lotacao lotacao=Lotacao.findByFuncionario(funcionario)
+
+
+				def lotacao = Lotacao.findByFuncionario(funcionario)
+
+			if (lotacao == null){
+			
+				Lotacao newLotacao = new Lotacao() 
+				newLotacao.vinculo = params.vinculo
+				newLotacao.cargo = Cargo.get(params.cargo)
+				newLotacao.funcao = params.funcao
+				newLotacao.funcionario = funcionario
+				newLotacao.situacao = "ATIVO"
+				newLotacao.dataInicio = new Date()
+				newLotacao.dataTermino = new Date()
+
+				if (newLotacao.save(flush:true)){
+					println("newLotacao --- " + newLotacao)
+				}else{
+					listarMensagem("Erro ao atualizar lotação!", "erro")
+				}
+
+			}else{
 				lotacao.vinculo=params.vinculo
 				lotacao.cargo=Cargo.get(params.cargo)
 				lotacao.funcao=params.funcao
-				lotacao.save(flush:true)
-
+				if (lotacao.save(flush:true)){
+					println("Lotacao --- " + lotacao)
+				}else{
+					listarMensagem("Erro ao atualizar lotação!", "erro")
+				}
 			}
 		}
 	}
+}
 
-	def listar() {
-		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
-		}else{
-			def user = session["user"]
-			def pass = session["pass"]
+def listar() {
+	if((session["user"] == null) || (session["pass"] == null) ){
+		render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+	}else{
+		def user = session["user"]
+		def pass = session["pass"]
 
-			def usuario = new UsuarioController()
-        
-            def cargos
-			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+		def usuario = new UsuarioController()
 
-			def funcionarios
-			
-			if (perm1 || perm2) {
-				
-				if (session["escid"] == 0)
-				{
-					//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
-				}else{
+		def cargos
+		def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
+		def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+
+		def funcionarios
+
+		if (perm1 || perm2) {
+
+			if (session["escid"] == 0) {
+				//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
+			}else{
 				//	funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+			}
+			cargos=Cargo.findAll()
+			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
+		}else{
+			render(view:"/error403.gsp")
+		}
+	}
+}
+def listarMensagem(String msg, String tipo) {
+	if((session["user"] == null) || (session["pass"] == null) ){
+		render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+	}else{
+		def user = session["user"]
+		def pass = session["pass"]
+
+		def usuario = new UsuarioController()
+
+
+		def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
+		def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+		def funcionarios
+
+		if (perm1 || perm2) {
+
+			if (session["escid"] == "0") {
+				funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
+			}else{
+				funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+			}
+
+			if (tipo == "ok")
+
+			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2])
+			else
+			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2])
+		}else{
+			render(view:"/error403.gsp")
+		}
+	}
+}
+
+def deletar(int id){
+
+	if((session["user"] == null) || (session["pass"] == null) ){
+		render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+	}else{
+		def user = session["user"]
+		def pass = session["pass"]
+		def usuario = new UsuarioController()
+
+		def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+		if (perm2) {
+			Pessoa.deleteAll(Pessoa.get(id))
+
+			def pessoa = Pessoa.findAll()
+
+			def funcionarios = Funcionario.findAll()
+			redirect(action:"listarMensagem", params:[msg:"deletado com sucesso!", tipo: "ok" ]  )
+		}else{
+			render(view:"/error403.gsp")
+		}
+	}
+}
+def salvar(){
+	if((session["user"] == null) || (session["pass"] == null) ){
+		render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+	}else{
+		def user = session["user"]
+		def pass = session["pass"]
+		def usuario = new UsuarioController()
+
+		def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+		if (perm2) {
+
+			println("params ------ "+params)
+
+			Pessoa pessoa = new Pessoa(params)
+			pessoa.escid = session["escid"]
+			pessoa.nome = params.nome.toString().toUpperCase()
+
+
+
+			if (pessoa.save(flush:true)){
+
+				PessoaFisica pessoaFisica = new PessoaFisica(params)
+				pessoaFisica.pessoa = pessoa
+				pessoaFisica.save(flush:true)
+				pessoaFisica.errors.each{
+					println it
 				}
-				cargos=Cargo.findAll()
-				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
-			}else{
-				render(view:"/error403.gsp")
-			}
-		}
-	}
-	def listarMensagem(String msg, String tipo) {
-		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
-		}else{
-			def user = session["user"]
-			def pass = session["pass"]
 
-			def usuario = new UsuarioController()
-
-
-			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
-            def funcionarios
-
-			if (perm1 || perm2) {
-								
-				if (session["escid"] == "0")
-				{
-					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
-				}else{
-					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				Cidadao cidadao = new Cidadao(params)
+				cidadao.pessoaFisica = pessoaFisica
+				cidadao.save(flush:true)
+				cidadao.errors.each{
+					println it
 				}
 
-				if (tipo == "ok")
-
-					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2])
-				else
-					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2])
-			}else{
-				render(view:"/error403.gsp")
-			}
-		}
-	}
-
-	def deletar(int id){
-
-		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
-		}else{
-			def user = session["user"]
-			def pass = session["pass"]
-			def usuario = new UsuarioController()
-
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
-			if (perm2) {
-				Pessoa.deleteAll(Pessoa.get(id))
-
-				def pessoa = Pessoa.findAll()
-
-				def funcionarios = Funcionario.findAll()
-				redirect(action:"listarMensagem", params:[msg:"deletado com sucesso!", tipo: "ok" ]  )
-			}else{
-				render(view:"/error403.gsp")
-			}
-		}
-	}
-	def salvar(){
-		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
-		}else{
-			def user = session["user"]
-			def pass = session["pass"]
-			def usuario = new UsuarioController()
-
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
-			if (perm2) {
-				
-				println("params ------ "+params)
-				
-				Pessoa pessoa = new Pessoa(params)
-				pessoa.escid = session["escid"]
+				Funcionario funcionario = new Funcionario(params)
+				funcionario.cidadao = cidadao
 
 
-
-				if (pessoa.save(flush:true)){
-
-					PessoaFisica pessoaFisica = new PessoaFisica(params)
-					pessoaFisica.pessoa = pessoa
-					pessoaFisica.save(flush:true)
-					pessoaFisica.errors.each{ println it }
-
-					Cidadao cidadao = new Cidadao(params)
-					cidadao.pessoaFisica = pessoaFisica
-					cidadao.save(flush:true)
-					cidadao.errors.each{ println it }
-
-					Funcionario funcionario = new Funcionario(params)
-					funcionario.cidadao = cidadao
-									 									
-
-					if(funcionario.save(flush:true)){
-						funcionario.errors.each{ println it }
-						
-						def dataAtual=new Date()
-						Cargo cargo= Cargo.get(params.cargoId)
-						
-						Lotacao lotacao= new Lotacao()
-						 lotacao.cargo = cargo
-						 lotacao.funcionario=funcionario
-						 lotacao.situacao="Ativo"
-						 lotacao.vinculo=params.vinculo
-						 lotacao.funcao=params.funcao
-						 lotacao.dataInicio=dataAtual
-						 lotacao.dataTermino=dataAtual
-						 lotacao.save(flush:true)
-
-						//				def funcionarios = Funcionario.findAll()
-						//				render(view:"/funcionario/listarFuncionario.gsp", model:[
-						//					funcionarios:funcionarios,
-						//					ok : "Funcionário cadastrado com sucesso!"
-						//
-						//				])
-						listarMensagem("Funcionário cadastrado com sucesso!","ok")
-					}else{
-
-						//				def funcionarios = Funcionario.findAll()
-						//				render(view:"/funcionario/listarFuncionario.gsp", model:[
-						//					funcionarios:funcionarios,
-						//					erro : "Erro ao Salvar Funcionário!"
-						//				])
-						listarMensagem("Erro ao Salvar Funcionário!","erro")
-					}
-				}else{
-
-					def erros
-					pessoa.errors.each{ erros = it }
-
-					if  (erros.toString().contains("Pessoa.cpfCnpj.unique.error")){
-						erros = "CPF Já está cadastrado no sistema"
+				if(funcionario.save(flush:true)){
+					funcionario.errors.each{
+						println it
 					}
 
-					//			def funcionarios = Funcionario.findAll()
-					//			render(view:"/funcionario/listarFuncionario.gsp", model:[
-					//				funcionarios:funcionarios,
-					//				erro : erros
-					//			])
+					def dataAtual=new Date()
+					Cargo cargo= Cargo.get(params.cargoId)
+
+					Lotacao lotacao= new Lotacao()
+					lotacao.cargo = cargo
+					lotacao.funcionario=funcionario
+					lotacao.situacao="Ativo"
+					lotacao.vinculo=params.vinculo
+					lotacao.funcao=params.funcao
+					lotacao.dataInicio=dataAtual
+					lotacao.dataTermino=dataAtual
+					lotacao.save(flush:true)
+
+					//				def funcionarios = Funcionario.findAll()
+					//				render(view:"/funcionario/listarFuncionario.gsp", model:[
+					//					funcionarios:funcionarios,
+					//					ok : "Funcionário cadastrado com sucesso!"
+					//
+					//				])
+					listarMensagem("Funcionário cadastrado com sucesso!","ok")
+				}else{
+
+					//				def funcionarios = Funcionario.findAll()
+					//				render(view:"/funcionario/listarFuncionario.gsp", model:[
+					//					funcionarios:funcionarios,
+					//					erro : "Erro ao Salvar Funcionário!"
+					//				])
 					listarMensagem("Erro ao Salvar Funcionário!","erro")
 				}
 			}else{
-				render(view:"/error403.gsp")
+
+				def erros
+				pessoa.errors.each{
+					erros = it
+				}
+
+				if  (erros.toString().contains("Pessoa.cpfCnpj.unique.error")){
+					erros = "CPF Já está cadastrado no sistema"
+				}
+
+				//			def funcionarios = Funcionario.findAll()
+				//			render(view:"/funcionario/listarFuncionario.gsp", model:[
+				//				funcionarios:funcionarios,
+				//				erro : erros
+				//			])
+				listarMensagem("Erro ao Salvar Funcionário!","erro")
 			}
+		}else{
+			render(view:"/error403.gsp")
 		}
 	}
+}
 }

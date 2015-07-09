@@ -48,7 +48,8 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-		
+
+
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -62,6 +63,7 @@ function mudarCombo(){
 			</g:if>
 			<div class="box box-white">
 
+
 				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
 					<div class = "form-group">
 						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
@@ -69,6 +71,7 @@ function mudarCombo(){
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="" />
 								<button style="margin-left: 310px; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+
 								<i class="glyphicon glyphicon-search"></i> Buscar
 
 							</button>
@@ -76,8 +79,8 @@ function mudarCombo(){
 						</div>
 					</div>
 				</g:form>
-				
-				
+
+
 				<table id="" class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
@@ -110,8 +113,8 @@ function mudarCombo(){
 												<g:if test="${perm2}">
 
 													<li title="Editar Aluno"
-														class="btn btn-primary btn-xs btn-flat"><a
-														style="color: #fff"
+														class="btn btn-primary btn-xs btn-flat" ><a 
+														style="color: #fff" 
 														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 															class="glyphicon glyphicon-pencil"></span></a></li>
 
@@ -172,9 +175,11 @@ function mudarCombo(){
 
 
 			<g:if test="${perm2}">
+
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarAluno" onclick="hiddenInput();">
 				  <i class="fa fa-plus"></i> Novo Aluno
+
 				</button>
 			</g:if>
 			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
@@ -182,15 +187,16 @@ function mudarCombo(){
 			</button>
 			
 			<!-- Modal -->
+
 			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document" style="width: 75%;">
-			    <div class="modal-content" style="padding-left: 15px; padding-right: 15px;">
+			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
 			      </div>
-			      <div class="modal-body" style="margin-left: 50px;">
-			      	<g:form controller="Aluno" action="salvar" class="form-horizontal" style="width: 96%;">
+			      <div class="modal-body">
+			      	<g:form controller="Aluno" action="salvar" class="form-horizontal">
 						<!-- Steps Progress and Details - START -->
 						<div class="" style="margin-top:; margin-bottom: 0px;">
 							<div class="row">
@@ -203,6 +209,7 @@ function mudarCombo(){
 							<div class="row" style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);">
 								<div class="step">
 									<div id="div1" class="col-md-4 mouse-point activestep" onclick="javascript: resetActive(div1, event, 0, 'step-1');">
+
 										<div class="row">
 											<span class="fa fa-user"></span>
 											<p>Identificação</p>
@@ -217,7 +224,12 @@ function mudarCombo(){
 									<div id="div3" class="col-md-4 mouse-point" onclick="javascript: resetActive(div3, event, 70, 'step-3');">
 										<div class="row">
 											<span class="fa fa-university"></span>
-											<p>Matrícula</p>
+											<p>Dados Variáveis <br/>(início do ano corrente)</p>
+										</div>
+										<label for="iCpfMae" class="col-sm-2 control-label">CpfMae</label>
+										<div class="col-sm-10">
+											<g:textField class="form-control" id="iCpfMae" name="CpfMae"
+												placeholder="CPF" required="true" />
 										</div>
 									</div>
 								</div>
@@ -283,72 +295,126 @@ function mudarCombo(){
 									<label for="iNomeDoPai" class="col-sm-2 control-label">Nome do Pai</label>
 									<div class="col-sm-10">
 										<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput"/>
-										<div id="iDivSelectPicker" class="row">
-											<div class="col-sm-11">
-												<select class="form-control selectpicker" data-live-search="true" name="pai" id="comboPai">
-													<option value="0">Nome do Pai</option>
-													<g:each in="${pHomens}">
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:each>
-												</select>
-											</div>
-											<div class="col-sm-1">
-												<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarPai">Novo</button>
-											</div>
+										<div id="iDivSelectPicker">
+											<select class="form-control selectpicker" data-live-search="true" name="pai" id="comboPai">
+												<option value="0">Nome do Pai</option>
+												<g:each in="${pHomens}">
+													<option value="${it.id}">
+														${it.nome}
+													</option>
+												</g:each>
+											</select>
+										</div>
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarPai">
+										  Novo
+										</button>
+										<!-- Modal -->
+										<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
+										  <div class="modal-dialog" role="document" style="margin-top: 60%">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
+										      </div>
+										      <div class="modal-body">
+										        <div class="form-group">
+													<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
+													<div class="col-sm-11">
+														<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="true"/>
+													</div>
+													<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
+													<div class="col-sm-11">
+														<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfPai" placeholder="000.000.000-XX" required="true" />
+													</div>
+												</div>
+
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" onclick="salvarPai()">Cancelar</button>
+										        <button type="button" class="btn btn-success btn-flat">Cadastrar</button>
+										      </div>
+										    </div>
+										  </div>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="iNomeDaMae" class="col-sm-2 control-label">Nome da Mãe</label>
-									<div class="col-md-10">
+									<div class="col-sm-10">
 										<g:textField class="form-control" id="iNomeMaeInput" name="nomeMaeInput"/>
-										<div id="iDivSelectPicker1" class="row">
-											<div class="col-sm-11">
-												<select class="form-control selectpicker" data-live-search="true" name="mae" id="comboMae">
-													<option value="0">Nome da Mãe</option>
-													<g:each in="${pMulheres}">
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:each>
+										<div id="iDivSelectPicker1">
+											<select class="form-control selectpicker" data-live-search="true" name="mae" id="comboMae">
+												<option value="0">Nome da Mãe</option>
+												<g:each in="${pMulheres}">
+													<option value="${it.id}">
+														${it.nome}
+													</option>
+												</g:each>
+											</select>
+										</div>
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarMae">
+										  Novo
+										</button>
+										<!-- Modal -->
+										<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
+										  <div class="modal-dialog" role="document" style="margin-top: 60%">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
+										      </div>
+										      <div class="modal-body">
+										        <div class="form-group">
+													<label style="padding-top: 5px;" for="iNomeMae" class="col-sm-1 control-label">Nome:</label>
+													<div class="col-sm-11">
+														<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="true"/>
+													</div>
+													<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
+													<div class="col-sm-11">
+														<g:textField style="margin-top: 5px;" class="form-control" id="iCPF" name="cpfMae" placeholder="000.000.000-XX" required="true" />
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNacionalidade"
+													name="nacionalidade" placeholder="Nacionalidade"
+													required="true" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
+												Civil</label>
+											<div class="col-sm-10">
+												<select class="form-control" id="iEstadoCivil"
+													name="estadoCivil">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
 												</select>
 											</div>
-											<div class="col-sm-1">
-												<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
+										</div>
+										<div class="form-group" style="margin-top: 3%;">
+											<div class="col-sm-offset-10 col-sm-2"
+												style="margin-left: 87.2%;">
+												<button type="button" class="btn btn-primary btn-flat"
+													onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+													Próximo <i class="fa fa-chevron-circle-right"></i>
+												</button>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade"	required="true"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil</label>
-									<div class="col-sm-10">
-										<select class="form-control" id="iEstadoCivil" name="estadoCivil">
-											<option value="null" selected disabled>Selecione...</option>
-											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group" style="margin-top: 3%;">
-									<hr style="border-top: 2px solid #DFDFDF;"/>
-									<div class="col-md-1 col-md-offset-11">
-										<button type="button" class="btn btn-primary btn-flat" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Próximo <i class="fa fa-chevron-circle-right"></i></button>
-									</div>
-								</div>
-							</div>
-							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+									<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 										<h3>Endereço</h3>
-							
+
 										<div class="form-group">
 											<label for="iCep" class="col-sm-2 control-label">CEP</label>
 											<div id="iDivInputCep" class="col-sm-10">
@@ -361,9 +427,12 @@ function mudarCombo(){
 											</div>
 										</div>
 										<div class="form-group">
+										
+										
 											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" name="endereco" id="iLogradouro" placeholder="Logradouro">
+												<input type="text" class="form-control" name="endereco"
+													id="iLogradouro" placeholder="Logradouro">
 											</div>
 										</div>
 										<div class="form-group">
@@ -416,32 +485,15 @@ function mudarCombo(){
 										</div>
 									</div>
 									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
-										<h3>Matrícula</h3>
-										
-										
-										<div class="form-group">
-											<label class="col-sm-2 control-label">Realizar Matricula?</label>
-											<div class="col-sm-10 radio" style="padding-top: 0px;">
-												<label for="iRealizarMatricula" class="radio-inline">
-													<input type="radio" name="realizarMatricula"
-													id="iRealizarMatricula" value="SIM" onChange="disableInput('show')" >
-													Sim
-												</label> <label for="iRealizarMatricula" class="radio-inline">
-													<input type="radio" name="realizarMatricula"
-													id="iRealizarMatricula" value="NAO" onChange="disableInput('hide')" checked> Não
-												</label>
-											</div>
-										</div>
-										
-										
+										<h3>Dados Variáveis (iníco do ano corrente)</h3>
 										<div class="form-group">
 											<label for="iEscola" class="col-sm-2 control-label">Escola</label>
 											<div class="col-sm-10">
 												<select class="form-control selectpicker"
 													data-live-search="true" name="escolas" id="comboEscola"
-													onchange="mudarEscola();" >
+													onchange="mudarEscola();">
 													<g:each in="${escolas}">
-														<option value="0" disabled="true" selected="selected">Selecione
+														<option value="0" disabled="disabled" selected="selected">Selecione
 															uma escola</option>
 														<option value="${it.id}">
 															${it.pessoaJuridica.razaoSocial}
@@ -454,7 +506,7 @@ function mudarCombo(){
 											<label for="iSerie" class="col-sm-2 control-label">Série</label>
 											<div class="col-sm-10">
 												<select id="comboSerie" name="series" class="form-control"
-													onchange="mudarSerie()" disabled="true">
+													onchange="mudarSerie()">
 													<g:each in='${series?}'>
 														<option value="${it.id}">
 															${it.serie}
@@ -467,14 +519,14 @@ function mudarCombo(){
 											<label for="iTurma" class="col-sm-2 control-label">Turma</label>
 											<div class="col-sm-10">
 												<div id="teste"></div>
-												<select class="form-control" name="turma" id="comboTurma" disabled="true"></select>
+												<select class="form-control" name="turma" id="comboTurma"></select>
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="iNumeroMatricula" class="col-sm-2 control-label">Nº
 												Matrícula</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" name="matricula" value="" id="numMatricula" disabled="true" />
+												<g:textField class="form-control" name="matricula" value="" />
 											</div>
 										</div>
 										<div class="form-group">
@@ -484,7 +536,7 @@ function mudarCombo(){
 												<g:formatDate format="yyyy-MM-dd" date="${date}" />
 												<g:datePicker noSelection="['':'']" precision="day"
 													class="form-control" required="true" name="dataDaMatricula"
-													value="" id="dataMatricula" />
+													value="" />
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 3%;">
@@ -499,75 +551,53 @@ function mudarCombo(){
 													Finalizar <i class="fa fa-check-circle"></i>
 												</button>
 											</div>
+
 										</div>
 									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
+								<div class="col-sm-10">
+									<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade"	required="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="iEstadoCivil" name="estadoCivil">
+										<option value="null" selected disabled>Selecione...</option>
+										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+										<option value="CASADO(A)">CASADO(A)</option>
+										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+										<option value="VIÚVO(A)">VIÚVO(A)</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" style="margin-top: 3%;">
+								<div class="col-sm-offset-10 col-sm-2" style="margin-left: 87.2%;">
+									<button type="button" class="btn btn-primary btn-flat" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Próximo <i class="fa fa-chevron-circle-right"></i></button>
+								</div>
+							</div>
+							</g:form>
 						</div>
-					</g:form>  
+			
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Save</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
 			
-			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document" style="margin-top: 20%">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
-			      </div>
-			      <div class="modal-body">
-			        <div class="form-group">
-						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
-						<div class="col-sm-11">
-							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="true"/>
-						</div>
-						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" placeholder="000.000.000-XX" required="true" />
-						</div>
-					</div>
-			      </div>
-			      <hr/>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarPai()">Cadastrar</button>
-			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" >Cancelar</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-										
-			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document" style="margin-top: 20%">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
-			      </div>
-			      <div class="modal-body">
-			        <div class="form-group">
-						<label style="padding-top: 5px;" for="iNomeMae" class="col-sm-1 control-label">Nome:</label>
-						<div class="col-sm-11">
-							<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="true"/>
-						</div>
-						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFMae" name="cpfMae" placeholder="000.000.000-XX" required="true" />
-						</div>
-					</div>
-			      </div>
-			      <hr/>
-			      <div class="modal-footer">
-			      	<button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
-			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" >Cancelar</button>
-			        
-			      </div>
-			    </div>
-			  </div>
-			</div>
+			
+			
+			
 		</div>
+
 		
+
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
@@ -576,39 +606,16 @@ function mudarCombo(){
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
 				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 			}
-
-			function disableInput(type){
-
-				if(type=="hide"){
-					console.log('Hidden inputs...');
-					//document.getElementById("comboEscola").disabled = true;
-					document.getElementById("comboSerie").disabled = true;
-					document.getElementById("comboTurma").disabled = true;
-					document.getElementById("numMatricula").disabled = true;
-					//document.getElementById("dataMatricula").disabled = true;
-
-					
-					}
-				else{
-					console.log('show inputs...');
-					//document.getElementById("comboEscola").disabled = false;
-					document.getElementById("comboSerie").disabled = false;
-					document.getElementById("comboTurma").disabled = false;
-					document.getElementById("numMatricula").disabled = false;
-					//document.getElementById("dataMatricula").disabled = false;
-					}
-
-				}
 			
 
+
 			function salvarPai(){
-			   var endereco = "192.168.1.247";
-			   var nome = document.getElementById("iNomePai").value;
-			   var cpf = document.getElementById("iCPFPai").value;
+			   var endereco = "localhost";
+			   var nome = document.getElementById("iNome").value;
 			   
 			   $.ajax({
 		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome,
 		            dataType: "json",
 		            success: function(result){
 		            	console.log(result[result.length-1].nome);
@@ -627,13 +634,12 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 				   var nome = document.getElementById("iNomeMae").value;
-				   var cpf = document.getElementById("iCPFMae").value;
 				   
 				   $.ajax({
 			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf,
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nomeMae="+nome,
 			            dataType: "json",
 			            success: function(result){
 			            	console.log(result[result.length-1].nome);
@@ -650,64 +656,6 @@ function mudarCombo(){
 					    } 
 			        });
 				}
-
-
-			function mudarEscola(){
-		    	  
-				var endereco = "192.168.1.247";
-		        var comboTurma = document.getElementById("comboTurma");
-		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
-
-		        var idEscola = document.getElementById("comboEscola").value;
-				var idSerie = document.getElementById("comboSerie").value;
-		        
-		        
-		        $.ajax({
-		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
-		            dataType: "json",
-		            success: function(result){
-		            	comboTurma.options.length = 0;
-			        if (result.id.length == 0){
-			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
-			        }else{
-						for (i=0;i<result.id.length;i++){
-							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
-		           		}
-			        }
-		            }
-		        });
-				
-		   }
-
-		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
-			   var comboTurma = document.getElementById("comboTurma");
-		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
-
-		        var idEscola = document.getElementById("comboEscola").value;
-				var idSerie = document.getElementById("comboSerie").value;
-
-		        
-		        $.ajax({
-		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
-		            dataType: "json",
-		            success: function(result){
-		            	comboTurma.options.length = 0;
-			        if (result.id.length == 0){
-			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
-			        }else{
-						for (i=0;i<result.id.length;i++){
-							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
-		           		}
-			        }
-		            }
-		        });
-
-		    
-		       }
-	       
 			
 		</script>
 		

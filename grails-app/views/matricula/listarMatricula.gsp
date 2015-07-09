@@ -30,7 +30,7 @@
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "localhost";
+		var endereco = "192.168.1.247";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
@@ -143,22 +143,24 @@
 			</g:if>
 
 			<div class="box box-white">
-			
-			<g:form controller ="Matricula" action="pesquisarMatriculas" class ="form">
-					<div class = "form-group">
-						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+
+				<g:form controller="Matricula" action="pesquisarMatriculas"
+					class="form">
+					<div class="form-group">
+						<label for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="" />
-								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+							<button style="margin-left: 36%; margin-top: -56px;"
+								type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
-							
+
 						</div>
 					</div>
 				</g:form>
-				
-				
+
+
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
 					<thead>
@@ -169,36 +171,36 @@
 							<th style="width: 320px;">Nome da Escola</th>
 							<th style="width: 40px;">Série</th>
 							<th style="width: 60px;">Turma</th>
-	
+
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${matricula?}'>
-	
+
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
-											
-											
+
+
 											<g:if test="${perm2}">
 
-											<li class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${it.id})"
-												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
-												
-												</g:if> 
+												<li class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+												<li onclick="deletar(${it.id})"
+													class="btn btn-danger btn-xs btn-flat"><span
+													class="glyphicon glyphicon-remove"></span></li>
+
+											</g:if>
 											<li data-toggle="modal" data-target="#relatorioModal"
-											onclick="changeIdMatriculaParaRelatorio(${it.id});"
-											class="btn btn-warning btn-xs btn-flat"><span
-											class="glyphicon glyphicon-file"></span></li>
-												
+												onclick="changeIdMatriculaParaRelatorio(${it.id});"
+												class="btn btn-warning btn-xs btn-flat"><span
+												class="glyphicon glyphicon-file"></span></li>
+
 										</ul>
-	
+
 									</div>
 								</td>
 								<td>
@@ -215,13 +217,13 @@
 								<td>
 									${it.turma.turma}
 								</td>
-	
+
 							</tr>
 						</g:each>
-	
+
 					</tbody>
 				</table>
-			</div>	
+			</div>
 
 
 
@@ -229,7 +231,7 @@
 			
 				function mudarEscola(){
 		    	  
-					var endereco = "localhost";
+					var endereco = "192.168.1.247";
 			        var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -256,7 +258,7 @@
 			   }
 
 			  function mudarSerie(){
-				  var endereco = "localhost";
+				  var endereco = "192.168.1.247";
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -316,11 +318,10 @@
 
 
 								<div class="form-heading">
-									<input type="hidden" id="idMatriculaParaRelatorio"/>
-									<label>Tipo de Relatório</label>
+									<input type="hidden" id="idMatriculaParaRelatorio" /> <label>Tipo
+										de Relatório</label>
 									<div class="controls">
-										<select
-											class="form-control selectpicker" name="tipoRelatorio"
+										<select class="form-control selectpicker" name="tipoRelatorio"
 											id="tipoRelatorio">
 											<option value="1">Declaração de Vínculo</option>
 										</select> <br /> <br /> <br />
@@ -451,6 +452,6 @@
 		</div>
 	</section>
 	<div id="reportPrint" style="visibility: hidden;"></div>
-	
+
 </body>
 </html>

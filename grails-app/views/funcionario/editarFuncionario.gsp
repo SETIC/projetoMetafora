@@ -143,22 +143,22 @@
 						<div class="form-group">
 							<label for="inputvinculo3" class="col-sm-2 control-label">Vinculo</label>
 							<div class="col-sm-10">
-								<g:if test="${lotacao.vinculo == 'EFETIVO'}">
+								<g:if test="${funcionarios.lotacao?.vinculo == 'EFETIVO'}">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
-										<option value="${lotacao?.vinculo}">
-											${lotacao?.vinculo}
+										<option value="${funcionarios.lotacao?.vinculo}">
+											${funcionarios.lotacao?.vinculo}
 										</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:if>
-								<g:elseif test="${lotacao?.vinculo == ''} ">
+								<g:elseif test="${funcionarios.lotacao?.vinculo == ""} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="">
-											${lotacao?.vinculo}
+											${funcionarios.lotacao?.vinculo[0]}
 										</option>
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
@@ -167,39 +167,39 @@
 									</select>
 								</g:elseif>
 
-								<g:elseif test="${lotacao?.vinculo == 'COMISSIONADO'} ">
+								<g:elseif test="${funcionarios.lotacao?.vinculo == 'COMISSIONADO'} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="EFETIVO">EFETIVO</option>
-										<option value="${lotacao?.vinculo}" selected>
-											${lotacao?.vinculo}
+										<option value="${funcionarios.lotacao?.vinculo}" selected>
+											${funcionarios.lotacao?.vinculo}
 										</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:elseif>
 
-								<g:elseif test="${lotacao.vinculo == 'ESTAGIÁRIO'} ">
+								<g:elseif test="${funcionarios.lotacao?.vinculo == 'ESTAGIÁRIO'} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
-										<option value="" selected>${lotacao.vinculo}	</option>
+										<option value="" selected>${funcionarios.lotacao?.vinculo}	</option>
                                         <option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:elseif>
-
 								<g:else>
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
-										<opion value=""> ${lotacao.vinculo}
+										<opion value=""> ${funcionarios.lotacao?.vinculo}
 										</option>
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
-										<option value=""selected>${lotacao.vinculo}</option>
+										<option value=""selected>${funcionarios.lotacao?.vinculo}</option>
 									</select>
 								</g:else>
+					
 
 							</div>
 						</div>
@@ -209,7 +209,7 @@
 							<div class="col-sm-10">
 								<g:textField class="form-control" required="true"
 									name="funcao" style="width: 300px"
-									value="${lotacao.funcao}" />
+									value="${funcionarios.lotacao?.funcao[0]}" />
 							</div>
 						</div>
 												
@@ -357,7 +357,7 @@
 
 
 				function mudarSelect(){
-					var endereco = "localhost";
+					var endereco = "192.168.1.247";
 					
 					   var comboCargo = document.getElementById("comboCargo");
 					   comboCargo.options[comboCargo.options.length] = new Option("Buscando cargo", 0);
