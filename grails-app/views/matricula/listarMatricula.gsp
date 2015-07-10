@@ -297,10 +297,6 @@
 				</button>
 			</g:if>
 
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
-				<i class="glyphicon glyphicon-print"></i> Imprimir
-			</button>
-
 
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"

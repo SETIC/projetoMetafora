@@ -1,10 +1,14 @@
 package br.gov.rn.saogoncalo.pessoa
 import java.text.SimpleDateFormat
+
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
 import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.localizacao.Bairro
+import br.gov.rn.saogoncalo.localizacao.Estado
 import br.gov.rn.saogoncalo.localizacao.Logradouro
+import br.gov.rn.saogoncalo.localizacao.Municipio
+import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
 import grails.converters.JSON
 import groovy.json.JsonSlurper
@@ -487,7 +491,7 @@ class AlunoController {
 					Pessoa idMae = new Pessoa()
 
 					//alteração de id pai e mae
-					if(params.nomePaiInput == "" || params.nomePaiInput == null){
+					if(params.nomePaiInput == "" || params.nomePaiInput == null){	
 						idPai = Pessoa.get(params.pai)
 					}else{
 						idPai = Pessoa.get(params.nomePaiInput)
@@ -513,10 +517,84 @@ class AlunoController {
 
 
 					println("Parentesco --- " + params)
+					
+					
 					//endereço
-
+					
+					TipoLogradouro tipoLogradouro = new TipoLogradouro()
+					Logradouro logradouro = new Logradouro()
+					Bairro bairro = new Bairro()
+					Municipio municipio = new Municipio()
+					Estado estado = new Estado()
+					Reside newReside = new Reside()
+					
+					def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+					def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+					
+					println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
+					
+					
+					tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
+					if(tipoLogradouro == null){
+						TipoLogradouro newTipoLogradouro = new TipoLogradouro()
+						newTipoLogradouro.tipoLogradouro = tipoLogradouroSimple
+						newTipoLogradouro.save(flush:true)
+						println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)	
+						tipoLogradouro = newTipoLogradouro				
+					}
+					
+					logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
+					if(logradouro == null){
+						Logradouro newLogradouro = new Logradouro()
+						newLogradouro.logradouro = logradouroSimple
+						newLogradouro.save(flush:true)
+						println("Logradouro --- " + newLogradouro.logradouro)
+						logradouro = newLogradouro
+					}
+					
+					estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
+					if(estado == null){
+						Estado newEstado = new Estado()
+						newEstado.estado = params.uf.toString().toUpperCase()
+						newEstado.abreviacao = params.uf.toString().toUpperCase()
+						newEstado.save(flush:true)
+						println("Estado --- " + newEstado.estado)
+						estado = newEstado
+					}
+					
+					municipio = Municipio.findByMunicipio(params.municipio.toString().toUpperCase())
+					if(municipio == null){
+						Municipio newMunicipio = new Municipio()
+						newMunicipio.municipio = params.municipio.toString().toUpperCase()
+						newMunicipio.estado = estado
+						newMunicipio.save(flush:true)
+						println("Municipio --- " + newMunicipio.municipio)
+						municipio = newMunicipio
+					}
+					
+					bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
+					if(bairro == null){
+						Bairro newBairro = new Bairro()
+						newBairro.bairro = params.bairro.toString().toUpperCase()
+						newBairro.municipio = municipio
+						newBairro.save(flush:true)
+						println("Bairro --- " + newBairro.bairro)
+						bairro = newBairro
+					}
+										
+					newReside.bairro = bairro
+					newReside.logradouro = logradouro
+					newReside.pessoa = pessoa
+					newReside.numero = params.numero
+					newReside.complemento = params.complemento
+					newReside.cep = params.cep
+					if(newReside.save(flush:true) == false){
+						listarMensagem("Erro ao salvar reside", "erro")
+					}
+					println("reside --- " + newReside.id)
+										
 					//Bairro idBairro = new Bairro()
-
+					/*	
 					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
 
 					def idLogradouro = Logradouro.executeQuery(" select l " +
@@ -531,12 +609,13 @@ class AlunoController {
 					println("Logradouro banco --- " + idLogradouro.logradouro)
 
 
-					/*					if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
+									if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
 					 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
 					 }else{*/
 
 
-					if (params.cep != null){
+/*						//codigo de cadastro de endereços
+						if (params.cep != null){
 
 						println("idBairro -- " + idBairro)
 
@@ -554,7 +633,7 @@ class AlunoController {
 						}else{
 							listarMensagem("Erro ao salvar endereço", "erro")
 						}
-					}
+					}*/
 
 
 					//}

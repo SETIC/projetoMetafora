@@ -90,7 +90,8 @@ function printDiv(id)
 										<br>
 										
 
-			<div class="box box-white">
+			<div class="box box-white" >
+			<div id="print">
 				<table id="" class="table table-striped table-hover example">
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
@@ -109,6 +110,7 @@ function printDiv(id)
 						
 								<tr class='linha_registro'>
 									<td>
+									
 										<div style="margin-left: -35px" class="opcoes">
 											
 
@@ -163,11 +165,12 @@ function printDiv(id)
 										${it.bimestre}
 									</td>
 								</tr>
-							
+						
 						</g:each>
 	
 					</tbody>
 				</table>
+				</div>
 			</div>
 
 			<!-- Button trigger modal -->
@@ -177,7 +180,7 @@ function printDiv(id)
 				<i class="fa fa-plus"></i> Nova Atividade
 			</button>
 			
-			<button class="btn btn-default btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-default btn-flat" onClick="printDiv('print')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 
@@ -238,7 +241,7 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Descrição</label>
 										<div class="controls">
-											<textarea class="form-control" name="descricaoAtividade" 
+											<textarea required="required" class="form-control" name="descricaoAtividade" 
 											rows="3" placeholder="Descreva a atividade"></textarea>
 										</div>
 									</div>
