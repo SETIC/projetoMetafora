@@ -355,7 +355,7 @@ function mudarCombo(){
 												<g:textField type="number" class="form-control"
 													data-mask="99999-999" name="cep" id="iCep"
 													onfocusout="javascript: requestAjax(this);"
-													placeholder="CEP" />
+													placeholder="CEP" value="${reside?.cep}" />
 												<p id="iMensagemCEP" class="text-danger">Por favor
 													digite um CEP válido.</p>
 											</div>
@@ -363,7 +363,7 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" name="endereco" id="iLogradouro" placeholder="Logradouro">
+												<input type="text" class="form-control" name="endereco" id="iLogradouro" placeholder="Logradouro" value="${reside?.logradouro?.logradouro}">
 											</div>
 										</div>
 										<div class="form-group">
@@ -602,7 +602,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "192.168.1.247";
+			   var endereco = "localhost";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -627,7 +627,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -654,7 +654,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -681,7 +681,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
+			  var endereco = "localhost";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

@@ -19,63 +19,70 @@
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<script type="text/javascript">
-			
-			function hiddenInput(){
-				console.log('Hidden...');
-				document.getElementById("iNomePaiInput").className = 'form-control hidden';
-				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
-			}
-			function salvarPai(){
-				   var endereco = "192.168.1.247";
-				   var nome = document.getElementById("iNome").value;
-				   
-				   $.ajax({
-			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome,
-			            dataType: "json",
-			            success: function(result){
-			            	console.log(result[result.length-1].nome);
-			            	
-			            	document.getElementById("iDivSelectPicker").className = 'form-control hidden';
-			            	
-			            	document.getElementById("iNomePaiInput").className = 'form-control';
-			            	document.getElementById("iNomePaiInput").disabled = true;
-			            	document.getElementById("iNomePaiInput").value = result[result.length-1].nome;
+		function hiddenInput() {
+			console.log('Hidden...');
+			document.getElementById("iNomePaiInput").className = 'form-control hidden';
+			document.getElementById("iNomeMaeInput").className = 'form-control hidden';
+		}
+		function salvarPai() {
+			var endereco = "192.168.1.247";
+			var nome = document.getElementById("iNome").value;
 
-			            	$(function() {
+			$
+					.ajax({
+						type : "GET",
+						url : "http://"
+								+ endereco
+								+ ":8080/projetoMetafora/aluno/cadastrarPai?nome="
+								+ nome,
+						dataType : "json",
+						success : function(result) {
+							console.log(result[result.length - 1].nome);
+
+							document.getElementById("iDivSelectPicker").className = 'form-control hidden';
+
+							document.getElementById("iNomePaiInput").className = 'form-control';
+							document.getElementById("iNomePaiInput").disabled = true;
+							document.getElementById("iNomePaiInput").value = result[result.length - 1].nome;
+
+							$(function() {
 								$('#twoModalsExample').modal('hide');
-							});						
-					    } 
-			        });
-				}
+							});
+						}
+					});
+		}
 
-			function salvarMae(){
-				var endereco = "192.168.1.247";
-				   var nome = document.getElementById("iNomeMae").value;
-				   
-				   $.ajax({
-			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nomeMae="+nome,
-			            dataType: "json",
-			            success: function(result){
-			            	console.log(result[result.length-1].nome);
-			            	
-			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
-			            	
-			            	document.getElementById("iNomeMaeInput").className = 'form-control';
-			            	document.getElementById("iNomeMaeInput").disabled = true;
-			            	document.getElementById("iNomeMaeInput").value = result[result.length-1].nome;
+		function salvarMae() {
+			var endereco = "192.168.1.247";
+			var nome = document.getElementById("iNomeMae").value;
 
-			            	$(function() {
+			$
+					.ajax({
+						type : "GET",
+						url : "http://"
+								+ endereco
+								+ ":8080/projetoMetafora/aluno/cadastrarMae?nomeMae="
+								+ nome,
+						dataType : "json",
+						success : function(result) {
+							console.log(result[result.length - 1].nome);
+
+							document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
+
+							document.getElementById("iNomeMaeInput").className = 'form-control';
+							document.getElementById("iNomeMaeInput").disabled = true;
+							document.getElementById("iNomeMaeInput").value = result[result.length - 1].nome;
+
+							$(function() {
 								$('#twoModalsExample1').modal('hide');
-							});						
-					    } 
-			        });
-				}
-			 </script>
-			 <style onload="hiddenInput();"></style>
+							});
+						}
+					});
+		}
+	</script>
+	<style onload="hiddenInput();"></style>
 	<section class="content">
-	
+
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -93,8 +100,8 @@
 				<g:set var="cidadao" value="${it.cidadao}" />
 			</g:each>
 			<div>
-			<br>
-			<!-- modais-->
+				<br>
+				<!-- modais-->
 				<div class="modal fade" id="twoModalsExample"
 					style="background-color: white; height: 300px;"
 					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
@@ -105,10 +112,11 @@
 						<!--	<g:form class="form-horizontal"> -->
 						<div class="form-group">
 							<label for="iNome" class="col-sm-2 control-label">nome</label>
-							<g:textField class="form-control" id="iNome" name="nome" placeholder="Nome" required="true" />
-							<br>
-							<label for="iCpf" class="col-sm-2 control-label">CPF</label>
-							<g:textField class="form-control" id="iCpf" name="cpf" placeholder="CPF" required="true" />
+							<g:textField class="form-control" id="iNome" name="nome"
+								placeholder="Nome" required="true" />
+							<br> <label for="iCpf" class="col-sm-2 control-label">CPF</label>
+							<g:textField class="form-control" id="iCpf" name="cpf"
+								placeholder="CPF" required="true" />
 						</div>
 						<button id="closemodal" type="button"
 							data-dismiss="twoModalsExample" class="btn btn-success btn-flat"
@@ -118,30 +126,28 @@
 				</div>
 				<br>
 				<div class="modal fade" id="twoModalsExample1"
-								style="background-color: white; height: 300px;"
-								aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
-								aria-hidden="true">
-								<h4 class="modal-title" id="myModalLabel">Cadastro de
-									filiação</h4>
-								<br>
-								<div class="modal-body">
-									<!--	<g:form class="form-horizontal"> -->
-									<div class="form-group">
-										<label for="iNomeMae" class="col-sm-2 control-label">nome</label>
-										<div class="col-sm-10">
-											<g:textField class="form-control" id="iNomeMae" name="nomeMae"
-												placeholder="Nome" required="true" />
-										</div>
-									</div>
-									<button id="closemodal" type="button"
-										data-dismiss="twoModalsExample1"
-										class="btn btn-success btn-flat" onclick="salvarMae()">
-										Cadastrar</button>
-
-
-									<!--  	</g:form> -->
-								</div>
+					style="background-color: white; height: 300px;"
+					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
+					aria-hidden="true">
+					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
+					<br>
+					<div class="modal-body">
+						<!--	<g:form class="form-horizontal"> -->
+						<div class="form-group">
+							<label for="iNomeMae" class="col-sm-2 control-label">nome</label>
+							<div class="col-sm-10">
+								<g:textField class="form-control" id="iNomeMae" name="nomeMae"
+									placeholder="Nome" required="true" />
 							</div>
+						</div>
+						<button id="closemodal" type="button"
+							data-dismiss="twoModalsExample1" class="btn btn-success btn-flat"
+							onclick="salvarMae()">Cadastrar</button>
+
+
+						<!--  	</g:form> -->
+					</div>
+				</div>
 				<g:form controller="Aluno" action="atualizar"
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
@@ -276,44 +282,74 @@
 								<div class="col-sm-10">
 									<g:textField class="form-control" id="iNomePaiInput"
 										name="nomePaiInput" />
-									<div id="iDivSelectPicker" name="divSelectPicker" class="">
-										<select class="form-control selectpicker"
-											data-live-search="true" name="pai" id="comboPai">
-											<option value="0">Nome do Pai</option>
-											<g:each in="${pHomens}">
-												<option value="${it.id}">
-													${it.nome}
-												</option>
-											</g:each>
-										</select>
-									</div>
-									<button class="btn btn-primary btn-flat" id="btn1"
-										data-toggle="modal" data-target="#twoModalsExample">Novo</button>
-								</div>
+									<div id="iDivSelectPicker" class="row">
+										<div class="col-sm-11">
+											<select class="form-control selectpicker"
+												data-live-search="true" name="pai" id="comboPai">
+												<option value="0">Nome do Pai</option>
+												<g:each in="${pHomens}">
 
+													<g:if test="${it.id == parentescoPai.pessoa.id }">
+														<option value="${it.id}" selected>
+															${it.nome}
+														</option>
+
+													</g:if>
+													<g:else>
+
+														<option value="${it.id}">
+															${it.nome}
+														</option>
+
+													</g:else>
+
+												</g:each>
+											</select>
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-primary btn-flat"
+												data-toggle="modal" data-target="#modalCadastrarPai">Novo</button>
+										</div>
+									</div>
+								</div>
 							</div>
 							<br>
 							<div class="form-group">
 								<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
 									da Mãe</label>
-								<div class="col-sm-10">
+								<div class="col-md-10">
 									<g:textField class="form-control" id="iNomeMaeInput"
 										name="nomeMaeInput" />
-									<div id="iDivSelectPicker1" name="divSelectPicker1" class="">
-										<select class="form-control selectpicker"
-											data-live-search="true" name="mae" id="comboMae">
-											<option value="0">Nome da Mãe</option>
-											<g:each in="${pMulheres}">
-												<option value="${it.id}">
-													${it.nome}
-												</option>
-											</g:each>
-										</select>
-									</div>
-									<button class="btn btn-primary btn-flat" id="btn2"
-										data-toggle="modal" data-target="#twoModalsExample1">Novo</button>
-								</div>
+									<div id="iDivSelectPicker1" class="row">
+										<div class="col-sm-11">
+											<select class="form-control selectpicker"
+												data-live-search="true" name="mae" id="comboMae">
+												<option value="0">Nome da Mãe</option>
+												<g:each in="${pMulheres}">
 
+													<g:if test="${it.id == parentescoMae.pessoa.id }">
+														<option value="${it.id}" selected>
+															${it.nome}
+														</option>
+
+													</g:if>
+													<g:else>
+
+														<option value="${it.id}">
+															${it.nome}
+														</option>
+
+													</g:else>
+
+												</g:each>
+											</select>
+										</div>
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-primary btn-flat"
+												data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
+										</div>
+									</div>
+								</div>
 							</div>
 							<br>
 							<div class="form-group">
@@ -412,7 +448,8 @@
 								<div id="iDivInputCep" class="col-sm-10">
 									<g:textField type="number" class="form-control"
 										data-mask="99999-999" name="cep" id="iCep"
-										onfocusout="javascript: requestAjax(this);" placeholder="CEP" />
+										onfocusout="javascript: requestAjax(this);" placeholder="CEP"
+										value="${reside?.cep}" />
 									<p id="iMensagemCEP" class="text-danger">Por favor digite
 										um CEP válido.</p>
 								</div>
@@ -421,42 +458,47 @@
 								<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="endereco"
-										id="iLogradouro" placeholder="Logradouro">
+										id="iLogradouro" placeholder="Logradouro"
+										value="${reside?.logradouro.tipoLogradouro.tipoLogradouro} ${reside?.logradouro.logradouro}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="iNumero" class="col-sm-2 control-label">Número</label>
 								<div class="col-sm-10">
 									<input type="number" class="form-control" name="numero"
-										id="iNumero" placeholder="Número">
+										id="iNumero" placeholder="Número" value="${reside?.numero}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="iComplemento" class="col-sm-2 control-label">Complemento</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="complemento"
-										id="iComplemento" placeholder="Complemento">
+										id="iComplemento" placeholder="Complemento"
+										value="${reside?.complemento}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="iBairro" class="col-sm-2 control-label">Bairro</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="bairro"
-										id="iBairro" placeholder="Bairro">
+										id="iBairro" placeholder="Bairro"
+										value="${reside?.bairro.bairro}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="iUf" class="col-sm-2 control-label">UF</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="uf" id="iUf"
-										placeholder="Estado">
+										placeholder="Estado"
+										value="${reside?.bairro.municipio.estado.abreviacao}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="iMunicipio" class="col-sm-2 control-label">Município</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="municipio"
-										id="iMunicipio" placeholder="Município">
+										id="iMunicipio" placeholder="Município"
+										value="${reside?.bairro.municipio.municipio}">
 								</div>
 							</div>
 							<div class="form-group" style="margin-top: 3%;">
@@ -467,7 +509,7 @@
 										<i class="fa fa-chevron-circle-left"></i> Anterior
 									</button>
 									<button type="submit" onclick="javascript: inputsHabilitado();"
-											class="btn btn-primary btn-flat">
+										class="btn btn-primary btn-flat">
 										<i class="fa fa-refresh"></i> Atualizar
 									</button>
 									<button style="display: inline-block;" type="submit"
@@ -482,9 +524,235 @@
 					<br>
 				</g:form>
 			</div>
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="modalCadastrarPai" tabindex="-1"
+				role="dialog" data-focus-on="input:first"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="margin-top: 20%">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label style="padding-top: 5px;" for="iNomePai"
+									class="col-sm-1 control-label">Nome:</label>
+								<div class="col-sm-11">
+									<g:textField class="form-control" id="iNomePai" name="nomePai"
+										placeholder="Nome" required="true" />
+								</div>
+								<label for="iCpf" style="margin-top: 5px; padding-top: 5px;"
+									class="col-sm-1 control-label">CPF:</label>
+								<div class="col-sm-11">
+									<g:textField style="margin-top: 5px;" class="form-control"
+										id="iCPFPai" name="cpfPai" placeholder="000.000.000-XX"
+										required="true" />
+								</div>
+							</div>
+						</div>
+						<hr />
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-flat"
+								data-dismiss="modal" onclick="salvarPai()">Cadastrar</button>
+							<button type="button" class="btn btn-default btn-flat"
+								data-dismiss="modal">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="modalCadastrarMae" tabindex="-1"
+				role="dialog" data-focus-on="input:first"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="margin-top: 20%">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label style="padding-top: 5px;" for="iNomeMae"
+									class="col-sm-1 control-label">Nome:</label>
+								<div class="col-sm-11">
+									<g:textField class="form-control" id="iNomeMae" name="nomeMae"
+										placeholder="Nome" required="true" />
+								</div>
+								<label for="iCpf" style="margin-top: 5px; padding-top: 5px;"
+									class="col-sm-1 control-label">CPF:</label>
+								<div class="col-sm-11">
+									<g:textField style="margin-top: 5px;" class="form-control"
+										id="iCPFMae" name="cpfMae" placeholder="000.000.000-XX"
+										required="true" />
+								</div>
+							</div>
+						</div>
+						<hr />
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-flat"
+								data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
+							<button type="button" class="btn btn-default btn-flat"
+								data-dismiss="modal">Cancelar</button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Script buscar dados de acordo com CEP -->
+		<g:javascript src="script-buscar-cep.js" />
+		<script type="text/javascript">
+			function hiddenInput(){
+				console.log('Hidden...');
+				document.getElementById("iNomePaiInput").className = 'form-control hidden';
+				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
+			}
+
+			function disableInput(type){
+
+				if(type=="hide"){
+					console.log('Hidden inputs...');
+					//document.getElementById("comboEscola").disabled = true;
+					document.getElementById("comboSerie").disabled = true;
+					document.getElementById("comboTurma").disabled = true;
+					document.getElementById("numMatricula").disabled = true;
+					//document.getElementById("dataMatricula").disabled = true;
+
+					
+					}
+				else{
+					console.log('show inputs...');
+					//document.getElementById("comboEscola").disabled = false;
+					document.getElementById("comboSerie").disabled = false;
+					document.getElementById("comboTurma").disabled = false;
+					document.getElementById("numMatricula").disabled = false;
+					//document.getElementById("dataMatricula").disabled = false;
+					}
+
+				}
 			
-		
-		<g:javascript src="script-buscar-cep.js"/>
+
+			function salvarPai(){
+			   var endereco = "localhost";
+			   var nome = document.getElementById("iNomePai").value;
+			   var cpf = document.getElementById("iCPFPai").value;
+			   
+			   $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
+		            dataType: "json",
+		            success: function(result){
+		            	console.log(result[result.length-1].nome);
+		            	
+		            	document.getElementById("iDivSelectPicker").className = 'form-control hidden';
+		            	
+		            	document.getElementById("iNomePaiInput").className = 'form-control';
+		            	document.getElementById("iNomePaiInput").disabled = true;
+		            	document.getElementById("iNomePaiInput").value = result[result.length-1].nome;
+
+		            	$(function() {
+							$('#twoModalsExample').modal('hide');
+						});						
+				    } 
+		        });
+			}
+			
+			function salvarMae(){
+				var endereco = "localhost";
+				   var nome = document.getElementById("iNomeMae").value;
+				   var cpf = document.getElementById("iCPFMae").value;
+				   
+				   $.ajax({
+			            type: "GET",
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf,
+			            dataType: "json",
+			            success: function(result){
+			            	console.log(result[result.length-1].nome);
+			            	
+			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
+			            	
+			            	document.getElementById("iNomeMaeInput").className = 'form-control';
+			            	document.getElementById("iNomeMaeInput").disabled = true;
+			            	document.getElementById("iNomeMaeInput").value = result[result.length-1].nome;
+
+			            	$(function() {
+								$('#twoModalsExample1').modal('hide');
+							});						
+					    } 
+			        });
+				}
+
+
+			function mudarEscola(){
+		    	  
+				var endereco = "localhost";
+		        var comboTurma = document.getElementById("comboTurma");
+		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+		        var idEscola = document.getElementById("comboEscola").value;
+				var idSerie = document.getElementById("comboSerie").value;
+		        
+		        
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
+		            dataType: "json",
+		            success: function(result){
+		            	comboTurma.options.length = 0;
+			        if (result.id.length == 0){
+			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
+			        }else{
+						for (i=0;i<result.id.length;i++){
+							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
+		           		}
+			        }
+		            }
+		        });
+				
+		   }
+
+		  function mudarSerie(){
+			  var endereco = "localhost";
+			   var comboTurma = document.getElementById("comboTurma");
+		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+		        var idEscola = document.getElementById("comboEscola").value;
+				var idSerie = document.getElementById("comboSerie").value;
+
+		        
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
+		            dataType: "json",
+		            success: function(result){
+		            	comboTurma.options.length = 0;
+			        if (result.id.length == 0){
+			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
+			        }else{
+						for (i=0;i<result.id.length;i++){
+							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
+		           		}
+			        }
+		            }
+		        });
+
+		    
+		       }
+	       
+			
+		</script>
 	</section>
 </body>
 </html>
