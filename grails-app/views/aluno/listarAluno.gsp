@@ -48,7 +48,7 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-		
+
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -62,13 +62,14 @@ function mudarCombo(){
 			</g:if>
 			<div class="box box-white">
 
-				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
-					<div class = "form-group">
-						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
+				<g:form controller="Aluno" action="pesquisarAlunos" class="form">
+					<div class="form-group">
+						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="" />
-								<button style="margin-left: 310px; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+							<button style="margin-left: 310px; margin-top: -56px;"
+								type="submit" class="btn btn-primary btn-flat">
 								<i class="glyphicon glyphicon-search"></i> Buscar
 
 							</button>
@@ -76,8 +77,8 @@ function mudarCombo(){
 						</div>
 					</div>
 				</g:form>
-				
-				
+
+
 				<table id="" class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
@@ -173,123 +174,163 @@ function mudarCombo(){
 
 			<g:if test="${perm2}">
 				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarAluno" onclick="hiddenInput();">
-				  <i class="fa fa-plus"></i> Novo Aluno
+				<button type="button" class="btn btn-primary btn-flat"
+					data-toggle="modal" data-target="#modalCadastrarAluno"
+					onclick="hiddenInput();">
+					<i class="fa fa-plus"></i> Novo Aluno
 				</button>
 			</g:if>
 			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
-			
+
 			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document" style="width: 75%;">
-			    <div class="modal-content" style="padding-left: 15px; padding-right: 15px;">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
-			      </div>
-			      <div class="modal-body" style="margin-left: 50px;">
-			      	<g:form controller="Aluno" action="salvar" class="form-horizontal" style="width: 96%;">
-						<!-- Steps Progress and Details - START -->
-						<div class="" style="margin-top:; margin-bottom: 0px;">
-							<div class="row">
-								<div class="progress" id="progress1">
-									<div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-									<span class="progress-type">Progresso Geral</span> 
-									<span class="progress-completed">0%</span>
-								</div>
-							</div>
-							<div class="row" style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);">
-								<div class="step">
-									<div id="div1" class="col-md-4 mouse-point activestep" onclick="javascript: resetActive(div1, event, 0, 'step-1');">
-										<div class="row">
-											<span class="fa fa-user"></span>
-											<p>Identificação</p>
+			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1"
+				role="dialog" data-focus-on="input:first"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="width: 75%;">
+					<div class="modal-content"
+						style="padding-left: 15px; padding-right: 15px;">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
+						</div>
+						<div class="modal-body" style="margin-left: 50px;">
+							<g:form controller="Aluno" action="salvar"
+								class="form-horizontal" style="width: 96%;">
+								<!-- Steps Progress and Details - START -->
+								<div class="" style="margin-top:; margin-bottom: 0px;">
+									<div class="row">
+										<div class="progress" id="progress1">
+											<div class="progress-bar" role="progressbar"
+												aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+												style="width: 0%;"></div>
+											<span class="progress-type">Progresso Geral</span> <span
+												class="progress-completed">0%</span>
 										</div>
 									</div>
-									<div id="div2" class="col-md-4 mouse-point" onclick="javascript: resetActive(div2, event, 35, 'step-2');">
-										<div class="row">
-											<span class="fa fa-home"></span>
-											<p>Endereço</p>
+									<div class="row"
+										style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);">
+										<div class="step">
+											<div id="div1" class="col-md-4 mouse-point activestep"
+												onclick="javascript: resetActive(div1, event, 0, 'step-1');">
+												<div class="row">
+													<span class="fa fa-user"></span>
+													<p>Identificação</p>
+												</div>
+											</div>
+											<div id="div2" class="col-md-4 mouse-point"
+												onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+												<div class="row">
+													<span class="fa fa-home"></span>
+													<p>Endereço</p>
+												</div>
+											</div>
+											<div id="div3" class="col-md-4 mouse-point"
+												onclick="javascript: resetActive(div3, event, 70, 'step-3');">
+												<div class="row">
+													<span class="fa fa-university"></span>
+													<p>Matrícula</p>
+												</div>
+											</div>
 										</div>
 									</div>
-									<div id="div3" class="col-md-4 mouse-point" onclick="javascript: resetActive(div3, event, 70, 'step-3');">
-										<div class="row">
-											<span class="fa fa-university"></span>
-											<p>Matrícula</p>
+									<div class="activeStepInfo" id="step-1" style="margin-top: 2%;">
+										<h3>Identificação</h3>
+										<div class="form-group">
+											<label for="iNome" class="col-sm-2 control-label">Nome</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNome" name="nome"
+													placeholder="Nome" required="true" />
+											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-							<div class="activeStepInfo" id="step-1" style="margin-top: 2%;">
-								<h3>Identificação</h3>
-								<div class="form-group">
-									<label for="iNome" class="col-sm-2 control-label">Nome</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNome" name="nome" placeholder="Nome" required="true"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iDataDeNascimento"
-										class="col-sm-2 control-label">Data de Nascimento</label>
-									<div class="col-sm-10">
-										<g:formatDate format="yyyy-MM-dd" date="${date}" />
-										<g:datePicker noSelection="['':'']" precision="day" class="form-control" id="iDataDeNascimento" name="dataDeNascimento" required="true"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iCpf" class="col-sm-2 control-label">CPF</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iCpfCnpj" name="cpfCnpj" placeholder="CPF"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNumeroDoRegistroDeCartorio" class="col-sm-2 control-label">Número do Registro de Cartório</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNumeroDoRegistroDeCartorio" name="rcNumero" placeholder="Número do Registro de Cartório"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNomeDoCartorioDoRegistro" class="col-sm-2 control-label">Nome do Cartório do Registro</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNomeDoCartorioDoRegistro" name="rcNomeDoCartorio" placeholder="Nome do Cartório do Registro"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNomeDoLivroDoRegistroDeCartorio" class="col-sm-2 control-label">Nome do Livro do Registro de Cartório</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNomeDoLivroDoRegistroDeCartorio" name="rcNomeDoLivro" placeholder="Nome do Livro do Registro de Cartório"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iFolhaDoLivroDoRegistroDeCartorio" class="col-sm-2 control-label">Folha do Livro do Registro de Cartório</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iFolhaDoLivroDoRegistroDeCartorio" name="rcFolhaDoLivro" placeholder="Folha do Livro do Registro de Cartório" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Sexo</label>
-									<div class="col-sm-10 radio" style="padding-top: 0px;">
-										<label for="iSexoMasculino" class="radio-inline"> 
-											<input type="radio" name="sexo" id="iSexoMasculino" value="MASCULINO" checked> Masculino
-										</label> 
-										<label for="iSexoFeminino" class="radio-inline"> 
-											<input type="radio" name="sexo" id="iSexoFeminino" value="FEMININO"> Feminino
-										</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNomeDoPai" class="col-sm-2 control-label">Nome do Pai</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput"/>
-										<div id="iDivSelectPicker" class="row">
-											<div class="col-sm-11">
-												<select class="form-control selectpicker" data-live-search="true" name="pai" id="comboPai">
-													<option value="0">Nome do Pai</option>
-													<g:each in="${pHomens}">
-														<option value="${it.id}">
-															${it.nome}
+										<div class="form-group">
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">Data
+												de Nascimento</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" id="iDataDeNascimento"
+													name="dataDeNascimento" required="true" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iCpf" class="col-sm-2 control-label">CPF</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iCpfCnpj"
+													name="cpfCnpj" placeholder="CPF" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNumeroDoRegistroDeCartorio"
+												class="col-sm-2 control-label">Número do Registro de
+												Cartório</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iNumeroDoRegistroDeCartorio" name="rcNumero"
+													placeholder="Número do Registro de Cartório" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNomeDoCartorioDoRegistro"
+												class="col-sm-2 control-label">Nome do Cartório do
+												Registro</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iNomeDoCartorioDoRegistro" name="rcNomeDoCartorio"
+													placeholder="Nome do Cartório do Registro" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNomeDoLivroDoRegistroDeCartorio"
+												class="col-sm-2 control-label">Nome do Livro do
+												Registro de Cartório</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iNomeDoLivroDoRegistroDeCartorio" name="rcNomeDoLivro"
+													placeholder="Nome do Livro do Registro de Cartório" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iFolhaDoLivroDoRegistroDeCartorio"
+												class="col-sm-2 control-label">Folha do Livro do
+												Registro de Cartório</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iFolhaDoLivroDoRegistroDeCartorio"
+													name="rcFolhaDoLivro"
+													placeholder="Folha do Livro do Registro de Cartório" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Sexo</label>
+											<div class="col-sm-10 radio" style="padding-top: 0px;">
+												<label for="iSexoMasculino" class="radio-inline"> <input
+													type="radio" name="sexo" id="iSexoMasculino"
+													value="MASCULINO" checked> Masculino
+												</label> <label for="iSexoFeminino" class="radio-inline"> <input
+													type="radio" name="sexo" id="iSexoFeminino"
+													value="FEMININO"> Feminino
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
+												do Pai</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNomePaiInput"
+													name="nomePaiInput" />
+												<div id="iDivSelectPicker" class="row">
+													<div class="col-sm-11">
+														<select class="form-control selectpicker"
+															data-live-search="true" name="pai" id="comboPai">
+															<option value="0">Nome do Pai</option>
+															<g:each in="${pHomens}">
+																<option value="${it.id}">
+																	${it.nome}
 														</option>
 													</g:each>
 												</select>
@@ -440,9 +481,9 @@ function mudarCombo(){
 												<select class="form-control selectpicker"
 													data-live-search="true" name="escolas" id="comboEscola"
 													onchange="mudarEscola();" >
-													<g:each in="${escolas}">
-														<option value="0" disabled="true" selected="selected">Selecione
+													<option value="0" disabled="true" selected="selected">Selecione
 															uma escola</option>
+													<g:each in="${escolas}">
 														<option value="${it.id}">
 															${it.pessoaJuridica.razaoSocial}
 														</option>
@@ -602,7 +643,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -627,7 +668,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -654,7 +695,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -681,7 +722,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "localhost";
+			  var endereco = "192.168.1.247";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

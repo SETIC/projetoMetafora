@@ -259,11 +259,13 @@ def listarMensagem(String msg, String tipo) {
 				funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 			}
 
+			def cargos = Cargo.findAll()
+			
 			if (tipo == "ok")
 
-			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2])
+			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2, cargos:cargos])
 			else
-			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2])
+			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2, cargos:cargos])
 		}else{
 			render(view:"/error403.gsp")
 		}

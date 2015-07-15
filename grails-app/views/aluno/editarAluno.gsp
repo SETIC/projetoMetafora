@@ -94,7 +94,7 @@
 					${erro}
 				</div>
 			</g:if>
-			<g:each in='${alunos?}'>
+			<g:each in='${alunos}'>
 				<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
 				<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
 				<g:set var="cidadao" value="${it.cidadao}" />
@@ -289,7 +289,7 @@
 												<option value="0">Nome do Pai</option>
 												<g:each in="${pHomens}">
 
-													<g:if test="${it.id == parentescoPai.pessoa.id }">
+													<g:if test="${it.id == parentescoPai?.pessoa?.id }">
 														<option value="${it.id}" selected>
 															${it.nome}
 														</option>
@@ -327,7 +327,7 @@
 												<option value="0">Nome da Mãe</option>
 												<g:each in="${pMulheres}">
 
-													<g:if test="${it.id == parentescoMae.pessoa.id }">
+													<g:if test="${it.id == parentescoMae?.pessoa?.id }">
 														<option value="${it.id}" selected>
 															${it.nome}
 														</option>
@@ -459,7 +459,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="endereco"
 										id="iLogradouro" placeholder="Logradouro"
-										value="${reside?.logradouro.tipoLogradouro.tipoLogradouro} ${reside?.logradouro.logradouro}">
+										value="${reside?.logradouro?.tipoLogradouro?.tipoLogradouro} ${reside?.logradouro?.logradouro}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -482,7 +482,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="bairro"
 										id="iBairro" placeholder="Bairro"
-										value="${reside?.bairro.bairro}">
+										value="${reside?.bairro?.bairro}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -490,7 +490,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="uf" id="iUf"
 										placeholder="Estado"
-										value="${reside?.bairro.municipio.estado.abreviacao}">
+										value="${reside?.bairro?.municipio?.estado?.abreviacao}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -498,7 +498,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="municipio"
 										id="iMunicipio" placeholder="Município"
-										value="${reside?.bairro.municipio.municipio}">
+										value="${reside?.bairro?.municipio?.municipio}">
 								</div>
 							</div>
 							<div class="form-group" style="margin-top: 3%;">
@@ -645,7 +645,7 @@
 			
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -670,7 +670,7 @@
 			}
 			
 			function salvarMae(){
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -697,7 +697,7 @@
 
 			function mudarEscola(){
 		    	  
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -724,7 +724,7 @@
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "localhost";
+			  var endereco = "192.168.1.247";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

@@ -37,7 +37,8 @@ class MatriculaController {
 				def alunos
 				def escolas
 				def parametro = params.pesquisa
-				if (session["escid"] == 0){	
+				//session["escid"] == 0
+				if (parametro != null || parametro != ""){	
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
 							"    and p.id = m.aluno.id" +
@@ -45,7 +46,7 @@ class MatriculaController {
 							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')",[ano])
 
 					escolas = Escola.findAll()
-
+		
 
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.status = 'Ativo' " +
@@ -112,15 +113,14 @@ class MatriculaController {
 					//		"  where t.id = m.turma.id " +
 					//		"  and t.anoLetivo = ?",[ano])
 
-					//escolas = Escola.findAll()
+					escolas = Escola.findAll()
 
-
-					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-					//		"  where p.id = a.id and p.status = 'Ativo' " +
-					//		"    and a.id not in ( select m.aluno.id " +
-					//		"  						 from Matricula as m, Turma as t " +
-					//		" 					    where t.id = m.turma.id " +
-					//		"   				     	and t.anoLetivo >= ? ) " , [ano])
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [ano])
 				
 					
 					
@@ -130,15 +130,15 @@ class MatriculaController {
 					//		"  where t.id = m.turma.id " +
 					//		"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
-					//escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
 
-					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-					//		"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
-					//		"    and a.id not in ( select m.aluno.id " +
-					//		"  						 from Matricula as m, Turma as t " +
-					//		" 					    where t.id = m.turma.id " +
-					//		"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 							
 				}
 

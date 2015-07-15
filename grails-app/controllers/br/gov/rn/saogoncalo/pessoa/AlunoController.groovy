@@ -10,6 +10,7 @@ import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.localizacao.Municipio
 import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.pessoa.Escola
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 
@@ -45,7 +46,7 @@ class AlunoController {
 	}
 
 	def editarAluno(long id){
-
+		println("o id está aqui "+id)
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -56,22 +57,33 @@ class AlunoController {
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
 				Aluno alunos = Aluno.get(id)
+				println("objeto alunos aquiiiiiiiiiiiiiii------ "+alunos)
 				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'MASCULINO' ")
-
-
+					
+				println("objeto pHomens aquiiiiiiiiiiiiiii------ "+pHomens)
+				
 				def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO' ")
+				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
+				
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
 				
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
+				
+				
+				
+				println("objeto parentescoPai aquiiiiiiiiiiiiiii------ "+parentescoPai)
+				println("objeto parentescoMae aquiiiiiiiiiiiiiii------ "+parentescoMae)
 
 				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae])
+					
+			
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -92,8 +104,8 @@ class AlunoController {
 
 				//Atualizando a pessoa
 
-				Parentesco parentescoPai = new Parentesco()
-				Parentesco parentescoMae = new Parentesco()
+				//Parentesco parentescoPai = new Parentesco()
+				//Parentesco parentescoMae = new Parentesco()
 
 				def pessoa = Pessoa.get(params.id)
 				pessoa.nome = params.nome
@@ -129,6 +141,8 @@ class AlunoController {
 				//def parentescoPai = Parentesco.executeQuery("select p "+
 				//	" from Parentesco p where p.parentesco ='PAI' and p.pessoaFisica.id = "+ pessoaFisica.id)
 
+				def parentescoPai
+				def parentescoMae
 				parentescoPai = Parentesco.findByParentescoAndPessoaFisica("PAI",pessoaFisica)
 				//if(parentescoPai == null){
 				//	Parentesco newParentescoPai = new Parentesco()
@@ -147,12 +161,23 @@ class AlunoController {
 				def idPai
 				def idMae
 
+				println("nomepai Input --- " + params.nomePaiInput)
 				if(params.nomePaiInput == "" || params.nomePaiInput == null ){
 					println("id pessoa pai "+Pessoa.get(params.pai))
 					idPai = Pessoa.get(params.pai)
 					println("if do pai "+idPai)
-					parentescoPai.pessoa = idPai
-					parentescoPai.save(flush:true)
+
+					if(parentescoPai == null){
+						Parentesco newParentescoPai = new Parentesco()
+						newParentescoPai.parentesco = "PAI"
+						newParentescoPai.pessoa = pessoa.get(params.pai)
+						newParentescoPai.pessoaFisica = PessoaFisica.get(pessoa.id)
+						newParentescoPai.save(flush:true)
+						
+					}else{ 
+						parentescoPai.pessoa = idPai
+						parentescoPai.save(flush:true)
+					}
 				}else{
 					idPai = Pessoa.get(params.nomePaiInput)
 					println("if do paiInput "+params.nomePaiInput)
@@ -163,8 +188,19 @@ class AlunoController {
 				if(params.nomeMaeInput == "" || params.nomeMaeInput == null ){
 					idMae = Pessoa.get(params.mae)
 					println("if do Mae "+idMae)
+					
+					if(parentescoMae == null){
+						Parentesco newParentescoMae = new Parentesco()
+						newParentescoMae.parentesco = "MÃE"
+						newParentescoMae.pessoa = pessoa.get(params.mae)
+						newParentescoMae.pessoaFisica = PessoaFisica.get(pessoa.id)
+						newParentescoMae.save(flush:true)
+						
+					}else{
+					
 					parentescoMae.pessoa = idMae
 					parentescoMae.save(flush:true)
+					}
 				}else{
 					idMae = Pessoa.get(params.nomeMaeInput)
 					println("if do maeInput "+params.nomeMaeInput)
@@ -397,26 +433,26 @@ class AlunoController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
-
 			if (perm1 || perm2){
-
+				def escolas
 				def alunos
 				def parametro = params.pesquisa
+				
 				if (session["escid"] == 0){
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-
+				
 					print("print alunossss "+ alunos )
+					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 				}else{
+			
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
-
+				
 							//"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-
+					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, escolas:escolas, perm2:perm2])
 				}
-
-				render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
