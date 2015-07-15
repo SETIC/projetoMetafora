@@ -57,13 +57,13 @@ function mensagemDeErroCep(modoDisplay, classeDaDiv) {
 
 function inputsBuscando(logradouro, bairro, municipio, uf) {
 	logradouro.value = "Buscando...";
-	// logradouro.disabled = true;
+	//logradouro.disabled = true;
 	bairro.value = "Buscando...";
-	// bairro.disabled = true;
+	//bairro.disabled = true;
 	municipio.value = "Buscando...";
-	// municipio.disabled = true;
+	//municipio.disabled = true;
 	uf.value = "Buscando...";
-	// uf.disabled = true;
+	//uf.disabled = true;			
 }
 
 function inputsHabilitado() {

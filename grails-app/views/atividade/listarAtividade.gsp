@@ -241,7 +241,9 @@ function printDiv(id)
 									<div class="form-heading">
 										<label>Descrição</label>
 										<div class="controls">
+
 											<textarea required="required" class="form-control" name="descricaoAtividade" 
+
 											rows="3" placeholder="Descreva a atividade"></textarea>
 										</div>
 									</div>

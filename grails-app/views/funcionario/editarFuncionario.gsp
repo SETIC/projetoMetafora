@@ -184,8 +184,10 @@
 										style="width: 300px">
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
+
 										<option value="" selected>${funcionarios.lotacao?.vinculo}	</option>
                                         <option value="TERCEIRIZADO">TERCEIRIZADO</option>
+
 									</select>
 								</g:elseif>
 								<g:else>
@@ -196,48 +198,85 @@
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
+
 										<option value=""selected>${funcionarios.lotacao?.vinculo}</option>
 									</select>
 								</g:else>
 					
 
+
 							</div>
 						</div>
-                      <br>
-                        <div class="form-group">
+						<br>
+						<div class="form-group">
 							<label for="inputfuncao3" class="col-sm-2 control-label">Função</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" required="true"
 									name="funcao" style="width: 300px"
 									value="${funcionarios.lotacao?.funcao[0]}" />
+
 							</div>
 						</div>
-												
-						<br><label>Cargo</label> <select name="cargo"
-							id="comboCargo" " class="form-control">
+					<br> 
+					  
+					   <label for="inputcargo3" class="col-sm-2 control-label">Cargo</label> 
+					   <select name="cargo" id="comboCargo" class="form-control">
 							<div class="col-sm-10">
+								<g:each in="${cargo}">
+									  <g:if test="${it.id == funcionarios.lotacao.cargo.id[0] }">
+										<option value="${it.id}" selected>
+											${it.cargo}
+										</option>
+									  </g:if>
+									<g:else>
+								      <option value="${it.id}">
+											${it.cargo}
+										</option>
+									</g:else>
+								</g:each>
+						</select> 
+				
+						</br>
+						<div class="form-heading">
+							<label>Turno</label>
+							<div class="controls">
 							
-							<g:each in="${cargo}">
-
-								<g:if test="${it.id == funcionarios.lotacao.cargo.id[0] }">
-																	<option value="${it.id}" selected>
-										${it.cargo}
-									</option>
-									
+							      <g:if test= "${charManha=="M"}">
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao1" value="M" checked >Manhã
+								</label> 
 								</g:if>
 								<g:else>
-
-									<option value="${it.id}">
-										${it.cargo}
-									</option>
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao1" value="M">Manhã
+								</label> 
 								</g:else>
-							</g:each>
+								
+								 <g:if test= "${charTarde=="T"}">
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao2" value="T" checked >Tarde
+								</label> 
+								</g:if>
+								<g:else>
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao2" value="T">Tarde
+								</label> 
+								</g:else>
+								
+								 <g:if test= "${charManha=="N"}">
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao3" value="N" checked >Noite
+								</label> 
+								</g:if>
+								<g:else>
+								<label class="checkbox-inline"><input type="checkbox"
+									name="opcao3" value="N">Noite
+								</label> 
+								</g:else>
 							
-						</select> 
-						
-					</br>
-
-						<div class="form-group">
+							</div>
+							</br> 
+							<div class="form-group">
 								<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
 									Civil</label>
 								<div class="col-sm-10">
@@ -330,7 +369,8 @@
 								<label for="inputmatricula3" class="col-sm-2 control-label">Matricula</label>
 								<div class="col-sm-10">
 									<g:textField class="form-control" required="true"
-										name="matricula" style="width: 300px" value="${funcionarios.matricula}" />
+										name="matricula" style="width: 300px"
+										value="${funcionarios.matricula}" />
 								</div>
 							</div>
 							<br>
@@ -353,7 +393,6 @@
 					// Ordena por nome e "desempata" com o id
 					tabela.fnSort([ [ 1, 'asc' ] ]);
 				});
-
 
 
 				function mudarSelect(){
@@ -380,10 +419,11 @@
 				            }
 				        });
 
-					}
+
+				}
 			</script>
-			
-					</div>
+
+		</div>
 	</section>
 </body>
 </html>
