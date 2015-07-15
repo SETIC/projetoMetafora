@@ -238,41 +238,52 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									
+
+									<div class="form-heading">
+										<label>Vinculo </label>
+										<div class="controls">
+											<select class="form-control" name="vinculo">
+												<option value="EFETIVO">EFETIVO</option>
+												<option value="COMISSIONADO">COMISSIONADO</option>
+												<option value="ESTAGIARIO">ESTAGIARIO</option>
+												<option value="TERCEIRIZADO">TERCEIRIZADO</option>
+											</select>
+										</div>
+										<br>
 										<div class="form-heading">
-											<label>Vinculo </label>
+											<label>Função</label>
 											<div class="controls">
-												<select class="form-control" name="vinculo">
-															<option value="EFETIVO">EFETIVO</option>
-															<option value="COMISSIONADO">COMISSIONADO</option>
-															<option value="ESTAGIARIO">ESTAGIARIO</option>
-															<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-														</select>
+												<g:textField class="form-control" required="true"
+													name="funcao" value="" />
 											</div>
 											<br>
+
 											<div class="form-heading">
-												<label>Função</label>
+												<label>Cargo</label>
 												<div class="controls">
-													<g:textField class="form-control" required="true"name="funcao" value="" />
-												</div>
-												<br>
-												
-											 
-												<div class="form-heading">
-													<label>Cargo</label>
-													<div class="controls">
-														<select class="form-control selectpicker"
+													<select class="form-control selectpicker"
 														data-live-search="true" name="cargoId">
-														  <g:each in="${cargos}">
+														<g:each in="${cargos}">
 															<option value="${it.id}">
 																${it.cargo}
 															</option>
 														</g:each>
 													</select>
-													</div>
 												</div>
-                                              <br>
-												
+											</div>
+											<br>
+											<div class="form-heading">
+												<label>Turno</label>
+												<div class="controls">
+													<label class="checkbox-inline"> <input
+														type="checkbox" name="opcao1" value="M" checked>Manhã
+													</label> <label class="checkbox-inline"> <input
+														type="checkbox" name="opcao2" value="T">Tarde
+													</label> <label class="checkbox-inline"> <input
+														type="checkbox" name="opcao3" value="N">Noite
+													</label>
+												</div>
+												</br>
 												<div class="form-heading">
 													<label>Estado Civil</label>
 													<div class="controls">
@@ -289,24 +300,21 @@ function printDiv(id)
 												<div class="form-heading">
 													<label>Profissão</label>
 													<div class="controls">
-														<g:textField class="form-control" required="true"
-															name="profissao" value="" />
+														<g:textField class="form-control" required="true" name="profissao" value="" />
 													</div>
 												</div>
 												<br>
 												<div class="form-heading">
 													<label>Carga Horária</label>
 													<div class="controls">
-														<g:textField class="form-control" required=""
-															name="cargaHoraria" value="" />
+														<g:textField class="form-control" required="" name="cargaHoraria" value="" />
 													</div>
 												</div>
 												<br>
 												<div class="form-heading">
 													<label>Matricula</label>
 													<div class="controls">
-														<g:textField class="form-control" required="true"
-															name="matricula" value="" />
+														<g:textField class="form-control" required="true" name="matricula" value="" />
 													</div>
 												</div>
 												<br>

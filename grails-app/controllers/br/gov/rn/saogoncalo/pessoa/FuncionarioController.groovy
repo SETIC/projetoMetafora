@@ -11,7 +11,45 @@ class FuncionarioController {
 	
 	
 	
+	def gerarRelatorio(){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+            
+
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+			if (perm1 || perm2){
+				
+				def funcionario
+				def lotacao
+				def cargo
+				
+				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
+					" where p.id = f.id "+
+					" and l.cargo.id = c.id "+
+					" and f.id = l.funcionario.id")
+			
+				
+			println("aaaaaaaaaaaa"+funcionario)
+					
+				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo])
+			}else{
+				render(view:"/error403.gsp")
+			}
+				
+		   }
+									
+	    }
 	
+		
 	def pesquisarFuncionarios(){
 		
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -36,13 +74,14 @@ class FuncionarioController {
 				if (session["escid"] == 0){
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-                    cargos= Cargo.findAll()
+                    //cargos = Cargo.findAll()
 					print("printcargos "+ cargos )
 				}else{
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
 				}
+				cargos=Cargo.findAll()
 
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos,perm2:perm2])
 			}else{
@@ -64,15 +103,36 @@ class FuncionarioController {
             def lotacao
 			def cargo
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
-
+            
 			if (perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
 				lotacao = Lotacao.findByFuncionario(funcionarios)
 				println ("lotacao "+lotacao)
 				cargo=Cargo.findAll()
+				
+				def charManha = ""
+				def charTarde = ""
+				def charNoite = ""
+				
+				if( lotacao.turno.toString().contains("M")){
+					
+					charManha="M"
+					
+				}
 			     
-								
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo])
+				if( lotacao.turno.toString().contains("T")){
+					
+				charTarde="T"
+					
+				}
+				if( lotacao.turno.toString().contains("N")){
+					
+					charNoite="N"
+					
+				}
+				 
+	
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -153,6 +213,7 @@ class FuncionarioController {
 					//				ok : "Funcionário atualizado com sucesso!"
 					//
 					//			])
+					
 					listarMensagem("Funcionário atualizado com sucesso!", "ok")
 				}else{
 					//			render(view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,
@@ -162,12 +223,44 @@ class FuncionarioController {
 				}
 				
 				
-				Lotacao lotacao=Lotacao.findByFuncionario(funcionario)
-				lotacao.vinculo=params.vinculo
-				lotacao.cargo=Cargo.get(params.cargo)
-				lotacao.funcao=params.funcao
+				Lotacao lotacao = Lotacao.findByFuncionario(funcionario)
+				lotacao.vinculo = params.vinculo
+				lotacao.cargo = Cargo.get(params.cargo)
+				
+				println("params "+params)
+				
+				def turnoCompleto = ""
+				if (params.opcao1 != null ){
+					 turnoCompleto = turnoCompleto + params.opcao1
+					
+					 
+					}else{
+					
+					turnoCompleto = turnoCompleto + ""
+					}
+				if (params.opcao2 != null ){
+					turnoCompleto = turnoCompleto + params.opcao2
+					
+				   }else{
+				   turnoCompleto = turnoCompleto + ""
+				   }
+				if (params.opcao3 != null ){
+					turnoCompleto = turnoCompleto + params.opcao3
+					
+				   }
+				else{
+					turnoCompleto = turnoCompleto + ""
+					}
+				println("opcao1 "+params.opcao1)
+				println("opcao2 "+params.opcao2)
+				println("opcao3 "+params.opcao3)
+				
+				println("turnoCompleto"+turnoCompleto)	
+				lotacao.turno = turnoCompleto
+				lotacao.funcao = params.funcao
 				lotacao.save(flush:true)
-
+				
+				
 			}
 		}
 	}
@@ -191,11 +284,16 @@ class FuncionarioController {
 				
 				if (session["escid"] == 0)
 				{
+					
 					//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id ")
 				}else{
 				//	funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 				}
 				cargos=Cargo.findAll()
+				println("cargos "+ cargos)
+				
+							
+								
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -224,12 +322,13 @@ class FuncionarioController {
 				}else{
 					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 				}
-
+				
+               def cargos=Cargo.findAll()
 				if (tipo == "ok")
 
-					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2])
+					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg, perm2:perm2,cargos:cargos])
 				else
-					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2])
+					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, erro:msg, perm2:perm2,cargos:cargos])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -269,12 +368,12 @@ class FuncionarioController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 			if (perm2) {
 				
+				
 				println("params ------ "+params)
 				
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
-
-
+				pessoa.nome=params.nome.toString().toUpperCase()
 
 				if (pessoa.save(flush:true)){
 
@@ -298,15 +397,46 @@ class FuncionarioController {
 						def dataAtual=new Date()
 						Cargo cargo= Cargo.get(params.cargoId)
 						
-						Lotacao lotacao= new Lotacao()
+						 Lotacao lotacao= new Lotacao()
 						 lotacao.cargo = cargo
 						 lotacao.funcionario=funcionario
 						 lotacao.situacao="Ativo"
 						 lotacao.vinculo=params.vinculo
 						 lotacao.funcao=params.funcao
+						 
+						 def turnoCompleto=""
+                      if (params.opcao1 != null ){
+						   turnoCompleto = turnoCompleto + params.opcao1
+						  
+						  }else{
+						  
+						  turnoCompleto = turnoCompleto + ""
+						  }
+					  if (params.opcao2 != null ){
+						  turnoCompleto = turnoCompleto + params.opcao2
+						 
+						 }else{
+						 turnoCompleto = turnoCompleto + ""
+						 }
+					  if (params.opcao3 != null ){
+						  turnoCompleto = turnoCompleto + params.opcao3
+						 
+						 }
+					  else{
+						  turnoCompleto = turnoCompleto + ""
+						  }
+						  
+					 
+					  			  
+						 lotacao.turno = turnoCompleto
 						 lotacao.dataInicio=dataAtual
 						 lotacao.dataTermino=dataAtual
 						 lotacao.save(flush:true)
+						 println("opcao1 "+params.opcao1)
+						 println("opcao2 "+params.opcao2)
+						 println("opcao3 "+params.opcao3)
+						 
+						 println("turnoCompleto"+turnoCompleto)
 
 						//				def funcionarios = Funcionario.findAll()
 						//				render(view:"/funcionario/listarFuncionario.gsp", model:[
@@ -344,5 +474,7 @@ class FuncionarioController {
 				render(view:"/error403.gsp")
 			}
 		}
+		
 	}
 }
+

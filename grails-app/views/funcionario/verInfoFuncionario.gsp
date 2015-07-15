@@ -43,7 +43,7 @@ function printDiv(id)
   
   newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
 
-newWin.print();
+  newWin.print();
   newWin.close();
 }
 </script>
@@ -93,8 +93,7 @@ newWin.print();
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
 								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" required="true" name="dataDeNascimento"
-									value="${pessoa.dataDeNascimento}" />
+								class="form-control" required="true" name="dataDeNascimento" value="${pessoa.dataDeNascimento}" />
 							</div>
 						</div>
 						<br>
@@ -152,36 +151,42 @@ newWin.print();
 							</div>
 						</div>
 						<br>
-						
 						<div class="form-group">
-							<label for="inputnacionalidade3" class="col-sm-2 control-label">Vinculo</label>
+							<label for="inputvinculo3" class="col-sm-2 control-label">Vinculo</label>
 							<div class="col-sm-10">
 								${lotacao.vinculo}
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputnacionalidade3" class="col-sm-2 control-label">Função</label>
+							<label for="inputfuncao3" class="col-sm-2 control-label">Função</label>
 							<div class="col-sm-10">
 								${lotacao.funcao}
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputnacionalidade3" class="col-sm-2 control-label">Cargo</label>
+							<label for="inputcargo3" class="col-sm-2 control-label">Cargo</label>
 							<div class="col-sm-10">
 								${lotacao.cargo.cargo}
 							</div>
 						</div>
 						<br>
-
+						
+						<div class="form-group">
+							<label for="inputturno3" class="col-sm-2 control-label">Turno</label>
+							<div class="col-sm-10">
+								${lotacao.turno}
+							</div>
+						</div>
+						<br>
+						
 						<div class="form-group">
 							<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
 								Civil</label>
 							<div class="col-sm-10">
-								
-											${cidadao.estadoCivil}
-								
+
+								${cidadao.estadoCivil}
 							</div>
 						</div>
 						<br>
@@ -217,10 +222,12 @@ newWin.print();
 							<li class="btn btn-info btn-flat"><a
 								href="/projetoMetafora/funcionario/listar/">Voltar</a></li>
 						</ul>
+						</button>
 					</div>
-				</g:form>
-			</div>
-			<script type="text/javascript">
+			    </div>
+			</g:form>
+		</div>
+		<script type="text/javascript">
 				$(document).ready(function() {
 					$('#example').DataTable();
 					var tabela = $('#example').dataTable();
