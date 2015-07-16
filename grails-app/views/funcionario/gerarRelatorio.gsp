@@ -79,7 +79,7 @@
 						<table id="" class="table table-bordered">
 							<thead>
 								<tr>
-								
+									<th style="width: 20px;">Nº</th>
 									<th style="width: 20px;">Nome</th>
 									<th style="width: 20px;">Matricula</th>
 									<th style="width: 20px;">Cargo</th>
@@ -90,12 +90,17 @@
 								</tr>
 							</thead>
 						<tbody>
+						
+							<g:set var="i" value="${1}"/>
 							<g:each in='${funcionario?}'>
 										<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
 										<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
 										<g:set var="cidadao" value="${it.cidadao}" />
 			
 								<tr class="success">
+									<td>
+										${i++}
+									</td>
 									<td>
 										${it.cidadao.pessoaFisica.pessoa.nome}
 									</td>

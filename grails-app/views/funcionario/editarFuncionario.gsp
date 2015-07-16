@@ -44,7 +44,7 @@
 							<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="nome" type="text"
-									style="width: 300px" value="${pessoa.nome }">
+									style="width: 300px" value="${pessoa?.nome }">
 							</div>
 						</div>
 						<br>
@@ -55,7 +55,7 @@
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
 								<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" required="true" name="dataDeNascimento"
-									value="${pessoa.dataDeNascimento}" />
+									value="${pessoa?.dataDeNascimento}" />
 							</div>
 						</div>
 						<br>
@@ -63,7 +63,7 @@
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">CPF</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" id="cpf" name="cpfCnpj"
-									required="true" style="width: 300px" value="${pessoa.cpfCnpj }" />
+									required="true" style="width: 300px" value="${pessoa?.cpfCnpj }" />
 							</div>
 						</div>
 						<br>
@@ -72,7 +72,7 @@
 								do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNumero"
-									style="width: 300px" value="${pessoaFisica.rcNumero }" />
+									style="width: 300px" value="${pessoaFisica?.rcNumero }" />
 							</div>
 						</div>
 						<br>
@@ -82,7 +82,7 @@
 								Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNomeDoCartorio"
-									style="width: 300px" value="${pessoaFisica.rcNomeDoCartorio }" />
+									style="width: 300px" value="${pessoaFisica?.rcNomeDoCartorio }" />
 							</div>
 						</div>
 						<br>
@@ -91,7 +91,7 @@
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcNomeDoLivro"
-									style="width: 300px" value="${pessoaFisica.rcNomeDoLivro }" />
+									style="width: 300px" value="${pessoaFisica?.rcNomeDoLivro }" />
 							</div>
 						</div>
 						<br>
@@ -100,14 +100,14 @@
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								<g:textField class="form-control" name="rcFolhaDoLivro"
-									style="width: 300px" value="${pessoaFisica.rcFolhaDoLivro }" />
+									style="width: 300px" value="${pessoaFisica?.rcFolhaDoLivro }" />
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
 							<div class="col-sm-10">
-								<g:if test="${pessoaFisica.sexo == 'MASCULINO' }">
+								<g:if test="${pessoaFisica?.sexo == 'MASCULINO' }">
 									<label class="radio-inline"> <input type="radio"
 										name="sexo" id="inlineRadio1" value="MASCULINO"
 										checked="checked"> MASCULINO
@@ -135,7 +135,7 @@
 							<div class="col-sm-10">
 								<g:textField class="form-control" required="true"
 									name="nacionalidade" style="width: 300px"
-									value="${cidadao.nacionalidade}" />
+									value="${cidadao?.nacionalidade}" />
 							</div>
 						</div>
 						<br>
@@ -146,19 +146,19 @@
 								<g:if test="${funcionarios.lotacao?.vinculo == 'EFETIVO'}">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
-										<option value="${funcionarios.lotacao?.vinculo}">
-											${funcionarios.lotacao?.vinculo}
+										<option value="${funcionarios?.lotacao?.vinculo}">
+											${funcionarios?.lotacao?.vinculo}
 										</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:if>
-								<g:elseif test="${funcionarios.lotacao?.vinculo == ""} ">
+								<g:elseif test="${funcionarios?.lotacao?.vinculo == ""} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="">
-											${funcionarios.lotacao?.vinculo[0]}
+											${funcionarios?.lotacao?.vinculo[0]}
 										</option>
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
@@ -167,25 +167,25 @@
 									</select>
 								</g:elseif>
 
-								<g:elseif test="${funcionarios.lotacao?.vinculo == 'COMISSIONADO'} ">
+								<g:elseif test="${funcionarios?.lotacao?.vinculo == 'COMISSIONADO'} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="${funcionarios.lotacao?.vinculo}" selected>
-											${funcionarios.lotacao?.vinculo}
+											${funcionarios?.lotacao?.vinculo}
 										</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:elseif>
 
-								<g:elseif test="${funcionarios.lotacao?.vinculo == 'ESTAGIÁRIO'} ">
+								<g:elseif test="${funcionarios?.lotacao?.vinculo == 'ESTAGIÁRIO'} ">
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 
-										<option value="" selected>${funcionarios.lotacao?.vinculo}	</option>
+										<option value="" selected>${funcionarios?.lotacao?.vinculo}	</option>
                                         <option value="TERCEIRIZADO">TERCEIRIZADO</option>
 
 									</select>
@@ -193,13 +193,13 @@
 								<g:else>
 									<select class="form-control" name="vinculo"
 										style="width: 300px">
-										<opion value=""> ${funcionarios.lotacao?.vinculo}
+										<opion value=""> ${funcionarios?.lotacao?.vinculo}
 										</option>
 										<option value="EFETIVO">EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 
-										<option value=""selected>${funcionarios.lotacao?.vinculo}</option>
+										<option value=""selected>${funcionarios?.lotacao?.vinculo}</option>
 									</select>
 								</g:else>
 					
@@ -213,35 +213,38 @@
 							<div class="col-sm-10">
 								<g:textField class="form-control" required="true"
 									name="funcao" style="width: 300px"
-									value="${funcionarios.lotacao?.funcao[0]}" />
+									value="${funcionarios?.lotacao?.funcao[0]}" />
 
 							</div>
 						</div>
 					<br> 
-					  
+					  <div class="form-group">
 					   <label for="inputcargo3" class="col-sm-2 control-label">Cargo</label> 
-					   <select name="cargo" id="comboCargo" class="form-control">
-							<div class="col-sm-10">
-								<g:each in="${cargo}">
-									  <g:if test="${it.id == funcionarios.lotacao.cargo.id[0] }">
-										<option value="${it.id}" selected>
-											${it.cargo}
-										</option>
-									  </g:if>
-									<g:else>
-								      <option value="${it.id}">
-											${it.cargo}
-										</option>
-									</g:else>
-								</g:each>
-						</select> 
-				
+					   <div class="col-sm-4">
+						   <select name="cargo" id="comboCargo" class="form-control">
+								<div class="col-sm-10">
+									<g:each in="${cargo}">
+										  <g:if test="${it.id == funcionarios?.lotacao?.cargo.id[0] }">
+											<option value="${it.id}" selected>
+												${it.cargo}
+											</option>
+										  </g:if>
+										<g:else>
+									      <option value="${it.id}">
+												${it.cargo}
+											</option>
+										</g:else>
+									</g:each>
+							</select>
+						</div> 
+						</div>
 						</br>
-						<div class="form-heading">
-							<label>Turno</label>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Turno</label>
 							<div class="controls">
-							
-							      <g:if test= "${charManha=="M"}">
+								<div class="col-sm-4">
+							      <g:if test= "${charManha == "M"}">
 								<label class="checkbox-inline"><input type="checkbox"
 									name="opcao1" value="M" checked >Manhã
 								</label> 
@@ -252,7 +255,7 @@
 								</label> 
 								</g:else>
 								
-								 <g:if test= "${charTarde=="T"}">
+								 <g:if test= "${charTarde == "T"}">
 								<label class="checkbox-inline"><input type="checkbox"
 									name="opcao2" value="T" checked >Tarde
 								</label> 
@@ -263,7 +266,7 @@
 								</label> 
 								</g:else>
 								
-								 <g:if test= "${charManha=="N"}">
+								 <g:if test= "${charNoite == "N"}">
 								<label class="checkbox-inline"><input type="checkbox"
 									name="opcao3" value="N" checked >Noite
 								</label> 
@@ -273,8 +276,9 @@
 									name="opcao3" value="N">Noite
 								</label> 
 								</g:else>
-							
 							</div>
+							</div>
+						</div>
 							</br> 
 							<div class="form-group">
 								<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
@@ -396,7 +400,7 @@
 
 
 				function mudarSelect(){
-					var endereco = "192.168.1.247";
+					var endereco = "localhost";
 					
 					   var comboCargo = document.getElementById("comboCargo");
 					   comboCargo.options[comboCargo.options.length] = new Option("Buscando cargo", 0);

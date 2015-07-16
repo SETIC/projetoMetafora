@@ -123,7 +123,7 @@ class FuncionarioController {
 				def charTarde = ""
 				def charNoite = ""
 				
-				if(lotacao == null) {
+				if(lotacao != null) {
 
 					println ("lotacao "+lotacao)
 					
@@ -234,8 +234,36 @@ class FuncionarioController {
 				}
 
 
-
-				Lotacao lotacao = Lotacao.findByFuncionario(funcionario)
+				def cargos
+				def lotacao = Lotacao.findByFuncionario(funcionario)
+				
+						if(lotacao == null){
+				
+				
+							Lotacao newLotacao = new Lotacao()
+							newLotacao.vinculo = params.vinculo
+							newLotacao.cargo = Cargo.get(params.cargo)
+							newLotacao.funcao = params.funcao
+							newLotacao.funcionario = funcionario
+							newLotacao.situacao = "ATIVO"
+							newLotacao.dataInicio = new Date()
+							newLotacao.dataTermino = new Date()
+				
+							if (newLotacao.save(flush:true)){
+								println("newLotacao --- " + newLotacao)
+							}else{
+								listarMensagem("Erro ao atualizar lotação!", "erro")
+							}
+				
+							cargos=Cargo.findAll()
+							println("cargos "+ cargos)
+				
+				
+				
+							render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
+						}else{
+				
+		
 				lotacao.vinculo = params.vinculo
 				lotacao.cargo = Cargo.get(params.cargo)
 
@@ -269,44 +297,6 @@ class FuncionarioController {
 				lotacao.save(flush:true)
 			}
 		}
-
-
-
-		def lotacao = Lotacao.findByFuncionario(funcionario)
-
-		if(lotacao == null){
-
-
-			Lotacao newLotacao = new Lotacao()
-			newLotacao.vinculo = params.vinculo
-			newLotacao.cargo = Cargo.get(params.cargo)
-			newLotacao.funcao = params.funcao
-			newLotacao.funcionario = funcionario
-			newLotacao.situacao = "ATIVO"
-			newLotacao.dataInicio = new Date()
-			newLotacao.dataTermino = new Date()
-
-			if (newLotacao.save(flush:true)){
-				println("newLotacao --- " + newLotacao)
-			}else{
-				listarMensagem("Erro ao atualizar lotação!", "erro")
-			}
-
-			cargos=Cargo.findAll()
-			println("cargos "+ cargos)
-
-
-
-			render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
-		}else{
-			lotacao.vinculo=params.vinculo
-			lotacao.cargo=Cargo.get(params.cargo)
-			lotacao.funcao=params.funcao
-			if (lotacao.save(flush:true)){
-				println("Lotacao --- " + lotacao)
-			}else{
-				listarMensagem("Erro ao atualizar lotação!", "erro")
-			}
 		}
 	}
 

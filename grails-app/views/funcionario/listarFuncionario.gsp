@@ -255,12 +255,7 @@ function printDiv(id)
 											<label>Função</label>
 											<div class="controls">
 
-												<select class="form-control" name="vinculo">
-															<option value="EFETIVO">EFETIVO</option>
-															<option value="COMISSIONADO">COMISSIONADO</option>
-															<option value="ESTAGIARIO">ESTAGIARIO</option>
-															<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-												</select>
+											<g:textField class="form-control" name="funcao" value="" />
 
 											</div>
 											<br>
