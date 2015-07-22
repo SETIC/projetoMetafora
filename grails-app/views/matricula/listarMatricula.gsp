@@ -43,31 +43,32 @@
             dataType: "json",
             success: function(result){
 	 
-        divToPrint.innerHTML += "<style=''>";
-        divToPrint.innerHTML  += "<img src='http://"+endereco+":8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>";
-        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>";
-        divToPrint.innerHTML  += "<h4 style='margin-top:-50px;text-align:center'>SÃO GONÇALO DO AMARANTE</h4></br>"; 	
-        divToPrint.innerHTML  += "<hr><br/><br/>";
-        divToPrint.innerHTML  += "<h3 style='text-align:center;margin-top:15%;'>DECLARAÇÃO</h3><br/><br/>";
-        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:10%;line-height:200%;'>";
-        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
-        divToPrint.innerHTML  += result.nomeAluno+",";
-        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
-      
-        divToPrint.innerHTML  += result.serie+" e na";
-        divToPrint.innerHTML  += " Turma " ;
-        divToPrint.innerHTML  += result.turma+", do ano letivo de "+result.anoLetivo+", desta escola.";
-
-        divToPrint.innerHTML  += "</p>";
-        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:15%;'>________________________________________";
-        divToPrint.innerHTML  += "<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>";
-        divToPrint.innerHTML  += "</p>";
-        divToPrint.innerHTML  += "<style type='text/css' >";
-        //divToPrint.innerHTML  += "body{font-family:Arial;}";
-        //divToPrint.innerHTML  += "img{margin-lefth: 10px;}";
-       // divToPrint.innerHTML  += "label{text-transform: uppercase; font-weight:bold; }";
-        divToPrint.innerHTML  += "</style>";
-        divToPrint.innerHTML  += " ";
+            	divToPrint.innerHTML +=  "<style=''>";   
+                divToPrint.innerHTML  += "<img src='../static/images/brasao.jpg' style='width:90px;float:left;margin-top:-9px;'>";
+                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
+                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
+                divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
+                divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
+                divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
+                divToPrint.innerHTML  += "<hr>";
+                divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
+                divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:10%;line-height:200%;'>";
+                divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
+                divToPrint.innerHTML  +=  result.nomeAluno+",";
+                divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
+                divToPrint.innerHTML  += result.serie+" e na";
+                divToPrint.innerHTML  += " Turma " ;
+                divToPrint.innerHTML  += result.turma+", do ano letivo de "+result.anoLetivo+", desta escola.";        
+                divToPrint.innerHTML  += "</p>";
+                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:15%;'>________________________________________";
+                divToPrint.innerHTML  += "<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>";
+                divToPrint.innerHTML  += "</p>";
+                divToPrint.innerHTML  += "<style type='text/css' >";
+                //divToPrint.innerHTML  += "body{font-family:Arial;}";
+                //divToPrint.innerHTML  += "img{margin-lefth: 10px;}";
+               // divToPrint.innerHTML  += "label{text-transform: uppercase; font-weight:bold; }";
+                divToPrint.innerHTML  += "</style>";
+                divToPrint.innerHTML  += " ";
 
           	  var now = new Date();
 
@@ -358,7 +359,7 @@
 
 												<select id="aluno" name="aluno"
 													class="form-control selectpicker" data-live-search="true">
-													<g:each in='${alunos}'>
+													<g:each in='${alunos1}'>
 
 														<option value="${it.id}">
 															${it.cidadao.pessoaFisica.pessoa.nome}
@@ -378,9 +379,9 @@
 													data-live-search="true" name="escolas" id="comboEscola"
 													onchange="mudarEscola();">
 													<option value="0" disabled="disabled" selected="selected">
-															Selecione uma escola</option>
+														Selecione uma escola</option>
 													<g:each in="${escolas}">
-														
+
 														<option value="${it.id}">
 															${it.pessoaJuridica.razaoSocial}
 														</option>
@@ -448,7 +449,10 @@
 			</g:if>
 		</div>
 	</section>
-	<div id="reportPrint" style="visibility: hidden;"></div>
+	
+	<div id="reportPrint" style="visibility: hidden;">
+	
+	</div>
 
 </body>
 </html>

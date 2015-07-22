@@ -43,7 +43,7 @@ environments {
 			
 			//url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
 			//url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
-			  url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
+			  url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
         }
     }
     test {
@@ -60,7 +60,7 @@ environments {
 			//password = "bgt54rfvcde3"			
             dbCreate = "update"
             //url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
-			  url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
+			  url = "jdbc:postgresql://192.168.1.247:5667/db_sgg_testes"
 			
 			}
 			 }

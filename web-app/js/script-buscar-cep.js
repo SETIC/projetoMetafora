@@ -71,10 +71,27 @@ function inputsHabilitado() {
 	var elementoBairro = document.getElementById("iBairro");
 	var elementoMunicipio = document.getElementById("iMunicipio");
 	var elementoUf = document.getElementById("iUf");
+	var elementoNomePaiInput = document.getElementById("iNomePaiInput");
+	var elementoNomeMaeInput = document.getElementById("iNomeMaeInput");
+	
 	elementoLogradouro.disabled = false;
 	elementoBairro.disabled = false;
 	elementoMunicipio.disabled = false;
 	elementoUf.disabled = false;
+	
+	if(elementoNomePaiInput != ""){
+		elementoNomePaiInput.disabled = false;
+	}else{
+		elementoNomePaiInput.disabled = true;
+	}
+	
+	if(elementoNomeMaeInput != ""){
+		elementoNomeMaeInput.disabled = false;
+	}else{
+		elementoNomeMaeInput.disabled = true;
+	}
+	
+	
 }
 
 function inserirValoresNosInputs(result, logradouro, bairro, municipio, uf) {

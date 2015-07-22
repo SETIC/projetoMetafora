@@ -79,7 +79,7 @@ function mudarCombo(){
 				</g:form>
 
 
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarAluno" class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
@@ -180,7 +180,7 @@ function mudarCombo(){
 					<i class="fa fa-plus"></i> Novo Aluno
 				</button>
 			</g:if>
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarAluno')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 
@@ -318,11 +318,12 @@ function mudarCombo(){
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
-												do Pai</label>
+											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome	do Pai</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNomePaiInput"
-													name="nomePaiInput" />
+												<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput" />
+												
+												<input type="hidden" name="idNomePai" id="idNomePaiId" value="">
+												
 												<div id="iDivSelectPicker" class="row">
 													<div class="col-sm-11">
 														<select class="form-control selectpicker"
@@ -344,10 +345,13 @@ function mudarCombo(){
 								<div class="form-group">
 									<label for="iNomeDaMae" class="col-sm-2 control-label">Nome da Mãe</label>
 									<div class="col-md-10">
+										
+										<input type="hidden" name="idNomeMae" id="idNomeMaeId" value="">
+										
 										<g:textField class="form-control" id="iNomeMaeInput" name="nomeMaeInput"/>
 										<div id="iDivSelectPicker1" class="row">
 											<div class="col-sm-11">
-												<select class="form-control selectpicker" data-live-search="true" name="mae" id="comboMae">
+												<select class="form-control selectpicker" data-live-search="true" name="mae" id="comboMae" >
 													<option value="0">Nome da Mãe</option>
 													<g:each in="${pMulheres}">
 														<option value="${it.id}">
@@ -653,6 +657,8 @@ function mudarCombo(){
 		            dataType: "json",
 		            success: function(result){
 		            	console.log(result[result.length-1].nome);
+
+		            	document.getElementById("idNomePaiId").value = result[result.length-1].id;
 		            	
 		            	document.getElementById("iDivSelectPicker").className = 'form-control hidden';
 		            	
@@ -678,7 +684,9 @@ function mudarCombo(){
 			            dataType: "json",
 			            success: function(result){
 			            	console.log(result[result.length-1].nome);
-			            	
+	
+							document.getElementById("idNomeMaeId").value = result[result.length-1].id;
+			            				            	
 			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
 			            	
 			            	document.getElementById("iNomeMaeInput").className = 'form-control';

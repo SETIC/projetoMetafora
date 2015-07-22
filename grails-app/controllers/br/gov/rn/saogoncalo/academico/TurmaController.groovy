@@ -355,7 +355,7 @@ class TurmaController {
 					//				ok : "Turma atualizada com sucesso!"
 					//
 					//			])
-					listarMessagem("Turma atualizada com sucesso!", "ok")
+					listarMensagem("Turma atualizada com sucesso!", "ok")
 				}else{
 
 					Calendar ca = Calendar.getInstance()
@@ -368,7 +368,7 @@ class TurmaController {
 					//			render(view:"/turma/editarTurma.gsp", model:[turmas:turmas,
 					//				erro : "Erro ao atualizar!"
 					//			])
-					listarMessagem("Erro ao atualizar!","erro")
+					listarMensagem("Erro ao atualizar!","erro")
 				}
 			}
 
@@ -392,8 +392,8 @@ class TurmaController {
 				Turma.deleteAll(Turma.get(id))
 
 				//redirect(action:"listar" )
-				redirect(action:"listarMessagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
-				//listarMessagem("Turma excluída com sucesso", "ok")
+				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
+				//listarMensagem("Turma excluída com sucesso", "ok")
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -489,7 +489,7 @@ class TurmaController {
 						//
 						//				])
 						//				redirect(action:"listar" )
-						listarMessagem("Turma cadastrada com sucesso!", "ok")
+						listarMensagem("Turma cadastrada com sucesso!", "ok")
 
 					}else{
 
@@ -505,7 +505,7 @@ class TurmaController {
 						//				render(view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas,
 						//					erro : erros
 						//				])
-						listarMessagem("erro ao Salvar", "erro")
+						listarMensagem("erro ao Salvar", "erro")
 					}
 
 

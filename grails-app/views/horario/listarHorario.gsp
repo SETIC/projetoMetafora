@@ -183,7 +183,7 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarHorario" class="table table-striped table-hover example">
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
@@ -246,7 +246,7 @@ function printDiv(id)
 			</button>
 			</g:if>
 			
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarHorario')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			

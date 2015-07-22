@@ -62,28 +62,26 @@ class AlunoController {
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'MASCULINO' ")
-					
+
 				println("objeto pHomens aquiiiiiiiiiiiiiii------ "+pHomens)
-				
+
 				def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO' ")
 				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
-				
+
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				
+
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
-				
-				
-				
+
+
+
 				println("objeto parentescoPai aquiiiiiiiiiiiiiii------ "+parentescoPai)
 				println("objeto parentescoMae aquiiiiiiiiiiiiiii------ "+parentescoMae)
 
 				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae])
-					
-			
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -108,19 +106,19 @@ class AlunoController {
 				//Parentesco parentescoMae = new Parentesco()
 
 				def pessoa = Pessoa.get(params.id)
-				pessoa.nome = params.nome
+				pessoa.nome = params.nome.toString().toUpperCase()
 				pessoa.dataDeNascimento = params.dataDeNascimento
 				if (!params.cpfCnpj.trim().equals(''))
 					pessoa.cpfCnpj = params.cpfCnpj
 				else
 					pessoa.cpfCnpj = null
 				if(pessoa.save(flush:true)){
-						println("salvou pessoa");
-					}else{
+					println("salvou pessoa");
+				}else{
 					println(" não salvou pessoa");
 					listarMensagem("Erro ao salvar pessoa", "erro")
-					}
-					
+				}
+
 				def pessoaFisica = PessoaFisica.get(params.id)
 				pessoaFisica.rcNumero = params.rcNumero
 				pessoaFisica.rcNomeDoCartorio = params.rcNomeDoCartorio
@@ -130,7 +128,7 @@ class AlunoController {
 				if(pessoaFisica.save(flush:true)){
 					println("salvou pessoa física");
 				}else{
-				println(" não salvou pessoa física");
+					println(" não salvou pessoa física");
 				}
 
 				//atualizando parentesco da pessoa
@@ -146,14 +144,14 @@ class AlunoController {
 				parentescoPai = Parentesco.findByParentescoAndPessoaFisica("PAI",pessoaFisica)
 				//if(parentescoPai == null){
 				//	Parentesco newParentescoPai = new Parentesco()
-					
-					
+
+
 				//}
 
 				//def parentescoMae = Parentesco.executeQuery("select p "+
 				//	" from Parentesco as p where p.parentesco ='MÃE' and p.pessoaFisica.id = "+ pessoaFisica.id)
 				parentescoMae = Parentesco.findByParentescoAndPessoaFisica("MÃE",pessoaFisica)
-					
+
 				//Parentesco newParentescoMae = new Parentesco()
 				println("parentesco pai aquiiiiii "+parentescoPai)
 				println("parentesco Mae aquiiiiii "+parentescoMae)
@@ -162,91 +160,102 @@ class AlunoController {
 				def idMae
 
 				println("nomepai Input --- " + params.nomePaiInput)
-				if(params.nomePaiInput == "" || params.nomePaiInput == null ){
-					println("id pessoa pai "+Pessoa.get(params.pai))
-					idPai = Pessoa.get(params.pai)
-					println("if do pai "+idPai)
 
-					if(parentescoPai == null){
-						Parentesco newParentescoPai = new Parentesco()
-						newParentescoPai.parentesco = "PAI"
-						newParentescoPai.pessoa = pessoa.get(params.pai)
-						newParentescoPai.pessoaFisica = PessoaFisica.get(pessoa.id)
-						newParentescoPai.save(flush:true)
-						
-					}else{ 
+				if((params.pai != 0) || (params.nomePaiInput != "")){
+
+					if(params.nomePaiInput == "" || params.nomePaiInput == null ){
+						println("id pessoa pai "+Pessoa.get(params.pai))
+						idPai = Pessoa.get(params.pai)
+						println("if do pai "+idPai)
+
+						if(parentescoPai == null){
+							Parentesco newParentescoPai = new Parentesco()
+							newParentescoPai.parentesco = "PAI"
+							newParentescoPai.pessoa = pessoa.get(params.pai)
+							newParentescoPai.pessoaFisica = PessoaFisica.get(pessoa.id)
+							newParentescoPai.save(flush:true)
+
+						}else{
+							parentescoPai.pessoa = idPai
+							parentescoPai.save(flush:true)
+						}
+					}else{
+						idPai = Pessoa.get(params.nomePaiInput)
+						println("if do paiInput "+params.nomePaiInput)
 						parentescoPai.pessoa = idPai
 						parentescoPai.save(flush:true)
 					}
-				}else{
-					idPai = Pessoa.get(params.nomePaiInput)
-					println("if do paiInput "+params.nomePaiInput)
-					parentescoPai.pessoa = idPai
-					parentescoPai.save(flush:true)
 				}
 
-				if(params.nomeMaeInput == "" || params.nomeMaeInput == null ){
-					idMae = Pessoa.get(params.mae)
-					println("if do Mae "+idMae)
-					
-					if(parentescoMae == null){
-						Parentesco newParentescoMae = new Parentesco()
-						newParentescoMae.parentesco = "MÃE"
-						newParentescoMae.pessoa = pessoa.get(params.mae)
-						newParentescoMae.pessoaFisica = PessoaFisica.get(pessoa.id)
-						newParentescoMae.save(flush:true)
-						
+				if((params.mae != 0) || (params.nomeMaeInput != "")){
+					if(params.nomeMaeInput == "" || params.nomeMaeInput == null ){
+						idMae = Pessoa.get(params.mae)
+						println("if do Mae "+idMae)
+
+						if(parentescoMae == null){
+							Parentesco newParentescoMae = new Parentesco()
+							newParentescoMae.parentesco = "MÃE"
+							newParentescoMae.pessoa = pessoa.get(params.mae)
+							newParentescoMae.pessoaFisica = PessoaFisica.get(pessoa.id)
+							newParentescoMae.save(flush:true)
+
+						}else{
+
+							parentescoMae.pessoa = idMae
+							parentescoMae.save(flush:true)
+						}
 					}else{
-					
-					parentescoMae.pessoa = idMae
-					parentescoMae.save(flush:true)
+						idMae = Pessoa.get(params.nomeMaeInput)
+						println("if do maeInput "+params.nomeMaeInput)
+						parentescoMae.pessoa = idMae
+						parentescoMae.save(flush:true)
 					}
-				}else{
-					idMae = Pessoa.get(params.nomeMaeInput)
-					println("if do maeInput "+params.nomeMaeInput)
-					parentescoMae.pessoa = idMae
-					parentescoMae.save(flush:true)
 				}
 				//println("parentencoPai.parentesco "+parentescoPai.parentesco)
-				println("idPai "+idPai.nome)
+				//println("idPai "+idPai.nome)
 
-				
-				
-				
+
+
+
 				//bloco de endereço
 
-				
+
 				TipoLogradouro tipoLogradouro = new TipoLogradouro()
 				Logradouro logradouro = new Logradouro()
 				Bairro bairro = new Bairro()
 				Municipio municipio = new Municipio()
 				Estado estado = new Estado()
 				Reside newReside = new Reside()
-				
-				def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
-				def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
-				
-				println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
-				
-				
-				tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
-				if(tipoLogradouro == null){
-					TipoLogradouro newTipoLogradouro = new TipoLogradouro()
-					newTipoLogradouro.tipoLogradouro = tipoLogradouroSimple
-					newTipoLogradouro.save(flush:true)
-					println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)
-					tipoLogradouro = newTipoLogradouro
+
+				if(params.endereco != ""){
+
+					def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+					def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+
+					println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
+
+
+					tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
+					if(tipoLogradouro == null){
+						TipoLogradouro newTipoLogradouro = new TipoLogradouro()
+						newTipoLogradouro.tipoLogradouro = tipoLogradouroSimple
+						newTipoLogradouro.save(flush:true)
+						println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)
+						tipoLogradouro = newTipoLogradouro
+					}
+
+
+
+					logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
+					if(logradouro == null){
+						Logradouro newLogradouro = new Logradouro()
+						newLogradouro.logradouro = logradouroSimple
+						newLogradouro.save(flush:true)
+						println("Logradouro --- " + newLogradouro.logradouro)
+						logradouro = newLogradouro
+					}
 				}
-				
-				logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
-				if(logradouro == null){
-					Logradouro newLogradouro = new Logradouro()
-					newLogradouro.logradouro = logradouroSimple
-					newLogradouro.save(flush:true)
-					println("Logradouro --- " + newLogradouro.logradouro)
-					logradouro = newLogradouro
-				}
-				
+
 				estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
 				if(estado == null){
 					Estado newEstado = new Estado()
@@ -256,7 +265,7 @@ class AlunoController {
 					println("Estado --- " + newEstado.estado)
 					estado = newEstado
 				}
-				
+
 				municipio = Municipio.findByMunicipio(params.municipio.toString().toUpperCase())
 				if(municipio == null){
 					Municipio newMunicipio = new Municipio()
@@ -266,7 +275,7 @@ class AlunoController {
 					println("Municipio --- " + newMunicipio.municipio)
 					municipio = newMunicipio
 				}
-				
+
 				bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
 				if(bairro == null){
 					Bairro newBairro = new Bairro()
@@ -276,7 +285,7 @@ class AlunoController {
 					println("Bairro --- " + newBairro.bairro)
 					bairro = newBairro
 				}
-									
+
 				newReside.bairro = bairro
 				newReside.logradouro = logradouro
 				newReside.pessoa = pessoa
@@ -287,51 +296,37 @@ class AlunoController {
 					listarMensagem("Erro ao salvar reside", "erro")
 				}
 				println("reside --- " + newReside.id)
-				
-				
-								
-
-/*				//atualizando reside
-				Bairro bairro = new Bairro()
-
-				bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
-
-				//def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '"+params.bairro.toString().toUpperCase()+"'")
-
-				String t = params.endereco.toString().toUpperCase()
-				String tr = t.substring((t.indexOf(' ')+1), t.length())
-				println("Substring --- " + tr)
 
 
-				Logradouro idLogradouro = new Logradouro()
 
-				idLogradouro = Logradouro.findByLogradouro(tr)
 
-				def idLogradouro = Logradouro.executeQuery(" select l " +
+				/*				//atualizando reside
+				 Bairro bairro = new Bairro()
+				 bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
+				 //def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '"+params.bairro.toString().toUpperCase()+"'")
+				 String t = params.endereco.toString().toUpperCase()
+				 String tr = t.substring((t.indexOf(' ')+1), t.length())
+				 println("Substring --- " + tr)
+				 Logradouro idLogradouro = new Logradouro()
+				 idLogradouro = Logradouro.findByLogradouro(tr)
+				 def idLogradouro = Logradouro.executeQuery(" select l " +
 				 "  from Logradouro as l, TipoLogradouro as tl " +
 				 "  where l.tipoLogradouro.id = tl.id " +
 				 "  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase()+"'")
-				 
-
-
-
-
-
-				if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
+				 if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
 				 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
 				 }else{
-
-				def reside = Reside.findByPessoa(pessoa)
-				println("reside aquillll "+reside )
-				println("idBairro "+bairro)
-				println("idLogradouro "+idLogradouro)
-				reside.bairro = bairro
-				reside.logradouro = idLogradouro
-				reside.pessoa = pessoa
-				reside.numero = params.numero
-				reside.complemento = params.complemento
-				reside.cep = params.cep
-				reside.save(flush:true)*/
+				 def reside = Reside.findByPessoa(pessoa)
+				 println("reside aquillll "+reside )
+				 println("idBairro "+bairro)
+				 println("idLogradouro "+idLogradouro)
+				 reside.bairro = bairro
+				 reside.logradouro = idLogradouro
+				 reside.pessoa = pessoa
+				 reside.numero = params.numero
+				 reside.complemento = params.complemento
+				 reside.cep = params.cep
+				 reside.save(flush:true)*/
 
 				//}
 				//fim do reside
@@ -419,6 +414,7 @@ class AlunoController {
 			}
 		}
 	}
+
 	def pesquisarAlunos(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
@@ -437,17 +433,17 @@ class AlunoController {
 				def escolas
 				def alunos
 				def parametro = params.pesquisa
-				
+
 				if (session["escid"] == 0){
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-				
+
 					print("print alunossss "+ alunos )
 					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 				}else{
-			
+
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
-				
+
 							//"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
@@ -458,6 +454,7 @@ class AlunoController {
 			}
 		}
 	}
+
 	def listarMensagem(String msg, String tipo) {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -628,98 +625,114 @@ class AlunoController {
 					Pessoa idPai = new Pessoa()
 					Pessoa idMae = new Pessoa()
 
+					println(" params.nomePaiInput -- " + params.nomePaiInput + " params.nomePai -- " + params.nomePai + " params.idNomePai -- " + params.idNomePai)
+					println(" params.nomeMaeInput -- " + params.nomeMaeInput + " params.nomeMae -- " + params.nomeMae + " params.idNomeMae -- " + params.idNomeMae)
+
 					//alteração de id pai e mae
-					if(params.nomePaiInput == "" || params.nomePaiInput == null){	
+					if(params.nomePaiInput == "" || params.nomePaiInput == null){
 						idPai = Pessoa.get(params.pai)
 					}else{
-						idPai = Pessoa.get(params.nomePaiInput)
+						idPai = Pessoa.get(params.idNomePai)
 					}
 
-					if(params.nomePaiInput == "" || params.nomeMaeInput == null){
+					if(params.nomeMaeInput == "" || params.nomeMaeInput == null){
 						idMae = Pessoa.get(params.mae)
-					}else{aq
-
-						idMae = Pessoa.get(params.nomeMaeInput)
+					}else{
+						idMae = Pessoa.get(params.idNomeMae)
 					}
 
 
-					parentescoPai.pessoaFisica = pessoaFisica
-					parentescoPai.pessoa = idPai
-					parentescoPai.parentesco = "PAI"
-					parentescoPai.save(flush:true)
+					if((params.pai != 0) || (params.nomePaiInput != "")){
 
-					parentescoMae.pessoaFisica = pessoaFisica
-					parentescoMae.pessoa = idMae
-					parentescoMae.parentesco = "MÃE"
-					parentescoMae.save(flush:true)
+						parentescoPai.pessoaFisica = pessoaFisica
+						parentescoPai.pessoa = idPai
+						parentescoPai.parentesco = "PAI"
+						parentescoPai.save(flush:true)
+					}
 
+					if((params.mae != 0) || (params.nomeMaeInput != "")){
 
-					println("Parentesco --- " + params)
-					
-					
+						parentescoMae.pessoaFisica = pessoaFisica
+						parentescoMae.pessoa = idMae
+						parentescoMae.parentesco = "MÃE"
+						parentescoMae.save(flush:true)
+					}
+
 					//endereço
-					
+
+
 					TipoLogradouro tipoLogradouro = new TipoLogradouro()
 					Logradouro logradouro = new Logradouro()
 					Bairro bairro = new Bairro()
 					Municipio municipio = new Municipio()
 					Estado estado = new Estado()
 					Reside newReside = new Reside()
-					
-					def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
-					def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
-					
-					println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
-					
-					
-					tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
-					if(tipoLogradouro == null){
-						TipoLogradouro newTipoLogradouro = new TipoLogradouro()
-						newTipoLogradouro.tipoLogradouro = tipoLogradouroSimple
-						newTipoLogradouro.save(flush:true)
-						println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)	
-						tipoLogradouro = newTipoLogradouro				
+
+					if(params.endereco != ""){
+						def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+						def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+
+
+						println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
+
+
+						tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
+						if(tipoLogradouro == null){
+							TipoLogradouro newTipoLogradouro = new TipoLogradouro()
+							newTipoLogradouro.tipoLogradouro = tipoLogradouroSimple
+							newTipoLogradouro.save(flush:true)
+							println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)
+							tipoLogradouro = newTipoLogradouro
+						}
+
+						logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
+						if(logradouro == null){
+							Logradouro newLogradouro = new Logradouro()
+							newLogradouro.logradouro = logradouroSimple
+							newLogradouro.save(flush:true)
+							println("Logradouro --- " + newLogradouro.logradouro)
+							logradouro = newLogradouro
+						}
 					}
-					
-					logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
-					if(logradouro == null){
-						Logradouro newLogradouro = new Logradouro()
-						newLogradouro.logradouro = logradouroSimple
-						newLogradouro.save(flush:true)
-						println("Logradouro --- " + newLogradouro.logradouro)
-						logradouro = newLogradouro
+
+					if(params.uf != ""){
+						estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
+						if(estado == null){
+							Estado newEstado = new Estado()
+							newEstado.estado = params.uf.toString().toUpperCase()
+							newEstado.abreviacao = params.uf.toString().toUpperCase()
+							newEstado.save(flush:true)
+							println("Estado --- " + newEstado.estado)
+							estado = newEstado
+						}
 					}
-					
-					estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
-					if(estado == null){
-						Estado newEstado = new Estado()
-						newEstado.estado = params.uf.toString().toUpperCase()
-						newEstado.abreviacao = params.uf.toString().toUpperCase()
-						newEstado.save(flush:true)
-						println("Estado --- " + newEstado.estado)
-						estado = newEstado
+
+					if(params.municipio != ""){
+						municipio = Municipio.findByMunicipio(params.municipio.toString().toUpperCase())
+						if(municipio == null){
+							Municipio newMunicipio = new Municipio()
+							newMunicipio.municipio = params.municipio.toString().toUpperCase()
+							newMunicipio.estado = estado
+							newMunicipio.save(flush:true)
+							println("Municipio --- " + newMunicipio.municipio)
+							municipio = newMunicipio
+						}
 					}
-					
-					municipio = Municipio.findByMunicipio(params.municipio.toString().toUpperCase())
-					if(municipio == null){
-						Municipio newMunicipio = new Municipio()
-						newMunicipio.municipio = params.municipio.toString().toUpperCase()
-						newMunicipio.estado = estado
-						newMunicipio.save(flush:true)
-						println("Municipio --- " + newMunicipio.municipio)
-						municipio = newMunicipio
+
+					if(params.bairro != ""){
+						bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
+						if(bairro == null){
+							Bairro newBairro = new Bairro()
+							newBairro.bairro = params.bairro.toString().toUpperCase()
+							newBairro.municipio = municipio
+							newBairro.save(flush:true)
+							println("Bairro --- " + newBairro.bairro)
+							bairro = newBairro
+						}
 					}
-					
-					bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
-					if(bairro == null){
-						Bairro newBairro = new Bairro()
-						newBairro.bairro = params.bairro.toString().toUpperCase()
-						newBairro.municipio = municipio
-						newBairro.save(flush:true)
-						println("Bairro --- " + newBairro.bairro)
-						bairro = newBairro
-					}
-										
+
+
+
 					newReside.bairro = bairro
 					newReside.logradouro = logradouro
 					newReside.pessoa = pessoa
@@ -730,48 +743,41 @@ class AlunoController {
 						listarMensagem("Erro ao salvar reside", "erro")
 					}
 					println("reside --- " + newReside.id)
-										
+
+
+
 					//Bairro idBairro = new Bairro()
 					/*	
-					def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
-
-					def idLogradouro = Logradouro.executeQuery(" select l " +
-							"  from Logradouro as l, TipoLogradouro as tl " +
-							"  where l.tipoLogradouro.id = tl.id " +
-							"  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase() +"'")
-
-
-					println("Bairro --- " + params.bairro)
-					println("Logradouro --- " + params.endereco)
-					println("Bairro banco --- " + idBairro.bairro)
-					println("Logradouro banco --- " + idLogradouro.logradouro)
-
-
-									if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
+					 def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
+					 def idLogradouro = Logradouro.executeQuery(" select l " +
+					 "  from Logradouro as l, TipoLogradouro as tl " +
+					 "  where l.tipoLogradouro.id = tl.id " +
+					 "  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase() +"'")
+					 println("Bairro --- " + params.bairro)
+					 println("Logradouro --- " + params.endereco)
+					 println("Bairro banco --- " + idBairro.bairro)
+					 println("Logradouro banco --- " + idLogradouro.logradouro)
+					 if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
 					 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
 					 }else{*/
 
 
-/*						//codigo de cadastro de endereços
-						if (params.cep != null){
-
-						println("idBairro -- " + idBairro)
-
-						Reside reside = new Reside()
-						reside.bairro = Bairro.get(idBairro.id)
-						reside.logradouro = Logradouro.get(idLogradouro.id)
-						reside.pessoa = Pessoa.get(pessoa.id)
-
-						reside.numero = params.numero
-						reside.complemento = params.complemento
-						reside.cep = params.cep
-
-						if (reside.save(flush:true)){
-							println("salvou reside")
-						}else{
-							listarMensagem("Erro ao salvar endereço", "erro")
-						}
-					}*/
+					/*						//codigo de cadastro de endereços
+					 if (params.cep != null){
+					 println("idBairro -- " + idBairro)
+					 Reside reside = new Reside()
+					 reside.bairro = Bairro.get(idBairro.id)
+					 reside.logradouro = Logradouro.get(idLogradouro.id)
+					 reside.pessoa = Pessoa.get(pessoa.id)
+					 reside.numero = params.numero
+					 reside.complemento = params.complemento
+					 reside.cep = params.cep
+					 if (reside.save(flush:true)){
+					 println("salvou reside")
+					 }else{
+					 listarMensagem("Erro ao salvar endereço", "erro")
+					 }
+					 }*/
 
 
 					//}

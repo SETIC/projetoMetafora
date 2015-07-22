@@ -67,7 +67,7 @@ function printDiv(id)
 						</div>
 					</div>
 				</g:form>
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarFuncionario" class="table table-striped table-hover example">
 					<g:if test="${!funcionarios?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -142,7 +142,7 @@ function printDiv(id)
 					<i class="fa fa-plus"></i> Novo Funcionário
 				</button>
 			</g:if>
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarFuncionario')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			<!-- Modal -->

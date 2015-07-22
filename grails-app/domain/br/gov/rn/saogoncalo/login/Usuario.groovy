@@ -1,5 +1,6 @@
 package br.gov.rn.saogoncalo.login
 
+import br.gov.rn.saogoncalo.administracaoregistro.Log
 import br.gov.rn.saogoncalo.pessoa.Pessoa
 
 class Usuario {

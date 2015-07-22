@@ -1,7 +1,10 @@
 package br.gov.rn.saogoncalo.academico
 import grails.converters.*
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController;
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 
 class SalaController {
 
@@ -113,6 +116,7 @@ class SalaController {
 
 				def escolas
 				def sala
+				AdministracaoController adm = new AdministracaoController()
 
 				if (session["escid"] == 0) {
 
@@ -125,6 +129,9 @@ class SalaController {
 							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					
+					adm.salvaLog(2, "Teste de observação 01", "Select", "Sala")
+					
 				}
 
 
@@ -264,4 +271,6 @@ class SalaController {
 			}
 		}
 	}
+
+	
 }
