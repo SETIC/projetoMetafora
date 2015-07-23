@@ -1,8 +1,6 @@
 package br.gov.rn.saogoncalo.pessoa
 
-import br.gov.rn.saogoncalo.organizacao.Cargo
-import br.gov.rn.saogoncalo.organizacao.Lotacao
-import com.sun.org.apache.xalan.internal.xsltc.compiler.ForEach;
+
 
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
@@ -87,7 +85,7 @@ class FuncionarioController {
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 				}
-				cargos=Cargo.findAll()
+				
 
 				cargos= Cargo.findAll()
 

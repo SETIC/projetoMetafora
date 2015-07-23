@@ -13,7 +13,7 @@
 			newWin = window.open("");
 			
 			
-			newWin.document.write("<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
+			newWin.document.write("<img src='http://192.168.1.247:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
 			newWin.document.write("<h4 style='margin-top:1px;text-align:center'>PREFEITURA DE SÃO GONÇALO DO AMARANTE <br></h4>");
 			newWin.document.write("<h3 style='text-align:center;margin-top:10px;'>GERAÇÃO DE BOLETIM</h3><br/><br/>");
 			newWin.document.write("<hr><br/><br/> ");

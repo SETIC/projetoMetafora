@@ -79,7 +79,8 @@ function mudarCombo(){
 				</g:form>
 
 
-				<table id="listarAluno" class="table table-striped table-hover example">
+				<table id="listarAluno"
+					class="table table-striped table-hover example">
 
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
@@ -180,7 +181,8 @@ function mudarCombo(){
 					<i class="fa fa-plus"></i> Novo Aluno
 				</button>
 			</g:if>
-			<button class="btn btn-danger btn-flat" onClick="printDiv('listarAluno')">
+			<button class="btn btn-danger btn-flat"
+				onClick="printDiv('listarAluno')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 
@@ -318,12 +320,15 @@ function mudarCombo(){
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome	do Pai</label>
+											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
+												do Pai</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput" />
-												
-												<input type="hidden" name="idNomePai" id="idNomePaiId" value="">
-												
+												<g:textField class="form-control" id="iNomePaiInput"
+													name="nomePaiInput" />
+
+												<input type="hidden" name="idNomePai" id="idNomePaiId"
+													value="">
+
 												<div id="iDivSelectPicker" class="row">
 													<div class="col-sm-11">
 														<select class="form-control selectpicker"
@@ -332,7 +337,7 @@ function mudarCombo(){
 															<g:each in="${pHomens}">
 																<option value="${it.id}">
 																	${it.nome}
-														</option>
+																</option>
 													</g:each>
 												</select>
 											</div>
@@ -432,13 +437,48 @@ function mudarCombo(){
 													id="iBairro" placeholder="Bairro">
 											</div>
 										</div>
+
+										
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" name="uf" id="iUf"
-													placeholder="Estado">
+												
+												<select name="estado" name="uf" id="iUf" class="form-control"> 
+													<option value="AC">Acre</option> 
+													<option value="AL">Alagoas</option> 
+													<option value="AM">Amazonas</option> 
+													<option value="AP">Amapá</option> 
+													<option value="BA">Bahia</option> 
+													<option value="CE">Ceará</option> 
+													<option value="DF">Distrito Federal</option> 
+													<option value="ES">Espírito Santo</option> 
+													<option value="GO">Goiás</option> 
+													<option value="MA">Maranhão</option> 
+													<option value="MT">Mato Grosso</option> 
+													<option value="MS">Mato Grosso do Sul</option> 
+													<option value="MG">Minas Gerais</option> 
+													<option value="PA">Pará</option> 
+													<option value="PB">Paraíba</option> 
+													<option value="PR">Paraná</option> 
+													<option value="PE">Pernambuco</option> 
+													<option value="PI">Piauí</option> 
+													<option value="RJ">Rio de Janeiro</option> 
+													<option value="RN" selected>Rio Grande do Norte</option> 
+													<option value="RO">Rondônia</option> 
+													<option value="RS">Rio Grande do Sul</option> 
+													<option value="RR">Roraima</option> 
+													<option value="SC">Santa Catarina</option> 
+													<option value="SE">Sergipe</option> 
+													<option value="SP">São Paulo</option> 
+													<option value="TO">Tocantins</option> 
+												</select>
+												
+												
 											</div>
 										</div>
+										
+										
+										
 										<div class="form-group">
 											<label for="iMunicipio" class="col-sm-2 control-label">Município</label>
 											<div class="col-sm-10">
@@ -647,7 +687,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -674,7 +714,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -703,7 +743,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -730,7 +770,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "localhost";
+			  var endereco = "192.168.1.247";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

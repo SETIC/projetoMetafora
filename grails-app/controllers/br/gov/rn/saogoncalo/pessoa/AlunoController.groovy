@@ -229,8 +229,16 @@ class AlunoController {
 
 				if(params.endereco != ""){
 
-					def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
-					def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+					def tipoLogradouroSimple
+					def logradouroSimple
+					
+					if (params.endereco.toString().indexOf(" ") != 0) {
+						tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+						logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+					}else{
+						tipoLogradouroSimple = "RUA"
+						logradouroSimple = params.endereco
+					}
 
 					println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
 
@@ -243,7 +251,6 @@ class AlunoController {
 						println("TipoLogradouro --- " + newTipoLogradouro.tipoLogradouro)
 						tipoLogradouro = newTipoLogradouro
 					}
-
 
 
 					logradouro = Logradouro.findByLogradouro(logradouroSimple.toUpperCase())
