@@ -410,8 +410,8 @@ class MatriculaController {
 
 		def matricula = Matricula.get(id)
 
-		def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "serie":matricula.turma.serie.serie,
-			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo]
+		def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "dataAluno" : matricula.aluno.cidadao.pessoaFisica.pessoa.dataDeNascimento , "serie":matricula.turma.serie.serie,
+			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo, "nacionalidade" : matricula.aluno.cidadao.nacionalidade]		
 
 		render( result as JSON)
 

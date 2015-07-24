@@ -68,43 +68,6 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
-								do Registro de Cartório</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="rcNumero"
-									style="width: 300px" value="${pessoaFisica?.rcNumero }" />
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputrcNomeDoCartorio3"
-								class="col-sm-2 control-label">Nome do Cartório do
-								Registro de Cartório</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="rcNomeDoCartorio"
-									style="width: 300px" value="${pessoaFisica?.rcNomeDoCartorio }" />
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Nome
-								do Livro do Registro de Cartório</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="rcNomeDoLivro"
-									style="width: 300px" value="${pessoaFisica?.rcNomeDoLivro }" />
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputrcFolhaDoLivro3" class="col-sm-2 control-label">Folha
-								do Livro do Registro de Cartório</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="rcFolhaDoLivro"
-									style="width: 300px" value="${pessoaFisica?.rcFolhaDoLivro }" />
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
 							<div class="col-sm-10">
 								<g:if test="${pessoaFisica?.sexo == 'MASCULINO' }">

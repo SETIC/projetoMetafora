@@ -30,7 +30,7 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
         </g:link>
-        
+        <g:if test="${sessao==0}">
         <g:link class="link-black" controller="Escola" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">
@@ -42,7 +42,7 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
 		</g:link>
-		
+		</g:if>
 		<g:link class="link-black" controller="Professores" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">

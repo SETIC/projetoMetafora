@@ -73,11 +73,11 @@ function printDiv(id)
 						<tr>
 							<th style="width: 65px;"></th>
 							<th style="width: 280px;">Nome</th>
-							<th style="width: 60px;">CPF</th>
 							<th style="width:;">Matricula</th>
-							<th style="width:;">Data de Nascimento</th>
-							<th style="width:;">Sexo</th>
-							<th style="width:;">Estado Civil</th>
+							<th style="width:;">Cargo</th>						
+							<th style="width:;">Vínculo</th>
+							<th style="width:;">Função</th>
+							<th style="width:65px;">turno</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -116,18 +116,20 @@ function printDiv(id)
 									${pessoa.nome}
 								</td>
 								<td>
-									${pessoa.cpfCnpj}
-								</td>
-								<td>
 									${it.matricula}
 								</td>
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${pessoa.dataDeNascimento}" /></td>
 								<td>
-									${pessoaFisica.sexo}
+									${it.lotacao.cargo.cargo[0]}
+								</td>
+								
+								<td>
+									${it.lotacao.vinculo[0]}
 								</td>
 								<td>
-									${cidadao.estadoCivil}
+									${it.lotacao.funcao[0]}
+								</td>
+								<td>
+									${it.lotacao.turno[0]}
 								</td>
 							</tr>
 						</g:each>
@@ -187,37 +189,6 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
-										<label>Número do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNumero" value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Cartório do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoCartorio"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoLivro"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Folha do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcFolhaDoLivro"
-												value="" />
-										</div>
-										<br>
-									</div>
 									<div class="form-heading">
 										<label>Sexo</label>
 										<div class="controls">

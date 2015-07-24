@@ -30,10 +30,12 @@
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
+        
+        
         
         divToPrint.innerHtml = "";
         
@@ -42,33 +44,36 @@
             url: "http://"+endereco+":8080/projetoMetafora/matricula/getMatriculaByIdParaRelatorio/"+idMatricula,
             dataType: "json",
             success: function(result){
-	 
-            	divToPrint.innerHTML +=  "<style=''>";   
-                divToPrint.innerHTML  += "<img src='../static/images/brasao.jpg' style='width:90px;float:left;margin-top:-9px;'>";
-                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
-                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
-                divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
-                divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
-                divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
-                divToPrint.innerHTML  += "<hr>";
-                divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
-                divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:10%;line-height:200%;'>";
-                divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
-                divToPrint.innerHTML  +=  result.nomeAluno+",";
-                divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
-                divToPrint.innerHTML  += result.serie+" e na";
-                divToPrint.innerHTML  += " Turma " ;
-                divToPrint.innerHTML  += result.turma+", do ano letivo de "+result.anoLetivo+", desta escola.";        
-                divToPrint.innerHTML  += "</p>";
-                divToPrint.innerHTML  += "<p style='text-align:center;margin-top:15%;'>________________________________________";
-                divToPrint.innerHTML  += "<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>";
-                divToPrint.innerHTML  += "</p>";
-                divToPrint.innerHTML  += "<style type='text/css' >";
-                //divToPrint.innerHTML  += "body{font-family:Arial;}";
-                //divToPrint.innerHTML  += "img{margin-lefth: 10px;}";
-               // divToPrint.innerHTML  += "label{text-transform: uppercase; font-weight:bold; }";
-                divToPrint.innerHTML  += "</style>";
-                divToPrint.innerHTML  += " ";
+            	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
+        	    
+			    divToPrint.innerHTML +=  "<style=''>";   
+		        divToPrint.innerHTML  += "<img src='../static/images/brasao.jpg' style='width:90px;float:left;margin-top:-9px;'>";
+		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
+		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
+		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
+		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
+		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
+		        divToPrint.innerHTML  += "<hr>";
+		        divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
+		        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:30%;line-height:200%;'>";
+		        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
+		        divToPrint.innerHTML  +=  result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
+		        divToPrint.innerHTML  +=" ___________________________ ";
+		        divToPrint.innerHTML  +=" sendo filho de _________________________________________ e de _____________________________________ ";
+		        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
+		        divToPrint.innerHTML  += result.serie+" e na";
+		        divToPrint.innerHTML  += " Turma " ;
+		        divToPrint.innerHTML  += result.turma+", do ano letivo de "+result.anoLetivo+", desta escola.";     
+		        divToPrint.innerHTML  += "</p>";
+		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:15%;'>________________________________________";
+		        divToPrint.innerHTML  += "<h4 style='text-align:center'>ASSINATURA DA COORDENAÇÃO</h4><br/><br/>";
+		        divToPrint.innerHTML  += "</p>";
+		        divToPrint.innerHTML  += "<style type='text/css' >";
+		        //divToPrint.innerHTML  += "body{font-family:Arial;}";
+		        //divToPrint.innerHTML  += "img{margin-lefth: 10px;}";
+		       // divToPrint.innerHTML  += "label{text-transform: uppercase; font-weight:bold; }";
+		        divToPrint.innerHTML  += "</style>";
+		        divToPrint.innerHTML  += " ";
 
           	  var now = new Date();
 
@@ -86,6 +91,7 @@
           	  meses[9] = "Outubro";
           	  meses[10] = "Novembro";
           	  meses[11] = "Dezembro";
+
           	  
           	divToPrint.innerHTML  += "<p style='font-size:12px;margin-top:10%; margin-left:55%;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
 
@@ -105,6 +111,8 @@
         });
 
 	}
+
+	
 </script>
 
 	<script type="text/javascript">
@@ -232,7 +240,7 @@
 			
 				function mudarEscola(){
 		    	  
-					var endereco = "192.168.1.247";
+					var endereco = "localhost";
 			        var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -259,7 +267,7 @@
 			   }
 
 			  function mudarSerie(){
-				  var endereco = "192.168.1.247";
+				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
