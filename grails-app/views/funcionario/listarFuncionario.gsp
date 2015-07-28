@@ -77,28 +77,26 @@ function printDiv(id)
 							<th style="width:;">Cargo</th>						
 							<th style="width:;">Vínculo</th>
 							<th style="width:;">Função</th>
-							<th style="width:65px;">turno</th>
+							<th style="width:65px;">Turno</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${funcionarios?}'>
-							<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
-							<g:set var="cidadao" value="${it.cidadao}" />
-							<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
+
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
 
-											<g:if test="${perm2 }">
+											<g:if test="${perm2}">
 
 												<li title="Editar Funcionario "
 													class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/funcionario/editarFuncionario/${pessoa.id}"><span
+													href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 												<li title="Remover Funcionario"
-													onclick="deletar(${pessoa.id})"
+													onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 
@@ -106,30 +104,29 @@ function printDiv(id)
 											<li title="Ver detalhes do Funcionario"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/funcionario/verInfoFuncionario/${pessoa.id}"><span
+												href="/projetoMetafora/funcionario/verInfoFuncionario/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
 
 									</div>
 								</td>
 								<td>
-									${pessoa.nome}
+									${it?.cidadao.pessoaFisica.pessoa.nome}
 								</td>
 								<td>
-									${it.matricula}
+									${it?.matricula}
 								</td>
 								<td>
-									${it.lotacao.cargo.cargo[0]}
-								</td>
-								
+									 ${it.lotacao.cargo.cargo[0]}
+								</td>								
 								<td>
 									${it.lotacao.vinculo[0]}
 								</td>
 								<td>
-									${it.lotacao.funcao[0]}
+									${it?.lotacao.funcao[0]}
 								</td>
 								<td>
-									${it.lotacao.turno[0]}
+									${it?.lotacao.turno[0]}
 								</td>
 							</tr>
 						</g:each>
@@ -289,6 +286,13 @@ function printDiv(id)
 													<label>Matricula</label>
 													<div class="controls">
 														<g:textField class="form-control" required="true" name="matricula" value="" />
+													</div>
+												</div>
+												<br>
+												<div class="form-heading">
+												<label>Observação</label>
+													<div>
+														<textarea rows="3" class="form-control" name="observacao" placeholder="Insira uma observação relacionada ao Funcionário"></textarea>
 													</div>
 												</div>
 												<br>

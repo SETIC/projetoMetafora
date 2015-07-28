@@ -341,6 +341,13 @@
 								</div>
 							</div>
 							<br>
+							<div class="form-group">
+								<label for="inputmatricula3" class="col-sm-2 control-label" >Observação</label>
+								<div class="col-sm-5">
+									<textarea rows="3" class="form-control" name="observacao" placeholder="Insira uma observação relacionada ao Funcionário">${funcionarios.observacao}</textarea>
+								</div>
+							</div>
+							<br>
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button type="submit" class="btn btn-primary btn-flat">

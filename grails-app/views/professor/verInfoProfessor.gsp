@@ -116,6 +116,7 @@
 								${pessoa.cpfCnpj }
 							</div>
 						</div>
+					<!-- 
 						<br>
 						<div class="form-group">
 							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
@@ -149,6 +150,8 @@
 								${pessoaFisica.rcFolhaDoLivro }
 							</div>
 						</div>
+						-->
+						
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>

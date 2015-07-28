@@ -8,6 +8,7 @@ class Log {
 	String tabela
 	String tipo
 	String observacao
+	Date data
 
 	static belongsTo =[usuario:Usuario]
 

@@ -188,7 +188,7 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
+				<!--					<div class="form-heading">
 										<label>Número do Registro de Cartório</label>
 										<div class="controls">
 											<g:textField class="form-control" name="rcNumero" value="" />
@@ -217,7 +217,7 @@ function printDiv(id)
 											<g:textField class="form-control" name="rcFolhaDoLivro"
 												value="" />
 										</div>
-										<br>
+										<br> -->
 										<div class="form-heading">
 											<label>Sexo</label>
 											<div class="controls">

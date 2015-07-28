@@ -7,6 +7,7 @@ class Funcionario {
 	Cidadao cidadao
 	String cargaHoraria
 	String matricula
+	String observacao
 
 
 	static hasMany = [lotacao:Lotacao]
@@ -16,6 +17,7 @@ class Funcionario {
 	
 			cargaHoraria blank:true, nullable:true
 			matricula blank:true, nullable:true
+			observacao blank:true, nullable:true 
 		}
 			
 	static mapping = {

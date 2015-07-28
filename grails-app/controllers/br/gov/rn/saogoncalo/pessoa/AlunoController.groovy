@@ -232,7 +232,7 @@ class AlunoController {
 					def tipoLogradouroSimple
 					def logradouroSimple
 					
-					if (params.endereco.toString().indexOf(" ") != 0) {
+					if (params.endereco.toString().indexOf(" ") != -1) {
 						tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
 						logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
 					}else{
@@ -257,6 +257,7 @@ class AlunoController {
 					if(logradouro == null){
 						Logradouro newLogradouro = new Logradouro()
 						newLogradouro.logradouro = logradouroSimple
+						newLogradouro.tipoLogradouro = tipoLogradouro
 						newLogradouro.save(flush:true)
 						println("Logradouro --- " + newLogradouro.logradouro)
 						logradouro = newLogradouro
@@ -474,6 +475,17 @@ class AlunoController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+			
+			def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+					" where p.id not in (select e.id from Escola e) " +
+					" and pf.id = p.id " +
+					" and pf.sexo = 'MASCULINO' ")
+
+
+			def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+					" where p.id not in (select e.id from Escola e) " +
+					" and pf.id = p.id " +
+					" and pf.sexo = 'FEMININO' ")
 
 
 			if (perm1 || perm2)
@@ -492,9 +504,9 @@ class AlunoController {
 
 				//render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos])
 				if (tipo == "ok")
-					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, ok:msg, perm2:perm2])
+					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, ok:msg, perm2:perm2])
 				else
-					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, erro:msg, perm2:perm2])
+					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, erro:msg, perm2:perm2])
 
 			}else{
 				render(view:"/error403.gsp")
@@ -570,7 +582,6 @@ class AlunoController {
 			def usuario = new UsuarioController()
 
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
-
 
 			if (perm2)
 			{
@@ -674,10 +685,23 @@ class AlunoController {
 					Municipio municipio = new Municipio()
 					Estado estado = new Estado()
 					Reside newReside = new Reside()
-
+					def tipoLogradouroSimple
+					def logradouroSimple
+					
+					
 					if(params.endereco != ""){
-						def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
-						def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+						//def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+						//def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+						
+						
+						if (params.endereco.toString().indexOf(" ") != -1) {
+							tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
+							logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
+						}else{
+							tipoLogradouroSimple = "RUA"
+							logradouroSimple = params.endereco
+						}
+						
 
 
 						println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
@@ -696,18 +720,19 @@ class AlunoController {
 						if(logradouro == null){
 							Logradouro newLogradouro = new Logradouro()
 							newLogradouro.logradouro = logradouroSimple
+							newLogradouro.tipoLogradouro = tipoLogradouro
 							newLogradouro.save(flush:true)
 							println("Logradouro --- " + newLogradouro.logradouro)
 							logradouro = newLogradouro
 						}
 					}
 
-					if(params.uf != ""){
-						estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
+					if(params.estado != ""){
+						estado = Estado.findByAbreviacao(params.estado.toString().toUpperCase())
 						if(estado == null){
 							Estado newEstado = new Estado()
-							newEstado.estado = params.uf.toString().toUpperCase()
-							newEstado.abreviacao = params.uf.toString().toUpperCase()
+							newEstado.estado = params.estado.toString().toUpperCase()
+							newEstado.abreviacao = params.estado.toString().toUpperCase()
 							newEstado.save(flush:true)
 							println("Estado --- " + newEstado.estado)
 							estado = newEstado
@@ -843,10 +868,19 @@ class AlunoController {
 					}
 
 					def alunos = Aluno.findAll()
-					render(view:"/aluno/listarAluno.gsp", model:[
-						alunos:alunos,
-						erro : erros
-					])
+					
+					def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+							" where p.id not in (select e.id from Escola e) " +
+							" and pf.id = p.id " +
+							" and pf.sexo = 'MASCULINO' ")
+	
+	
+					def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+							" where p.id not in (select e.id from Escola e) " +
+							" and pf.id = p.id " +
+							" and pf.sexo = 'FEMININO' ")
+					
+					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos,	erro : erros, pHomens:pHomens, pMulheres:pMulheres	])
 				}
 			}else{
 				render(view:"/error403.gsp")

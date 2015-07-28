@@ -6,8 +6,49 @@
 </head>
 <body>
 
-	<script>
+<script>
+function printDiv(id)
+{
+  var divToPrint=document.getElementById(id);
+  newWin= window.open("");
+  newWin.document.write("<style=''>");
+  newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
+  newWin.document.write("<hr>");
+  newWin.document.write("<style type='text/css' >");
+  newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
+  newWin.document.write("body{font-family:Arial;}");
+  newWin.document.write("img{margin-lefth: 10px;}");
+  newWin.document.write("label{text-transform: uppercase; font-weight:bold; }");
+  newWin.document.write("</style>");
+  newWin.document.write(" ");
+  newWin.document.write(divToPrint.outerHTML);
+  var now = new Date();
 
+  meses = new Array(12);
+
+  meses[0] = "Janeiro";
+  meses[1] = "Fevereiro";
+  meses[2] = "Março";
+  meses[3] = "Abril";
+  meses[4] = "Maio";
+  meses[5] = "Junho";
+  meses[6] = "Julho";
+  meses[7] = "Agosto";
+  meses[8] = "Setembro";
+  meses[9] = "Outubro";
+  meses[10] = "Novembro";
+  meses[11] = "Dezembro";
+  
+  newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
+
+  newWin.print();
+  newWin.close();
+}
+</script>
+
+	<script>
+	
 	function changeIdMatriculaParaRelatorio(idMatricula){
 		document.getElementById("idMatriculaParaRelatorio").value = idMatricula;
 	}
@@ -30,7 +71,7 @@
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "localhost";
+		var endereco = "192.168.1.247";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
@@ -170,7 +211,7 @@
 				</g:form>
 
 
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarMatricula" class="table table-striped table-hover example">
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -240,7 +281,7 @@
 			
 				function mudarEscola(){
 		    	  
-					var endereco = "localhost";
+					var endereco = "192.168.1.247";
 			        var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -267,7 +308,7 @@
 			   }
 
 			  function mudarSerie(){
-				  var endereco = "localhost";
+				  var endereco = "192.168.1.247";
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -304,6 +345,12 @@
 					data-target="#myModal">
 					<i class="fa fa-plus"></i> Realizar Matrícula
 				</button>
+													
+				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
+				<i class="glyphicon glyphicon-print"></i> Imprimir
+			</button>
+				
+				
 			</g:if>
 
 
@@ -449,6 +496,7 @@
 										</button>
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
+								
 								</g:form>
 							</div>
 						</div>

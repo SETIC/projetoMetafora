@@ -103,6 +103,8 @@ function printDiv(id)
 								${pessoa?.cpfCnpj }
 							</div>
 						</div>
+						
+						<!-- 
 						<br>
 						<div class="form-group">
 							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
@@ -136,6 +138,8 @@ function printDiv(id)
 								${pessoaFisica?.rcFolhaDoLivro }
 							</div>
 						</div>
+						
+						-->
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
@@ -209,6 +213,13 @@ function printDiv(id)
 							<label for="inputmatricula3" class="col-sm-2 control-label">Matricula</label>
 							<div class="col-sm-10">
 								${it?.matricula}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputCpfCnpj3" class="col-sm-2 control-label">Observação</label>
+							<div class="col-sm-10">
+								<h5>${it.observacao}</h5>
 							</div>
 						</div>
 						<br>
