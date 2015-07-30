@@ -605,7 +605,7 @@ function mudarCombo(){
 			        <div class="form-group">
 						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
 						<div class="col-sm-11">
-							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="true"/>
+							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
 						</div>
 						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
 						<div class="col-sm-11">
@@ -634,7 +634,7 @@ function mudarCombo(){
 			        <div class="form-group">
 						<label style="padding-top: 5px;" for="iNomeMae" class="col-sm-1 control-label">Nome:</label>
 						<div class="col-sm-11">
-							<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="true"/>
+							<g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="false"/>
 						</div>
 						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
 						<div class="col-sm-11">
