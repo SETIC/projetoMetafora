@@ -207,7 +207,7 @@ class FuncionarioController {
 				def cidadao = Cidadao.get(params.id)
 				cidadao.nacionalidade = params.nacionalidade
 				cidadao.estadoCivil = params.estadoCivil
-				cidadao.profissao = params.profissao
+				cidadao.profissao = params.funcao
 
 				def funcionario = Funcionario.get(params.id)
 				funcionario.cargaHoraria = params.cargaHoraria
@@ -215,7 +215,7 @@ class FuncionarioController {
 				funcionario.observacao = params.observacao
 
 
-				def funcionarios = Funcionario.findAll()
+				//def funcionarios = Funcionario.findAll()
 
 
 				if(funcionario.save(flush:true)){
@@ -225,8 +225,84 @@ class FuncionarioController {
 					//				ok : "Funcionário atualizado com sucesso!"
 					//
 					//			])
-
+					
+					
+					def turnoCompleto = ""
+					if (params.opcao1 != null ){
+						turnoCompleto = turnoCompleto + params.opcao1
+					}else{
+	
+						turnoCompleto = turnoCompleto + ""
+					}
+					if (params.opcao2 != null ){
+						turnoCompleto = turnoCompleto + params.opcao2
+					}else{
+						turnoCompleto = turnoCompleto + ""
+					}
+					if (params.opcao3 != null ){
+						turnoCompleto = turnoCompleto + params.opcao3
+					}
+					else{
+						turnoCompleto = turnoCompleto + ""
+					}
+					println("opcao1 "+params.opcao1)
+					println("opcao2 "+params.opcao2)
+					println("opcao3 "+params.opcao3)
+	
+					println("turnoCompleto"+turnoCompleto)
+					
+					
+					//codigo pra lotação
+					def cargos
+					def lotacao = Lotacao.findByFuncionario(funcionario)
+					
+							if(lotacao == null){
+					
+					
+								Lotacao newLotacao = new Lotacao()
+								newLotacao.vinculo = params.vinculo
+								newLotacao.cargo = Cargo.get(params.cargo)
+								newLotacao.funcao = params.funcao
+								newLotacao.funcionario = funcionario
+								newLotacao.situacao = "ATIVO"
+								newLotacao.turno = turnoCompleto
+								newLotacao.dataInicio = new Date()
+								newLotacao.dataTermino = new Date()
+					
+								if (newLotacao.save(flush:true)){
+									println("newLotacao --- " + newLotacao)
+								}else{
+									listarMensagem("Erro ao atualizar lotação!", "erro")
+								}
+					
+								cargos=Cargo.findAll()
+								println("cargos "+ cargos)
+					
+								
+								def funcionarios
+					
+								//render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
+								listarMensagem("Funcionário atualizado com sucesso!", "ok")
+							}else{
+					
+			
+					lotacao.vinculo = params.vinculo
+					lotacao.cargo = Cargo.get(params.cargo)
+	
+					println("params "+params)
+	
+					
+					lotacao.turno = turnoCompleto
+					lotacao.funcao = params.funcao
+					lotacao.save(flush:true)
+					
+					println("Lotação - " + lotacao)
 					listarMensagem("Funcionário atualizado com sucesso!", "ok")
+				}
+					
+					
+
+					//listarMensagem("Funcionário atualizado com sucesso!", "ok")
 				}else{
 					//			render(view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,
 					//				erro : "Erro ao atualizar!"
@@ -235,68 +311,7 @@ class FuncionarioController {
 				}
 
 
-				def cargos
-				def lotacao = Lotacao.findByFuncionario(funcionario)
-				
-						if(lotacao == null){
-				
-				
-							Lotacao newLotacao = new Lotacao()
-							newLotacao.vinculo = params.vinculo
-							newLotacao.cargo = Cargo.get(params.cargo)
-							newLotacao.funcao = params.funcao
-							newLotacao.funcionario = funcionario
-							newLotacao.situacao = "ATIVO"
-							newLotacao.dataInicio = new Date()
-							newLotacao.dataTermino = new Date()
-				
-							if (newLotacao.save(flush:true)){
-								println("newLotacao --- " + newLotacao)
-							}else{
-								listarMensagem("Erro ao atualizar lotação!", "erro")
-							}
-				
-							cargos=Cargo.findAll()
-							println("cargos "+ cargos)
-				
-				
-				
-							render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
-						}else{
-				
-		
-				lotacao.vinculo = params.vinculo
-				lotacao.cargo = Cargo.get(params.cargo)
 
-				println("params "+params)
-
-				def turnoCompleto = ""
-				if (params.opcao1 != null ){
-					turnoCompleto = turnoCompleto + params.opcao1
-				}else{
-
-					turnoCompleto = turnoCompleto + ""
-				}
-				if (params.opcao2 != null ){
-					turnoCompleto = turnoCompleto + params.opcao2
-				}else{
-					turnoCompleto = turnoCompleto + ""
-				}
-				if (params.opcao3 != null ){
-					turnoCompleto = turnoCompleto + params.opcao3
-				}
-				else{
-					turnoCompleto = turnoCompleto + ""
-				}
-				println("opcao1 "+params.opcao1)
-				println("opcao2 "+params.opcao2)
-				println("opcao3 "+params.opcao3)
-
-				println("turnoCompleto"+turnoCompleto)
-				lotacao.turno = turnoCompleto
-				lotacao.funcao = params.funcao
-				lotacao.save(flush:true)
-			}
 		}
 		}
 	}

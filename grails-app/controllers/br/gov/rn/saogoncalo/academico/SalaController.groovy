@@ -1,5 +1,6 @@
 package br.gov.rn.saogoncalo.academico
 import grails.converters.*
+
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
@@ -85,6 +86,11 @@ class SalaController {
 					//				ok : "Sala atualizado com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), " Atualizada Sala " + salas.id.toString(), "Update", "Sala", date)
+					
 					listarMensagem("Sala atualizada com sucesso", "ok")
 				}else{
 
@@ -112,13 +118,13 @@ class SalaController {
 			def perm1 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "2")
 
-			def date = new Date()
+			
 			
 			if (perm1 || perm2) {
 
 				def escolas
 				def sala
-				AdministracaoController adm = new AdministracaoController()
+				
 
 				if (session["escid"] == 0) {
 
@@ -131,12 +137,10 @@ class SalaController {
 							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-					
-					adm.salvaLog(2, "Teste de observação 01", "Select", "Sala", date)
-					
+								
 				}
-
-
+				
+				
 				render(view:"/sala/listarSala.gsp", model:[sala:sala, escolas:escolas, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -202,8 +206,15 @@ class SalaController {
 			if (perm2) {
 
 				Sala.deleteAll(Sala.get(id))
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), " Deletada Sala " + id.toString(), "Delete", "Sala", date)
 
 				//redirect(action:"listar")
+				
+				
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -236,8 +247,8 @@ class SalaController {
 				salaL.escola = escola
 
 
-				
-				Sala.withTransaction{ status ->
+				//Trecho de tranzação de teste
+			/*	Sala.withTransaction{ status ->
 					try{
 						
 						salaL.save(flush:true)
@@ -249,10 +260,14 @@ class SalaController {
 						status.setRollbackOnly()
 						listarMensagem("Erro ao salvar", "erro")
 					} 
-				} 
+				} */
 				
 
-/*				if (salaL.save(flush:true)){
+				if (salaL.save(flush:true)){
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), " Salvo Sala " + salaL.id.toString(), "Create", "Sala", date)
 
 					listarMensagem("Sala cadastrada com sucesso", "ok")
 				}else{
@@ -262,7 +277,7 @@ class SalaController {
 					//
 					//			])
 					listarMensagem("Erro ao salvar", "erro")
-				}*/
+				}
 
 
 

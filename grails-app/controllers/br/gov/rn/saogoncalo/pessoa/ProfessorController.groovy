@@ -125,7 +125,7 @@ class ProfessorController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
 			if (perm2) {
 				Pessoa.deleteAll(Pessoa.get(id))
-				Pessoa.deleteAll(Pessoa.get(id))
+				
 
 				//redirect(action:"listar" )
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
