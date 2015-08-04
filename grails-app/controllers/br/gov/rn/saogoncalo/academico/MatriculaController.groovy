@@ -5,6 +5,7 @@ import grails.converters.JSON
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 
 class MatriculaController {
@@ -111,7 +112,7 @@ class MatriculaController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "MATRICULA", "2")
 
 			if (perm1 || perm2) {
-
+				
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
@@ -174,7 +175,7 @@ class MatriculaController {
 				def series = Serie.findAll()
 
 				println("Escolas - " + escolas)
-
+				
 				render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, alunos1:alunos1, series:series, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -204,6 +205,7 @@ class MatriculaController {
 				def matricula
 				def alunos
 				def escolas
+				
 				
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
 
@@ -241,11 +243,13 @@ class MatriculaController {
 
 				println("Escolas - " + escolas)
 
-				if (tipo == "ok")
-
+				if (tipo == "ok") {
+					
 					render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, series:series, ok:msg, perm2:perm2])
-				else
+				} else {
+				
 					render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, series:series, erro:msg, perm2:perm2])
+				}
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -270,6 +274,11 @@ class MatriculaController {
 
 				//redirect(action:"listar" )
 				//listarMensagem("Matrícula excluída com sucesso ", "ok")
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Matrícula: " + id.toString(), "DELETE", "Matricula", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -345,6 +354,9 @@ class MatriculaController {
 					 ok : "Matriucla atualizada com sucesso!"
 					 ])*/
 
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Matrícula: " + matricula.id, "UPDATE", "Matricula", date)
 
 					listarMensagem("Matricula atualizada com sucesso", "ok")
 					//redirect(action: "listar", params: [ok: "Teste OK params"])
@@ -391,6 +403,10 @@ class MatriculaController {
 
 					if(matriculaM.save(flush:true)){
 
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matriculaM.id, "CREATE", "Matricula", date)
+	
 
 						listarMensagem("Matrícula realizada com sucesso", "ok")
 

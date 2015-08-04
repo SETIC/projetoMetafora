@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.academico
 
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class DisciplinaController {
 
@@ -71,6 +72,11 @@ class DisciplinaController {
 				Disciplina.deleteAll(Disciplina.get(id))
 
 				//redirect(action:"listar" )
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Disciplina: " + id.toString(), "DELETE", "Disciplina", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 
 			}else{
@@ -125,6 +131,11 @@ class DisciplinaController {
 					//				ok : "Disciplina atualizada com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Disciplina: " + disciplina.id.toString(), "UPDATE", "Disciplina", date)
+					
 					listarMensagem("Disciplina atualizada com sucesso!", "ok")
 				}else{
 					//			render(view:"/disciplina/editarDisciplina.gsp", model:[disciplinas:disciplinas,
@@ -164,6 +175,12 @@ class DisciplinaController {
 					//				ok : "Disciplina cadastrada com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Criar Disciplina: " + disciplina.id.toString(), "CREATE", "Disciplina", date)
+					
+					
 					listarMensagem("Disciplina cadastrada com sucesso!", "ok")
 				}else{
 

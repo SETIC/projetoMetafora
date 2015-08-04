@@ -4,6 +4,7 @@ import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class TransferenciaController {
 

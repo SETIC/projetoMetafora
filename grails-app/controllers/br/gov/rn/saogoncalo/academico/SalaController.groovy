@@ -1,10 +1,10 @@
 package br.gov.rn.saogoncalo.academico
 import grails.converters.*
-import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
 import grails.converters.JSON
 import groovy.json.JsonSlurper
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class SalaController {
 
@@ -25,6 +25,7 @@ class SalaController {
 			if (perm2) {
 
 				Sala salas = Sala.get(id)
+
 				render (view:"/sala/editarSala.gsp", model:[salas:salas])
 			}else{
 				render(view:"/error403.gsp")
@@ -85,6 +86,11 @@ class SalaController {
 					//				ok : "Sala atualizado com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Sala: " + id, "UPDATE", "Sala", date)
+					
 					listarMensagem("Sala atualizada com sucesso", "ok")
 				}else{
 
@@ -112,13 +118,10 @@ class SalaController {
 			def perm1 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "2")
 
-			def date = new Date()
-			
 			if (perm1 || perm2) {
 
 				def escolas
 				def sala
-				AdministracaoController adm = new AdministracaoController()
 
 				if (session["escid"] == 0) {
 
@@ -132,7 +135,6 @@ class SalaController {
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					
-					adm.salvaLog(2, "Teste de observação 01", "Select", "Sala", date)
 					
 				}
 
@@ -204,6 +206,11 @@ class SalaController {
 				Sala.deleteAll(Sala.get(id))
 
 				//redirect(action:"listar")
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Sala: " + id, "DELETE", "Sala", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -264,7 +271,11 @@ class SalaController {
 					listarMensagem("Erro ao salvar", "erro")
 				}*/
 
-
+				/*def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
+				
+				
 
 
 			}else{
