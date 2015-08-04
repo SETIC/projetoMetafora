@@ -1,18 +1,19 @@
 package br.gov.rn.saogoncalo.pessoa
+import grails.converters.JSON
+import groovy.json.JsonSlurper
+
 import java.text.SimpleDateFormat
 
 import br.gov.rn.saogoncalo.academico.Matricula
 import br.gov.rn.saogoncalo.academico.Serie
 import br.gov.rn.saogoncalo.academico.Turma
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.localizacao.Bairro
 import br.gov.rn.saogoncalo.localizacao.Estado
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.localizacao.Municipio
 import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.pessoa.Escola
-import grails.converters.JSON
-import groovy.json.JsonSlurper
 
 class AlunoController {
 
@@ -352,6 +353,11 @@ class AlunoController {
 				//def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 
 				if(aluno.save(flush:true)){
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
+					
 					listarMensagem("Aluno atualizado com sucesso", "ok")
 				}else{
 
@@ -361,7 +367,6 @@ class AlunoController {
 		}
 
 	}
-
 
 	def listar() {
 
@@ -500,8 +505,6 @@ class AlunoController {
 					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 				}
 
-
-
 				//render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos])
 				if (tipo == "ok")
 					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, ok:msg, perm2:perm2])
@@ -529,6 +532,13 @@ class AlunoController {
 			if (perm2){
 				Pessoa.deleteAll(Pessoa.get(id))
 				//redirect(action:"listar" )
+				
+				//log
+				Aluno aluno  = Aluno.get(id)
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "aluno deletado " + aluno.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Aluno", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -818,7 +828,8 @@ class AlunoController {
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
-
+						
+												
 						aluno.errors.each{println it}
 
 						println("params matricula ---- " + params)
@@ -844,6 +855,11 @@ class AlunoController {
 							}
 
 						}
+						
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "aluno matriculado " + aluno.id.toString(),"cadastrar", "Aluno", date)
+						
 
 						/*				def alunos = Aluno.findAll()
 						 render(view:"/aluno/listarAluno.gsp", model:[
@@ -899,7 +915,6 @@ class AlunoController {
 		if(pessoa.save(flush:true)){
 
 			PessoaFisica pf = new PessoaFisica()
-
 			pf.pessoa = pessoa
 			pf.sexo = "MASCULINO"
 
@@ -910,7 +925,7 @@ class AlunoController {
 						" and pf.id = p.id " +
 						" and pf.sexo = 'MASCULINO'")
 				render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
-
+                
 				def result = [];
 
 				for (int i=0; i<vetorPais.size();i++) {

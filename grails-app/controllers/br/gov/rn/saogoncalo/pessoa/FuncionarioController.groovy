@@ -1,7 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
-
-
-
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
@@ -141,7 +139,8 @@ class FuncionarioController {
 						charNoite="N"
 					}
 				}
-
+				
+				
 
 				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite])
 			}else{
@@ -256,15 +255,11 @@ class FuncionarioController {
 								listarMensagem("Erro ao atualizar lotação!", "erro")
 							}
 				
-							cargos=Cargo.findAll()
+							cargos = Cargo.findAll()
 							println("cargos "+ cargos)
-				
-				
-				
 							render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
 						}else{
 				
-		
 				lotacao.vinculo = params.vinculo
 				lotacao.cargo = Cargo.get(params.cargo)
 
@@ -296,9 +291,15 @@ class FuncionarioController {
 				lotacao.turno = turnoCompleto
 				lotacao.funcao = params.funcao
 				lotacao.save(flush:true)
+				
+				
+				def date = new Date()
+			    AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "funcionario atualizado " + funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"atualizar", "Funcionario", date)
+				
 			}
-		}
-		}
+		 }
+	   }
 	}
 
 
@@ -403,6 +404,13 @@ class FuncionarioController {
 				def pessoa = Pessoa.findAll()
 
 				def funcionarios = Funcionario.findAll()
+				
+				Funcionario func = Funcionario.get(id)
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "funcionario deletado " + func.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Funcionario", date)
+				
+				
 				redirect(action:"listarMensagem", params:[msg:"deletado com sucesso!", tipo: "ok" ]  )
 			}else{
 				render(view:"/error403.gsp")
@@ -488,6 +496,12 @@ class FuncionarioController {
 						lotacao.dataTermino = dataAtual
 						lotacao.save(flush:true)
 						println("Salvou lotação")
+						
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "funcionario cadastrado " + funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"cadastrado", "Funcionario", date)
+						
+						
 						lotacao.errors.each{ println it }
 						
 						println("opcao1 "+params.opcao1)

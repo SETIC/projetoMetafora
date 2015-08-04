@@ -112,13 +112,13 @@ class SalaController {
 			def perm1 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "2")
 
-			def date = new Date()
+			
 			
 			if (perm1 || perm2) {
 
 				def escolas
 				def sala
-				AdministracaoController adm = new AdministracaoController()
+				
 
 				if (session["escid"] == 0) {
 
@@ -132,7 +132,9 @@ class SalaController {
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					
-					adm.salvaLog(2, "Teste de observação 01", "Select", "Sala", date)
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "listar", "listar", "Sala", date)
 					
 				}
 
