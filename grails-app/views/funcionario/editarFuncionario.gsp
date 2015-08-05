@@ -120,6 +120,7 @@
 									<select class="form-control" name="vinculo" style="width: 300px">
 										<option value="EFETIVO" selected>EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
+						
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
@@ -348,7 +349,7 @@
 
 
 				function mudarSelect(){
-					var endereco = "192.168.1.247";
+					var endereco = "localhost";
 					
 					   var comboCargo = document.getElementById("comboCargo");
 					   comboCargo.options[comboCargo.options.length] = new Option("Buscando cargo", 0);

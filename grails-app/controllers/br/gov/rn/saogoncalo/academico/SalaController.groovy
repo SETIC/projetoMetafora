@@ -1,11 +1,10 @@
 package br.gov.rn.saogoncalo.academico
 import grails.converters.*
-
-import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
 import grails.converters.JSON
 import groovy.json.JsonSlurper
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class SalaController {
 
@@ -26,6 +25,7 @@ class SalaController {
 			if (perm2) {
 
 				Sala salas = Sala.get(id)
+
 				render (view:"/sala/editarSala.gsp", model:[salas:salas])
 			}else{
 				render(view:"/error403.gsp")
@@ -89,7 +89,9 @@ class SalaController {
 					
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
+
 					adm.salvaLog(session["usid"].toString().toInteger(), " Atualizada Sala " + salas.id.toString(), "Update", "Sala", date)
+
 					
 					listarMensagem("Sala atualizada com sucesso", "ok")
 				}else{
@@ -118,13 +120,10 @@ class SalaController {
 			def perm1 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "SALA", "2")
 
-			
-			
 			if (perm1 || perm2) {
 
 				def escolas
 				def sala
-				
 
 				if (session["escid"] == 0) {
 
@@ -137,7 +136,13 @@ class SalaController {
 							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-								
+
+
+				/*	def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "listar", "listar", "Sala", date)*/
+					
+
 				}
 				
 				
@@ -209,11 +214,8 @@ class SalaController {
 				
 				def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
-				adm.salvaLog(session["usid"].toString().toInteger(), " Deletada Sala " + id.toString(), "Delete", "Sala", date)
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Sala: " + id, "DELETE", "Sala", date)
 
-				//redirect(action:"listar")
-				
-				
 				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
@@ -279,7 +281,11 @@ class SalaController {
 					listarMensagem("Erro ao salvar", "erro")
 				}
 
-
+				/*def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
+				
+				
 
 
 			}else{

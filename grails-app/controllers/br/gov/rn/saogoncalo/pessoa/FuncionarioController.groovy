@@ -1,7 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
-
-
-
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
@@ -141,7 +139,8 @@ class FuncionarioController {
 						charNoite="N"
 					}
 				}
-
+				
+				
 
 				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite])
 			}else{
@@ -312,8 +311,77 @@ class FuncionarioController {
 
 
 
+
 		}
 		}
+
+			/*	def cargos
+				def lotacao = Lotacao.findByFuncionario(funcionario)
+				
+						if(lotacao == null){
+				
+				
+							Lotacao newLotacao = new Lotacao()
+							newLotacao.vinculo = params.vinculo
+							newLotacao.cargo = Cargo.get(params.cargo)
+							newLotacao.funcao = params.funcao
+							newLotacao.funcionario = funcionario
+							newLotacao.situacao = "ATIVO"
+							newLotacao.dataInicio = new Date()
+							newLotacao.dataTermino = new Date()
+				
+							if (newLotacao.save(flush:true)){
+								println("newLotacao --- " + newLotacao)
+							}else{
+								listarMensagem("Erro ao atualizar lotação!", "erro")
+							}
+				
+							cargos = Cargo.findAll()
+							println("cargos "+ cargos)
+							render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
+						}else{
+				
+				lotacao.vinculo = params.vinculo
+				lotacao.cargo = Cargo.get(params.cargo)
+
+				println("params "+params)
+
+				def turnoCompleto = ""
+				if (params.opcao1 != null ){
+					turnoCompleto = turnoCompleto + params.opcao1
+				}else{
+
+					turnoCompleto = turnoCompleto + ""
+				}
+				if (params.opcao2 != null ){
+					turnoCompleto = turnoCompleto + params.opcao2
+				}else{
+					turnoCompleto = turnoCompleto + ""
+				}
+				if (params.opcao3 != null ){
+					turnoCompleto = turnoCompleto + params.opcao3
+				}
+				else{
+					turnoCompleto = turnoCompleto + ""
+				}
+				println("opcao1 "+params.opcao1)
+				println("opcao2 "+params.opcao2)
+				println("opcao3 "+params.opcao3)
+
+				println("turnoCompleto"+turnoCompleto)
+				lotacao.turno = turnoCompleto
+				lotacao.funcao = params.funcao
+				lotacao.save(flush:true)
+				
+				
+				def date = new Date()
+			    AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "funcionario atualizado " + funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"atualizar", "Funcionario", date)
+				
+			}
+		 }
+	   }*/
+
 	}
 
 
@@ -418,6 +486,13 @@ class FuncionarioController {
 				def pessoa = Pessoa.findAll()
 
 				def funcionarios = Funcionario.findAll()
+				
+				Funcionario func = Funcionario.get(id)
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "funcionario deletado " + func.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Funcionario", date)
+				
+				
 				redirect(action:"listarMensagem", params:[msg:"deletado com sucesso!", tipo: "ok" ]  )
 			}else{
 				render(view:"/error403.gsp")
@@ -503,6 +578,12 @@ class FuncionarioController {
 						lotacao.dataTermino = dataAtual
 						lotacao.save(flush:true)
 						println("Salvou lotação")
+						
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "funcionario cadastrado " + funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"cadastrado", "Funcionario", date)
+						
+						
 						lotacao.errors.each{ println it }
 						
 						println("opcao1 "+params.opcao1)

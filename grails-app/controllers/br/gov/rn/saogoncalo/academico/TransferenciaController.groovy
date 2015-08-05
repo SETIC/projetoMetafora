@@ -1,9 +1,11 @@
 package br.gov.rn.saogoncalo.academico
 import grails.converters.JSON
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class TransferenciaController {
 
@@ -110,7 +112,6 @@ class TransferenciaController {
 					}
 				}
 
-
 				println("idEscola ---- " + params.idEscola)
 
 				int t = Integer.parseInt(params.idEscola)
@@ -119,7 +120,11 @@ class TransferenciaController {
 				aluno.status = 'Em Transferência'
 
 				if(aluno.save(flush:true)){
-
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), " tranferencia concluida " + aluno.id.toString(),"transferencia ", "Aluno", date)
+					
 					listarMensagem("Solicitação enviada, aguardando aprovação da escola de destino", "ok")
 				}else{
 
@@ -148,6 +153,13 @@ class TransferenciaController {
 
 				aluno.save(flush:true)
 				listar()
+				
+				//log
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "tranferencia aceita " + aluno.id.toString(),"cadastro", "Aluno", date)
+				
+				
 			}else{
 				render(view:"/error403.gsp")
 			}
