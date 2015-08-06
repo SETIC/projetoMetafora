@@ -215,11 +215,11 @@ class AtividadeController {
 			idMat = Integer.parseInt(params.keySet()[i].toString().replaceAll("mat-", ""))
 			//def idMatricula = Long.parseLong(params.atividadeId)
 			println(" IdMatricula --- " + idMat)
+			
 			}
 
 
-			
-			
+						
 			def matricula = Matricula.get(idMat)
 			
 
