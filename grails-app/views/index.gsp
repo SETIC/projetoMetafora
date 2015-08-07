@@ -66,6 +66,35 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
 	    </g:link>
+			<br>
+	    <!-- Main content -->
+    <section class="content" >
+          <div class="row">
+            <div class="col-md-6">
+          
+              <!-- DONUT CHART -->
+              <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Quantitativo de Alunos por Escola</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <div class="col-md-4">
+               
+                  </div>
+                </div>
+                <div class="box-body">
+                    <canvas id="pieChart" style="height: 265px; width: 530px;" width="530" height="265"></canvas>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
+
+            </div><!-- /.col (LEFT) -->
+            
+          </div><!-- /.row -->
+          <br>
+			
+        </section>
+	    
 	       
 	  </div><!-- /.row -->
     </section><!-- /.content -->	

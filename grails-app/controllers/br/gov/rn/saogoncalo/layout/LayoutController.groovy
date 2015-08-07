@@ -1,9 +1,12 @@
 package br.gov.rn.saogoncalo.layout
+import org.apache.tools.ant.types.Quantifier;
+
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Funcionario
 import br.gov.rn.saogoncalo.pessoa.Professor
+import grails.converters.JSON
 class LayoutController {
 	
 	def index() {		
@@ -61,5 +64,17 @@ class LayoutController {
 			//	render(view:"/error403.gsp")
 			//}
 		}
+		
+	}
+	def dadosDoGrafico(){
+		def alunos
+		def quantAlunos
+		//verificar com matriculas
+		alunos = Aluno.executeQuery("select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
+		quantAlunos = alunos.size();
+		
+		def result=["value":quantAlunos , "color": "", "highlight":"", "label":""]
+		
+		render( result as JSON)
 	}
 }

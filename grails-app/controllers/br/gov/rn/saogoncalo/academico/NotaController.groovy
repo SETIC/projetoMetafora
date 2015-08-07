@@ -2,10 +2,12 @@ package br.gov.rn.saogoncalo.academico
 
 
 import groovy.sql.Sql
+
 import java.sql.Driver
 import java.sql.SQLException
 import java.text.SimpleDateFormat
 
+import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Professor
 
@@ -14,8 +16,23 @@ class NotaController {
 
 	def listar(){
 
-		def notas = Nota.findAll()
-		render (view:"/nota/listarNota.gsp", model:[notas:notas])
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Sala", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm1 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "NOTA", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "NOTA", "2")
+
+			if (perm1 || perm2) {
+
+				def notas = Nota.findAll()
+				render (view:"/nota/listarNota.gsp", model:[notas:notas])
+			}
+		}
 	}
 
 	def notasTurma(){
@@ -78,7 +95,7 @@ class NotaController {
 		def anoAtual
 		def turmas
 		def td
-		
+
 		if ((session["escid"] == 0) ) {
 
 			p = Professor.executeQuery(" select pr from Atividade a, TurmaDisciplina td, " +
@@ -97,7 +114,6 @@ class NotaController {
 
 			turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
 			td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
-			
 		}else{
 
 			p = Professor.get(Long.parseLong(session['pesid'].toString()))
@@ -111,8 +127,6 @@ class NotaController {
 
 			turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 			td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
-
-
 		}
 
 
@@ -125,7 +139,7 @@ class NotaController {
 		props.setProperty("password", "bgt54rfvcde3")
 
 
-		def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 
 

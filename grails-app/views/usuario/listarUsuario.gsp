@@ -137,7 +137,7 @@
 										<g:select class="form-control selectpicker"
 												data-live-search="true" 
 												name="grupo" multiple="multiple"
-												from="${br.gov.rn.saogoncalo.login.Grupo.list() }"
+												from="${br.gov.rn.saogoncalo.login.Grupo.list()}"
 												value="id" optionKey="id" optionValue="nome" />	
 											
 										</div>
