@@ -7,6 +7,8 @@ import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Funcionario
 import br.gov.rn.saogoncalo.pessoa.Professor
 import grails.converters.JSON
+import groovy.sql.Sql
+import java.sql.Driver
 class LayoutController {
 	
 	def index() {		
@@ -67,14 +69,72 @@ class LayoutController {
 		
 	}
 	def dadosDoGrafico(){
-		def alunos
-		def quantAlunos
+		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+		def props = new Properties()
+		props.setProperty("user", "admin_db_sr")
+		props.setProperty("password", "bgt54rfvcde3")
+
+
+		def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
+		def sql = new Sql(conn)
+	
+		List<String> alunoByEscola = new ArrayList();
+	
 		//verificar com matriculas
-		alunos = Aluno.executeQuery("select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?", [session["escid"]])
-		quantAlunos = alunos.size();
+		alunoByEscola = sql.rows("SELECT p.escid, (select nome from cadastro_unico_pessoal.pessoa as pi where pi.id = p.escid) as escola, count(*) as Alunos"+
+			" FROM educacao_academico.matricula as m, educacao_academico.turma as t, cadastro_unico_pessoal.pessoa as p" + 
+			" where m.aluno_id= p.id "+
+			" and m.turma_id= t.id "+
+			" and m.status ='Ativo'"+
+			"group by p.escid")
+		;
 		
-		def result=["value":quantAlunos , "color": "", "highlight":"", "label":""]
+		
+		def result = []
+		
+		def i = 0
+		
+		
+		println(alunoByEscola)
+		
+		for (aluno in alunoByEscola){
+			def cor = gerarCor()
+			result[i] = ["label":aluno.escola, "value":aluno.alunos, "color":cor, "highlight":cor]
+			
+			i++
+		}
+		
+		
 		
 		render( result as JSON)
 	}
+	
+	def gerarCor(){
+		Random sort = new Random()
+		int R = sort.nextInt(255)
+		int G = sort.nextInt(255)
+		int B = sort.nextInt(255)
+		String hex = String.format("#%02x%02x%02x", R, G, B)
+		
+		return hex;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }
