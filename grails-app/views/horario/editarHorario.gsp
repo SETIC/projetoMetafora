@@ -9,7 +9,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-	var endereco ="192.168.1.247";
+	var endereco ="localhost";
 		function deletar(id) {
 			var resposta = confirm("Deseja exluir este Horário?");
 
@@ -398,7 +398,7 @@
 									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="3" checked/> 3 
 								</g:if>
 								<g:else>
-									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="4"/> 3 
+									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="3"/> 3 
 								</g:else>
 								</label>
 								

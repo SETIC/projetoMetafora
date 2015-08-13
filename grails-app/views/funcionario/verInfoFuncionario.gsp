@@ -194,13 +194,6 @@ function printDiv(id)
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputprofissao3" class="col-sm-2 control-label">Profissão</label>
-							<div class="col-sm-10">
-								${cidadao?.profissao }
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
 							<label for="inputcargaHoraria3" class="col-sm-2 control-label">Carga
 								Horária</label>
 							<div class="col-sm-10">

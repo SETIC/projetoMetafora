@@ -919,20 +919,26 @@ class AlunoController {
 			pf.sexo = "MASCULINO"
 
 			if (pf.save(flush:true)){
-				def vetorPais = []
-				vetorPais = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
-						" where p.id not in (select e.id from Escola e) " +
-						" and pf.id = p.id " +
-						" and pf.sexo = 'MASCULINO'")
-				render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
-                
-				def result = [];
 
-				for (int i=0; i<vetorPais.size();i++) {
-					print "<<< FOR >>>"
-					result[i] = ["id":vetorPais[i].id, "nome":vetorPais[i].nome]
-					print "RESULT >>> "+result[i]
-				}
+			//	def vetorPais = []
+				//vetorPais = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+				//		" where p.id not in (select e.id from Escola e) " +
+			//			" and pf.id = p.id " +
+			//			" and pf.sexo = 'MASCULINO'")
+				//render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
+
+				def result = []
+				
+				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
+				
+				println result
+
+				//for (int i=0; i<vetorPais.size();i++) {
+				//	print "<<< FOR >>>"
+				//	result[i] = ["id":vetorPais[i].id, "nome":vetorPais[i].nome]
+				//	print "RESULT >>> "+result[i]
+				//}
+
 
 				render result as JSON
 			}
@@ -958,21 +964,23 @@ class AlunoController {
 			pf.sexo = "FEMININO"
 
 			if (pf.save(flush:true)){
-				def vertorMae = []
+			/*	def vertorMae = []
 				vertorMae = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO'")
 
-				render(view:"/aluno/listarAluno.gsp", model:[vetorMae:vertorMae])
+				render(view:"/aluno/listarAluno.gsp", model:[vetorMae:vertorMae])*/
 
 				def result = [];
+				
+				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
 
-				for (int i=0; i<vertorMae.size();i++) {
+				/*for (int i=0; i<vertorMae.size();i++) {
 					result[i] = ["id":vertorMae[i].id, "nome":vertorMae[i].nome]
 
 				}
-
+*/
 				render result as JSON
 			}
 

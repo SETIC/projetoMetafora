@@ -160,26 +160,26 @@ function printDiv(id)
 													            <div style="margin-top: -3.5%; margin-left: 60%; padding: 2%;" class="radio">
 													                <label class="radio-inline">
 													                <g:if test="${table.permissao == '1' }">  
-													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}" checked> L
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#1" checked> L
 													              </g:if>
 													              <g:else>
-													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#${table.permissao_id}"> L
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-1#1"> L
 													              </g:else>
 													              </label>
 													              <label class="radio-inline">
 													              <g:if test="${table.permissao == '2' }">
-													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}" checked> E
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#2" checked> E
 													              </g:if>
 													              <g:else>
-													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#${table.permissao_id}"> E
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-2#2"> E
 													              </g:else>
 													              </label>
 													              <label class="radio-inline">
 													              <g:if test="${table.permissao == '0' }">
-													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}" checked> N
+													                  <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#0" checked> N
 													              </g:if>
 													              <g:else>
-													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#${table.permissao_id}"> N
+													                <input type="radio" name="comp${table.schemaname}-${table.tabela}" value="${table.schemaname}-${table.tabela}-0#0"> N
 													              </g:else>
 													              </label>
 													            </div>

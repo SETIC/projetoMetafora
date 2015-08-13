@@ -166,6 +166,7 @@ class UsuarioController {
 			}
 		}
 	}
+	
 	def editarUsuario(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -194,6 +195,7 @@ class UsuarioController {
 			}
 		}
 	}
+	
 	def atualizar(){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -226,6 +228,9 @@ class UsuarioController {
 				def gruposUsadosGSP = params.grupoUsuario
 
 
+				println("Grupos Usados Banco - " + gruposUsadosBanco.id)
+				println("Grupos Usados GSP - " + gruposUsadosGSP)
+				
 				//deletar
 				for(int i=0;i<gruposUsadosBanco.size();i++){
 
@@ -246,7 +251,7 @@ class UsuarioController {
 				//inserir
 				for(int j=0;j<gruposUsadosGSP.size();j++){
 
-					int str = gruposUsadosGSP[j]
+					int str = gruposUsadosGSP[j].toString().toInteger()
 					if (gruposUsadosBanco.grupoId.contains(Integer.parseInt(gruposUsadosGSP[j])) ){
 						//aqui
 					}

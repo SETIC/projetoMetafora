@@ -86,7 +86,6 @@
 									<th style="width: 20px;">Turno</th>
 									<th style="width: 20px;">Funcão</th>
 									<th style="width: 20px;">Vinculo</th>
-									<th style="width: 20px;">Salário</th>
 								</tr>
 							</thead>
 						<tbody>
@@ -120,9 +119,6 @@
 										${it.lotacao.vinculo[0]}
 									</td>
 										
-									<td>
-										${it.lotacao.cargo.moedaSalario[0]}
-									</td>
 								  </tr>
 								</g:each>
 							</tbody>

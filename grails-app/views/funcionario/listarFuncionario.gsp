@@ -262,13 +262,6 @@ function printDiv(id)
 												</div>
 												<br>
 												<div class="form-heading">
-													<label>Profissão</label>
-													<div class="controls">
-														<g:textField class="form-control" required="true" name="profissao" value="" />
-													</div>
-												</div>
-												<br>
-												<div class="form-heading">
 													<label>Carga Horária</label>
 													<div class="controls">
 														<g:textField class="form-control" required="" name="cargaHoraria" value="" />

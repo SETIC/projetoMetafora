@@ -689,6 +689,9 @@ function mudarCombo(){
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
+
+			//var host = 'localhost'
+
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
@@ -720,7 +723,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "192.168.1.247";
+			   var endereco = "localhost";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -747,7 +750,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -776,7 +779,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -803,7 +806,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
+			  var endereco = "localhost";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

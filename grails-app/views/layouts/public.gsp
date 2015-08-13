@@ -248,6 +248,7 @@
 		<!-- Bootstrap Master -->
 	<g:javascript src="bootstrap-modal-master/js/bootstrap-modalmanager.js" />
 	
+	
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 	<g:javascript src="dashboard2.js" /> -->
 

@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta name="layout" content="public" />
+ 
 </head>
 <body>
 	<!-- Content Header (Page header) -->
@@ -66,8 +67,90 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
 	    </g:link>
+			<br>
+	    <!-- Main content -->
+	    
+	<g:if test="${sessao==0}">
+    <section class="content" >
+          <div class="row">
+            <div class="col-md-6">
+          
+              <!-- DONUT CHART -->
+              <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Quantitativo de Alunos matriculados por Escola</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <div class="col-md-4">
+               
+                  </div>
+                </div>
+                <div class="box-body">
+                    <canvas id="pieChart" style="height: 265px; width: 530px;" width="530" height="265"></canvas>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+              
+
+            </div><!-- /.col (LEFT) -->
+            
+          </div><!-- /.row -->
+          <br>
+			
+        </section>
+	    </g:if>
 	       
 	  </div><!-- /.row -->
     </section><!-- /.content -->	
+    <script src="/projetoMetafora/js/jQuery/jQuery-2.1.3.min.js" type="text/javascript"></script>
+
+    
+    <script>
+      $(function () {
+
+    	  var endereco = "localhost";
+   			
+          $.ajax({
+              type: "GET",
+              url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
+              dataType: "json",
+              success: function(result){
+                  
+            	    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+                    var pieChart = new Chart(pieChartCanvas);
+             
+            var PieData = result
+
+            var pieOptions = {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke: false,
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor: "#fff",
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth: 2,
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                    //Number - Amount of animation steps
+                    animationSteps: 100,
+                    //String - Animation easing effect
+                    animationEasing: "easeOutBounce",
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate: true,
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale: false,
+                    //Boolean - whether to make the chart responsive to window resizing
+                    responsive: true,
+                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                    maintainAspectRatio: true,
+                    //String - A legend template
+                    legendTemplate: ""
+                  };
+                  //Create pie or douhnut chart
+                  // You can switch between pie and douhnut using the method below.
+                  pieChart.Doughnut(PieData, pieOptions);
+            
+              }});
+     
+      });
+    </script>
 </body>
 </html>
