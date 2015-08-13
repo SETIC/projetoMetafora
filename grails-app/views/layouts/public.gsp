@@ -247,6 +247,7 @@
 	<g:javascript src="bootstrap-modal-master/js/bootstrap-modal.js" />
 		<!-- Bootstrap Master -->
 	<g:javascript src="bootstrap-modal-master/js/bootstrap-modalmanager.js" />
+
 	<script>
       $(function () {
         /* ChartJS
@@ -329,6 +330,8 @@
      
       });
     </script>
+
+	
 	
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 	<g:javascript src="dashboard2.js" /> -->

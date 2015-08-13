@@ -63,7 +63,6 @@ function printDiv(id)
 								type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
-
 						</div>
 					</div>
 				</g:form>
@@ -107,7 +106,6 @@ function printDiv(id)
 												href="/projetoMetafora/funcionario/verInfoFuncionario/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
-
 									</div>
 								</td>
 								<td>
@@ -174,7 +172,6 @@ function printDiv(id)
 											<g:datePicker noSelection="['':'']" precision="day"
 												class="form-control" required="true" name="dataDeNascimento"
 												value="" />
-
 										</div>
 									</div>
 									<br>
@@ -207,7 +204,6 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-
 									<div class="form-heading">
 										<label>Vinculo </label>
 										<div class="controls">
@@ -222,12 +218,9 @@ function printDiv(id)
 										<div class="form-heading">
 											<label>Função</label>
 											<div class="controls">
-
 											<g:textField class="form-control" name="funcao" value="" />
-
 											</div>
 											<br>
-
 											<div class="form-heading">
 												<label>Cargo</label>
 												<div class="controls">
@@ -289,7 +282,7 @@ function printDiv(id)
 													</div>
 												</div>
 												<br>
-								</fieldset>
+								    </fieldset>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
 										<i class="fa fa-save"></i> Cadastrar
@@ -303,5 +296,5 @@ function printDiv(id)
 			</div>
 		</div>
 	</section>
-</body>
+ </body>
 </html>

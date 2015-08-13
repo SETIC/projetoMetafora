@@ -20,7 +20,7 @@ function printDiv(id)
 </script>
 
 	<script type="text/javascript">
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
 	
 		      function deletar(id) {
 			        var resposta = confirm("Deseja exluir este Horário?");

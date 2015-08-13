@@ -78,7 +78,6 @@ function mudarCombo(){
 					</div>
 				</g:form>
 
-
 				<table id="listarAluno"
 					class="table table-striped table-hover example">
 
@@ -243,15 +242,15 @@ function mudarCombo(){
 									<div class="activeStepInfo" id="step-1" style="margin-top: 2%;">
 										<h3>Identificação</h3>
 										<div class="form-group">
-											<label for="iNome" class="col-sm-2 control-label">Nome</label>
-											<div class="col-sm-10">
+											<label for="iNome" class="col-sm-2 control-label">Nome *</label>
+											<div class="col-sm-10"> 
 												<g:textField class="form-control" id="iNome" name="nome"
-													placeholder="Nome" required="true" />
+													placeholder="Nome" required="true"/>
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="iDataDeNascimento" class="col-sm-2 control-label">Data
-												de Nascimento</label>
+												de Nascimento </label>
 											<div class="col-sm-10">
 												<g:formatDate format="yyyy-MM-dd" date="${date}" />
 												<g:datePicker noSelection="['':'']" precision="day"
@@ -340,7 +339,7 @@ function mudarCombo(){
 																</option>
 													</g:each>
 												</select>
-											</div>
+											  </div>
 											<div class="col-sm-1">
 												<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalCadastrarPai">Novo</button>
 											</div>
@@ -372,15 +371,15 @@ function mudarCombo(){
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade</label>
+									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
 									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade"	required="true"/>
+										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil</label>
+									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
 									<div class="col-sm-10">
-										<select class="form-control" id="iEstadoCivil" name="estadoCivil">
+										<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
 											<option value="null" selected disabled>Selecione...</option>
 											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
 											<option value="CASADO(A)">CASADO(A)</option>
@@ -392,13 +391,12 @@ function mudarCombo(){
 								<div class="form-group" style="margin-top: 3%;">
 									<hr style="border-top: 2px solid #DFDFDF;"/>
 									<div class="col-md-1 col-md-offset-11">
-										<button type="button" class="btn btn-primary btn-flat" onclick="javascript: resetActive(div2, event, 35, 'step-2');">Próximo <i class="fa fa-chevron-circle-right"></i></button>
+							 <button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
 									</div>
 								</div>
 							</div>
 							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 										<h3>Endereço</h3>
-							
 										<div class="form-group">
 											<label for="iCep" class="col-sm-2 control-label">CEP</label>
 											<div id="iDivInputCep" class="col-sm-10">
@@ -437,12 +435,9 @@ function mudarCombo(){
 													id="iBairro" placeholder="Bairro">
 											</div>
 										</div>
-
-										
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												
 												<select name="estado" name="uf" id="iUf" class="form-control"> 
 													<option value="AC">Acre</option> 
 													<option value="AL">Alagoas</option> 
@@ -472,12 +467,8 @@ function mudarCombo(){
 													<option value="SP">São Paulo</option> 
 													<option value="TO">Tocantins</option> 
 												</select>
-												
-												
 											</div>
 										</div>
-										
-										
 										
 										<div class="form-group">
 											<label for="iMunicipio" class="col-sm-2 control-label">Município</label>
@@ -653,18 +644,60 @@ function mudarCombo(){
 			</div>
 		</div>
 		
+	<!-- valida campos -->
+		<script type="text/javascript"> 
+         //validaçao dos campos de aluno
+		
+		 function validaDados(){
+
+			 var nome = iNome.value;
+		     var nacionalidade = iNacionalidade.value;
+		     var estadoCivil = iEstadoCivil.value;
+		     var selecionaEstadoCivil = document.getElementById("iEstadoCivil");  
+		     
+			 if (nome == "" || nome == null){
+			   alert('preencha o campo nome');
+			   document.getElementById("iNome").focus();
+			   return false;
+
+		        }
+
+			  if(nacionalidade == "" || nacionalidade == null){
+				   alert('preencha o campo nacionalidade');
+				   document.getElementById("iNacionalidade").focus();
+				   return false;
+    			 }
+ 		     
+ 			 
+			  if (selecionaEstadoCivil.options[selecionaEstadoCivil.selectedIndex].value == "null" ){
+				   alert('preencha o campo estado civil');
+				   document.getElementById("iEstadoCivil").focus();
+			       return false;
+                 				  
+			     } 
+			     
+		
+			else{
+			
+				resetActive(div2, event, 35, 'step-2');
+				 }
+			
+			  }
+		
+		</script>
+		
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
 
-			//var host = '192.168.1.247'
+			//var host = 'localhost'
 
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
 				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 			}
-
+			
 			function disableInput(type){
 
 				if(type=="hide"){
@@ -690,7 +723,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "192.168.1.247";
+			   var endereco = "localhost";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -717,7 +750,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -746,7 +779,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "192.168.1.247";
+				var endereco = "localhost";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -773,7 +806,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
+			  var endereco = "localhost";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -796,13 +829,10 @@ function mudarCombo(){
 			        }
 		            }
 		        });
-
 		    
 		       }
-	       
 			
 		</script>
-		
 	</section>
 </body>
 </html>

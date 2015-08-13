@@ -24,8 +24,6 @@ class MatriculaController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
-
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
@@ -304,8 +302,6 @@ class MatriculaController {
 				Matricula matricula = Matricula.get(id)
 
 				def turmas = Turma.findAllBySerieAndEscola(matricula.turma.serie, matricula.turma.escola)
-
-
 				def aluno = Aluno.get(matricula.aluno.id)
 				render (view:"/matricula/editarMatricula.gsp", model:[matriculas:matricula, escolas:escolas, aluno:aluno, series:series, turmas:turmas])
 			}else{
@@ -313,8 +309,6 @@ class MatriculaController {
 			}
 		}
 	}
-
-
 
 	def atualizar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -333,13 +327,10 @@ class MatriculaController {
 				def aluno = Aluno.get(params.aluno)
 				def turma = Turma.get(params.turma)
 
-
 				matricula.aluno = aluno
 				matricula.turma = turma
-
 				matricula.dataDaMatricula = new Date()
 				matricula.matricula = params.matricula
-
 
 				//def matriculas = Matricula.findAll()
 				Calendar ca = Calendar.getInstance()
@@ -386,10 +377,10 @@ class MatriculaController {
 
 			if (perm2) {
 
-
+                
 				Matricula matriculaM = new Matricula(params)
 				matriculaM.status = 'Ativo'
-
+                
 				def turma = Turma.findById(params.turma)
 				def matriculados = Matricula.findAllByTurma(turma)
 				Calendar ca = Calendar.getInstance()

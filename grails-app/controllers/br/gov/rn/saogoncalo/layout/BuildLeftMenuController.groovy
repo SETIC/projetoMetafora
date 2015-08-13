@@ -154,13 +154,13 @@ class BuildLeftMenuController {
 		
 				menu ='<li class="treeview"> '+
 						'<a href="#"> '+
-						'<i class="fa fa-user"></i> <span>Administração</span> '+
+						'<i class="fa fa-briefcase"></i> <span>Administração</span> '+
 						'<i class="fa fa-angle-left pull-right"></i> '+
 						'</a> '+
 						'<ul class="treeview-menu"> '
 		
 				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
-					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-file-text-o"></i>Visualizar Relatorios</a></li>'
+					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
 					verificador = true
 				}
 				menu +='</ul> '  +

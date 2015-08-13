@@ -83,7 +83,7 @@ function printDiv(id)
 										</ul>
 	
 									</div>
-								</td>
+								  </td>
 								<td>
 									${it.nome}
 								</td>
