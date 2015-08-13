@@ -31,7 +31,7 @@ class AlunoController {
 
 		print urlCompleta
 
-		URL urlReferenteAAPI = new URL(urlCompleta)
+		URL urlReferenteAAPI = new URL(urlCompleta)e 3
 
 		def dadosReferenteAoCep
 

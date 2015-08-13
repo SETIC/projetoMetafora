@@ -185,7 +185,7 @@
 
 
 							<div class="form-group">
-								<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
+								<label for="inputNome3" class="col-sm-2 control-label">Nome *</label>
 								<div class="col-sm-10">
 									<input class="form-control" required name="nome" type="text"
 										style="width: 300px" value="${pessoa.nome }">
@@ -353,7 +353,7 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade</label>
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade *</label>
 								<div class="col-sm-10">
 									<g:textField class="form-control" required="true"
 										name="nacionalidade" style="width: 300px"
@@ -362,8 +362,8 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
-									Civil</label>
+								<label for="inputestadoCivil3" class="col-sm-2 control-label" required="true">Estado
+									Civil *</label>
 								<div class="col-sm-10">
 									<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)' }">
 										<select class="form-control" name="estadoCivil"

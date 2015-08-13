@@ -20,8 +20,8 @@ function requestAjax(elementoCep) {
 		inputsBuscando(elementoLogradouro, elementoBairro, elementoMunicipio,
 				elementoUf);
 		try {
-			$
-					.ajax({
+	
+					$.ajax({
 						type : "GET",
 						url : "http://192.168.1.247:8080/projetoMetafora/aluno/buscarCEP?cep="
 								+ cep + "",
