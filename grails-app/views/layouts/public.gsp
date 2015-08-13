@@ -295,7 +295,11 @@
             color: "#d2d6de",
             highlight: "#d2d6de",
             label: "Navigator"
-          }her we should show a stroke on each segment
+          }
+          ];
+        
+		var pieOptions = {
+          her we should show a stroke on each segment
           segmentShowStroke: true,
           //String - The colour of each segment stroke
           segmentStrokeColor: "#fff",

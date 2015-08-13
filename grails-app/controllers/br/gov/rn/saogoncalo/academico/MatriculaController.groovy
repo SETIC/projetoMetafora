@@ -285,6 +285,7 @@ class MatriculaController {
 			}
 		}
 	}
+	
 	def editarMatricula(long id){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Matricula", act:"listar"])
