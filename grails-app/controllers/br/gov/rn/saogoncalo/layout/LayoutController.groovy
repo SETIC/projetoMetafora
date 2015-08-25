@@ -42,6 +42,7 @@ class LayoutController {
 			def sessao = session["escid"]
 			if(sessao == 0 ||sessao == 29){
 			
+
 				quantAlunos = Aluno.count()
 				quantEscolas = Escola.count()
 				quantProfessores = Professor.count()
@@ -51,7 +52,7 @@ class LayoutController {
 			}else{
 			
 				def pessoaIdList = Pessoa.findAllByEscid(session["escid"]).id
-				
+
 				quantAlunos = Aluno.countByIdInList(pessoaIdList)
 				quantProfessores =  Professor.countByIdInList(pessoaIdList)
 				quantFuncionarios =  Funcionario.countByIdInList(pessoaIdList)
