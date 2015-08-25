@@ -349,7 +349,7 @@
 
 
 				function mudarSelect(){
-					var endereco = "localhost";
+					var endereco = "192.168.1.247";
 					
 					   var comboCargo = document.getElementById("comboCargo");
 					   comboCargo.options[comboCargo.options.length] = new Option("Buscando cargo", 0);

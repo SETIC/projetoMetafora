@@ -36,12 +36,15 @@ class FuncionarioController {
 				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
 						" where p.id = f.id "+
 						" and l.cargo.id = c.id "+
-						" and f.id = l.funcionario.id")
+						" and f.id = l.funcionario.id " +
+						" order by p.id ")
 
+				def escolas = Escola.findAll()
+				
 
 				println("aaaaaaaaaaaa"+funcionario)
 
-				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo])
+				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo, escolas:escolas])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -95,6 +98,62 @@ class FuncionarioController {
 			}
 		}
 	}
+	
+	
+	def pesquisarFuncionariosByEscola(){
+		
+				if((session["user"] == null) || (session["pass"] == null) ){
+					render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+				}else{
+		
+					def user = session["user"]
+					def pass = session["pass"]
+		
+					def usuario = new UsuarioController()
+		
+		
+					def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+					def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+		
+		
+					if (perm1 || perm2){
+		
+						def funcionarios
+						def cargos
+						def lotacao
+				
+		
+						def parametro = params.escola
+						if (session["escid"] == 0){
+							funcionarios = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
+						" where p.id = f.id "+
+						" and l.cargo.id = c.id "+
+						" and f.id = l.funcionario.id " +
+						" order by p.nome ")
+		
+						}else{
+							funcionarios = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
+						" where p.id = f.id "+
+						" and l.cargo.id = c.id "+
+						" and f.id = l.funcionario.id " +
+						" and p.escid = " + parametro +
+						" order by p.nome ")
+						}
+					
+
+						cargos= Cargo.findAll()
+						def escolas = Escola.findAll() 
+		
+						
+						println("Teste : " + params + funcionarios)
+						
+						render(view:"/funcionario/gerarRelatorio.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2, escolas:escolas])
+					}else{
+						render(view:"/error403.gsp")
+					}
+				}
+			}
+	
 
 	def editarFuncionario(long id){
 
@@ -174,6 +233,7 @@ class FuncionarioController {
 			}
 		}
 	}
+	
 	def atualizar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
@@ -499,6 +559,7 @@ class FuncionarioController {
 			}
 		}
 	}
+	
 	def salvar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
@@ -707,3 +768,4 @@ class FuncionarioController {
 		}
 	}
 }
+

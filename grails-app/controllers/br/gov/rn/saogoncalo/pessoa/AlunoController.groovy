@@ -910,7 +910,11 @@ class AlunoController {
 		Pessoa pessoa = new Pessoa()
 
 		pessoa.nome = params.nome
-		pessoa.cpfCnpj = params.cpf
+		if (params.cpf != "0"){
+			pessoa.cpfCnpj = params.cpf
+		}
+		
+		println(" cpf " + params.cpf + " " + params.nome)
 
 		if(pessoa.save(flush:true)){
 
@@ -954,8 +958,12 @@ class AlunoController {
 		Pessoa pessoa = new Pessoa()
 
 		pessoa.nome = params.nome
-		pessoa.cpfCnpj = params.cpf
+		if (params.cpf != "0"){
+			pessoa.cpfCnpj = params.cpf
+		}
 
+		
+		
 		if(pessoa.save(flush:true)){
 
 			PessoaFisica pf = new PessoaFisica()

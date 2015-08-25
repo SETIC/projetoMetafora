@@ -600,7 +600,7 @@ function mudarCombo(){
 						</div>
 						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
 						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" placeholder="000.000.000-XX" required="true" />
+							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" />
 						</div>
 					</div>
 			      </div>
@@ -629,7 +629,7 @@ function mudarCombo(){
 						</div>
 						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
 						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFMae" name="cpfMae" placeholder="000.000.000-XX" required="true" />
+							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFMae" name="cpfMae" />
 						</div>
 					</div>
 			      </div>
@@ -690,7 +690,7 @@ function mudarCombo(){
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
 
-			//var host = 'localhost'
+			//var host = '192.168.1.247'
 
 			function hiddenInput(){
 				console.log('Hidden...');
@@ -723,11 +723,19 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNomePai").value;
-			   var cpf = document.getElementById("iCPFPai").value;
+			   var cpf
 			   
-			   $.ajax({
+			   if(document.getElementById("iCPFPai").value == ''){
+			   		cpf = "0";
+			   }else{	
+			   
+			   		cpf = document.getElementById("iCPFPai").value;
+			   }
+			   
+			   console.log("CPF -- " + cpf);
+			   $.ajax({ 
 		            type: "GET",
 		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
 		            dataType: "json",
@@ -750,9 +758,14 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 				   var nome = document.getElementById("iNomeMae").value;
-				   var cpf = document.getElementById("iCPFMae").value;
+				   var cpf
+				if(document.getElementById("iCPFMae").value == ''){
+			   		cpf = "0";
+			    }else{	
+				    cpf = document.getElementById("iCPFMae").value;
+					 }
 				   
 				   $.ajax({
 			            type: "GET",
@@ -779,7 +792,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -806,7 +819,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "localhost";
+			  var endereco = "192.168.1.247";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

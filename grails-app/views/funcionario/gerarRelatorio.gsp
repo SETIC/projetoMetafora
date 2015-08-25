@@ -7,7 +7,7 @@
 <g:javascript src="jquery.maskedinput.js" />
 </head>
 <body>
-<script>
+	<script>
 			function printDiv(id)
 			{
 			  var divToPrint=document.getElementById(id);
@@ -71,14 +71,47 @@
 					${erro}
 				</div>
 			</g:if>
+
+
 			
-			<div style="margin-left: 10px">
-				<g:form controller="Funcionario" action="gerarRelatorio" class="form-horizontal">
-					<g:hiddenField type="number" name="id" value="${pessoa?.id}"/>
-					<div id="print" class="box box-white">
-						<table id="" class="table table-bordered">
-							<thead>
-								<tr>
+					
+				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
+				<div class="form-heading">
+				<label style="margin-left:15px;">Escola</label>
+			
+
+					<select class="col-sm-6 selectpicker" data-live-search="true"
+						name="escola" id="comboEscola">
+						<option value="0" disabled="disabled" selected="selected">
+							Selecione uma escola</option>
+						<g:each in="${escolas}">
+
+							<option value="${it.id}">
+								${it.pessoaJuridica.razaoSocial}
+							</option>
+						</g:each>
+					</select>
+
+					<button style="margin-left: 55%; margin-top: -56px;"
+						type="submit" class="btn btn-primary btn-flat">
+						<i class="glyphicon glyphicon-search"></i> Buscar
+					</button>
+				</g:form>
+					
+					
+
+		
+
+			</div>
+			
+			
+
+				<table id="listarFuncionarios"
+					class="table table-striped table-hover table-bordered example">
+
+					<g:if test="${!funcionarios?.isEmpty()})"></g:if>
+					<thead>
+						<tr class = "table table-bordered">
 									<th style="width: 20px;">Nº</th>
 									<th style="width: 20px;">Nome</th>
 									<th style="width: 20px;">Matricula</th>
@@ -86,54 +119,48 @@
 									<th style="width: 20px;">Turno</th>
 									<th style="width: 20px;">Funcão</th>
 									<th style="width: 20px;">Vinculo</th>
+						</tr>
+					</thead>
+					<tbody>
+					    <g:set var="i" value="${1}" />
+						<g:each in='${funcionarios?}'>
+
+								
+                                    <tr class="success">
+									<td>
+											${i++}
+										</td>
+										<td>
+											${it.cidadao.pessoaFisica.pessoa.nome}
+										</td>
+										<td>
+											${it.matricula}
+										</td>
+										<td>
+											${it.lotacao.cargo.cargo[0]}
+										</td>
+										<td>
+											${it.lotacao.turno[0]}
+										</td>
+										<td>
+											${it.lotacao.funcao[0]}
+										</td>
+										<td>
+											${it.lotacao.vinculo[0]}
+										</td>
 								</tr>
-							</thead>
-						<tbody>
-						
-							<g:set var="i" value="${1}"/>
-							<g:each in='${funcionario?}'>
-										<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
-										<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
-										<g:set var="cidadao" value="${it.cidadao}" />
-			
-								<tr class="success">
-									<td>
-										${i++}
-									</td>
-									<td>
-										${it.cidadao.pessoaFisica.pessoa.nome}
-									</td>
-									<td>
-										${it.matricula}
-									</td>
-									<td>
-										${it.lotacao.cargo.cargo[0]}
-									</td>
-									<td>
-										${it.lotacao.turno[0]}
-									</td>
-									<td>
-										${it.lotacao.funcao[0]}
-									</td>
-									<td>
-										${it.lotacao.vinculo[0]}
-									</td>
-										
-								  </tr>
-								</g:each>
-							</tbody>
-						</table>
-					</div>
-					<div style="margin: 0%">
+							
+						</g:each>
+
+					</tbody>
+				</table>
+
+
 						<button class="btn btn-danger btn-flat"
-							onClick="printDiv('print')">
+							onClick="printDiv('listarFuncionarios')">
 							<i class="glyphicon glyphicon-print"></i> Imprimir
 						</button>
-						<ul style="display: inline-block; margin-left: -30px">
-							<li class="btn btn-info btn-flat"><a
-								href="/projetoMetafora/funcionario/gerarRelatorio/">Voltar</a></li>
-						</ul>
-				</g:form>
-	     </section>
-    </body>
+
+	</section>
+</body>
 </html>
