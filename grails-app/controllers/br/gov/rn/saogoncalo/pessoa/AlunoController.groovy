@@ -396,7 +396,7 @@ class AlunoController {
 
 				def alunos
 
-				if (session["escid"] == 0)
+				if (session["escid"] == 0 ||session["escid"] == 29)
 				{
 					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ", [max: 10, offset: 0])
 
@@ -447,7 +447,7 @@ class AlunoController {
 				def alunos
 				def parametro = params.pesquisa
 
-				if (session["escid"] == 0){
+				if (session["escid"] == 0 || session["escid"] == 29 ){
 					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
@@ -498,7 +498,7 @@ class AlunoController {
 
 				def alunos
 
-				if (session["escid"] == 0)
+				if (session["escid"] == 0 ||session["escid"] == 29)
 				{
 					//alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id ")
 				}else{
@@ -1015,7 +1015,7 @@ class AlunoController {
 				def matricula
 				def escolas
 
-				if (session["escid"] == 0)
+				if (session["escid"] == 0 || session["escid"] == 29)
 				{
 					matricula = Matricula.executeQuery(
 							" select m from Matricula m, Aluno a, "+

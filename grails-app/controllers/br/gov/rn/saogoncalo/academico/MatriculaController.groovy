@@ -183,7 +183,6 @@ class MatriculaController {
 		}
 	}
 
-
 	def listarMensagem(String msg, String tipo){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -205,6 +204,8 @@ class MatriculaController {
 				def matricula
 				def alunos
 				def escolas
+				tipo= params.tipo
+				msg = params.msg
 				
 				
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
@@ -408,7 +409,8 @@ class MatriculaController {
 						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matriculaM.id, "CREATE", "Matricula", date)
 	
 
-						listarMensagem("Matrícula realizada com sucesso", "ok")
+						//listarMensagem("Matrícula realizada com sucesso", "ok")
+						redirect(controller: "Matricula", action: "listarMensagem", params:[msg:"Aluno Matriculado com Sucesso!", tipo:"ok"])
 
 					}else{
 
