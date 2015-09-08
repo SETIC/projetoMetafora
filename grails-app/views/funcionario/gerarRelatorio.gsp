@@ -119,34 +119,39 @@
 									<th style="width: 20px;">Turno</th>
 									<th style="width: 20px;">Funcão</th>
 									<th style="width: 20px;">Vinculo</th>
+									<th style="width: 20px;">Escola</th>
 						</tr>
 					</thead>
 					<tbody>
 					    <g:set var="i" value="${1}" />
+					    
 						<g:each in='${funcionarios?}'>
 
-								
+								<g:set var="t" value="it.id == 8"/>
                                     <tr class="success">
 									<td>
 											${i++}
 										</td>
 										<td>
-											${it.cidadao.pessoaFisica.pessoa.nome}
+											${it.nome}
 										</td>
 										<td>
 											${it.matricula}
 										</td>
 										<td>
-											${it.lotacao.cargo.cargo[0]}
+											${it.cargo}
 										</td>
 										<td>
-											${it.lotacao.turno[0]}
+											${it.turno}
 										</td>
 										<td>
-											${it.lotacao.funcao[0]}
+											${it.funcao}
 										</td>
 										<td>
-											${it.lotacao.vinculo[0]}
+											${it.vinculo}
+										</td>
+										<td>
+											${it.escola}														
 										</td>
 								</tr>
 							

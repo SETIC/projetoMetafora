@@ -107,38 +107,8 @@
               <div class="box box-danger">
                 <div class="box-header with-border">
 
-                  <h3 class="box-title"><b>Alunos Matriculados por Escola<b></h3>
-
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <div class="col-md-4">
-               
-                  </div>
-                </div>
-                <div class="box-body">
-
-                    <canvas id="pieChart2" style="margin-left: ;height: 278px; width: 530px;" width="355" height="265"></canvas>
-
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-              
-				</div>
-            </div><!-- /.col (LEFT) -->
-            
-         
-          <br>
-			
-        
-<<<<<<< HEAD
-        <!-- PROFESSORES -->
-       
-        
-            <div class="col-md-4">
-          
-              <!-- DONUT CHART -->
-              <div class="box box-danger">
-                <div class="box-header with-border">
                   <h3 class="box-title"><b>Professores por Escola<b></h3>
+
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <div class="col-md-4">
@@ -146,7 +116,9 @@
                   </div>
                 </div>
                 <div class="box-body">
+
                     <canvas id="pieChart2" style="margin-left: ;height: 278px; width: 530px;" width="355" height="265"></canvas>
+
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
               
@@ -156,7 +128,7 @@
          
           <br>
 			
-        
+   
 
            <!-- FUNCIONÁRIOS -->
 

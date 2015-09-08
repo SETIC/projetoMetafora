@@ -144,7 +144,7 @@ function mudarCombo(){
 										</div>
 									</td>
 									<td>
-										${pessoa.nome}
+										${pessoa.nome} 
 									</td>
 									<td>
 										${pessoa.cpfCnpj}

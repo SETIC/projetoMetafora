@@ -42,7 +42,7 @@ class MatriculaController {
 				if (parametro != null || parametro != ""){	
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
-							"    and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.id = m.aluno.id" +
+							"    and p.id = m.aluno.id" +
 							"    and t.anoLetivo = ? "+
 							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')",[ano])
 

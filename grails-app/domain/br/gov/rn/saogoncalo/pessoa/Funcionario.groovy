@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.pessoa
 
 import br.gov.rn.saogoncalo.organizacao.Lotacao
+import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor
 
 
 class Funcionario {
@@ -10,7 +11,7 @@ class Funcionario {
 	String observacao
 
 
-	static hasMany = [lotacao:Lotacao]
+	static hasMany = [lotacao:Lotacao , funcionarioSetor:FuncionarioSetor]
 
 	
 	static constraints = {
