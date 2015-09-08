@@ -7,7 +7,7 @@
 <g:javascript src="jquery.maskedinput.js" />
 </head>
 <body>
-<script>
+	<script>
 			function printDiv(id)
 			{
 			  var divToPrint=document.getElementById(id);
@@ -48,10 +48,25 @@
 			}
              </script>
 
+
+
 	<section class="content-header">
 		<h1>
 			<center>Relação de Servidores</center>
 		</h1>
+		<br>
+			<label style="margin-left:15px;">Relação por Escola</label><select class="col-sm-6 selectpicker" data-live-search="true"
+				name="escola" id="comboEscola" onchange="mudarEscola();">
+				<option value="0" disabled="disabled" selected="selected">
+					Selecione uma escola</option>
+				<g:each in="${escolas}">
+					<option value="${it.id}">
+						${it.pessoaJuridica.razaoSocial}
+					</option>
+				</g:each>
+			</select><button style="margin-left: 65%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="glyphicon glyphicon-search"></i> Buscar
+							</button>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -71,14 +86,32 @@
 					${erro}
 				</div>
 			</g:if>
-			
+
 			<div style="margin-left: 10px">
-				<g:form controller="Funcionario" action="gerarRelatorio" class="form-horizontal">
-					<g:hiddenField type="number" name="id" value="${pessoa?.id}"/>
+				<g:form controller="Funcionario" action="gerarRelatorio"
+					class="form-horizontal">
+					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<div id="print" class="box box-white">
+
+						<!-- 	<g:form controller="Funcionario" action="pesquisarFuncionarios"
+					class="form">
+					<div class="form-group">
+						<label for="inputPesquisa" class="col-sm-2 control-label">NOME/MATRICULA:</label>
+						<div class="col-sm-10">
+							<g:textField class="form-control" id="" name="pesquisa"
+								style="width: 300px" value="" />
+							<button style="margin-left: 36%; margin-top: -56px;"
+								type="submit" class="btn btn-primary btn-flat">
+								<i class="fa fa-save"></i> Buscar
+							</button>
+						</div>
+					</div>
+				</g:form>
+					
+					 -->
 						<table id="" class="table table-bordered">
 							<thead>
-								<tr>
+								<tr class ="success">
 									<th style="width: 20px;">Nº</th>
 									<th style="width: 20px;">Nome</th>
 									<th style="width: 20px;">Matricula</th>
@@ -86,40 +119,45 @@
 									<th style="width: 20px;">Turno</th>
 									<th style="width: 20px;">Funcão</th>
 									<th style="width: 20px;">Vinculo</th>
+                                    <th style="width: 20px;">Escola</th>
+                                      									
 								</tr>
 							</thead>
-						<tbody>
-						
-							<g:set var="i" value="${1}"/>
-							<g:each in='${funcionario?}'>
-										<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
-										<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
-										<g:set var="cidadao" value="${it.cidadao}" />
-			
-								<tr class="success">
-									<td>
-										${i++}
-									</td>
-									<td>
-										${it.cidadao.pessoaFisica.pessoa.nome}
-									</td>
-									<td>
-										${it.matricula}
-									</td>
-									<td>
-										${it.lotacao.cargo.cargo[0]}
-									</td>
-									<td>
-										${it.lotacao.turno[0]}
-									</td>
-									<td>
-										${it.lotacao.funcao[0]}
-									</td>
-									<td>
-										${it.lotacao.vinculo[0]}
-									</td>
-										
-								  </tr>
+							<tbody>
+								<g:set var="i" value="${1}" />
+								<g:each in='${funcionario?}'>
+									<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
+									<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
+									<g:set var="cidadao" value="${it.cidadao}" />
+
+									<tr class="success">
+										<td>
+											${i++}
+										</td>
+										<td>
+											${it.cidadao.pessoaFisica.pessoa.nome}
+										</td>
+										<td>
+											${it.matricula}
+										</td>
+										<td>
+											${it.lotacao.cargo.cargo[0]}
+										</td>
+										<td>
+											${it.lotacao.turno[0]}
+										</td>
+										<td>
+											${it.lotacao.funcao[0]}
+										</td>
+										<td>
+											${it.lotacao.vinculo[0]}
+										</td>
+										<td>
+										<g:findAll in="${escola}" expr="it.escola == 8 ">
+                                         <p>escola: ${pessoaJuridica.razaoSocial}</p>
+										</td>
+                                        </g:findAll>
+									</tr>
 								</g:each>
 							</tbody>
 						</table>
@@ -134,6 +172,6 @@
 								href="/projetoMetafora/funcionario/gerarRelatorio/">Voltar</a></li>
 						</ul>
 				</g:form>
-	     </section>
-    </body>
+	</section>
+</body>
 </html>

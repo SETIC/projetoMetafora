@@ -436,7 +436,6 @@ function printDiv(id)
 													<option value="0" disabled="disabled" selected="selected">
 														Selecione uma escola</option>
 													<g:each in="${escolas}">
-
 														<option value="${it.id}">
 															${it.pessoaJuridica.razaoSocial}
 														</option>

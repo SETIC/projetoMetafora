@@ -104,7 +104,12 @@
                     <p>
 
                       ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}
+                      
+                      
 
+                    </p>
+                    <p style="font-size: 12px;">
+                    	${session["user"].split(" ")[0]}
                     </p>
                   </li>
                   <!--Menu Body 
@@ -145,7 +150,9 @@
             </div>
             <div class="pull-left info">
               <p style="margin-top: 10.5px;">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</p>
-              
+              <p style="font-size: 12px;">
+                    	${session["user"].split(" ")[0]}
+                    </p>
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>

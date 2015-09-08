@@ -163,6 +163,7 @@ class BuildLeftMenuController {
 					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
 					verificador = true
 				}
+				
 				menu +='</ul> '  +
 				' </li> '
 

@@ -75,7 +75,7 @@ class LayoutController {
 		props.setProperty("password", "bgt54rfvcde3")
 
 
-		def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 	
 		List<String> alunoByEscola = new ArrayList();
@@ -86,8 +86,7 @@ class LayoutController {
 			" where m.aluno_id= p.id "+
 			" and m.turma_id= t.id "+
 			" and m.status ='Ativo'"+
-			"group by p.escid")
-		;
+			"group by p.escid");
 		
 		
 		def result = []
