@@ -15,7 +15,7 @@ class BuildLeftMenuController {
 		render  buildPessoalMenu(permissoes) +
 				buildAcademicoMenu(permissoes) +
 				buildProfessorMenu(permissoes)+
-				buildRelatorioFuncionarioMenu+
+				buildRelatorioFuncionarioMenu(permissoes)+
 				buildProtocoloMenu(permissoes)
 	}
 
@@ -202,7 +202,6 @@ class BuildLeftMenuController {
 
 		return menu
 	}
-
 
 	
 
