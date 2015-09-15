@@ -19,7 +19,7 @@
 <body>
 	<section class="content-header">
 		<h1>
-			Matriculas <small>Editar dadas</small>
+			Matriculas <small>Editar Dados</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
@@ -144,7 +144,7 @@
 
 
 						</div>
-						<br> <select name="series" id="comboSerie" onchange="mudarSerie();" class="form-control">
+						<br><label>Série</label> <select name="series" id="comboSerie" onchange="mudarSerie();" class="form-control">
 							<g:each in="${series}">
 								<g:if test="${matriculas.turma.serie.id == it.id}">
 									<option value="${it.id}" selected>

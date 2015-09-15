@@ -169,6 +169,110 @@
 							</div>
 						</div>
 						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Nome do pai</label>
+							<div class="col-sm-10">
+							<g:if test="${parentescoPai != null}">
+								${parentescoPai.pessoa.nome}
+							</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Nome da mãe</label>
+							<div class="col-sm-10">
+							<g:if test="${parentescoMae != null}">
+								${parentescoMae.pessoa.nome}
+							</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">CEP</label>
+							<div class="col-sm-10">
+								<g:if test="${reside != null}">
+									${reside.cep}
+								</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Logradouro</label>
+							<div class="col-sm-10">
+								<g:if test="${reside != null}">
+									${reside.logradouro.logradouro}
+								</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Número</label>
+							<div class="col-sm-10">
+							<g:if test="${reside != null}">
+								${reside.numero}
+							</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Complemento</label>
+							<div class="col-sm-10">
+							<g:if test="${reside != null}">
+								${reside.complemento}
+							</g:if>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Bairro</label>
+							<div class="col-sm-10">
+							<g:if test="${reside != null}">
+								${reside.bairro.bairro}
+							</g:if>
+								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">UF</label>
+							<div class="col-sm-10">
+							<g:if test="${reside != null}">
+								${reside.bairro.municipio.estado.abreviacao}
+							</g:if>
+								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai"
+								class="col-sm-2 control-label">Município</label>
+							<div class="col-sm-10">
+							<g:if test="${reside != null}">
+								${reside.bairro.municipio.municipio}
+							</g:if>
+								
+							</div>
+						</div>
+						<br>
+
+						
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat" onClick="printDiv('print')">

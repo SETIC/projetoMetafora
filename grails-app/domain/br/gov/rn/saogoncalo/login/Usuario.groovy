@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.login
 
 import br.gov.rn.saogoncalo.pessoa.Pessoa
+import br.gov.rn.saogoncalo.protocolo.Protocolo
 
 class Usuario {
 	
@@ -8,7 +9,7 @@ class Usuario {
 	String username
 
 	
-	static hasMany = [grupoUsuario:GrupoUsuario]
+	static hasMany = [grupoUsuario:GrupoUsuario , protocolo:Protocolo]
 	static belongsTo = [pessoa:Pessoa]
 	
 	static constraints = {

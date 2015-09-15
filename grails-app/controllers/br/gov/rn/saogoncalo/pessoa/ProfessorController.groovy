@@ -2,6 +2,7 @@ package br.gov.rn.saogoncalo.pessoa
 
 import br.gov.rn.saogoncalo.academico.Disciplina
 import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 
@@ -125,7 +126,12 @@ class ProfessorController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
 			if (perm2) {
 				Pessoa.deleteAll(Pessoa.get(id))
-				Pessoa.deleteAll(Pessoa.get(id))
+				
+				Professor professores = Professor.get(id)
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "professor deletado " + professores.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Professor", date)
+				
 
 				//redirect(action:"listar" )
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
@@ -186,6 +192,8 @@ class ProfessorController {
 				def dlppl =  dlpp.disciplina.id
 
 				def disc  = Disciplina.findAll()
+				
+							
 
 				render (view:"/professor/editarProfessor.gsp", model:[professores:professores, dlppl:dlppl, disc:disc])
 			}else{
@@ -293,12 +301,13 @@ class ProfessorController {
 
 						professorDisciplina.save(flush:true)
 
-
+     
 					}
 
 
 				}
-
+				
+				
 
 				if (disciplinaNovo.getClass() != java.lang.String) {
 					for (int i=0; i<dp.size(); i++){
@@ -348,6 +357,14 @@ class ProfessorController {
 					listarMensagem("Erro ao salvar", "erro")
 
 				}
+				
+				 //log
+				 def date = new Date()
+				 professor = Professor.get(params.id)
+				 AdministracaoController adm = new AdministracaoController()
+				 adm.salvaLog(session["usid"].toString().toInteger(), "professor atualizado " + professor.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"atualizar", "Professor", date)
+				 
+ 
 
 			}
 		}
@@ -371,6 +388,7 @@ class ProfessorController {
 
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
+				pessoa.nome = params.nome.toString().toUpperCase()
 
 				if (pessoa.save(flush:true)){
 
@@ -416,6 +434,12 @@ class ProfessorController {
 
 							disciplinaProfessor.situacao = "ATIVA"
 							disciplinaProfessor.save(flush:true)
+							
+							
+							def date = new Date()
+							AdministracaoController adm = new AdministracaoController()
+							adm.salvaLog(session["usid"].toString().toInteger(), "professor cadastrado " + professor.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"cadastrado", "Professor", date)
+							
 
 
 						}

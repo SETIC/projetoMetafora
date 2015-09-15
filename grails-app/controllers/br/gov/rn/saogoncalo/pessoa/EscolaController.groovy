@@ -1,10 +1,8 @@
 package br.gov.rn.saogoncalo.pessoa
 
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.localizacao.Bairro
-import br.gov.rn.saogoncalo.localizacao.Estado
 import br.gov.rn.saogoncalo.localizacao.Logradouro
-import br.gov.rn.saogoncalo.localizacao.Municipio
-import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 class EscolaController {
@@ -119,6 +117,11 @@ class EscolaController {
 			if (perm2) {
 
 				Pessoa.deleteAll(Pessoa.get(id))
+				//log
+				def date = new Date()
+				Escola escola= Escola.get(id)
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "escola deletada  " + escola.id.toString(),"deletar", "Escola", date)
 
 				redirect(action:"listarMensagem", params:[msg:"deletado com sucesso!", tipo: "ok" ]  )
 			}else{
@@ -215,6 +218,13 @@ class EscolaController {
 					//				ok : "Escola atualizada com sucesso!"
 					//
 					//			])
+					
+					
+					//log
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "escola atualizada " + escola.id.toString(),"atualizar", "Escola", date)
+					
 					listarMensagem("Escola atualizada com sucesso!", "ok")
 				}else{
 					//			render(view:"/escola/editarEscola.gsp", model:[escolas:escolas,
@@ -242,8 +252,10 @@ class EscolaController {
 			{
 
 				Pessoa pessoa = new Pessoa(params)
+				Escola escola = new Escola(params)
 				Bairro bairro = Bairro.get(params.bairro)
 				Logradouro logradouro = Logradouro.get(params.logradouro)
+				
 			
 				Reside reside = new Reside()
 				
@@ -269,12 +281,14 @@ class EscolaController {
 					pessoaJuridica.pessoa = pessoa
 					pessoaJuridica.save(flush:true)
 					pessoaJuridica.errors.each{ println it }
-
-					Escola escola = new Escola(params)
+                     
+					//Escola escola = new Escola(params)
 					escola.pessoaJuridica = pessoaJuridica
 
 					if(escola.save(flush:true)){
 						escola.errors.each{ println it }
+						
+						println escola
 
 						listarMensagem("Escola cadastrada com sucesso!", "ok")
 					}else{
@@ -291,6 +305,12 @@ class EscolaController {
 
 					listarMensagem("Erro ao Salvar!", "erro")
 				}
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "escola cadastrada " + escola.id.toString(),"cadastro", "Escola", date)
+				
+				
 			}else{
 				render(view:"/error403.gsp")
 			}

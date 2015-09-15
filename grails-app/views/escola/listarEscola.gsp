@@ -52,7 +52,7 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="" class="table table-hover example">
+				<table id="listarEscola" class="table table-hover example">
 					<g:if test="${!escolas?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -129,7 +129,7 @@ function printDiv(id)
 				</g:if>
 
 				
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarEscola')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			

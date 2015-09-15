@@ -37,6 +37,9 @@
     <!-- Jasny Mask Bootstrap -->
     <link href="${resource(dir: 'css', file: 'jasny-bootstrap.min.css')}" rel="stylesheet">
     
+    <!-- Bootstrap Master -->
+    <link href="${resource(dir: 'css', file: 'bootstrap-modal-master/css/bootstrap-modal.css')}" rel="stylesheet">    
+    
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="${resource(dir: 'css', file: 'skins/_all-skins.min.css')}" rel="stylesheet">
@@ -100,7 +103,13 @@
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
 
-                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}
+                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}<br>
+
+                      <p style="font-size:12px;">
+                      
+                       ${session["user"].split(" ")[0]}
+                      
+                      </>
 
                     </p>
                   </li>
@@ -142,6 +151,11 @@
             </div>
             <div class="pull-left info">
               <p style="margin-top: 10.5px;">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</p>
+                      <p style="font-size:12px;">
+                      
+                       ${session["user"].split(" ")[0]}
+                      
+                      </>
               
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
@@ -240,6 +254,11 @@
     <g:javascript src="plugins/slimScroll/jquery.slimscroll.min.js" />
     <!-- ChartJS 1.0.1 -->
 	<g:javascript src="plugins/chartjs/Chart.min.js" />
+	<!-- Bootstrap Master -->
+	<g:javascript src="bootstrap-modal-master/js/bootstrap-modal.js" />
+		<!-- Bootstrap Master -->
+	<g:javascript src="bootstrap-modal-master/js/bootstrap-modalmanager.js" />
+	
 	
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 	<g:javascript src="dashboard2.js" /> -->

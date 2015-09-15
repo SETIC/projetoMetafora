@@ -1,6 +1,7 @@
 package br.gov.rn.saogoncalo.academico
 
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class SerieController {
 
@@ -112,6 +113,11 @@ class SerieController {
 					//				ok : "Serie atualizado com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Serie: " + series.id.toString(), "UPDATE", "Serie", date)
+					
 					listarMensagem("Serie atualizado com sucesso!", "ok")
 				}else{
 
@@ -145,6 +151,11 @@ class SerieController {
 				//def p = Serie.findAll()
 
 				//redirect(action:"listar")
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Serie: " + id.toString(), "DELETE", "Serie", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -180,6 +191,12 @@ class SerieController {
 					//				ok : "Serie cadastrada com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Criar Serie: " + seriel.id.toString(), "CREATE", "Serie", date)
+					
+					
 					listarMensagem("Serie cadastrada com sucesso", "ok")
 				}else{
 					//			def serie = Serie.findAll()

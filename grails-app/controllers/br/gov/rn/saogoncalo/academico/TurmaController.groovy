@@ -5,6 +5,8 @@ import grails.converters.JSON
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
+
 
 
 class TurmaController {
@@ -163,10 +165,11 @@ class TurmaController {
 
 				
 				//render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas])
-				if (tipo == "ok")
+				if (tipo == "ok") {
 					render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, ok:msg, perm2:perm2])
-				else
+				} else {
 					render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, erro:msg, perm2:perm2])
+				}
 			}else{
 				render(view:"/error403.gsp")
 
@@ -355,7 +358,12 @@ class TurmaController {
 					//				ok : "Turma atualizada com sucesso!"
 					//
 					//			])
-					listarMessagem("Turma atualizada com sucesso!", "ok")
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Turma: " + params.id.toString(), "UPDATE", "Turma", date)
+
+					listarMensagem("Turma atualizada com sucesso!", "ok")
 				}else{
 
 					Calendar ca = Calendar.getInstance()
@@ -368,7 +376,7 @@ class TurmaController {
 					//			render(view:"/turma/editarTurma.gsp", model:[turmas:turmas,
 					//				erro : "Erro ao atualizar!"
 					//			])
-					listarMessagem("Erro ao atualizar!","erro")
+					listarMensagem("Erro ao atualizar!","erro")
 				}
 			}
 
@@ -391,9 +399,14 @@ class TurmaController {
 
 				Turma.deleteAll(Turma.get(id))
 
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Turma: " + id.toString(), "DELETE", "Turma", date)
+
+				
 				//redirect(action:"listar" )
-				redirect(action:"listarMessagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
-				//listarMessagem("Turma excluída com sucesso", "ok")
+				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
+				//listarMensagem("Turma excluída com sucesso", "ok")
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -413,8 +426,7 @@ class TurmaController {
 
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "TURMA", "2")
 
-			if (perm2)
-			{
+			if (perm2) {
 
 				Turma turma = new Turma(params)
 
@@ -433,7 +445,8 @@ class TurmaController {
 
 
 				if(turma.save(flush:true)){
-
+					
+					
 					if (params.disciplinas.getClass() != java.lang.String) {
 
 
@@ -489,7 +502,12 @@ class TurmaController {
 						//
 						//				])
 						//				redirect(action:"listar" )
-						listarMessagem("Turma cadastrada com sucesso!", "ok")
+						
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Turma: " + turma.id.toString(), "CREATE", "Turma", date)
+						
+						listarMensagem("Turma cadastrada com sucesso!", "ok")
 
 					}else{
 
@@ -505,7 +523,7 @@ class TurmaController {
 						//				render(view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas,
 						//					erro : erros
 						//				])
-						listarMessagem("erro ao Salvar", "erro")
+						listarMensagem("erro ao Salvar", "erro")
 					}
 
 

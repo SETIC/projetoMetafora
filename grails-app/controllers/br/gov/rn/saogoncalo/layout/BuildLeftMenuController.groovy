@@ -12,9 +12,10 @@ class BuildLeftMenuController {
 
 		def permissoes = usuario.getAllPermissoes()
 
-		render buildPessoalMenu(permissoes) +
+		render  buildPessoalMenu(permissoes) +
 				buildAcademicoMenu(permissoes) +
-				buildProfessorMenu(permissoes)
+				buildProfessorMenu(permissoes)+
+				buildRelatorioFuncionarioMenu(permissoes)
 	}
 
 	def buildPessoalMenu(perm){
@@ -143,6 +144,34 @@ class BuildLeftMenuController {
 
 		return menu
 	}
+	
+	//adição de mais um link para gerar o relatorio de funcionarios
+	
+	def buildRelatorioFuncionarioMenu(perm){
+		
+				def menu = '';
+				def verificador = false
+		
+				menu ='<li class="treeview"> '+
+						'<a href="#"> '+
+						'<i class="fa fa-briefcase"></i> <span>Administração</span> '+
+						'<i class="fa fa-angle-left pull-right"></i> '+
+						'</a> '+
+						'<ul class="treeview-menu"> '
+		
+				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
+					verificador = true
+				}
+				menu +='</ul> '  +
+				' </li> '
+
+		if (!verificador)
+			menu = ""
+
+		return menu
+	}
+
 
 	def verificaPerm(sch, tab, perm){
 

@@ -58,47 +58,44 @@ function printDiv(id)
 						<label for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
-								style="width: 300px" value="${ }" />
+								style="width: 300px" value="" />
 							<button style="margin-left: 36%; margin-top: -56px;"
 								type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
-
 						</div>
 					</div>
 				</g:form>
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarFuncionario" class="table table-striped table-hover example">
 					<g:if test="${!funcionarios?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
 							<th style="width: 65px;"></th>
 							<th style="width: 280px;">Nome</th>
-							<th style="width: 60px;">CPF</th>
 							<th style="width:;">Matricula</th>
-							<th style="width:;">Data de Nascimento</th>
-							<th style="width:;">Sexo</th>
-							<th style="width:;">Estado Civil</th>
+							<th style="width:;">Cargo</th>						
+							<th style="width:;">Vínculo</th>
+							<th style="width:;">Função</th>
+							<th style="width:65px;">Turno</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${funcionarios?}'>
-							<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
-							<g:set var="cidadao" value="${it.cidadao}" />
-							<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
+
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
 
-											<g:if test="${perm2 }">
+											<g:if test="${perm2}">
 
 												<li title="Editar Funcionario "
 													class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/funcionario/editarFuncionario/${pessoa.id}"><span
+													href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 												<li title="Remover Funcionario"
-													onclick="deletar(${pessoa.id})"
+													onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 
@@ -106,28 +103,28 @@ function printDiv(id)
 											<li title="Ver detalhes do Funcionario"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/funcionario/verInfoFuncionario/${pessoa.id}"><span
+												href="/projetoMetafora/funcionario/verInfoFuncionario/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
-
 									</div>
 								</td>
 								<td>
-									${pessoa.nome}
+									${it?.cidadao.pessoaFisica.pessoa.nome}
 								</td>
 								<td>
-									${pessoa.cpfCnpj}
+									${it?.matricula}
 								</td>
 								<td>
-									${it.matricula}
-								</td>
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${pessoa.dataDeNascimento}" /></td>
+									 ${it.lotacao.cargo.cargo[0]}
+								</td>								
 								<td>
-									${pessoaFisica.sexo}
+									${it.lotacao.vinculo[0]}
 								</td>
 								<td>
-									${cidadao.estadoCivil}
+									${it?.lotacao.funcao[0]}
+								</td>
+								<td>
+									${it?.lotacao.turno[0]}
 								</td>
 							</tr>
 						</g:each>
@@ -142,7 +139,7 @@ function printDiv(id)
 					<i class="fa fa-plus"></i> Novo Funcionário
 				</button>
 			</g:if>
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarFuncionario')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			<!-- Modal -->
@@ -175,7 +172,6 @@ function printDiv(id)
 											<g:datePicker noSelection="['':'']" precision="day"
 												class="form-control" required="true" name="dataDeNascimento"
 												value="" />
-
 										</div>
 									</div>
 									<br>
@@ -187,37 +183,6 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
-										<label>Número do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNumero" value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Cartório do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoCartorio"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Nome do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcNomeDoLivro"
-												value="" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Folha do Livro do Registro de Cartório</label>
-										<div class="controls">
-											<g:textField class="form-control" name="rcFolhaDoLivro"
-												value="" />
-										</div>
-										<br>
-									</div>
 									<div class="form-heading">
 										<label>Sexo</label>
 										<div class="controls">
@@ -239,43 +204,40 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									
-										<div class="form-heading">
-											<label>Vinculo </label>
-											<div class="controls">
-												<select class="form-control" name="vinculo">
-													<option value="EFETIVO">EFETIVO</option>
-													<option value="COMISSIONADO">COMISSIONADO</option>
-													<option value="ESTAGIARIO">ESTAGIARIO</option>
-													<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-												</select>
-											</div>
-											<br>
+									<div class="form-heading">
+										<label>Vinculo </label>
+										<div class="controls">
+											<select class="form-control" name="vinculo">
+												<option value="EFETIVO">EFETIVO</option>
+												<option value="COMISSIONADO">COMISSIONADO</option>
+												<option value="ESTAGIARIO">ESTAGIARIO</option>
+												<option value="TERCEIRIZADO">TERCEIRIZADO</option>
+											</select>
 										</div>
-										
-											<div class="form-heading">
-												<label>Função</label>
+										<br>
+										<div class="form-heading">
+											<label>Função</label>
+											<div class="controls">
 												<div class="controls">
 													<g:textField class="form-control" required="true"name="funcao" value="" />
 												</div>
-												<br>
 											</div>
-											 
-												<div class="form-heading">
-													<label>Cargo</label>
-													<div class="controls">
-														<select class="form-control selectpicker" data-live-search="true"
-														id="cargo" name="cargoId" onChange="habilitarDisciplinas()">
-															<g:each in="${cargos}">
-																
-																<option value="${it.id}">
-																	${it.cargo}
-																</option>
-															</g:each>
-														</select>
-													</div>
-												</div>
-                                              <br>
+											<br>
+										</div>
+										<div class="form-heading">
+											<label>Cargo</label>
+											<div class="controls">
+												<select class="form-control selectpicker" data-live-search="true"
+												id="cargo" name="cargoId" onChange="habilitarDisciplinas()">
+													<g:each in="${cargos}">
+														<option value="${it.id}">
+															${it.cargo}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+                                        <br>
                                               
                                               <div id="divDisciplinas" style="display: none;" class="form-heading">
 													<label>Disciplinas</label>
@@ -285,7 +247,6 @@ function printDiv(id)
 															name="disciplinaProf" multiple="multiple"
 															from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
 															value="${id}" optionKey="id" optionValue="disciplina" />
-													</select>
 													</div>
 											  <br>
 											  </div>
@@ -300,7 +261,18 @@ function printDiv(id)
 													}
 												}
 											</script>
-											
+											<div class="form-heading">
+												<label>Turno</label>
+												<div class="controls">
+													<label class="checkbox-inline"> <input
+														type="checkbox" name="opcao1" value="M" checked>Manhã
+													</label> <label class="checkbox-inline"> <input
+														type="checkbox" name="opcao2" value="T">Tarde
+													</label> <label class="checkbox-inline"> <input
+														type="checkbox" name="opcao3" value="N">Noite
+													</label>
+												</div>
+												</br>
 												<div class="form-heading">
 													<label>Estado Civil</label>
 													<div class="controls">
@@ -315,30 +287,27 @@ function printDiv(id)
 												</div>
 												<br>
 												<div class="form-heading">
-													<label>Profissão</label>
-													<div class="controls">
-														<g:textField class="form-control" required="true"
-															name="profissao" value="" />
-													</div>
-												</div>
-												<br>
-												<div class="form-heading">
 													<label>Carga Horária</label>
 													<div class="controls">
-														<g:textField class="form-control" required=""
-															name="cargaHoraria" value="" />
+														<g:textField class="form-control" required="" name="cargaHoraria" value="" />
 													</div>
 												</div>
 												<br>
 												<div class="form-heading">
 													<label>Matricula</label>
 													<div class="controls">
-														<g:textField class="form-control" required="true"
-															name="matricula" value="" />
+														<g:textField class="form-control" required="true" name="matricula" value="" />
 													</div>
 												</div>
 												<br>
-								</fieldset>
+												<div class="form-heading">
+												<label>Observação</label>
+													<div>
+														<textarea rows="3" class="form-control" name="observacao" placeholder="Insira uma observação relacionada ao Funcionário"></textarea>
+													</div>
+												</div>
+												<br>
+								    </fieldset>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
 										<i class="fa fa-save"></i> Cadastrar
@@ -352,5 +321,5 @@ function printDiv(id)
 			</div>
 		</div>
 	</section>
-</body>
+ </body>
 </html>

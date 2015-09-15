@@ -75,6 +75,8 @@ class GrupoController {
 						table = obj.substring( obj.indexOf('-')+1 ,obj.indexOf('=') )
 						permission = obj.substring( obj.size()-1 ,obj.size() )
 
+						println("Dado :" + obj )
+						
 						println("Esquemas: "+esquem+"\n")
 
 						println("Tabelas: "+table+"\n")
@@ -153,10 +155,15 @@ class GrupoController {
 						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"SALA"],
 						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"HORARIO"],
 						["schemaname":"LOGIN", "tabela":"USUARIO"],
-						["schemaname":"LOGIN", "tabela":"GRUPO"]
+						["schemaname":"LOGIN", "tabela":"GRUPO"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"ATIVIDADE"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"NOTA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"FREQUENCIA"],
+						["schemaname":"ADMINISTRACAO_REGISTRO", "tabela":"LOG"]
+
 					]
 
-					schemas = [["schemaname":"CADASTRO_UNICO_PESSOAL"], ["schemaname":"EDUCACAO_ACADEMICO"], ["schemaname":"LOGIN"]]
+					schemas = [["schemaname":"CADASTRO_UNICO_PESSOAL"], ["schemaname":"EDUCACAO_ACADEMICO"], ["schemaname":"LOGIN"], ["schemaname":"ADMINISTRACAO_REGISTRO"] ]
 
 				}catch(SQLException ex){
 					println ex.getMessage()
@@ -213,7 +220,31 @@ class GrupoController {
 
 
 				try {
-					tabelas = sql.rows(" SELECT upper(pg.schemaname) as schemaname, upper(pg.tablename) as tabela, ( " +
+					
+/*					tabelas = [
+						["schemaname":"CADASTRO_UNICO_PESSOAL", "tabela":"ALUNO"],
+						["schemaname":"CADASTRO_UNICO_PESSOAL", "tabela":"ESCOLA"],
+						["schemaname":"CADASTRO_UNICO_PESSOAL", "tabela":"FUNCIONARIO"],
+						["schemaname":"CADASTRO_UNICO_PESSOAL", "tabela":"PROFESSOR"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"SERIE"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"MATRICULA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"TURMA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"DISCIPLINA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"SALA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"HORARIO"],
+						["schemaname":"LOGIN", "tabela":"USUARIO"],
+						["schemaname":"LOGIN", "tabela":"GRUPO"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"ATIVIDADE"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"NOTA"],
+						["schemaname":"EDUCACAO_ACADEMICO", "tabela":"FREQUENCIA"],
+						["schemaname":"ADMINISTRACAO_REGISTRO", "tabela":"RELATORIOS"]
+						
+						
+					]
+
+					schemas = ["CADASTRO_UNICO_PESSOAL", "EDUCACAO_ACADEMICO", "LOGIN", "ADMINISTRACAO_REGISTRO"]*/
+					
+							tabelas = sql.rows(" SELECT upper(pg.schemaname) as schemaname, upper(pg.tablename) as tabela, ( " +
 
 							"case " +
 
@@ -235,11 +266,11 @@ class GrupoController {
 							"  and p.grupo_id = "+id+") as permissao_id " +
 
 							"  FROM pg_tables pg " +
-							"	 where upper(schemaname) in ('LOGIN', 'CADASTRO_UNICO_PESSOAL', 'EDUCACAO_ACADEMICO') " +
-							" and upper(tablename) in ('ALUNO', 'PROFESSOR', 'ESCOLA', 'FUNCIONARIO','DISCIPLINA', 'HORARIO', 'MATRICULA', 'SALA', 'SERIE', 'TURMA', 'GRUPO', 'USUARIO', 'ATIVIDADE', 'NOTA') " +
+								 " where upper(schemaname) in ('LOGIN', 'CADASTRO_UNICO_PESSOAL', 'EDUCACAO_ACADEMICO', 'ADMINISTRACAO_REGISTRO') " + 
+							" and upper(tablename) in ('ALUNO', 'PROFESSOR', 'ESCOLA', 'FUNCIONARIO','DISCIPLINA', 'HORARIO', 'MATRICULA', 'SALA', 'SERIE', 'TURMA', 'GRUPO', 'USUARIO', 'ATIVIDADE', 'NOTA', 'FREQUENCIA', 'LOG') " +
 							" order by pg.schemaname");
 
-					schemas = sql.rows("SELECT distinct upper(schemaname) as schemaname FROM pg_tables where schemaname in ('login', 'cadastro_unico_pessoal', 'educacao_academico') " +
+					schemas = sql.rows("SELECT distinct upper(schemaname) as schemaname FROM pg_tables where schemaname in ('login', 'cadastro_unico_pessoal', 'educacao_academico', 'administracao_registro') " +
 							"order by schemaname")
 
 				}catch(SQLException ex){

@@ -398,7 +398,7 @@
 									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="3" checked/> 3 
 								</g:if>
 								<g:else>
-									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="4"/> 3 
+									<input type="checkbox" name="cbHorario" id="cbHorario3" onclick="afixar()" value="3"/> 3 
 								</g:else>
 								</label>
 								

@@ -2,6 +2,9 @@ package br.gov.rn.saogoncalo.academico
 import grails.converters.*
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
+import grails.converters.JSON
+import groovy.json.JsonSlurper
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class SalaController {
 
@@ -22,6 +25,7 @@ class SalaController {
 			if (perm2) {
 
 				Sala salas = Sala.get(id)
+
 				render (view:"/sala/editarSala.gsp", model:[salas:salas])
 			}else{
 				render(view:"/error403.gsp")
@@ -82,6 +86,13 @@ class SalaController {
 					//				ok : "Sala atualizado com sucesso!"
 					//
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+
+					adm.salvaLog(session["usid"].toString().toInteger(), " Atualizada Sala " + salas.id.toString(), "Update", "Sala", date)
+
+					
 					listarMensagem("Sala atualizada com sucesso", "ok")
 				}else{
 
@@ -125,9 +136,16 @@ class SalaController {
 							"  where s.escola.id = ?",[Long.parseLong(session["escid"].toString())])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+
+
+				/*	def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "listar", "listar", "Sala", date)*/
+					
+
 				}
-
-
+				
+				
 				render(view:"/sala/listarSala.gsp", model:[sala:sala, escolas:escolas, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -193,8 +211,12 @@ class SalaController {
 			if (perm2) {
 
 				Sala.deleteAll(Sala.get(id))
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Sala: " + id, "DELETE", "Sala", date)
 
-				//redirect(action:"listar")
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -227,8 +249,27 @@ class SalaController {
 				salaL.escola = escola
 
 
+				//Trecho de tranzação de teste
+			/*	Sala.withTransaction{ status ->
+					try{
+						
+						salaL.save(flush:true)
+						//def x = 78/0
+						listarMensagem("Sala cadastrada com sucesso", "ok")
+						
+					}catch(Exception exp){
+						//salaL.errors.reject( 'Erro em pessoa' )
+						status.setRollbackOnly()
+						listarMensagem("Erro ao salvar", "erro")
+					} 
+				} */
+				
 
 				if (salaL.save(flush:true)){
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), " Salvo Sala " + salaL.id.toString(), "Create", "Sala", date)
 
 					listarMensagem("Sala cadastrada com sucesso", "ok")
 				}else{
@@ -239,9 +280,20 @@ class SalaController {
 					//			])
 					listarMensagem("Erro ao salvar", "erro")
 				}
+
+				/*def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
+				
+				
+
+
 			}else{
 				render(view:"/error403.gsp")
+
 			}
 		}
 	}
+
+	
 }
