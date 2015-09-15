@@ -15,7 +15,9 @@ class BuildLeftMenuController {
 		render  buildPessoalMenu(permissoes) +
 				buildAcademicoMenu(permissoes) +
 				buildProfessorMenu(permissoes)+
-				buildRelatorioFuncionarioMenu(permissoes)
+				buildRelatorioFuncionarioMenu(permissoes) +
+				buildProtocoloMenu(permissoes)
+				
 	}
 
 	def buildPessoalMenu(perm){
@@ -171,6 +173,33 @@ class BuildLeftMenuController {
 
 		return menu
 	}
+	
+	
+	def buildProtocoloMenu(perm){
+		
+				def menu = '';
+				def verificador = false
+		
+				menu ='<li class="treeview"> '+
+						'<a href="#"> '+
+						'<i class="fa fa-briefcase"></i> <span>Protocolo</span> '+
+						'<i class="fa fa-angle-left pull-right"></i> '+
+						'</a> '+
+						'<ul class="treeview-menu"> '
+		
+				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+					menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-clipboard"></i>Setor</a></li>'
+					verificador = true
+				}
+				menu +='</ul> '  +
+				' </li> '
+
+		if (!verificador)
+			menu = ""
+
+		return menu
+	}
+	
 
 
 	def verificaPerm(sch, tab, perm){
