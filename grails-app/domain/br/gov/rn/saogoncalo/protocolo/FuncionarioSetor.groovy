@@ -11,8 +11,8 @@ class FuncionarioSetor {
 	static belongsTo= [setor:Setor , funcionario:Funcionario]
 	
 	static mapping = {
-		table name: "FuncionarioSetor", schema:"cadastro_unico_protocolo"
+		table name: "Funcionario_Setor", schema:"cadastro_unico_protocolo"
 		version false
-		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.funcionarioSetor_id_seq']
+		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.funcionario_Setor_id_seq']
 	}
 }
