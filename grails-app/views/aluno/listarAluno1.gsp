@@ -610,7 +610,7 @@ function mudarCombo(){
 
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNome").value;
 			   
 			   $.ajax({

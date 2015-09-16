@@ -25,11 +25,11 @@
 			document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 		}
 		function salvarPai() {
-			var endereco = "localhost";
+			var endereco = "192.168.1.247";
 			var nome = document.getElementById("iNome").value;
 
-			$
-					.ajax({
+			
+					$.ajax({
 						type : "GET",
 						url : "http://"
 								+ endereco
@@ -53,11 +53,11 @@
 		}
 
 		function salvarMae() {
-			var endereco = "localhost";
+			var endereco = "192.168.1.247";
 			var nome = document.getElementById("iNomeMae").value;
 
-			$
-					.ajax({
+			
+					$.ajax({
 						type : "GET",
 						url : "http://"
 								+ endereco
@@ -645,7 +645,7 @@
 			
 
 			function salvarPai(){
-			   var endereco = "localhost";
+			   var endereco = "192.168.1.247";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -670,7 +670,7 @@
 			}
 			
 			function salvarMae(){
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -697,7 +697,7 @@
 
 			function mudarEscola(){
 		    	  
-				var endereco = "localhost";
+				var endereco = "192.168.1.247";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -724,7 +724,7 @@
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "localhost";
+			  var endereco = "192.168.1.247";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

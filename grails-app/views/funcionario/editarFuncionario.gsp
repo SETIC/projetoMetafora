@@ -120,12 +120,10 @@
 									<select class="form-control" name="vinculo" style="width: 300px">
 										<option value="EFETIVO" selected>EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
-						
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:elseif>
-								
 
 								<g:elseif test="${funcionarios?.lotacao?.vinculo[0] == 'COMISSIONADO'} ">
 									<select class="form-control" name="vinculo" style="width: 300px">
@@ -349,7 +347,7 @@
 
 
 				function mudarSelect(){
-					var endereco = "localhost";
+					var endereco = "192.168.1.247";
 					
 					   var comboCargo = document.getElementById("comboCargo");
 					   comboCargo.options[comboCargo.options.length] = new Option("Buscando cargo", 0);

@@ -42,7 +42,7 @@ class MatriculaController {
 				if (parametro != null || parametro != ""){	
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
-							"    and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.id = m.aluno.id" +
+							"    and p.id = m.aluno.id" +
 							"    and t.anoLetivo = ? "+
 							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')",[ano])
 
@@ -181,7 +181,6 @@ class MatriculaController {
 		}
 	}
 
-
 	def listarMensagem(String msg, String tipo){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -203,6 +202,8 @@ class MatriculaController {
 				def matricula
 				def alunos
 				def escolas
+				tipo= params.tipo
+				msg = params.msg
 				
 				
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
@@ -283,6 +284,7 @@ class MatriculaController {
 			}
 		}
 	}
+	
 	def editarMatricula(long id){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Matricula", act:"listar"])
@@ -399,7 +401,8 @@ class MatriculaController {
 						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matriculaM.id, "CREATE", "Matricula", date)
 	
 
-						listarMensagem("Matrícula realizada com sucesso", "ok")
+						//listarMensagem("Matrícula realizada com sucesso", "ok")
+						redirect(controller: "Matricula", action: "listarMensagem", params:[msg:"Aluno Matriculado com Sucesso!", tipo:"ok"])
 
 					}else{
 

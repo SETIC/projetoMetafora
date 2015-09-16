@@ -136,6 +136,8 @@ class BuildLeftMenuController {
 			menu+='<li><a href="/projetoMetafora/Frequencia/frequencia" ><i class="fa fa-check-square-o"></i> Aula/Frequência</a></li>'
 			verificador = true
 		}
+		
+		
 
 		menu +='</ul>'
 		'</li>'
@@ -161,9 +163,10 @@ class BuildLeftMenuController {
 						'<ul class="treeview-menu"> '
 		
 				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
-					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
+					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Situação</a></li>'
 					verificador = true
 				}
+				
 				
 				menu +='</ul> '  +
 				' </li> '
@@ -189,8 +192,18 @@ class BuildLeftMenuController {
 						'</a> '+
 						'<ul class="treeview-menu"> '
 		
-				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
-					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SITUACAO', perm)){
+					menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-clipboard"></i>Situacao</a></li>'
+					verificador = true
+				}
+				
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+					menu+= '<li><a href="/projetoMetafora/Protocolo/listarProtocolo"><i class="fa fa-clipboard"></i>Protocolo de Documentos</a></li>'
+					verificador = true
+				}
+				
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'TIPO_DOCUMENTO', perm)){
+					menu+= '<li><a href="/projetoMetafora/tipoDocumento/listarTipoDocumento"><i class="glyphicon glyphicon-file"></i>Tipos de Documentos</a></li>'
 					verificador = true
 				}
 				

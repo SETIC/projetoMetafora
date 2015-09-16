@@ -103,9 +103,14 @@
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
 
-                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}
+
+                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}<br>
+
+                      <p style="font-size:12px;">
                       
+                       ${session["user"].split(" ")[0]}
                       
+                      </>
 
                     </p>
                     <p style="font-size: 12px;">
@@ -150,9 +155,13 @@
             </div>
             <div class="pull-left info">
               <p style="margin-top: 10.5px;">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</p>
-              <p style="font-size: 12px;">
-                    	${session["user"].split(" ")[0]}
-                    </p>
+
+                      <p style="font-size:12px;">
+                      
+                       ${session["user"].split(" ")[0]}
+                      
+                      </>
+              
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>
