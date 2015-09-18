@@ -15,6 +15,7 @@ class FuncionarioController {
 	def index() { }
 	
 	def gerarRelatorio(){
+		
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
 		}else{

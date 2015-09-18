@@ -1,16 +1,17 @@
 package br.gov.com.saogoncalo.protocolo
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor
+import br.gov.rn.saogoncalo.protocolo.Observacao
 import br.gov.rn.saogoncalo.protocolo.Protocolo
 import br.gov.rn.saogoncalo.protocolo.Situacao
 import br.gov.rn.saogoncalo.protocolo.TipoDocumento
+import br.gov.rn.saogoncalo.protocolo.Tramite
 
 class ProtocoloController {
 
 	def index() { }
 
 	def salvar(){
-
 
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -30,29 +31,71 @@ class ProtocoloController {
 				protocolo.numero = params.numero.toInteger()
 				protocolo.numeroDocumento = params.numeroDocumento
 				protocolo.assunto = params.assunto
-
 				protocolo.dataProtocolo = params.dataProtocolo
 				protocolo.dataEmissao = params.dataEmissao
 				
 				def funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
-				
-				/*println("Params aqui -- " + params)
-				println("Datas: " + protocolo.dataProtocolo + " - " + protocolo.dataEmissao)
-                */
 				def tipoDocumento = TipoDocumento.get(params.tipoDocumento)
 				def situacao = Situacao.get(params.situacao)
+				
 				protocolo.tipoDocumento  = tipoDocumento
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
-				if (protocolo.save(flush:true)){
-
+				  
+				 if (protocolo.save(flush:true)){
+					Observacao observacao = new Observacao(params)
+					println ("fdd" + params)
+					println ("fdfdf" + params.texto)
+					observacao.texto = params.texto
+					observacao.dataObservacao = new Date()
+					observacao.protocolo = protocolo
+				
+				 if(observacao.save(flush:true)){
+					
+					println("salvou observacao ")
+					println ("observacao" + observacao)
 					listarMensagem("Protocolo cadastrado com sucesso", "ok")
-				}else{
+					
+					}
+				 
+				 else{
+						
+						def erros
+						observacao.errors.each {erros = it}
+						print("erros: "+erros)
+						
+					}
+				
+				 
+				 Tramite tramite = new Tramite()
+				 tramite.funcionarioSetorOrigem = funcionarioSetor
+				 tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
+				 tramite.protocolo = protocolo
+				 tramite.dataDisponibilizacao = new Date()
+				
+				if(tramite.save()){
+					println("tramite salvo" + tramite)
+					
+					def ok
+					redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])
+					
+					}
+				
+				else{
+					def erros
+					tramite.errors.each {erros = it}
+					print("erros: "+erros)
+					
+					}
+				  
+				 }else{
+				
 					def erros
 					protocolo.errors.each {erros = it}
 					print("erros: "+erros)
 					listarMensagem("Erro ao salvar", "erro")
 				}
+				
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -85,7 +128,6 @@ class ProtocoloController {
 			}
 		}
 	}
-	
 	
 	
 	def editar(long id){
@@ -194,7 +236,41 @@ class ProtocoloController {
 		}
 	}
 
+     def verInfoProtocolo(long id){
+		 
+		 if((session["user"] == null) || (session["pass"] == null) ){
+			 render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		 }else{
+			 def user = session["user"]
+			 def pass = session["pass"]
+ 
+			 def usuario = new UsuarioController()
+ 
+			 def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
+			 def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+ 
+			 if (perm1 || perm2) {
+              
+				
+		        def funcionarioSetor
+				
+				
+			    Protocolo protocolos = Protocolo.get(id)
+			   def tramites = Tramite.findAllByProtocolo(protocolos)
+			 
+			     def observacoes = Observacao.findAllByProtocolo(protocolos)
+                //funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
+				
+				render (view:"/protocolo/verInfoProtocolo.gsp", model:[protocolos:protocolos , tramites:tramites, observacoes:observacoes])
+			     
+			 }else{
+				 render(view:"/error403.gsp")
+			 }
+		 
+		 }
+     }
 
+			 
 	def listarProtocolo(){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -213,7 +289,8 @@ class ProtocoloController {
 				def protocolo
 				def situacoes
 				def tipoDocumentos
-				def funcionarioSetor
+				def funcionariosSetor
+				def funcionarioSetorDestino
 				
                 
 				if (session["escid"] == 0) {
@@ -221,32 +298,31 @@ class ProtocoloController {
 					protocolo = Protocolo.findAll()
 					situacoes = Situacao.findAll()
 					tipoDocumentos = TipoDocumento.findAll()
-					println("session "+session["pesid"])
+									
+				    funcionariosSetor = FuncionarioSetor.executeQuery(" select fs from FuncionarioSetor fs, Pessoa p, Usuario u " +
+															          " where p.id = fs.funcionario.id " +
+																	  "   and u.pessoa.id = p.id " + 
+																	  "   and p.id = " + session["pesid"])	
 					
-					println(" Protocolo: " + protocolo)
-					println(" Situações: " + situacoes)
-					println(" TipoDocumentos: " + tipoDocumentos)
 					
-				    funcionarioSetor = FuncionarioSetor.executeQuery(" select fs from FuncionarioSetor fs ")
-					 
-					
+					funcionarioSetorDestino = FuncionarioSetor.findAll()
+		
 				}else{
-				
-				
 				
 					protocolo = Protocolo.findAll()
 					situacoes = Situacao.findAll()
 					tipoDocumentos = TipoDocumento.findAll()
 					
-					println ("session" +session["pesid"])
-					println(" Protocolo: " + protocolo)
-					println(" Situações: " + situacoes)
-					println(" TipoDocumentos: " + tipoDocumentos)
+					funcionariosSetor = FuncionarioSetor.executeQuery(" select fs from FuncionarioSetor fs, Pessoa p, Usuario u " +
+															          " where p.id = fs.funcionario.id " +
+																	  "   and u.pessoa.id = p.id " + 
+																	  "   and p.id = " + session["pesid"])
 					
-					funcionarioSetor = FuncionarioSetor.findAll()
+					funcionarioSetorDestino = FuncionarioSetor.findAll()
 					
-				render(view:"/protocolo/listarProtocolo.gsp", model:[protocolo:protocolo, situacoes:situacoes, funcionarioSetor:funcionarioSetor, tipoDocumentos:tipoDocumentos, perm2:perm2])
-				}
+				}	
+				render(view:"/protocolo/listarProtocolo.gsp", model:[protocolo:protocolo, situacoes:situacoes, funcionariosSetor:funcionariosSetor, funcionarioSetorDestino:funcionarioSetorDestino , tipoDocumentos:tipoDocumentos, perm2:perm2])
+				
 				}else{
 				render(view:"/error403.gsp")
 			}

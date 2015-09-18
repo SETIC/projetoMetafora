@@ -130,11 +130,10 @@
 								</select>
 							</div>
 						</div>
+						</select> 
 						<br>
-						</g:each>
-						</select> <br>
 					</fieldset>
-					<div style="margin: 0 15% auto">
+					<div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar
 						</button>
