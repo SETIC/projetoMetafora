@@ -1,14 +1,10 @@
 package br.gov.rn.saogoncalo.pessoa
 import groovy.sql.Sql
 
-
-import br.gov.rn.saoconcalo.organizacao.Cargo
-import br.gov.rn.saoconcalo.organizacao.Lotacao
-import br.gov.rn.saogoncalo.academico.Disciplina
-import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
-
 import java.sql.Driver
 
+import br.gov.rn.saogoncalo.academico.Disciplina
+import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
@@ -208,7 +204,7 @@ class FuncionarioController {
 			if (perm2) {
 				Funcionario funcionarios = Funcionario.get(id)
 
-				cargo=Cargo.findAll()
+				cargo = Cargo.findAll()
 
 				lotacao = Lotacao.findByFuncionario(funcionarios)
 
@@ -217,8 +213,6 @@ class FuncionarioController {
 				def charNoite = ""
 
 				if(lotacao != null) {
-
-					println ("lotacao "+lotacao)
 
 					if( lotacao.turno.toString().contains("M")){
 
@@ -237,7 +231,19 @@ class FuncionarioController {
 
 
 
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite])
+				Cargo cargoProfessor = Cargo.get(lotacao.cargo.id)
+				def dlpp, dlppl, disc
+				Professor professores = new Professor()
+
+				if (cargoProfessor.cargo == "PROFESSOR" || cargoProfessor.cargo == "PROFESSOR PI G") {
+					professores = Professor.get(id)
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professores)
+					dlppl =  dlpp.disciplina.id
+					disc  = Disciplina.findAll()
+				}
+
+
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite, professores:professores, dlppl:dlppl, disc:disc])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -311,7 +317,8 @@ class FuncionarioController {
 
 
 				//def funcionarios = Funcionario.findAll()
-
+				
+				def professor = Professor.get(params.id)
 
 				if(funcionario.save(flush:true)){
 
@@ -394,6 +401,106 @@ class FuncionarioController {
 						println("Lotação - " + lotacao)
 						listarMensagem("Funcionário atualizado com sucesso!", "ok")
 					}
+
+
+					// ----------- disciplina lecionada por professor
+
+
+					def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professor)
+					def dp = dlpp.disciplina.id
+					def disciplinaNovo = params.disciplinaLecionadaPorProfessor
+					def idDisc
+
+
+					println(" disciiplinaNovo - " + disciplinaNovo)
+
+					if (disciplinaNovo.getClass() != java.lang.String)
+					{
+
+						for (int i=0; i<disciplinaNovo.size(); i++){
+
+							idDisc = disciplinaNovo[i]
+
+							if (!dp.contains(idDisc.toLong())){
+								DisciplinaLecionadaPorProfessor professorDisciplina = new DisciplinaLecionadaPorProfessor()
+
+								def dpi = Disciplina.get(idDisc)
+
+								professorDisciplina.professor = professor
+								professorDisciplina.disciplina = dpi
+								professorDisciplina.data = new Date()
+								professorDisciplina.situacao = "ATIVA"
+
+								professorDisciplina.save(flush:true)
+
+
+							}
+						}
+
+
+
+					}else{
+
+
+						idDisc = disciplinaNovo
+
+						if (!dp.contains(idDisc.toLong())){
+							DisciplinaLecionadaPorProfessor professorDisciplina = new DisciplinaLecionadaPorProfessor()
+
+							def dpi = Disciplina.get(idDisc)
+
+							professorDisciplina.professor = professor
+							professorDisciplina.disciplina = dpi
+							professorDisciplina.data = new Date()
+							professorDisciplina.situacao = "ATIVA"
+
+							professorDisciplina.save(flush:true)
+
+
+						}
+
+
+					}
+
+
+
+					if (disciplinaNovo.getClass() != java.lang.String) {
+						for (int i=0; i<dp.size(); i++){
+
+							def cont = 0
+							for (int j = 0;j<disciplinaNovo.size(); j++) {
+								if (dp[i].toString() == disciplinaNovo[j].toString()){
+									cont = cont+1
+								}
+								idDisc = dp[i]
+							}
+
+							if (cont == 0){
+								def disc = Disciplina.get(idDisc)
+								def dlppl = DisciplinaLecionadaPorProfessor.findByDisciplinaAndProfessor(disc, professor)
+
+								dlppl.delete()
+							}
+						}
+					}else {
+						for (int i=0; i<dp.size(); i++){
+							def cont = 0
+							if (dp[i].toString() == disciplinaNovo){
+								cont = cont+1
+							}
+							idDisc = dp[i]
+
+							if (cont == 0){
+
+								def disc = Disciplina.get(idDisc)
+								def dlppl = DisciplinaLecionadaPorProfessor.findByDisciplinaAndProfessor(disc, professor)
+
+								dlppl.delete()
+							}
+						}
+					}
+
+					// -----------------------------------------------
 
 
 
@@ -629,7 +736,7 @@ class FuncionarioController {
 							def professor = new Professor()
 							professor.identificacao = ""
 							professor.funcionario = funcionario
-							
+
 							if(professor.save(flush:true)){
 								DisciplinaLecionadaPorProfessor disciplinaProfessor = new DisciplinaLecionadaPorProfessor()
 								Disciplina disciplina

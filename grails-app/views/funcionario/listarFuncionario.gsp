@@ -273,18 +273,19 @@ function printDiv(id)
 													</label>
 												</div>
 												</br>
-												<div class="form-heading">
-													<label>Estado Civil</label>
-													<div class="controls">
-														<select class="form-control" name="estadoCivil">
-															<option value="null">Selecione...</option>
-															<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-															<option value="CASADO(A)">CASADO(A)</option>
-															<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-															<option value="VIÚVO(A)">VIÚVO(A)</option>
-														</select>
-													</div>
+											</div>
+											<div class="form-heading">
+												<label>Estado Civil</label>
+												<div class="controls">
+													<select class="form-control" name="estadoCivil">
+														<option value="null">Selecione...</option>
+														<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+														<option value="CASADO(A)">CASADO(A)</option>
+														<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+														<option value="VIÚVO(A)">VIÚVO(A)</option>
+													</select>
 												</div>
+											</div>
 												<br>
 												<div class="form-heading">
 													<label>Carga Horária</label>
