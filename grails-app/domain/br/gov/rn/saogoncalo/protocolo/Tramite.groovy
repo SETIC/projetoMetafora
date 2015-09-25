@@ -13,7 +13,7 @@ class Tramite {
 	
 	static constraints = {
 		dataDisponibilizacao blank:false, nullable:true
-		dataRecebimento blank:false, nullable:true
+		dataRecebimento blank:true, nullable:true
 		
 	}
 	

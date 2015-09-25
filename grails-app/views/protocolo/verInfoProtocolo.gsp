@@ -133,24 +133,17 @@ function printDiv(id)
 						</div>
 						<br>
 						
-						
-						
-						
-						
-						<div class="form-group">
-						
+				<div class="form-group">
 				<div class="box box-white"> 
-				<label>Tramites</label>
 				<table id="listarTramites"
 					class="table table-bordered ">
+					 <legend class="scheduler-border">Tramitação</legend>
 					<thead>
 						<tr>
-						 
 							<th>Data de Disponibilização</th>
 							<th>Data de Recebimento</th>
-							<th>Funcionario Setor origem</th>
-                            <th>Funcionario Setor destino</th>
-
+							<th>Funcionário Setor Origem</th>
+                            <th>Funcionário Setor Destino</th>
 						</tr>
 						<g:each in='${tramites?}'>
 						<tr class ="info">
@@ -164,36 +157,29 @@ function printDiv(id)
 								<td>
 									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome} -${ it.funcionarioSetorOrigem.setor.nome}
 								</td>
-
 								<td>
 									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome} -${ it.funcionarioSetorOrigem.setor.nome}
 								</td>
-
 							</tr>
-						
 					  </g:each>	
-					</thead>
-						
+					 </thead>
 					</table>	
 					</br>
 					</br>
-									
+								
 				<table id="listarObservacoes"
 					class="table table-bordered">
+					 <legend class="scheduler-border">Observações</legend>
 					<thead>
 						<tr>
-							<th>Observações</th>
-							
+							<th>Observação</th>
 							<th>Data</th>
-						
-					 </tr>
+					    </tr>
 					<g:each in='${observacoes?}'>
-					 
 					 <tr class="success">
 					   <td>
 						${it.texto} 
 					 </td>
-
 					<td>
 					  <g:formatDate format="dd/MM/yyyy"
 					date="${it.dataObservacao}" /></td>
@@ -201,15 +187,35 @@ function printDiv(id)
 					 </g:each>
 					</thead>
 					</table>
-						
-						
+										
+					<table id="listarAnexos"
+					class="table table-bordered">
+					 <legend class="scheduler-border">Anexos</legend>
+					<thead>
+						<tr>
+							<th>Nome do Arquivo</th>
+							<th>Data</th>
+							<th>Tamanho</th>
+					    </tr>
+					<g:each in='${observacoes}'>
+					 <tr class="success">
+					   <td>
+						${} 
+					 </td>
+					<td>
+					  <g:formatDate format="dd/MM/yyyy"
+					date="${}" /></td>
+					</tr>
+					 </g:each>
+					</thead>
+					</table>
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat"
 							onClick="printDiv('print')">
 							<i class="glyphicon glyphicon-print"></i> Imprimir
 						</button>
-						<ul style="display: inline-block; margin-left: -30px">
+						 <ul style="display: inline-block; margin-left: -30px">
 							<li class="btn btn-info btn-flat"><a
 								href="/projetoMetafora/funcionario/listar/">Voltar</a></li>
 						 </ul>

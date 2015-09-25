@@ -99,10 +99,13 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+		
     }
     production {
+		
         grails.logging.jul.usebridge = false
 		grails.serverURL = "http://192.168.1.247:8080/projetoMetafora"
+		
 	
         // TODO: grails.serverURL = "http://www.changeme.com"
     }

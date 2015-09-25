@@ -62,7 +62,6 @@ function deletar(id) {
 							<th>Numero do Documento</th>
 							<th>Assunto</th>
 
-
 						</tr>
 					</thead>
 					<tbody>
@@ -114,6 +113,17 @@ function deletar(id) {
 					</tbody>
 				</table>
 			</div>
+			
+			
+			<div class='container'>
+        <p>
+            Select File: <input type='file' id='file' name="arquivo"> 
+            <input type='button' value='Upload!'>
+        </p>
+        <div class='progress_outer'>
+            <div id='_progress' class='progress'></div>
+        </div>
+    </div>
 
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
@@ -141,7 +151,7 @@ function deletar(id) {
 									Protocolo</h4>
 							</div>
 							<div class="modal-body">
-								<g:form controller="Protocolo" action="salvar" class="form">
+								<g:form controller="Protocolo" action="salvar" class="form" enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
 											<label>Numero</label>
@@ -220,7 +230,6 @@ function deletar(id) {
 												</select>
 											</div>
 										</div>
-										
 									<br>
                                     
                                     <div class="form-heading">
@@ -259,37 +268,22 @@ function deletar(id) {
 											<label>Observação</label>
 											<div>
 												<textarea rows="3" class="form-control" name="texto"
-													placeholder="Insira uma observação relacionada ao protocolo"></textarea>
+												placeholder="Insira uma observação relacionada ao protocolo"></textarea>
 											</div>
 										</div>
 										<br>
 										
-							         <div class="form-group">
-											<label for="iProtocolo" class="col-sm-4 control-label">Data
-												da Observação</label>
-											<div class="col-sm-16">
-												<g:formatDate format="yyyy-MM-dd" date="${date}" />
-												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataObservacao"
-													name="dataObservacao" required="true" />
-											</div>
-										</div>
-										</br>
-										 <div class="form-group">
-											<label for="itexto" class="col-sm-4 control-label">Anexo
-												</label>
-											
-                                       
-                                        
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-    <span class="btn btn-primary btn-file"><span class="fileupload-new">Select file</span>
-    <span class="fileupload-exists">Change</span>         <input type="file" /></span>
-    <span class="fileupload-preview"></span>
-    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
-  </div>
-   </div>
-                                        </div>
-									</fieldset>
+										<label>Anexo</label>
+										
+										<p>
+							            Select File: <input type='file' id='file' name="arquivo" > 
+							            <input type='button' value='Upload!'>
+							        </p>
+										 <button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
+										 <i class="fa fa-chevron-circle-right"></i></button>
+									
+									
+									 </fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
 											<i class="fa fa-save"></i> Cadastrar
@@ -298,6 +292,6 @@ function deletar(id) {
 									</div>
 								</g:form>
 							</g:if>
-					</section>
-				 </body>
+					 </section>
+				  </body>
 				</html>

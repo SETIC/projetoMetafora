@@ -276,7 +276,6 @@ function printDiv(id)
 			</div>
 
 
-
 			<script type="text/javascript">
 			
 				function mudarEscola(){

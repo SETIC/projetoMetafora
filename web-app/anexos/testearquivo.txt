@@ -1,0 +1,153 @@
+https://spring.io/guides/gs/uploading-files/
+https://lucasaquiles.wordpress.com/2010/11/17/upload-de-arquivos-com-groovy-e-grails/
+http://www.tecmundo.com.br/educacao/86868-dinheiro-54-cursos-online-tecnologia-gratuitos-portugues.htm
+
+
+
+
+=====================================================================================================
+
+
+
+
+                          def upload = { arquivoAnexo ->
+					  
+			  def nomeOriginal = params.arquivo
+			  arquivoAnexo.arquivo = nomeOriginal
+			  
+			  def f = request.getFile("arquivo")
+			  
+			  if(!f.empty){
+				// f.transferTo(new File("/etc/anexos/" + params.arquivo))
+				 f.transferTo(new File("C:/imagens/" + params.arquivo))
+			  
+				}else{
+				 listarMensagem("Nao foi possivel tranferir o arquivo")
+			  }
+				  
+				 }
+
+  upload(arquivoAnexo)
+
+==================================================================================================
+
+ANEXO
+
+
+ <div class="form-group">
+											<label>Anexo</label>
+											<input type="file" id="files" name="arquivo" multiple enctype="multipart/form-data"/>
+                                            <output id="list"></output>
+		                                  
+		                                    <script type="text/javascript"> 
+
+										 function handleFileSelect(evt) {
+
+											 
+											var files = evt.target.files;
+										    var tamanhoMax = 20480 * 1024;
+										    var output = [];
+										    var caminho = "/etc/anexos/";
+                                           
+										   /* var f = evt.target.files[0]; 
+
+                                               if (f) {
+										        var r = new FileReader();
+										        r.onload = function(e) { 
+										         var caminho = document.getElementById("fileinput").value;
+										         document.getElementById("sample_arquivo").value = caminho;      
+										        }
+										        
+										        r.readAsText(f);
+										    }
+										    */
+										    for (var i = 0, f; f = files[i]; i++) {
+
+										    	 if(f.size > tamanhoMax){ 
+										    		alert('Tamanho do arquivo superior ao permitido de 20MB'); 
+										    	 }
+
+										    else{ 
+											    
+								             output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+								                  f.size, ' bytes, ultima modificação: ',
+                                                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+                                            
+                                          
+								    		 }
+										
+										 } 
+                                            document.getElementById('list').innerHTML = '<ul>' + output.join('') +  '</ul>' ;
+										   
+										  }
+										  
+										   document.getElementById('files').addEventListener('change', handleFileSelect, false);
+										
+									 </script>
+
+============================================================================================
+
+http://grails.asia/grails-example-application-simple-document-management-system
+http://grails.github.io/grails-doc/1.3.8/guide/single.html#8. The Service Layer
+http://coderberry.me/blog/2010/10/12/uploading-files-in-grails/
+http://www.ibm.com/developerworks/br/library/j-grails06099/
+
+==========================================================================================================================
+
+
+
+metodo de salvar anexo
+
+
+
+
+                                        def file = request.getFile('arquivo')
+					arquivoAnexo.filename = file.originalFilename
+					arquivoAnexo.fullPath = grailsApplication.config.uploadFolder + arquivoAnexo.filename
+					file.transferTo(new File(arquivoAnexo.fullPath))
+				   
+				       def criarDiretorio = servletContext.getRealPath("/")
+				       def userDir = new File(criarDiretorio, "c:/anexos/")
+				       userDir.mkdirs()
+				       println("diretorio criado")
+						 
+				     file.transferTo( new File( userDir, file.originalFilename))
+				    arquivoAnexo.filename = file.originalFilename
+				   println ("ContentType: ${file.contentType}")
+
+=================================================================================================
+
+
+
+
+ /*def upload() {
+		
+		def file = request.getFile('arquivo')
+		
+		if(file.empty) {
+			
+			listarMensagem("arquivo vazio")
+		
+			}else{
+	        
+			 // Anexo anexo = new Anexo()
+			  def anexo = Anexo.get(params.anexo)
+			  anexo.filename = file.originalFilename
+			  anexo.fullPath = grailsApplication.config.uploadFolder + anexo.filename
+			  file.transferTo(new File(anexo.fullPath))
+			 
+			   def criarDiretorio = servletContext.getRealPath("/")
+			   def userDir = new File(criarDiretorio, "c:/anexos/")
+			   userDir.mkdirs()
+			   println("diretorio criado")
+			   file.transferTo( new File( userDir, file.originalFilename))
+			   anexo.filename = file.originalFilename
+			   anexo.save()
+		
+		}
+		def ok
+			redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])
+	
+	}
+*/
+				   
