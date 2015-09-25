@@ -8,12 +8,8 @@ class Tramite {
 	Date dataRecebimento
 	FuncionarioSetor funcionarioSetorOrigem
 	FuncionarioSetor funcionarioSetorDestino
-	
 
-	
-	
-	static hasmany = [protocolo:Protocolo]
-	static belongsTo = [responsavel:Responsavel,protocolo:Protocolo ]
+	static belongsTo = [protocolo:Protocolo ]
 	
 	
 	static constraints = {
@@ -23,7 +19,7 @@ class Tramite {
 	}
 	
 	static mapping = {
-		table name: "Tramite", schema:"cadastro_unico_protocolo"
+		table name: "tramite", schema:"cadastro_unico_protocolo"
 		version false
 		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.tramite_id_seq']
 	}

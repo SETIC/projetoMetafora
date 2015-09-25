@@ -29,10 +29,10 @@ class SetorController {
 				if (session["escid"] == 0) {
 					setor = Setor.findAll()
 					funcionarios = Funcionario.executeQuery("select f from Funcionario f " + 
-                                                            " where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
+                                                            " where f.id not in (select fs.funcionario.id from Funcionario_Setor fs)")
 				}else{
 					setor = Setor.findAll()
-					funcionarios = Funcionario.executeQuery("select f from Funcionario f where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
+					funcionarios = Funcionario.executeQuery("select f from Funcionario f where f.id not in (select fs.funcionario.id from Funcionario_Setor fs)")
 				}
 
 				render(view:"/setor/listarSetor.gsp", model:[setor:setor, perm2:perm2, funcionarios:funcionarios])

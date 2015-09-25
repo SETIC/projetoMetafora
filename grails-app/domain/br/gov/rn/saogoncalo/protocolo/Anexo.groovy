@@ -3,7 +3,6 @@ package br.gov.rn.saogoncalo.protocolo
 class Anexo {
 	String arquivo	
 	Date dataAnexo
-	double tamanho
 	
 	
 	static belongsTo = [protocolo:Protocolo]
@@ -12,7 +11,6 @@ class Anexo {
 	static constraints = {
 		arquivo blank:false, nullable:false
 		dataAnexo blank:false, nullable:false
-		tamanho blank:false, nullable:false
 	}
 	
 	static mapping = {

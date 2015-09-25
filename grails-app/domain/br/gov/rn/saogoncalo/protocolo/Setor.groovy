@@ -14,7 +14,7 @@ class Setor {
 	}
 	
 	static mapping = {
-		table name: "Setor", schema:"cadastro_unico_protocolo"
+		table name: "setor", schema:"cadastro_unico_protocolo"
 		version false
 		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.setor_id_seq']
 	}

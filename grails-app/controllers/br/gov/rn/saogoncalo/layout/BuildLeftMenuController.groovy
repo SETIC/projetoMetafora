@@ -187,8 +187,12 @@ class BuildLeftMenuController {
 						'</a> '+
 						'<ul class="treeview-menu"> '
 		
-				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
 					menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-clipboard"></i>Setor</a></li>'
+					verificador = true
+				}
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+					menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-clipboard"></i>Pendentes</a></li>'
 					verificador = true
 				}
 				menu +='</ul> '  +

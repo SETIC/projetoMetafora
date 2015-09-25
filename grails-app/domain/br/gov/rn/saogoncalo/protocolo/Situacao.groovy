@@ -4,8 +4,6 @@ class Situacao {
 	String nome	
 	String tipo
 
-	
-	
 	static hasMany =[protocolo:Protocolo]
 	
 	static constraints = {
