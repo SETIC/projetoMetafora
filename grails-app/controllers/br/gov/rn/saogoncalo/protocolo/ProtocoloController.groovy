@@ -36,4 +36,29 @@ class ProtocoloController {
 			}
 		}
 	}
+	
+	def aceitarProtocolos(long id) {
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
+
+			if (perm1 || perm2) {
+				
+				def tramite = Tramite.get(id)
+				tramite.dataRecebimento = new Date()
+				tramite.save(flush:true)
+				
+				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2,tramite:tramite])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
 }
