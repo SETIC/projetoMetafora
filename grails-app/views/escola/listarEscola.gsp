@@ -284,11 +284,7 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>					
-									
-									
-									
 								</fieldset>
-								
 									<button type="submit" class="btn btn-primary btn-flat"> Cadastrar</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 						

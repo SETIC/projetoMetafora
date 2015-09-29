@@ -1,0 +1,33 @@
+comando:renomear variaveis---ctrl + R com o cursor em cima da variavel
+identaçao: alt + shift + i ou l
+
+
+cap.1 
+primeiro passo da refatoraçao
+-criar um conjunto de testes.
+obs:vale a pena gastar o tempo necessario para implementar
+os testes, pois eles nos darao segurançao para alterar o programa mais tarde.
+obs: antes de começar a refatorar crie seus testes.
+
+-  se o metodo é longo entao procure decompo-lo em partes menores para
+   que fique mais gerenciavel, facil de trabalhar e mover.
+   obs:mova os blocos de codigo para classes mais apropriadas evitando a duplicaçao de codigo.
+   obs: para a remoçao do bloco de codigo tenha atençao para variaveis locais e parametros
+   onde tera que ser observado se a mesma sera ou na modificada ao logo do metodo.
+   no exemplo em questao as variaveis cada(local nao modificada) e estaQuantia(local modificada pelo metodo)
+   entao aqui vale o seguinte: posso passar qualquer variavel nao modificada para um parametro. 
+   ja as modificadas estas terao mais atençao, pois ela sera alterada a cada interaçao do comando switch e 
+   portanto será usada como retorno do novo metodo.
+
+
+- um metodo deve esta no objeto cujos dados ele usa.
+  o metodo quantiaDe que esta no classe cliente sera movido para a classes locaçao.
+
+- substituir variavel temporaria por consulta
+-é uma ma ideia fazer um switch baseado em um atributo de outro objeto. entao é bom usar o polimorfismo e usar os atributos
+do proprio objeto.
+
+cap2- principios da refatoraçao
+-refatore  quando precisar consertar uma falha.
+-enquanto revisa o codigo
+   

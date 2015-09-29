@@ -120,12 +120,10 @@
 									<select class="form-control" name="vinculo" style="width: 300px">
 										<option value="EFETIVO" selected>EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
-						
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
 								</g:elseif>
-								
 
 								<g:elseif test="${funcionarios?.lotacao?.vinculo[0] == 'COMISSIONADO'} ">
 									<select class="form-control" name="vinculo" style="width: 300px">

@@ -285,8 +285,6 @@ class SalaController {
 				/*def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
-				
-				
 
 
 			}else{

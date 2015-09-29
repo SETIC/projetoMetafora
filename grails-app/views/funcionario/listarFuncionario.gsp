@@ -226,7 +226,6 @@ function printDiv(id)
 												<div class="controls">
 													<select class="form-control selectpicker"
 														data-live-search="true" name="cargoId">
-
 														  <g:each in="${cargos}">
 															<option value="${it.id}">
 																${it.cargo}

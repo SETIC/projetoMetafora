@@ -641,11 +641,11 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-
+                   
 
 					println("Pessoa --- " + params)
 
-
+                       
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()

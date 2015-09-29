@@ -80,6 +80,7 @@ class LayoutController {
 
 
 		//verificar com matriculas
+
 		alunoByEscola = sql.rows("select count(pe.id) total, pe.escid, (select ps.nome from cadastro_unico_pessoal.pessoa as ps " +
 		    " where ps.id = pe.escid) as escola,(select count(pp.id) from cadastro_unico_pessoal.pessoa as pp, cadastro_unico_pessoal.aluno as a, " +
 			" educacao_academico.matricula as m where a.id = pp.id " +

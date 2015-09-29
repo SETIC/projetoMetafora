@@ -10,7 +10,8 @@ class Tramite {
 	static belongsTo = [protocolo:Protocolo]
 	
 	static constraints = {
-		dataDisponibilizacao blank:false, nullable:false
+
+		dataDisponibilizacao blank:false, nullable:true
 		dataRecebimento blank:true, nullable:true
 		
 	}
