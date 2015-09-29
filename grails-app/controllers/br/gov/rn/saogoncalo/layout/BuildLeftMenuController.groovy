@@ -200,14 +200,16 @@ class BuildLeftMenuController {
 			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-clipboard"></i>Situacao</a></li>'
 			verificador = true
 		}
-
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
 			menu+= '<li><a href="/projetoMetafora/Protocolo/listarProtocolo"><i class="fa fa-clipboard"></i>Protocolo de Documentos</a></li>'
 			verificador = true
 		}
-
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'TIPO_DOCUMENTO', perm)){
 			menu+= '<li><a href="/projetoMetafora/tipoDocumento/listarTipoDocumento"><i class="glyphicon glyphicon-file"></i>Tipos de Documentos</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+			menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-clipboard"></i>Pendentes</a></li>'
 			verificador = true
 		}
 

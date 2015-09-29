@@ -27,6 +27,7 @@
 			<name>.link_to_grails_plugins</name>
 			<type>2</type>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<location>C:/Users/ieber.moura/Documents/workspace-ggts-3.6.3.RELEASE/projetoMetafora/target/work/plugins</location>
 =======
 
@@ -34,6 +35,10 @@
 			</location>
 
 >>>>>>> origin/protocJadson
+=======
+
+			<location>C:/Users/david.allysson/Documents/workspace-ggts-3.6.1.RELEASE/projetoMetafora/target/work/plugins</location>
+>>>>>>> origin/protocDavid
 		</link>
 	</linkedResources>
 </projectDescription>

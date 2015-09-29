@@ -8,6 +8,7 @@ class Tramite {
 	FuncionarioSetor funcionarioSetorDestino
 
 	static belongsTo = [protocolo:Protocolo]
+
 	
 	static constraints = {
 

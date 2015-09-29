@@ -11,15 +11,14 @@ class Protocolo {
 	String assunto
 	FuncionarioSetor funcionarioSetor
 			
-	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao ]
+	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao]
 	static hasMany = [anexo:Anexo, observacao: Observacao , tramite:Tramite]
-	
+
 	static constraints = {
 		numero blank:false, nullable:false
 		dataProtocolo blank:false, nullable:false
 		dataEmissao blank:false, nullable:false   
 		assunto blank:false, nullable:false
-		
 	}
 	
 	static mapping = {
