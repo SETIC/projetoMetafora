@@ -307,7 +307,6 @@ class ProfessorController {
 
 				}
 				
-				
 
 				if (disciplinaNovo.getClass() != java.lang.String) {
 					for (int i=0; i<dp.size(); i++){

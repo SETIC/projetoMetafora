@@ -61,7 +61,6 @@ function deletar(id) {
 							<th>Data da Emissao</th>
 							<th>Numero do Documento</th>
 							<th>Assunto</th>
-
 						</tr>
 					</thead>
 					<tbody>
@@ -114,17 +113,6 @@ function deletar(id) {
 				</table>
 			</div>
 			
-			
-			<div class='container'>
-        <p>
-            Select File: <input type='file' id='file' name="arquivo"> 
-            <input type='button' value='Upload!'>
-        </p>
-        <div class='progress_outer'>
-            <div id='_progress' class='progress'></div>
-        </div>
-    </div>
-
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 				<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -258,7 +246,6 @@ function deletar(id) {
 														<option value="${it.id}">
 															${it.nome}
 														</option>
-
 													</g:each>
 												</select>
 											</div>
@@ -272,18 +259,14 @@ function deletar(id) {
 											</div>
 										</div>
 										<br>
-										
 										<label>Anexo</label>
-										
 										<p>
-							            Select File: <input type='file' id='file' name="arquivo" > 
-							            <input type='button' value='Upload!'>
-							        </p>
-										 <button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
-										 <i class="fa fa-chevron-circle-right"></i></button>
+							            <input type='file' id='file' name="arquivo" multiple enctype="multipart/form-data" multiple="multiple"> 
+							           </p>
+										 <%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
+										 <i class="fa fa-chevron-circle-right"></i></button> --%>
 									
-									
-									 </fieldset>
+									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
 											<i class="fa fa-save"></i> Cadastrar

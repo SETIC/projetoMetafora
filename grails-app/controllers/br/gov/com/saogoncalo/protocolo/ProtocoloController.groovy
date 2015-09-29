@@ -1,4 +1,8 @@
 package br.gov.com.saogoncalo.protocolo
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.protocolo.Anexo
 import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor
@@ -7,9 +11,8 @@ import br.gov.rn.saogoncalo.protocolo.Protocolo
 import br.gov.rn.saogoncalo.protocolo.Situacao
 import br.gov.rn.saogoncalo.protocolo.TipoDocumento
 import br.gov.rn.saogoncalo.protocolo.Tramite
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
+
+import com.sun.corba.se.impl.oa.poa.MultipleObjectMap
 
 
 
@@ -62,9 +65,7 @@ class ProtocoloController {
 						println("salvou observacao ")
 						println ("observacao" + observacao)
 						listarMensagem("Protocolo cadastrado com sucesso", "ok")
-					}
-
-					else {
+					}else{
 
 						def erros
 						observacao.errors.each {erros = it}
@@ -73,44 +74,67 @@ class ProtocoloController {
 
 					println("parametros aqui" + params)
                     
-					MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
+					
+					/*MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
 					CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("arquivo");
+					//Suponha que haja um campo de entrada de arquivo com nome ProfilePic */
+				
+					
+					MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
+					def List <CommonsMultipartFile> arquivoList = params.list ('arquivo')
+					 arquivoList.each{
+					  
+					println("nome do arquivo: " + arquivoList.originalFilename)
 					
 					
-					def fi = request.getFile('arquivo')
+					/*for(int i = 0 ;  i <  arquivoList.originalFilename.size(); i++){
+						println ( arquivoList.originalFilename[i])
+						println ("parametros akiiiiiiiiii" +params.arquivo)*/
+						
+						/*for(MultipartFile multipartFile : arquivo) {
+							
+						String fileName = multipartFile.getOriginalFilename();
+						fileNames.add(fileName);
+						println ("parametros akiiiiiiiiii" +params.arquivo)
+						*/
+					 }
+				
+					
+					 def fi = request.getFile('arquivo')
 					 if(!fi.isEmpty()){
-						 //println("fiiiiiiiii aki" + arquivo)
-
 						Anexo anexo = new Anexo(params)
+						
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						anexo.arquivo =  fil.uploadFile(fi,originalFilename,"/anexos")
+						anexo.arquivo =  fil.uploadFile(fi,fi.originalFilename,"/anexos")
 						anexo.dataAnexo =  new Date()
 						anexo.protocolo = protocolo
 
 						if(anexo.save(flush:true)){
-
-
 							println("anexo salvo")
 						}
-					}else{
+						
+					 	}else{
 
 						def erros
 						anexo.errors.each {erros = it}
 						print("erros: "+erros)
-					}
+					  }
+					 
 
 					Tramite tramite = new Tramite()
 					tramite.funcionarioSetorOrigem = funcionarioSetor
 					tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
 					tramite.protocolo = protocolo
 					tramite.dataDisponibilizacao = new Date()
+					
+					if(tramite.save(flush:true)){
 
-					if(tramite.save()){
-
+						println("Dado -- " + tramite.dataDisponibilizacao)
 						println("tramite salvo" + tramite)
+						println("parametros do tramite" +protocolo)
 
-						def ok
-						redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])
+						/*def ok
+						redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])*/
 					}
 
 					else{

@@ -35,55 +35,54 @@ ANEXO
 
 
  <div class="form-group">
-											<label>Anexo</label>
-											<input type="file" id="files" name="arquivo" multiple enctype="multipart/form-data"/>
-                                            <output id="list"></output>
+	<label>Anexo</label>
+	<input type="file" id="files" name="arquivo" multiple enctype="multipart/form-data"/>
+           <output id="list"></output>
 		                                  
-		                                    <script type="text/javascript"> 
+<script type="text/javascript"> 
 
-										 function handleFileSelect(evt) {
+	 function handleFileSelect(evt) {
 
 											 
-											var files = evt.target.files;
-										    var tamanhoMax = 20480 * 1024;
-										    var output = [];
-										    var caminho = "/etc/anexos/";
+	var files = evt.target.files;
+	var tamanhoMax = 20480 * 1024;
+	 var output = [];
+	 var caminho = "/etc/anexos/";
                                            
-										   /* var f = evt.target.files[0]; 
+	 /* var f = evt.target.files[0]; 
 
-                                               if (f) {
-										        var r = new FileReader();
-										        r.onload = function(e) { 
-										         var caminho = document.getElementById("fileinput").value;
-										         document.getElementById("sample_arquivo").value = caminho;      
-										        }
+          if (f) {
+	 var r = new FileReader();
+	r.onload = function(e) { 
+	 var caminho = document.getElementById("fileinput").value;
+	document.getElementById("sample_arquivo").value = caminho;      
+	}
 										        
-										        r.readAsText(f);
-										    }
-										    */
-										    for (var i = 0, f; f = files[i]; i++) {
+	r.readAsText(f);
+	
+	*/
+	 for (var i = 0, f; f = files[i]; i++) {
 
-										    	 if(f.size > tamanhoMax){ 
-										    		alert('Tamanho do arquivo superior ao permitido de 20MB'); 
-										    	 }
+	if(f.size > tamanhoMax){ 
+	alert('Tamanho do arquivo superior ao permitido de 20MB'); 
+	 }
 
-										    else{ 
-											    
-								             output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-								                  f.size, ' bytes, ultima modificação: ',
-                                                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+	else{ 
+	 output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+	 f.size, ' bytes, ultima modificação: ',
+         f.lastModifiedDate.toLocaleDateString(), '</li>');
                                             
                                           
-								    		 }
+			 }
 										
-										 } 
-                                            document.getElementById('list').innerHTML = '<ul>' + output.join('') +  '</ul>' ;
+				 } 
+       document.getElementById('list').innerHTML = '<ul>' + output.join('') +  '</ul>' ;
 										   
-										  }
+		}
 										  
-										   document.getElementById('files').addEventListener('change', handleFileSelect, false);
+	document.getElementById('files').addEventListener('change', handleFileSelect, false);
 										
-									 </script>
+		</script>
 
 ============================================================================================
 
