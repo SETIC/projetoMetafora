@@ -260,13 +260,42 @@ function deletar(id) {
 										</div>
 										<br>
 										<label>Anexo</label>
-										<p>
-							            <input type='file' id='file' name="arquivo" multiple enctype="multipart/form-data" multiple="multiple"> 
+										
+										<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>  
+										<script type="text/javascript">  
+										$(document).ready(function(){  
+										 
+										    var input = '<label style="display: block">Nome: <input type = "file" multiple = "multiple" name ="arquivo" /> <a href="#" class="remove">X</a></label>';  
+										    $("input[name='+ 1 Campo']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										});  
+										</script>  
+								        <label style="display: block"><input type="button" name="+ 1 Campo" value="Add" /></label>  
+								            <label style="display: block">Nome:<input type = "file" multiple ="multiple" name="arquivo" enctype="multipart/form-data"></label>  
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset>  
+								  
+										
+										
+										
+										<%--<p>
+							            <input type='file' id='file' name="arquivo[]"  enctype="multipart/form-data" multiple="multiple"> 
 							           </p>
-										 <%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
-										 <i class="fa fa-chevron-circle-right"></i></button> --%>
+							           <p>
+							            <input type='file' id='file' name="arquivo[1]"  enctype="multipart/form-data" multiple="multiple"> 
+							           </p>
+							            
+										 --%><%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
+										 <i class="fa fa-chevron-circle-right"></i></button>
 									
-									</fieldset>
+									--%></fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
 											<i class="fa fa-save"></i> Cadastrar

@@ -1,8 +1,7 @@
-package br.gov.com.saogoncalo.protocolo
+package br.gov.rn.saogoncalo.protocolo
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
-
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.protocolo.Anexo
 import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor
@@ -53,74 +52,57 @@ class ProtocoloController {
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
 
-
 				if (protocolo.save(flush:true)){
 					Observacao observacao = new Observacao(params)
 					observacao.texto = params.texto
 					observacao.dataObservacao = new Date()
 					observacao.protocolo = protocolo
 
-					if(observacao.save(flush:true)){
+				if(observacao.save(flush:true)){
 
 						println("salvou observacao ")
 						println ("observacao" + observacao)
 						listarMensagem("Protocolo cadastrado com sucesso", "ok")
-					}else{
+				}else{
 
 						def erros
 						observacao.errors.each {erros = it}
 						print("erros: "+erros)
 					}
-
-					println("parametros aqui" + params)
-                    
-					
-					/*MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
-					CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("arquivo");
-					//Suponha que haja um campo de entrada de arquivo com nome ProfilePic */
 				
+					/*MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
+					CommonsMultipartFile arquivoList = (CommonsMultipartFile)arquivo.getFile('arquivo')*/
+				   
+				   /* MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+					List<MultipartFile> fi = multipartRequest.getFiles("arquivo");
 					
-					MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
-					def List <CommonsMultipartFile> arquivoList = params.list ('arquivo')
-					 arquivoList.each{
-					  
-					println("nome do arquivo: " + arquivoList.originalFilename)
+					for(MultipartFile mf : fi) {
+						println mf
+					
+					}*/
 					
 					
-					/*for(int i = 0 ;  i <  arquivoList.originalFilename.size(); i++){
-						println ( arquivoList.originalFilename[i])
-						println ("parametros akiiiiiiiiii" +params.arquivo)*/
-						
-						/*for(MultipartFile multipartFile : arquivo) {
-							
-						String fileName = multipartFile.getOriginalFilename();
-						fileNames.add(fileName);
-						println ("parametros akiiiiiiiiii" +params.arquivo)
-						*/
-					 }
-				
-					
-					 def fi = request.getFile('arquivo')
-					 if(!fi.isEmpty()){
-						Anexo anexo = new Anexo(params)
-						
+					  def fi = request.getFile('arquivo')
+											    
+					  if(!fi.isEmpty()){
+						 
+						Anexo anexo = new Anexo()
 						FileUploadServiceController fil = new  FileUploadServiceController()
 						anexo.arquivo =  fil.uploadFile(fi,fi.originalFilename,"/anexos")
 						anexo.dataAnexo =  new Date()
 						anexo.protocolo = protocolo
-
+						
 						if(anexo.save(flush:true)){
 							println("anexo salvo")
 						}
-						
+					    
 					 	}else{
 
 						def erros
 						anexo.errors.each {erros = it}
 						print("erros: "+erros)
 					  }
-					 
-
+					
 					Tramite tramite = new Tramite()
 					tramite.funcionarioSetorOrigem = funcionarioSetor
 					tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
@@ -129,7 +111,6 @@ class ProtocoloController {
 					
 					if(tramite.save(flush:true)){
 
-						println("Dado -- " + tramite.dataDisponibilizacao)
 						println("tramite salvo" + tramite)
 						println("parametros do tramite" +protocolo)
 
@@ -154,8 +135,6 @@ class ProtocoloController {
 			}
 		}
 	}
-
-
 
 
 	def listarMensagem(String msg, String tipo){

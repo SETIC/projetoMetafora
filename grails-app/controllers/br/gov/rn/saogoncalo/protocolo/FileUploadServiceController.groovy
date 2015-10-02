@@ -1,4 +1,4 @@
-package br.gov.com.saogoncalo.protocolo
+package br.gov.rn.saogoncalo.protocolo
 
 import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import org.springframework.web.multipart.MultipartFile
@@ -17,7 +17,7 @@ class FileUploadServiceController {
 		 if(!storagePathDirectory.exists())
 		  println ("criando diretorio")
 		    if(storagePathDirectory.mkdirs()){
-				println ("sucess")
+				println ("success")
 		   
 			 }else{
 			println ("failed")

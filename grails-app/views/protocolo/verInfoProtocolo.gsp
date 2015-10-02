@@ -203,8 +203,7 @@ function printDiv(id)
 						${} 
 					 </td>
 					<td>
-					  <g:formatDate format="dd/MM/yyyy"
-					date="${}" /></td>
+					  <g:formatDate format="dd/MM/yyyy"/></td>
 					</tr>
 					 </g:each>
 					</thead>

@@ -88,9 +88,7 @@ function printDiv(id)
 						      <g:if test="${ it.tipo == 'I'}">
 									Inicio
 									 </g:if>
-						      <g:if test="${ it.tipo == 'N'}">
-									 Nenhum
-									 </g:if>
+						     
 						      <g:if test="${ it.tipo == 'F'}">
 									Fim
 									 </g:if> 
@@ -142,7 +140,7 @@ function printDiv(id)
 											<select class="form-control" name="tipo">
 												<option value='I'>Inicio</option>
 												<option value='N'>Fim</option>
-												<option value='F' selected>Nenhum</option>
+												
 											</select>
 										</div>
 									<br>
