@@ -20,6 +20,9 @@ class ProtocoloController {
 
 				def setorDestino
 				def tramites
+				def funcionarioSetor
+				
+				funcionarioSetor = FuncionarioSetor.findAll()
 				
 				setorDestino = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 														+ "where u.pessoa.id = f.id "
@@ -30,7 +33,7 @@ class ProtocoloController {
 				tramites = Tramite.executeQuery("select t from Protocolo p, Tramite t where t.protocolo.id = p.id and t.dataRecebimento is null "
 									+ " and t.funcionarioSetorDestino.id =:setorDestino", [setorDestino : setorDestino.id])
 				
-				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2,tramites:tramites])
+				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2,tramites:tramites,funcionarioSetor:funcionarioSetor])
 			}else{
 				render(view:"/error403.gsp")
 			}
