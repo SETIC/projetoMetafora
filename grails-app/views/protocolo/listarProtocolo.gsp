@@ -51,7 +51,8 @@ function deletar(id) {
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="listarprotocolo"
+				<label>Protocolos Enviados</label>
+				<table id="listarprotocolosEnviados"
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
@@ -64,7 +65,7 @@ function deletar(id) {
 						</tr>
 					</thead>
 					<tbody>
-						<g:each in ='${protocolo?}'>
+						<g:each in ='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
@@ -78,6 +79,71 @@ function deletar(id) {
 												<li onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
+											</g:if>
+											<li title="Ver detalhes do protocolo"
+												class="btn btn-success btn-xs btn-flat"><a
+												style="color: #fff"
+												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li>
+										</ul>
+
+									</div>
+								</td>
+
+								<td>
+									${it.numero}
+								</td>
+
+								<td><g:formatDate format="dd/MM/yyyy"
+										date="${it.dataProtocolo}" /></td>
+
+								<td><g:formatDate format="dd/MM/yyyy"
+										date="${it.dataEmissao}" /></td>
+
+								<td>
+									${it.numeroDocumento}
+								</td>
+
+								<td>
+									${it.assunto}
+								</td>
+
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<br>
+			
+			
+			<div class="box box-white">
+			<label>Protocolos Recebidos</label>
+				<table id="listarprotocolosAceitos"
+					class="table table-striped table-hover example">
+					<thead>
+						<tr>
+							<th style="width: 60px;"></th>
+							<th>Numero</th>
+							<th>Data do Protocolo</th>
+							<th>Data da Emissao</th>
+							<th>Numero do Documento</th>
+							<th>Assunto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in ='${protocolosAceitos?}'>
+							<tr class='linha_registro'>
+								<td>
+									<div style="margin-left: -35px" class="opcoes">
+										<ul style="display: inline">
+
+											<g:if test="${perm2}">
+												<li class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/Protocolo/editar/${it.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+
 											</g:if>
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
@@ -261,7 +327,7 @@ function deletar(id) {
 										<br>
 										<label>Anexo</label>
 										<p>
-							            <input type='file' id='file' name="arquivo" multiple enctype="multipart/form-data" multiple="multiple"> 
+							            <input type='file' id='file' name="arquivo[]" multiple enctype="multipart/form-data" multiple="multiple"> 
 							           </p>
 										 <%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
 										 <i class="fa fa-chevron-circle-right"></i></button> --%>

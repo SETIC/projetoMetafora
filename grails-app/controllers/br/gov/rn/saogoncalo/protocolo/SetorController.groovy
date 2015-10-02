@@ -5,6 +5,8 @@ import org.apache.jasper.compiler.Node.ParamsAction;
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Funcionario
+import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor;
+import br.gov.rn.saogoncalo.protocolo.Setor;
 
 class SetorController {
 

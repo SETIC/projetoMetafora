@@ -6,6 +6,7 @@ class Tramite {
 	Date dataRecebimento
 	FuncionarioSetor funcionarioSetorOrigem
 	FuncionarioSetor funcionarioSetorDestino
+	String status
 
 	static belongsTo = [protocolo:Protocolo]
 
@@ -14,6 +15,7 @@ class Tramite {
 
 		dataDisponibilizacao blank:false, nullable:true
 		dataRecebimento blank:true, nullable:true
+		status blank:false, nullable:false
 		
 	}
 	

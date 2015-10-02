@@ -41,7 +41,14 @@
 							<label for="inputNome3" class="col-sm-2 control-label">Numero</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="numero" type="text"
-									style="width: 300px" value="${it.numero}" />
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									readonly="readonly"
+								</g:if>
+								<g:else>
+									""
+								</g:else>
+								style="width: 300px" value="${it.numero}" />
+								
 							</div>
 						</div>
 						<br>
@@ -50,9 +57,21 @@
 								do Protocolo </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataProtocolo" name="dataProtocolo"
-									required="true" />
+								
+								
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true" disabled="true"/>
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true"/>
+								</g:else>
+								
+								
+
 							</div>
 						</div>
 						<br>
@@ -61,9 +80,21 @@
 								de Emissão </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataEmissao" name="dataEmissao"
+								
+								
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
+									required="true" disabled="true" />
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
 									required="true" />
+								</g:else>
+								
+								
+
 							</div>
 						</div>
 						<br>
@@ -72,7 +103,14 @@
 								do Documento</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="numeroDocumento"
-									type="text" style="width: 300px" value="${it.numeroDocumento}">
+									type="text" style="width: 300px" value="${it.numeroDocumento}"
+									<g:if test="${tipoEdicao == 'ACEITO'}">
+									readonly="readonly"
+								</g:if>
+								<g:else>
+									""
+								</g:else>
+									>
 							</div>
 						</div>
 						<br>
@@ -80,10 +118,48 @@
 							<label for="input3" class="col-sm-2 control-label">Assunto</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="assunto" type="text"
-									style="width: 300px" value="${it.assunto}">
+									style="width: 300px" value="${it.assunto}"
+									<g:if test="${tipoEdicao == 'ACEITO'}">
+									readonly="readonly"
+								</g:if>
+								<g:else>
+									""
+								</g:else> >
 							</div>
 						</div>
 						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
+								Documento</label>
+							<div class="col-sm-4">
+								<select class="selectpicker" " name="tipoDocumento"
+									id="comboTipoDocumento" class="form-control" 
+									<g:if test="${tipoEdicao == 'ACEITO'}">
+										disabled
+								</g:if>
+								<g:else>
+									""
+								</g:else> >
+									<div class="col-sm-10">
+										<g:each in="${tipoDocumentos}">
+											<g:if test="${it.id == protocolo.tipoDocumento.id}">
+												<option value="${it.id}" selected>
+													${it.nome}
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${it.id}">
+													${it.nome}
+												</option>
+											</g:else>
+										</g:each>
+								</select>
+							</div>
+						</div>
+						
+						
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção
 							</label>
@@ -108,29 +184,8 @@
 						</div>
 						<br>
 
-						<div class="form-group">
-							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
-								Documento</label>
-							<div class="col-sm-4">
-								<select class="selectpicker" " name="tipoDocumento"
-									id="comboTipoDocumento" class="form-control">
-									<div class="col-sm-10">
-										<g:each in="${tipoDocumentos}">
-											<g:if test="${it.id == protocolo.tipoDocumento.id}">
-												<option value="${it.id}" selected>
-													${it.nome}
-												</option>
-											</g:if>
-											<g:else>
-												<option value="${it.id}">
-													${it.nome}
-												</option>
-											</g:else>
-										</g:each>
-								</select>
-							</div>
-						</div>
-						</select> 
+
+						
 						<br>
 					</fieldset>
 					<div style="margin: 0 17% auto">

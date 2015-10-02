@@ -200,11 +200,10 @@ function printDiv(id)
 					<g:each in='${observacoes}'>
 					 <tr class="success">
 					   <td>
-						${} 
+						 
 					 </td>
 					<td>
-					  <g:formatDate format="dd/MM/yyyy"
-					date="${}" /></td>
+					  <g:formatDate format="dd/MM/yyyy" /></td>
 					</tr>
 					 </g:each>
 					</thead>

@@ -1,4 +1,4 @@
-package br.gov.com.saogoncalo.protocolo
+package br.gov.rn.saogoncalo.protocolo
 
 import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import org.springframework.web.multipart.MultipartFile
