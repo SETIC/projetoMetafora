@@ -147,13 +147,12 @@ function printDiv(id)
 						</tr>
 						<g:each in='${tramites?}'>
 						<tr class ="info">
-						
+						        
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataDisponibilizacao}" /></td>
+										date="${it.dataDisponibilizacao}"/></td>
 
 								<td><g:formatDate format="dd/MM/yyyy"
 										date="${it.dataRecebimento}" /></td>
-
 								<td>
 									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome} -${ it.funcionarioSetorOrigem.setor.nome}
 								</td>
@@ -161,9 +160,9 @@ function printDiv(id)
 									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome} -${ it.funcionarioSetorOrigem.setor.nome}
 								</td>
 							</tr>
-					  </g:each>	
-					 </thead>
-					</table>	
+					    </g:each>	
+					  </thead>
+					 </table>	
 					</br>
 					</br>
 								
@@ -187,29 +186,29 @@ function printDiv(id)
 					 </g:each>
 					</thead>
 					</table>
-										
 					<table id="listarAnexos"
 					class="table table-bordered">
-					 <legend class="scheduler-border">Anexos</legend>
+					<legend class="scheduler-border">Anexos</legend>
 					<thead>
 						<tr>
 							<th>Nome do Arquivo</th>
 							<th>Data</th>
-							<th>Tamanho</th>
 					    </tr>
-					<g:each in='${observacoes}'>
+					<g:each in='${anexos}'>
 					 <tr class="success">
 					   <td>
-						${} 
+					  
+						${it.arquivo.substring(8)}
 					 </td>
 					<td>
-					  <g:formatDate format="dd/MM/yyyy"/></td>
+					  <g:formatDate format="dd/MM/yyyy" 
+					  date="${it.dataAnexo}"/></td>
 					</tr>
 					 </g:each>
 					</thead>
 					</table>
 					</fieldset>
-					<div style="margin: 0 15% auto">
+					<div style="margin: 0 auto">
 						<button class="btn btn-danger btn-flat"
 							onClick="printDiv('print')">
 							<i class="glyphicon glyphicon-print"></i> Imprimir
@@ -222,15 +221,7 @@ function printDiv(id)
 					</div>
 			     </div>
 			</g:form>
-		</div>
-		<script type="text/javascript">
-				$(document).ready(function() {
-					$('#example').DataTable();
-					var tabela = $('#example').dataTable();
-					// Ordena por nome e "desempata" com o id
-					tabela.fnSort([ [ 1, 'asc' ] ]);
-				});
-			</script>
+		  </div>
 		</div>
 	</section>
 </body>

@@ -206,6 +206,10 @@ class BuildLeftMenuController {
 					menu+= '<li><a href="/projetoMetafora/tipoDocumento/listarTipoDocumento"><i class="glyphicon glyphicon-file"></i>Tipos de Documentos</a></li>'
 					verificador = true
 				}
+				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'CONSULTAR_PROTOCOLOS', perm)){
+					menu+= '<li><a href="/projetoMetafora/consultarProtocolo/listarTipoDocumento"><i class="glyphicon glyphicon-file"></i>Consultar Protocolo</a></li>'
+					verificador = true
+				}
 				
 				menu +='</ul> '  +
 				' </li> '

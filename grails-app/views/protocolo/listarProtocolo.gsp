@@ -282,9 +282,6 @@ function deletar(id) {
 								        <fieldset id="inputs_adicionais" style="border: none">  
 								        </fieldset>  
 								  
-										
-										
-										
 										<%--<p>
 							            <input type='file' id='file' name="arquivo[]"  enctype="multipart/form-data" multiple="multiple"> 
 							           </p>

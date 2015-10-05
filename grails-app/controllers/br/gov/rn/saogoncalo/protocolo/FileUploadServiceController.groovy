@@ -12,27 +12,27 @@ class FileUploadServiceController {
 	def String uploadFile(MultipartFile file , String nome , String destinationDirectory){
 		def serveltContext =  ServletContextHolder.servletContext
 		def storagePath = servletContext.getRealPath(destinationDirectory)
-		  
 		def storagePathDirectory = new File(storagePath)
 		 if(!storagePathDirectory.exists())
 		  println ("criando diretorio")
 		    if(storagePathDirectory.mkdirs()){
 				println ("success")
 		   
-			 }else{
-			println ("failed")
-			}
+		 }else{
 		
+			   println ("failed")
+			}
 
 		if(!file.isEmpty()){
+			
 			file.transferTo(new File(storagePath +"/" + nome))
 			println("arquivo salvo")
-			return(storagePath +"/" + nome)
+			return("/anexos/" + nome)
+			
 		}else{
 		
 		    println("arquivo vazio")
 		    return null
 		  }
 		}
-	
 }

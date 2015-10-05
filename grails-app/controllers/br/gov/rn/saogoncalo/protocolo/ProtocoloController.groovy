@@ -76,13 +76,13 @@ class ProtocoloController {
 				   /* MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
 					List<MultipartFile> fi = multipartRequest.getFiles("arquivo");
 					
+					
 					for(MultipartFile mf : fi) {
 						println mf
 					
 					}*/
-					
-					
-					  def fi = request.getFile('arquivo')
+				
+					   def fi = request.getFile('arquivo')
 											    
 					  if(!fi.isEmpty()){
 						 
@@ -108,6 +108,7 @@ class ProtocoloController {
 					tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
 					tramite.protocolo = protocolo
 					tramite.dataDisponibilizacao = new Date()
+					tramite.status = "ABERTO" 
 					
 					if(tramite.save(flush:true)){
 
@@ -292,8 +293,10 @@ class ProtocoloController {
 
 				def observacoes = Observacao.findAllByProtocolo(protocolos)
 				//funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
+				
+				def anexos = Anexo.findAllByProtocolo(protocolos)
 
-				render (view:"/protocolo/verInfoProtocolo.gsp", model:[protocolos:protocolos , tramites:tramites, observacoes:observacoes])
+				render (view:"/protocolo/verInfoProtocolo.gsp", model:[protocolos:protocolos , tramites:tramites, observacoes:observacoes , anexos:anexos])
 
 			}else{
 				render(view:"/error403.gsp")
