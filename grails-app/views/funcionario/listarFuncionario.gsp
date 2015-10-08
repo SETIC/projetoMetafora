@@ -205,7 +205,7 @@ function printDiv(id)
 									</div>
 									<br>
 									<div class="form-heading">
-										<label>Vinculo </label>
+										<label>Vinculo</label>
 										<div class="controls">
 											<select class="form-control" name="vinculo">
 												<option value="EFETIVO">EFETIVO</option>

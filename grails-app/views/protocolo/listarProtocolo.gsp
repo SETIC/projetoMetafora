@@ -106,7 +106,6 @@ function deletar(id) {
 								<td>
 									${it.assunto}
 								</td>
-
 							</tr>
 						</g:each>
 					</tbody>

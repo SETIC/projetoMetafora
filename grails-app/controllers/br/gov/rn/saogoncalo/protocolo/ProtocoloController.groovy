@@ -11,7 +11,6 @@ import br.gov.rn.saogoncalo.protocolo.Situacao
 import br.gov.rn.saogoncalo.protocolo.TipoDocumento
 import br.gov.rn.saogoncalo.protocolo.Tramite
 
-import com.sun.corba.se.impl.oa.poa.MultipleObjectMap
 
 
 
@@ -95,14 +94,14 @@ class ProtocoloController {
 						if(anexo.save(flush:true)){
 							println("anexo salvo")
 						}
-					    
+						
 					 	}else{
 
 						def erros
 						anexo.errors.each {erros = it}
 						print("erros: "+erros)
 					  }
-					
+					  
 					Tramite tramite = new Tramite()
 					tramite.funcionarioSetorOrigem = funcionarioSetor
 					tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
@@ -268,6 +267,26 @@ class ProtocoloController {
 			}
 		}
 	}
+	
+	 def pesquisarProtocolos(){
+		 
+		 
+		 if((session["user"] == null) || (session["pass"] == null) ){
+			 render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		 }else{
+ 
+			 def user = session["user"]
+			 def pass = session["pass"]
+ 
+			 def usuario = new UsuarioController()
+			 def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+ 
+			 if (perm1 || perm2){
+		
+			     }
+		      }
+		    
+	       }
 
 	def verInfoProtocolo(long id){
 
