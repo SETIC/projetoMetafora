@@ -6,6 +6,9 @@
 </head>
 <body>
 	<script>
+
+
+
 function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
@@ -16,6 +19,7 @@ function printDiv(id)
   newWin.document.write(divToPrint.outerHTML);
   newWin.print();
   newWin.close();
+ 
 }
 </script>
 	<script>
@@ -65,7 +69,7 @@ function deletar(id) {
 						</tr>
 					</thead>
 					<tbody>
-						<g:each in ='${protocolosEnviados?}'>
+						<g:each in='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
@@ -113,12 +117,19 @@ function deletar(id) {
 					</tbody>
 				</table>
 			</div>
-			<br>
-			<br>
-			
-			
+			<br> <br>
+
+
+<script>
+function preencheCampoHidden(id){
+	var campo = document.getElementById("idProtocoloHidden");
+	campo.value = id;
+	
+}
+</script>
+
 			<div class="box box-white">
-			<label>Protocolos Recebidos</label>
+				<label>Protocolos Recebidos</label>
 				<table id="listarprotocolosAceitos"
 					class="table table-striped table-hover example">
 					<thead>
@@ -132,7 +143,7 @@ function deletar(id) {
 						</tr>
 					</thead>
 					<tbody>
-						<g:each in ='${protocolosAceitos?}'>
+						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
@@ -150,7 +161,15 @@ function deletar(id) {
 												style="color: #fff"
 												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+
+											<li title="Tramitar Protocolo"
+												class="btn btn-warning btn-xs btn-flat"><a
+												style="color: #fff" data-target="#myModalTramite"
+												data-toggle="modal"><span
+													class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.id})"></span></a></li>
+											</ul>
+
+
 
 									</div>
 								</td>
@@ -178,7 +197,7 @@ function deletar(id) {
 					</tbody>
 				</table>
 			</div>
-			
+
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 				<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -205,7 +224,8 @@ function deletar(id) {
 									Protocolo</h4>
 							</div>
 							<div class="modal-body">
-								<g:form controller="Protocolo" action="salvar" class="form" enctype="multipart/form-data">
+								<g:form controller="Protocolo" action="salvar" class="form"
+									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
 											<label>Numero</label>
@@ -268,9 +288,9 @@ function deletar(id) {
 												</select>
 											</div>
 										</div>
-									<br>
-                                    
-                                    <div class="form-heading">
+										<br>
+
+										<div class="form-heading">
 											<label>Funcionario Setor de Destino</label>
 											<div class="controls ">
 												<select class="form-control selectpicker"
@@ -284,9 +304,9 @@ function deletar(id) {
 												</select>
 											</div>
 										</div>
-									<br>
-                                    
-                                    <div class="form-heading">
+										<br>
+
+										<div class="form-heading">
 											<label>Situação</label>
 											<div class="controls ">
 												<select class="form-control selectpicker"
@@ -321,17 +341,17 @@ function deletar(id) {
 											<label>Observação</label>
 											<div>
 												<textarea rows="3" class="form-control" name="texto"
-												placeholder="Insira uma observação relacionada ao protocolo"></textarea>
+													placeholder="Insira uma observação relacionada ao protocolo"></textarea>
 											</div>
 										</div>
-										<br>
-										<label>Anexo</label>
+										<br> <label>Anexo</label>
 										<p>
-							            <input type='file' id='file' name="arquivo[]" multiple enctype="multipart/form-data" multiple="multiple"> 
-							           </p>
-										 <%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
+											<input type='file' id='file' name="arquivo[]" 
+												enctype="multipart/form-data" multiple="multiple">
+										</p>
+										<%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
 										 <i class="fa fa-chevron-circle-right"></i></button> --%>
-									
+
 									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
@@ -340,7 +360,74 @@ function deletar(id) {
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-							</g:if>
-					 </section>
-				  </body>
-				</html>
+			</g:if>
+
+
+			<!-- ModalTramite -->
+			<div class="modal fade" id="myModalTramite" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Tramite de
+								protocolos</h4>
+						</div>
+						<div class="modal-body">
+							<g:form controller="Protocolo" action="salvarTramite"
+								class="form" enctype="multipart/form-data">
+								<fieldset>
+									<div class="form-heading">
+										
+										<input type="hidden" name="protocoloHidden" id="idProtocoloHidden"/>
+										<label>Destino</label>
+										<div class="controls ">
+
+											<select class="form-control selectpicker"
+												data-live-search="true"
+												name="funcionarioSetorDestinoTramite"
+												id="idFuncionarioSetorDestinoTramite" onchange="">
+												<g:each in="${funcionarioSetorDestino}">
+													<option value="${it.id}">
+														${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
+													</option>
+												</g:each>
+											</select>
+
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Observação</label>
+										<div class="controls">
+											<g:textArea class="form-control" name="observacao" value=""
+												required="true" />
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Anexo</label>
+										<div class="controls">
+											<input type='file' id='file' name="arquivo[]" 
+												enctype="multipart/form-data" multiple="multiple">
+										</div>
+									</div>
+									<br>
+								</fieldset>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary btn-flat">
+										<i class="fa fa-save"></i> Cadastrar
+									</button>
+									<input type="reset" class="btn btn btn-flat" value="Limpar">
+								</div>
+							</g:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+	</section>
+</body>
+</html>

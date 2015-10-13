@@ -1,18 +1,9 @@
 package br.gov.rn.saogoncalo.protocolo
-import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.protocolo.Anexo
-import br.gov.rn.saogoncalo.protocolo.FuncionarioSetor
-import br.gov.rn.saogoncalo.protocolo.Observacao
-import br.gov.rn.saogoncalo.protocolo.Protocolo
-import br.gov.rn.saogoncalo.protocolo.Situacao
-import br.gov.rn.saogoncalo.protocolo.TipoDocumento
-import br.gov.rn.saogoncalo.protocolo.Tramite
-
-import com.sun.corba.se.impl.oa.poa.MultipleObjectMap
 
 
 class ProtocoloController {
@@ -65,66 +56,61 @@ class ProtocoloController {
 					}else{
 
 						def erros
-						observacao.errors.each {erros = it}
+						observacao.errors.each { erros = it }
 						print("erros: "+erros)
 					}
 
 					println("parametros aqui" + params)
-                    
-					
+
+
 					/*MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
-					CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("arquivo");
-					//Suponha que haja um campo de entrada de arquivo com nome ProfilePic */
-				
-					
-					MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
-					def List <CommonsMultipartFile> arquivoList = params.list ('arquivo[]')
+					 CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("arquivo");
+					 //Suponha que haja um campo de entrada de arquivo com nome ProfilePic */
+
+
+					/*					MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
+					 def List <CommonsMultipartFile> arquivoList = params.list('arquivo')
 					 arquivoList.each{
-					  
-					println("nome do arquivo: " + arquivoList.originalFilename)
-					
-					
+					 println("nome do arquivo: " + arquivoList.originalFilename)*/
+
+
 					/*for(int i = 0 ;  i <  arquivoList.originalFilename.size(); i++){
-						println ( arquivoList.originalFilename[i])
-						println ("parametros akiiiiiiiiii" +params.arquivo)*/
-						
-						/*for(MultipartFile multipartFile : arquivo) {
-							
-						String fileName = multipartFile.getOriginalFilename();
-						fileNames.add(fileName);
-						println ("parametros akiiiiiiiiii" +params.arquivo)
-						*/
-					 }
-				
-					
-					 def fi = request.getFile('arquivo[]')
-					 if(!fi.isEmpty()){
-						Anexo anexo = new Anexo(params)
-						
+					 println ( arquivoList.originalFilename[i])
+					 println ("parametros akiiiiiiiiii" +params.arquivo)*/
+
+					/*for(MultipartFile multipartFile : arquivo) {
+					 String fileName = multipartFile.getOriginalFilename();
+					 fileNames.add(fileName);
+					 println ("parametros akiiiiiiiiii" +params.arquivo)
+					 } */
+
+
+
+
+					request.getFiles("arquivo[]").each { file ->
+
+						println("Arquivo aqui ---+++ " + file.originalFilename)
+
+						Anexo anexo = new Anexo()
+
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						anexo.arquivo =  fil.uploadFile(fi,fi.originalFilename, "/anexos")
-						anexo.dataAnexo =  new Date()
+						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						anexo.dataAnexo = new Date()
 						anexo.protocolo = protocolo
-
 						if(anexo.save(flush:true)){
-							println("anexo salvo")
+							println("anexo salva -----")
 						}
-						
-					 	}else{
+					}
 
-						def erros
-						anexo.errors.each {erros = it}
-						print("erros: "+erros)
-					  }
-					 
+
 
 					Tramite tramite = new Tramite()
 					tramite.funcionarioSetorOrigem = funcionarioSetor
 					tramite.funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestino)
 					tramite.protocolo = protocolo
-					tramite.status = 'ABERTO' 
+					tramite.status = 'ABERTO'
 					tramite.dataDisponibilizacao = new Date()
-					
+
 					if(tramite.save(flush:true)){
 
 						println("Dado -- " + tramite.dataDisponibilizacao)
@@ -132,18 +118,18 @@ class ProtocoloController {
 						println("parametros do tramite" +protocolo)
 
 						/*def ok
-						redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])*/
+						 redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])*/
 					}
 
 					else{
 						def erros
-						tramite.errors.each {erros = it}
+						tramite.errors.each { erros = it }
 						print("erros: "+erros)
 					}
 				}else{
 
 					def erros
-					protocolo.errors.each {erros = it}
+					protocolo.errors.each { erros = it }
 					print("erros: "+erros)
 					listarMensagem("Erro ao salvar", "erro")
 				}
@@ -200,31 +186,31 @@ class ProtocoloController {
 			def tipoEdicao, tramitesCriados
 
 			if (perm2) {
-				
+
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
-					+ "where u.pessoa.id = f.id "
-					+ "and fs.funcionario.id = f.id "
-					+ "and s.id = fs.setor.id "
-					+ "and f.id = " + session["pesid"])
+						+ "where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
 
 				situacoes = Situacao.findAll()
 				Protocolo protocolo = Protocolo.get(id)
 				tipoDocumentos = TipoDocumento.findAll()
-				tramitesCriados = Tramite.executeQuery(" select t from Tramite t, Protocolo p " + 
-													   "  where p.id = t.protocolo.id " +
-													   "    and t.dataRecebimento is null " +
-													   "    and t.status = 'ABERTO' " +
-													   "    and p.id = :protocoloId " +
-													   "    and t.funcionarioSetorOrigem.id = :funcionarioSetorId ", 
-													   [protocoloId:protocolo.id, funcionarioSetorId:funcionarioSetorLogado.id])
-				
+				tramitesCriados = Tramite.executeQuery(" select t from Tramite t, Protocolo p " +
+						"  where p.id = t.protocolo.id " +
+						"    and t.dataRecebimento is null " +
+						"    and t.status = 'ABERTO' " +
+						"    and p.id = :protocoloId " +
+						"    and t.funcionarioSetorOrigem.id = :funcionarioSetorId ",
+						[protocoloId:protocolo.id, funcionarioSetorId:funcionarioSetorLogado.id])
+
 				println("Tramite -- " + tramitesCriados)
-				
+
 				if(tramitesCriados.isEmpty()){
 					tipoEdicao = "ACEITO"
 				}else{
 					tipoEdicao = "CRIADO"
-				}					
+				}
 
 				println("Tipo -- " + tipoEdicao)
 
@@ -259,7 +245,7 @@ class ProtocoloController {
 				protocolos.numero = params.numero.toString().toInteger()
 				if(params.dataProtocolo != null){
 					protocolos.dataProtocolo = params?.dataProtocolo
-				}	
+				}
 				if(params.dataEmissao != null){
 					protocolos.dataEmissao = params?.dataEmissao
 				}
@@ -269,10 +255,10 @@ class ProtocoloController {
 				//tipoDocumentos = TipoDocumento.findAll()
 
 				def situacao = Situacao.get(params.situacao)
-				
+
 				if(params.tipoDocumento != null){
-				tipoDocumento = TipoDocumento.get(params?.tipoDocumento)
-				protocolos.tipoDocumento = tipoDocumento
+					tipoDocumento = TipoDocumento.get(params?.tipoDocumento)
+					protocolos.tipoDocumento = tipoDocumento
 				}
 
 				protocolos.situacao = situacao
@@ -337,11 +323,11 @@ class ProtocoloController {
 
 				Protocolo protocolos = Protocolo.get(id)
 				def tramites = Tramite.findAllByProtocolo(protocolos)
-
 				def observacoes = Observacao.findAllByProtocolo(protocolos)
+				def anexos = Anexo.findAllByProtocolo(protocolos)
 				//funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
 
-				render (view:"/protocolo/verInfoProtocolo.gsp", model:[protocolos:protocolos , tramites:tramites, observacoes:observacoes])
+				render (view:"/protocolo/verInfoProtocolo.gsp", model:[protocolos:protocolos , tramites:tramites, observacoes:observacoes, anexos:anexos])
 
 			}else{
 				render(view:"/error403.gsp")
@@ -366,7 +352,7 @@ class ProtocoloController {
 			if (perm1 || perm2) {
 
 				def protocolosAceitos
-				def protocolosEnviados				
+				def protocolosEnviados
 				def situacoes
 				def tipoDocumentos
 				def funcionariosSetor
@@ -374,31 +360,31 @@ class ProtocoloController {
 
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
-					+ "where u.pessoa.id = f.id "
-					+ "and fs.funcionario.id = f.id "
-					+ "and s.id = fs.setor.id "
-					+ "and f.id = " + session["pesid"])
-				
+						+ "where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
+
 				println(" Usuario - " + funcionarioSetorLogado)
-				
+
 				if (session["escid"] == 0) {
 
 					//protocolo = Protocolo.findAll()
 					protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
-																" where p.id = t.protocolo.id " +
-																"   and p.situacao.id = s.id " +
-																"   and t.dataRecebimento is null " +
-																"   and s.tipo = 'I' " +
-																"   and t.status = 'ABERTO' " +
-																"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
-					
+							" where p.id = t.protocolo.id " +
+							"   and p.situacao.id = s.id " +
+							"   and t.dataRecebimento is null " +
+							"   and s.tipo = 'I' " +
+							"   and t.status = 'ABERTO' " +
+							"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
+
 					protocolosAceitos = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
-															   " where p.id = t.protocolo.id " +
-															   "   and p.situacao.id = s.id " +
-															   "   and t.dataRecebimento is not null " +
-															   "   and s.tipo = 'I' " +
-															   "   and t.status <> 'FECHADO' " +
-															   "   and t.funcionarioSetorDestino.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
+							" where p.id = t.protocolo.id " +
+							"   and p.situacao.id = s.id " +
+							"   and t.dataRecebimento is not null " +
+							"   and s.tipo = 'I' " +
+							"   and t.status <> 'FECHADO' " +
+							"   and t.funcionarioSetorDestino.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
 					situacoes = Situacao.findAll()
 					tipoDocumentos = TipoDocumento.findAll()
 
@@ -410,36 +396,24 @@ class ProtocoloController {
 
 					funcionarioSetorDestino = FuncionarioSetor.findAll()
 				}else{
-				
-					
-				protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
-															" where p.id = t.protocolo.id " +
-															"   and p.situacao.id = s.id " +
-															"   and t.dataRecebimento is null " +
-															"   and s.tipo = 'I' " +
-															"   and t.status = 'ABERTO' " +
-															"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
 
-				protocolosAceitos = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
-															" where p.id = t.protocolo.id " +
-															"   and p.situacao.id = s.id " +
-															"   and t.dataRecebimento is not null " +
-															"   and s.tipo = 'I' " +
-															"   and t.status <> 'FECHADO' " +
-															"   and t.funcionarioSetorDestino.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
 
-					/*protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " + 
-															   "  where p.id = t.protocolo.id " +
-															   " and p.situacao.id = s.id " +
-															   " and t.dataRecebimento is null " +
-															   " and s.tipo = 'I' " +
-															   " and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
+					protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
+							" where p.id = t.protocolo.id " +
+							"   and p.situacao.id = s.id " +
+							"   and t.dataRecebimento is null " +
+							"   and s.tipo = 'I' " +
+							"   and t.status = 'ABERTO' " +
+							"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
+
 					protocolosAceitos = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
-																"  where p.id = t.protocolo.id " +
-																" and p.situacao.id = s.id " +
-																" and t.dataRecebimento is not null " +
-																" and s.tipo = 'I' " +
-																" and t.funcionarioSetorDestino.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])*/
+							" where p.id = t.protocolo.id " +
+							"   and p.situacao.id = s.id " +
+							"   and t.dataRecebimento is not null " +
+							"   and s.tipo = 'I' " +
+							"   and t.status <> 'FECHADO' " +
+							"   and t.funcionarioSetorDestino.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
+
 					situacoes = Situacao.findAll()
 					tipoDocumentos = TipoDocumento.findAll()
 
@@ -456,8 +430,8 @@ class ProtocoloController {
 			}
 		}
 	}
-	
-	
+
+
 	def listarPendentes(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
@@ -474,24 +448,24 @@ class ProtocoloController {
 
 				def setorDestino
 				def tramites
-				
+
 				setorDestino = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
-														+ "where u.pessoa.id = f.id "
-														+ "and fs.funcionario.id = f.id "
-														+ "and s.id = fs.setor.id "
-														+ "and f.id = " + session["pesid"])
-				
-				tramites = Tramite.executeQuery("select t from Protocolo p, Tramite t " + 
-					      						" where t.protocolo.id = p.id and t.dataRecebimento is null "
-											  + "   and t.funcionarioSetorDestino.id = :setorDestino", [setorDestino : setorDestino.id])
-				
+						+ "where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
+
+				tramites = Tramite.executeQuery("select t from Protocolo p, Tramite t " +
+						" where t.protocolo.id = p.id and t.dataRecebimento is null "
+						+ "   and t.funcionarioSetorDestino.id = :setorDestino", [setorDestino : setorDestino.id])
+
 				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2, tramites:tramites])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
-	
+
 	def aceitarProtocolos(long id) {
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
@@ -505,19 +479,159 @@ class ProtocoloController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
 
 			if (perm1 || perm2) {
-				
+
 				def tramite = Tramite.get(id)
 				tramite.dataRecebimento = new Date()
 				tramite.save(flush:true)
-				
+
 				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2,tramite:tramite])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
-	
-	
+
+	def salvarTramite(){
+
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
+
+			if (perm1 || perm2) {
+
+				println("params --- " + params)
+
+				def funcionarioSetorOrigem = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+						+ " where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
+				def funcionarioSetorOrigemObj = FuncionarioSetor.get(funcionarioSetorOrigem[0].id)
+				println("FuncionarioSetorOrigem --- " + funcionarioSetorOrigemObj)
+
+				def funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestinoTramite.toString().toInteger())
+				println("FuncionarioSetorDestino --- " + funcionarioSetorDestino)
+
+				def protocolo = Protocolo.get(params.protocoloHidden.toString().toInteger())
+				println("Protocolo --- " + protocolo)
+
+				def tramiteAnterior = Tramite.executeQuery("select t from Tramite t " +
+						" where t.dataRecebimento is not null " +
+						"   and t.status = 'ABERTO' " +
+						"   and t.protocolo.id = :protocoloId " +
+						"   and t.funcionarioSetorDestino.id = :funcionarioSetorDestinoId ",
+						[protocoloId:protocolo.id, funcionarioSetorDestinoId:funcionarioSetorOrigemObj.id])
+				def tramiteAnteriorObj = Tramite.get(tramiteAnterior[0].id)
+				println("tramiteAnterior --- " + tramiteAnteriorObj)
+
+
+				tramiteAnteriorObj.status = "FECHADO"
+				/*				if( tramiteAnteriorObj.save(flush:true)){
+				 println("Tramite antigo editado ---- ")
+				 }*/
+
+
+				//Observação
+
+				Observacao observacao = new Observacao()
+				observacao.dataObservacao = new Date()
+				observacao.protocolo = protocolo
+				observacao.texto = params.observacao
+				if(observacao.save(flush:true)){
+					println("observacao salva -----")
+				}
+
+				//Anexos
+
+				request.getFiles("arquivo[]").each { file ->
+
+					println("Arquivo aqui ---+++ " + file.originalFilename)
+
+					Anexo anexo = new Anexo()
+
+					FileUploadServiceController fil = new  FileUploadServiceController()
+					anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+					anexo.dataAnexo = new Date()
+					anexo.protocolo = protocolo
+					if(anexo.save(flush:true)){
+						println("anexo salva -----")
+					}
+				}
+
+				//tramite
+
+				Tramite tramite = new Tramite()
+				tramite.dataDisponibilizacao = new Date()
+				tramite.funcionarioSetorOrigem = funcionarioSetorOrigemObj
+				tramite.funcionarioSetorDestino = funcionarioSetorDestino
+				tramite.protocolo = protocolo
+				tramite.status = "ABERTO"
+				if(tramite.save(flush:true)){
+					println("Tramite novo salvo  ----- ")
+				}
+
+
+				redirect(action: "listarProtocolo")
+
+				//render(view:"/protocolo/listar.gsp", model:[perm2:perm2, tramite:tramite])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+
+
+
+	}
+
+
+	def downloadFile(long id) {
+
+		println("Teste --- download" )
+		
+		println("URL --- " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "\\" + "bla.txt")
+		
+		def anexo = Anexo.get(id)
+		//def file = new File("${sub.location}/${sub.fileName}")
+		println("Anexo --- " + anexo.arquivo)
+		def file = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "\\" + anexo.arquivo)
+		if (file.exists())
+		{
+			response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
+			//response.setHeader("Content-disposition", "attachment;filename=\"${file.name}\"")
+			response.setHeader("Content-disposition", " attachment; filename=\\" + anexo.arquivo )
+			response.outputStream << file.bytes
+		}
+		else render "Error!" // appropriate error handling
+
+
+		//render file: new File("C:/Users/ieber.moura/Documents/workspace-ggts-3.6.3.RELEASE/projetoMetafora/web-app/anexos/bla.txt"), contentType: 'text/plain'
+
+	}
+
+
+
+	def downloadSampleZip() {
+		response.setContentType('APPLICATION/OCTET-STREAM')
+		response.setHeader('Content-Disposition', 'Attachment;Filename="example.zip"')
+
+		ZipOutputStream zip = new ZipOutputStream(response.outputStream);
+		def file1Entry = new ZipEntry('first_file.txt');
+		zip.putNextEntry(file1Entry);
+		zip.write("This is the content of the first file".bytes);
+		def file2Entry = new ZipEntry('second_file.txt');
+		zip.putNextEntry(file2Entry);
+		zip.write("This is the content of the second file".bytes);
+		zip.close();
+	}
+
 }
+
 
 
