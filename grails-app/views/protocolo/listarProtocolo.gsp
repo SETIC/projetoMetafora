@@ -264,7 +264,7 @@ function deletar(id) {
 										<script type="text/javascript">  
 										$(document).ready(function(){  
 										 
-										    var input = '<label style="display: block">Nome: <input type = "file" multiple = "multiple" name ="arquivo" /> <a href="#" class="remove">X</a></label>';  
+										    var input = '<label style="display: block">Nome: <input type = "file" multiple = "multiple" name ="arquivo" /><a href="#" class="remove">X</a></label>';  
 										    $("input[name='+ 1 Campo']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  

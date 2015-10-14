@@ -560,8 +560,6 @@ class AlunoController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 
-
-
 			if (perm1 || perm2)
 			{
 
@@ -641,7 +639,6 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-                   
 
 					println("Pessoa --- " + params)
 

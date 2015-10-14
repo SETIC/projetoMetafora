@@ -132,7 +132,6 @@ function printDiv(id)
 							</div>
 						</div>
 						<br>
-						
 				<div class="form-group">
 				<div class="box box-white"> 
 				<table id="listarTramites"
@@ -147,7 +146,6 @@ function printDiv(id)
 						</tr>
 						<g:each in='${tramites?}'>
 						<tr class ="info">
-						        
 								<td><g:formatDate format="dd/MM/yyyy"
 										date="${it.dataDisponibilizacao}"/></td>
 
@@ -197,8 +195,7 @@ function printDiv(id)
 					<g:each in='${anexos}'>
 					 <tr class="success">
 					   <td>
-					  
-						${it.arquivo.substring(8)}
+						${it.arquivo}
 					 </td>
 					<td>
 					  <g:formatDate format="dd/MM/yyyy" 
@@ -224,5 +221,5 @@ function printDiv(id)
 		  </div>
 		</div>
 	</section>
-</body>
+ </body>
 </html>

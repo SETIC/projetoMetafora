@@ -33,7 +33,7 @@ class FuncionarioController {
 				def lotacao
 				def cargo
 				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
-						" where p.id = f.id "+
+						"where p.id = f.id "+
 						"and l.cargo.id = c.id "+
 						"and p.escid = 8"+
 						"and f.id = l.funcionario.id")

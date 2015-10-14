@@ -23,30 +23,37 @@
 			value = x.options[x.selectedIndex].value;
 
            switch(value){
-           
            case 'numero':
-			  newInput.innerHTML = "<label>Número do protcolo: </label/><input type='text'/>"
+			  newInput.innerHTML = "<label>Número do protocolo: </label/><input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>"
               break;
 
            case 'data':
-        	         
-              newInput.innerHTML = "<input data-provide='datepicker'/>"
+ 			  newInput.innerHTML = "<label>Data Inicial: </label/><input type='date' name ='dataInicial' id='dataInicial' " +
+ 	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>"
+ 	 	               
+               // newInput.innerHTML = "<input data-provide='datepicker' value='09-10-2015' language='pt-br'/>"
               break;
            
            case 'setor':
-        	   newInput.innerHTML = " <select class='form-heading selectpicker'><option value='rh'>RH</option>" +
-               "<option value='finanças'>FINANÇAS</option>" +
-               "<option value='merenda'>MERENDA</option></select>" 
+        	   newInput.innerHTML = "<label>Setor:</label/>" +
+        	   "<div id='iDivSelectPicker' class='row'>"+
+			   "<div class='col-sm-2'>"+
+        	   "<select class='form-control selectpicker' " +
+   			   "data-live-search='true' name='setor' id='setor'"+
+   			   "<option value='0'>Setor</option>" +
+   			   "<g:each in="${setor}">"+
+   			   "<option value='${it.id}'>"+
+   			   "${it.nome}</option></g:each></select></div>"
+            	   
               break;
            }
 			
 		}
-
-	</script>
-      
-	<section class="content-header">
+        
+		</script>
+	    <section class="content-header">
 		<h1>
-			Protocolo <small>Visualização e Gerenciamento</small>
+			Protocolo <small>Consulta de Documentos</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
@@ -69,14 +76,11 @@
 				class="btn btn-primary btn-flat">
 				<i class="glyphicon glyphicon-search"></i>Buscar
 		</button>
-			</g:form>
-			
-			<div id='newInput'>
+		<div id='newInput'>
 			<!-- lugar onde aparecerao os campos -->
 		   </div>
+			</g:form>
 			</section>
-		
-               
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
 		<div>
@@ -96,7 +100,8 @@
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
+						
+							<th style="width: 50px;"></th>
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
@@ -109,7 +114,7 @@
 						<g:each in='${protocolo?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
+									<div style="margin-left: 10px" class="opcoes">
 										<ul style="display: inline">
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
