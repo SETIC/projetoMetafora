@@ -4,6 +4,8 @@ import br.gov.rn.saogoncalo.academico.Disciplina
 import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.organizacao.Cargo
+import br.gov.rn.saogoncalo.organizacao.Lotacao
 
 
 
@@ -34,12 +36,14 @@ class ProfessorController {
 				def parametro = params.pesquisa
 				if (session["escid"] == 0){
 					professores = Professor.executeQuery("select a from Pessoa as p , Professor as a "+
-							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " + 
+							"    and p.escid = "+Long.parseLong(session["escid"].toString()) )
 
 					print("print professores "+ professores )
 				}else{
 					professores = Professor.executeQuery("select a from Pessoa as p , Professor as a "+
-							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " +
+							"    and p.escid = "+Long.parseLong(session["escid"].toString()))
 
 				}
 
@@ -442,6 +446,21 @@ class ProfessorController {
 
 
 						}
+						
+						
+						Cargo cargo= Cargo.findByCargo("PROFESSOR")
+						
+						Lotacao lotacao = new Lotacao()
+						lotacao.cargo= cargo
+						lotacao.funcionario = funcionario
+						lotacao.situacao="Ativo"
+						lotacao.vinculo= "EFETIVO"
+						lotacao.funcao= "PROFESSOR"
+						lotacao.turno = "MTN"
+						lotacao.dataInicio = new Date()
+						lotacao.dataTermino = new Date()
+						lotacao.save(flush:true)
+						
 
 
 

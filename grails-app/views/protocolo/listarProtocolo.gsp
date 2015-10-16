@@ -412,6 +412,8 @@ function preencheCampoHidden(id){
 										<div class="controls">
 											<input type='file' id='file' name="arquivo[]" 
 												enctype="multipart/form-data" multiple="multiple">
+											<a href="" id="resetLink">Limpar</a>
+											<button type="button" onclick="clearFile()"> Limpar </button>
 										</div>
 									</div>
 									<br>
@@ -422,6 +424,30 @@ function preencheCampoHidden(id){
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
+								
+								
+								<script>
+
+								function clearFile(){
+
+									var x = document.getElementById("file")
+									x.value = ""
+									
+									}
+
+								function reset_form_element (e) {
+								    e.wrap('<form>').parent('form').trigger('reset');
+								    e.unwrap();
+								}
+
+								$('#resetLink').on ('click', function (e) {
+								    reset_form_element( $('#file') );
+								    e.preventDefault();
+								});
+
+								</script>
+								
+								
 							</g:form>
 						</div>
 					</div>

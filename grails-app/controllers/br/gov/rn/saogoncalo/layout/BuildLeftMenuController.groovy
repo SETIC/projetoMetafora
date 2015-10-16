@@ -212,6 +212,10 @@ class BuildLeftMenuController {
 			menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-clipboard"></i>Pendentes</a></li>'
 			verificador = true
 		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="fa fa-clipboard"></i>Pesquisar Protocolos</a></li>'
+			verificador = true
+		}
 
 		menu +='</ul> '  +
 				' </li> '

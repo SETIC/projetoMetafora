@@ -71,7 +71,7 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
@@ -280,7 +280,7 @@ function printDiv(id)
 			
 				function mudarEscola(){
 		    	  
-					var endereco = "192.168.1.247";
+					var endereco = "localhost";
 			        var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -307,7 +307,7 @@ function printDiv(id)
 			   }
 
 			  function mudarSerie(){
-				  var endereco = "192.168.1.247";
+				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

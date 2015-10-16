@@ -9,6 +9,56 @@ import br.gov.rn.saogoncalo.login.UsuarioController
 class ProtocoloController {
 
 	def index() { }
+	
+	
+	def pesquisarProtocolos(){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+
+			if (perm1 || perm2){
+				
+				def protocolo
+				def sql
+				
+				println("parametro" + params)
+				   sql = "select p from Protocolo p "
+			   if(params.tipoBusca == "numero"){
+				   
+				   sql = sql + "where p.numero = "+params.numeroProtocolo
+			   }
+			   if(params.tipoBusca == "data"){
+				   
+				   sql = sql + "where p.dataEmissao between'" +params.dataInicial + "' and '" + params.dataFinal +"'"
+			   
+			   }
+			   
+			   if(params.tipoBusca == "setor"){
+				   
+				   sql = sql + "where p.funcionarioSetor.setor.id = "+params.setor
+				   
+			   }
+			   
+			   protocolo = Protocolo.executeQuery(sql)
+			   
+			   def setor=  Setor.findAll()
+	   
+				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolo:protocolo ,setor:setor, perm1:perm1])
+				}else{
+				render(view:"/error403.gsp")
+				}
+			
+			 }
+		   
+		  }
+	
 
 	def salvar(){
 
