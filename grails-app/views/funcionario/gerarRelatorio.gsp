@@ -48,10 +48,25 @@
 			}
              </script>
 
+
+
 	<section class="content-header">
 		<h1>
 			<center>Relação de Servidores</center>
 		</h1>
+		<br>
+			<label style="margin-left:15px;">Relação por Escola</label><select class="col-sm-6 selectpicker" data-live-search="true"
+				name="escola" id="comboEscola" onchange="mudarEscola();">
+				<option value="0" disabled="disabled" selected="selected">
+					Selecione uma escola</option>
+				<g:each in="${escolas}">
+					<option value="${it.id}">
+						${it.pessoaJuridica.razaoSocial}
+					</option>
+				</g:each>
+			</select><button style="margin-left: 65%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
+								<i class="glyphicon glyphicon-search"></i> Buscar
+							</button>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -97,15 +112,9 @@
 						<i class="glyphicon glyphicon-search"></i> Buscar
 					</button>
 				</g:form>
-					
-					
-
-		
-
+	
 			</div>
-			
-			
-
+		
 				<table id="listarFuncionarios"
 					class="table table-striped table-hover table-bordered example">
 
@@ -139,7 +148,7 @@
 											${it.matricula}
 										</td>
 										<td>
-											${it.cargo}
+								${it.cargo}
 										</td>
 										<td>
 											${it.turno}
@@ -154,9 +163,7 @@
 											${it.escola}														
 										</td>
 								</tr>
-							
 						</g:each>
-
 					</tbody>
 				</table>
 

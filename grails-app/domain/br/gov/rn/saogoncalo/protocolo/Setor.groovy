@@ -4,8 +4,6 @@ class Setor {
 	String nome	
 	String sigla
 
-	
-	
 	static hasMany =[funcionarioSetor:FuncionarioSetor]
 	
 	static constraints = {

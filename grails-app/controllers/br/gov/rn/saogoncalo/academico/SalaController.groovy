@@ -223,6 +223,7 @@ class SalaController {
 			}
 		}
 	}
+		
 	def salvar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Sala", act:"listar"])
@@ -284,8 +285,6 @@ class SalaController {
 				/*def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
-				
-				
 
 
 			}else{

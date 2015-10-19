@@ -218,24 +218,49 @@ function printDiv(id)
 										<div class="form-heading">
 											<label>Função</label>
 											<div class="controls">
-											<g:textField class="form-control" name="funcao" value="" />
-											</div>
-											<br>
-											<div class="form-heading">
-												<label>Cargo</label>
 												<div class="controls">
-													<select class="form-control selectpicker"
-														data-live-search="true" name="cargoId">
-
-														  <g:each in="${cargos}">
-															<option value="${it.id}">
-																${it.cargo}
-															</option>
-														</g:each>
-													</select>
+													<g:textField class="form-control" required="true"name="funcao" value="" />
 												</div>
 											</div>
 											<br>
+										</div>
+										<div class="form-heading">
+											<label>Cargo</label>
+											<div class="controls">
+												<select class="form-control selectpicker" data-live-search="true"
+												id="cargo" name="cargoId" onChange="habilitarDisciplinas()">
+													<g:each in="${cargos}">
+														<option value="${it.id}">
+															${it.cargo}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+                                        <br>
+                                              
+                                              <div id="divDisciplinas" style="display: none;" class="form-heading">
+													<label>Disciplinas</label>
+													<div class="controls">
+														<g:select class="form-control selectpicker"
+															data-live-search="true"
+															name="disciplinaProf" multiple="multiple"
+															from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
+															value="${id}" optionKey="id" optionValue="disciplina" />
+													</div>
+											  <br>
+											  </div>
+											  
+											<script>
+												function habilitarDisciplinas() {
+												    var cargo = document.getElementsByClassName("filter-option pull-left");
+												    if(cargo[0].innerText == "PROFESSOR" || cargo[0].innerText == "PROFESSOR PI G") {
+												    	document.getElementById("divDisciplinas").style.display = "block";   
+													} else {
+												    	document.getElementById("divDisciplinas").style.display = "none";
+													}
+												}
+											</script>
 											<div class="form-heading">
 												<label>Turno</label>
 												<div class="controls">
@@ -248,18 +273,19 @@ function printDiv(id)
 													</label>
 												</div>
 												</br>
-												<div class="form-heading">
-													<label>Estado Civil</label>
-													<div class="controls">
-														<select class="form-control" name="estadoCivil">
-															<option value="null">Selecione...</option>
-															<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-															<option value="CASADO(A)">CASADO(A)</option>
-															<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-															<option value="VIÚVO(A)">VIÚVO(A)</option>
-														</select>
-													</div>
+											</div>
+											<div class="form-heading">
+												<label>Estado Civil</label>
+												<div class="controls">
+													<select class="form-control" name="estadoCivil">
+														<option value="null">Selecione...</option>
+														<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+														<option value="CASADO(A)">CASADO(A)</option>
+														<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+														<option value="VIÚVO(A)">VIÚVO(A)</option>
+													</select>
 												</div>
+											</div>
 												<br>
 												<div class="form-heading">
 													<label>Carga Horária</label>

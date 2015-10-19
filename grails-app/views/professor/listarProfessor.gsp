@@ -279,13 +279,6 @@ function printDiv(id)
 									<br>
 
 
-
-
-
-
-
-
-
 									<div class="form-heading">
 										<label>Disciplinas</label>
 										<div class="controls">

@@ -644,6 +644,8 @@ function mudarCombo(){
 			</div>
 		</div>
 		
+		
+		<g:javascript src="script-buscar-cep.js" />
 	<!-- valida campos -->
 		<script type="text/javascript"> 
          //validaçao dos campos de aluno
@@ -687,10 +689,10 @@ function mudarCombo(){
 		</script>
 		
 		<!-- Script buscar dados de acordo com CEP -->
-		<g:javascript src="script-buscar-cep.js" />
+		
 		<script type="text/javascript">
 
-			//var host = '192.168.1.247'
+		
 
 			function hiddenInput(){
 				console.log('Hidden...');

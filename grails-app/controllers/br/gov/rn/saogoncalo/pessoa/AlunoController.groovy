@@ -24,14 +24,18 @@ class AlunoController {
 	}
 
 	def buscarCEP(String cep) {
+		
+		println("CEP --- " + cep)
+		
 		String urlCompleta
 		String urlBase = "http://cep.correiocontrol.com.br/"
+		//String urlBase = "http://api.postmon.com.br/"
 
 		urlCompleta = urlBase + cep + ".json"
 
 		print urlCompleta
 
-		URL urlReferenteAAPI = new URL(urlCompleta)e 3
+		URL urlReferenteAAPI = new URL(urlCompleta)
 
 		def dadosReferenteAoCep
 
@@ -641,11 +645,11 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-
+                   
 
 					println("Pessoa --- " + params)
 
-
+                       
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
