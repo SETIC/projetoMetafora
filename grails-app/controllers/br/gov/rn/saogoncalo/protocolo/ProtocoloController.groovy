@@ -415,7 +415,7 @@ class ProtocoloController {
 						+ "and s.id = fs.setor.id "
 						+ "and f.id = " + session["pesid"])
 
-				println(" Usuario - " + funcionarioSetorLogado)
+				println(" Usuario - " + session["pesid"])
 
 				if (session["escid"] == 0) {
 
@@ -448,6 +448,8 @@ class ProtocoloController {
 				}else{
 
 
+				println("FuncionarioSetor ---- " + funcionarioSetorLogado.id)
+				
 					protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
 							" where p.id = t.protocolo.id " +
 							"   and p.situacao.id = s.id " +

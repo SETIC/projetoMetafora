@@ -147,26 +147,29 @@ function preencheCampoHidden(id){
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+										<ul style="display: inline" width="400" >
 
 											<g:if test="${perm2}">
 												<li class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-
 											</g:if>
-											<li title="Ver detalhes do protocolo"
-												class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
 
-											<li title="Tramitar Protocolo"
-												class="btn btn-warning btn-xs btn-flat"><a
-												style="color: #fff" data-target="#myModalTramite"
-												data-toggle="modal"><span
-													class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.id})"></span></a></li>
+											<li title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}">
+											<span class="glyphicon glyphicon-eye-open">
+											</span>
+											</a>
+											</li>
+
+											<li title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
+											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
+											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.id})">
+											</span>
+											</a>
+											</li>
+											
 											</ul>
 
 
@@ -344,13 +347,37 @@ function preencheCampoHidden(id){
 													placeholder="Insira uma observação relacionada ao protocolo"></textarea>
 											</div>
 										</div>
-										<br> <label>Anexo</label>
-										<p>
-											<input type='file' id='file' name="arquivo[]" 
-												enctype="multipart/form-data" multiple="multiple">
-										</p>
-										<%--<button type="button" class="btn btn-primary btn-flat" onclick = "upload()">upload
-										 <i class="fa fa-chevron-circle-right"></i></button> --%>
+										<br> 
+										
+									<label>Anexo</label>
+																		
+										<script type="text/javascript">  
+
+										function limparCampoFile1(){
+											document.getElementById("arquivo[]").value = "";
+										}
+										
+										$(document).ready(function(){  
+										 
+										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    $("input[name='addFile1']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										}); 
+										 
+										</script>  
+								        <label style="display: block"> <input type="button" name="addFile1" value="Novo Anexo" /></label>
+								        
+								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+								         
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset> 
 
 									</fieldset>
 									<div class="modal-footer">
@@ -408,13 +435,38 @@ function preencheCampoHidden(id){
 									</div>
 									<br>
 									<div class="form-heading">
-										<label>Anexo</label>
-										<div class="controls">
-											<input type='file' id='file' name="arquivo[]" 
-												enctype="multipart/form-data" multiple="multiple">
-											<a href="" id="resetLink">Limpar</a>
-											<button type="button" onclick="clearFile()"> Limpar </button>
-										</div>
+										
+									<label>Anexo</label>
+																		
+										<script type="text/javascript">  
+
+										function limparCampoFile(){
+											document.getElementById("arquivo[]").value = "";
+										}
+										
+										$(document).ready(function(){  
+										 
+										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    $("input[name='addFile']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										}); 
+										 
+										</script>  
+								        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
+								        
+								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+								         
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset> 
+										
+										
 									</div>
 									<br>
 								</fieldset>
@@ -424,30 +476,7 @@ function preencheCampoHidden(id){
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
-								
-								
-								<script>
-
-								function clearFile(){
-
-									var x = document.getElementById("file")
-									x.value = ""
-									
-									}
-
-								function reset_form_element (e) {
-								    e.wrap('<form>').parent('form').trigger('reset');
-								    e.unwrap();
-								}
-
-								$('#resetLink').on ('click', function (e) {
-								    reset_form_element( $('#file') );
-								    e.preventDefault();
-								});
-
-								</script>
-								
-								
+							
 							</g:form>
 						</div>
 					</div>
