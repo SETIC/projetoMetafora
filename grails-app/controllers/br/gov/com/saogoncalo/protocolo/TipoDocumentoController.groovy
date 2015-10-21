@@ -1,4 +1,4 @@
-package br.gov.rn.saogoncalo.protocolo
+package br.gov.com.saogoncalo.protocolo
 
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.protocolo.TipoDocumento
