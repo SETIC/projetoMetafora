@@ -24,7 +24,7 @@ function printDiv(id)
 </script>
 	<script>
 function deletar(id) {
- var resposta = confirm("Deseja exluir esta protocolo?");
+ var resposta = confirm("Deseja exluir este protocolo?");
 
  if (resposta == true){
  location.href="/projetoMetafora/protocolo/deletar/"+id }
@@ -64,8 +64,9 @@ function deletar(id) {
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
-							<th>Numero do Documento</th>
+							<th>Destino</th>
 							<th>Assunto</th>
+							<th>Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,18 +77,18 @@ function deletar(id) {
 										<ul style="display: inline">
 
 											<g:if test="${perm2}">
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.id}"><span
+													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+												<li title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 											</g:if>
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
+												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
 
@@ -95,21 +96,25 @@ function deletar(id) {
 								</td>
 
 								<td>
-									${it.numero}
+									${it.protocolo.numero}
 								</td>
 
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataProtocolo}" /></td>
+										date="${it.protocolo.dataProtocolo}" /></td>
 
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataEmissao}" /></td>
+										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
-									${it.numeroDocumento}
+									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorDestino.setor.nome}
 								</td>
 
 								<td>
-									${it.assunto}
+									${it.protocolo.assunto}
+								</td>
+								
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
 
 							</tr>
@@ -138,8 +143,9 @@ function preencheCampoHidden(id){
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
-							<th>Numero do Documento</th>
+							<th>Origem</th>
 							<th>Assunto</th>
+							<th>Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,14 +156,14 @@ function preencheCampoHidden(id){
 										<ul style="display: inline" width="400" >
 
 											<g:if test="${perm2}">
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.id}"><span
+													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 											</g:if>
 
 											<li title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
-											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}">
+											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
 											<span class="glyphicon glyphicon-eye-open">
 											</span>
 											</a>
@@ -165,7 +171,7 @@ function preencheCampoHidden(id){
 
 											<li title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
 											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
-											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.id})">
+											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.protocolo.id})">
 											</span>
 											</a>
 											</li>
@@ -178,21 +184,25 @@ function preencheCampoHidden(id){
 								</td>
 
 								<td>
-									${it.numero}
+									${it.protocolo.numero}
 								</td>
 
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataProtocolo}" /></td>
+										date="${it.protocolo.dataProtocolo}" /></td>
 
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataEmissao}" /></td>
+										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
-									${it.numeroDocumento}
+									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorOrigem.setor.nome}
 								</td>
 
 								<td>
-									${it.assunto}
+									${it.protocolo.assunto}
+								</td>
+								
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
 
 							</tr>
@@ -285,7 +295,7 @@ function preencheCampoHidden(id){
 													id="idFuncionarioSetor" onchange="">
 													<g:each in="${funcionariosSetor}">
 														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
+															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
 														</option>
 													</g:each>
 												</select>
@@ -301,7 +311,7 @@ function preencheCampoHidden(id){
 													id="idFuncionarioSetorDestino" onchange="">
 													<g:each in="${funcionarioSetorDestino}">
 														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
+															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
 														</option>
 													</g:each>
 												</select>

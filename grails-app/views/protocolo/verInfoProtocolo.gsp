@@ -197,7 +197,7 @@ function printDiv(id)
 										<tr>
 											<th>Nome do Arquivo</th>
 											<th>Data</th>
-											<th>Ação</th>
+											<th> </th>
 										</tr>
 										<g:each in="${anexos}">
 											<tr class="success">

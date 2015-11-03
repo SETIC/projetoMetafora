@@ -105,7 +105,7 @@
 					<thead>
 						<tr>
 						
-							<th style="width: 50px;"></th>
+							<th>Funções</th>
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
@@ -115,7 +115,9 @@
 					</thead>
 					
 					<tbody>
-						<g:each in='${protocolo?}'>
+					
+				
+						<g:each in='${protocolos?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: 10px" class="opcoes">
@@ -123,8 +125,17 @@
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
+												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo_id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li> 
+																					
+											<g:if test="${ (it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id)}">
+												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+											</g:if>
+											
+																			
 										</ul>
 									</div>
 								</td>
@@ -132,14 +143,16 @@
 									${it.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataProtocolo}" /></td>
+								<td>
+								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_disponibilizacao}" />
+								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataEmissao}" /></td>
+								<td> 
+									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_recebimento}" />
+								</td>
 
 								<td>
-									${it.numeroDocumento}
+									${it.numero}
 								</td>
 
 								<td>

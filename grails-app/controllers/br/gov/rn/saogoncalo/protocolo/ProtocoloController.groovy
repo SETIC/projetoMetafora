@@ -1,5 +1,8 @@
 package br.gov.rn.saogoncalo.protocolo
 
+import groovy.sql.Sql
+
+import java.sql.Driver
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -9,10 +12,10 @@ import br.gov.rn.saogoncalo.login.UsuarioController
 class ProtocoloController {
 
 	def index() { }
-	
-	
+
+
 	def pesquisarProtocolos(){
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
 		}else{
@@ -24,41 +27,64 @@ class ProtocoloController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm1 || perm2){
-				
-				def protocolo
-				def sql
-				
-				println("parametro" + params)
-				   sql = "select p from Protocolo p "
-			   if(params.tipoBusca == "numero"){
-				   
-				   sql = sql + "where p.numero = "+params.numeroProtocolo
-			   }
-			   if(params.tipoBusca == "data"){
-				   
-				   sql = sql + "where p.dataEmissao between'" +params.dataInicial + "' and '" + params.dataFinal +"'"
-			   
-			   }
-			   
-			   if(params.tipoBusca == "setor"){
-				   
-				   sql = sql + "where p.funcionarioSetor.setor.id = "+params.setor
-				   
-			   }
-			   
-			   protocolo = Protocolo.executeQuery(sql)
-			   
-			   def setor=  Setor.findAll()
-	   
-				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolo:protocolo ,setor:setor, perm1:perm1])
-				}else{
-				render(view:"/error403.gsp")
+
+
+
+				// ----- consulta ---
+
+				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+				def props = new Properties()
+				props.setProperty("user", "admin_db_sr")
+				props.setProperty("password", "bgt54rfvcde3")
+
+
+				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				def sql = new Sql(conn)
+
+
+				def sqlString = " select * from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
+						"                 from cadastro_unico_protocolo.tramite t " +
+						"                group by t.protocolo_id) as t1 , cadastro_unico_protocolo.protocolo p, " +
+						"                                                 cadastro_unico_protocolo.tramite tr, " +
+						"                                                 cadastro_unico_protocolo.situacao s, " +
+						"                                                 cadastro_unico_protocolo.setor se, " +
+						"                                                 cadastro_unico_protocolo.funcionario_setor fs " +
+						" where p.id = t1.protoc_id " +
+						"  and tr.id = t1.tramite " +
+						"  and s.id = p.situacao_id " +
+						"  and se.id = fs.setor_id " +
+						"  and fs.id = p.funcionario_setor_id "
+
+				if(params.tipoBusca == "numero"){
+					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
 				}
-			
-			 }
-		   
-		  }
-	
+				if(params.tipoBusca == "data"){
+					sqlString = sqlString + " and p.data_Emissao between'" + params.dataInicial + "' and '" + params.dataFinal +"'"
+				}
+				if(params.tipoBusca == "setor"){
+					sqlString = sqlString + " and se.id = " + params.setor
+				}
+
+				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
+				def protocolos = sql.rows(sqlString)
+
+				// ------------------
+
+				def setor=  Setor.findAll()
+
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+						+ "where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
+
+				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolos:protocolos ,setor:setor, funcionarioSetorLogado: funcionarioSetorLogado, perm1:perm1])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+
 
 	def salvar(){
 
@@ -112,31 +138,6 @@ class ProtocoloController {
 
 					println("parametros aqui" + params)
 
-
-					/*MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
-					 CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("arquivo");
-					 //Suponha que haja um campo de entrada de arquivo com nome ProfilePic */
-
-
-					/*					MultipartHttpServletRequest arquivo = (MultipartHttpServletRequest)request
-					 def List <CommonsMultipartFile> arquivoList = params.list('arquivo')
-					 arquivoList.each{
-					 println("nome do arquivo: " + arquivoList.originalFilename)*/
-
-
-					/*for(int i = 0 ;  i <  arquivoList.originalFilename.size(); i++){
-					 println ( arquivoList.originalFilename[i])
-					 println ("parametros akiiiiiiiiii" +params.arquivo)*/
-
-					/*for(MultipartFile multipartFile : arquivo) {
-					 String fileName = multipartFile.getOriginalFilename();
-					 fileNames.add(fileName);
-					 println ("parametros akiiiiiiiiii" +params.arquivo)
-					 } */
-
-
-
-
 					request.getFiles("arquivo[]").each { file ->
 
 						println("Arquivo aqui ---+++ " + file.originalFilename)
@@ -166,16 +167,14 @@ class ProtocoloController {
 						println("Dado -- " + tramite.dataDisponibilizacao)
 						println("tramite salvo" + tramite)
 						println("parametros do tramite" +protocolo)
-
-						/*def ok
-						 redirect(controller: "Protocolo", action: "listarMensagem", params:[msg:"Protocolo cadastrado com sucesso!", tipo:"ok"])*/
-					}
-
-					else{
+					}else{
 						def erros
 						tramite.errors.each { erros = it }
 						print("erros: "+erros)
 					}
+
+
+					redirect(controller:"Protocolo", action: "listarProtocolo", params: [msg: "Protocolo cadastrado com sucesso.", tipo:"ok"])
 				}else{
 
 					def erros
@@ -203,15 +202,20 @@ class ProtocoloController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+			msg = params.msg
+			tipo= params.tipo
 
 			if (perm1 || perm2) {
 
-				def protocolo = Protocolo.findAll()
-				if (tipo == "ok")
+				//def protocolo = Protocolo.findAll()
 
-					render(view:"/protocolo/listarProtocolo.gsp", model:[protocolo:protocolo, ok:msg, perm2:perm2])
-				else
-					render(view:"/protocolo/listarProtocolo.gsp", model:[protocolo:protocolo, erro:msg, perm2:perm2])
+
+				if (tipo == "ok" || params.tipo =="ok"){
+
+					println("Teste render")
+					render(view:"/protocolo/listarProtocolo.gsp", model:[ ok:msg, perm2:perm2])
+				}else
+					render(view:"/protocolo/listarProtocolo.gsp", model:[ erro:msg, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -315,7 +319,38 @@ class ProtocoloController {
 				println ("assunto" +params.situacao)
 
 				if(protocolos.save(flush:true)){
-					listarMensagem("Protocolo atualizado com sucesso", "ok")
+
+					//atualização de tramites
+
+					if(protocolos.situacao.tipo == "F"){
+
+						Tramite tramite = new Tramite()
+						tramite = Tramite.findByProtocoloAndStatus(protocolos,"ABERTO")
+
+						println("status --- " +tramite)
+						tramite.status = "FECHADO"
+						tramite.save(flush:true)
+					}else{
+						
+						Tramite tramite = new Tramite()
+						def tramite1 = Tramite.executeQuery(" select t from Tramite t " +
+														" where t.protocolo.id = :protocolo " + 
+														" order by t.id desc "
+														, [protocolo : protocolos.id, max : 1])
+			
+						println("status +++ " +tramite1)
+						tramite = Tramite.get(tramite1.id)
+						tramite.status = "ABERTO"
+						//tramite.save(flush:true)
+					
+					
+					
+					}
+
+
+
+					redirect(controller:"Protocolo", action:"listarProtocolo",params:[msg:"Protocolo atualizado com sucesso.",tipo:"ok"])
+					//listarMensagem("Protocolo atualizado com sucesso", "ok")
 				}else{
 					def erros
 					protocolos.errors.each {erros = it}
@@ -345,7 +380,7 @@ class ProtocoloController {
 				Protocolo.deleteAll(Protocolo.get(id))
 
 
-				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
+				redirect(action:"listarProtocolo", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -407,8 +442,11 @@ class ProtocoloController {
 				def tipoDocumentos
 				def funcionariosSetor
 				def funcionarioSetorDestino
+				def msg
+				def tipo
 
-
+				msg = params.msg
+				tipo=params.tipo
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
@@ -420,7 +458,7 @@ class ProtocoloController {
 				if (session["escid"] == 0) {
 
 					//protocolo = Protocolo.findAll()
-					protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
+					protocolosEnviados = Protocolo.executeQuery(" select t from Protocolo p, Tramite t, Situacao s " +
 							" where p.id = t.protocolo.id " +
 							"   and p.situacao.id = s.id " +
 							"   and t.dataRecebimento is null " +
@@ -428,7 +466,7 @@ class ProtocoloController {
 							"   and t.status = 'ABERTO' " +
 							"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
 
-					protocolosAceitos = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
+					protocolosAceitos = Protocolo.executeQuery(" select t from Protocolo p, Tramite t, Situacao s " +
 							" where p.id = t.protocolo.id " +
 							"   and p.situacao.id = s.id " +
 							"   and t.dataRecebimento is not null " +
@@ -448,9 +486,9 @@ class ProtocoloController {
 				}else{
 
 
-				println("FuncionarioSetor ---- " + funcionarioSetorLogado.id)
-				
-					protocolosEnviados = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
+					println("FuncionarioSetor ---- " + funcionarioSetorLogado.id)
+
+					protocolosEnviados = Protocolo.executeQuery(" select t from Protocolo p, Tramite t, Situacao s " +
 							" where p.id = t.protocolo.id " +
 							"   and p.situacao.id = s.id " +
 							"   and t.dataRecebimento is null " +
@@ -458,7 +496,7 @@ class ProtocoloController {
 							"   and t.status = 'ABERTO' " +
 							"   and t.funcionarioSetorOrigem.id = :funcionarioSetorLogado", [funcionarioSetorLogado : funcionarioSetorLogado.id])
 
-					protocolosAceitos = Protocolo.executeQuery(" select p from Protocolo p, Tramite t, Situacao s " +
+					protocolosAceitos = Protocolo.executeQuery(" select t from Protocolo p, Tramite t, Situacao s " +
 							" where p.id = t.protocolo.id " +
 							"   and p.situacao.id = s.id " +
 							"   and t.dataRecebimento is not null " +
@@ -476,7 +514,7 @@ class ProtocoloController {
 
 					funcionarioSetorDestino = FuncionarioSetor.findAll()
 				}
-				render(view:"/protocolo/listarProtocolo.gsp", model:[protocolosAceitos:protocolosAceitos, protocolosEnviados:protocolosEnviados, situacoes:situacoes, funcionariosSetor:funcionariosSetor, funcionarioSetorDestino:funcionarioSetorDestino , tipoDocumentos:tipoDocumentos, perm2:perm2])
+				render(view:"/protocolo/listarProtocolo.gsp", model:[ok:msg, protocolosAceitos:protocolosAceitos, protocolosEnviados:protocolosEnviados, situacoes:situacoes, funcionariosSetor:funcionariosSetor, funcionarioSetorDestino:funcionarioSetorDestino , tipoDocumentos:tipoDocumentos, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -500,6 +538,9 @@ class ProtocoloController {
 
 				def setorDestino
 				def tramites
+				def msg
+
+				msg = params.msg
 
 				setorDestino = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -511,7 +552,7 @@ class ProtocoloController {
 						" where t.protocolo.id = p.id and t.dataRecebimento is null "
 						+ "   and t.funcionarioSetorDestino.id = :setorDestino", [setorDestino : setorDestino.id])
 
-				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2, tramites:tramites])
+				render(view:"/protocolo/listarPendentes.gsp", model:[ok:msg, perm2:perm2, tramites:tramites])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -536,7 +577,8 @@ class ProtocoloController {
 				tramite.dataRecebimento = new Date()
 				tramite.save(flush:true)
 
-				render(view:"/protocolo/listarPendentes.gsp", model:[perm2:perm2,tramite:tramite])
+				//render(view:"/protocolo/listarPendentes.gsp", model:[msg:"Aceito com sucesso", perm2:perm2,tramite:tramite])
+				redirect(action:"listarPendentes", params:[msg:"Aceito com sucesso", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -646,9 +688,9 @@ class ProtocoloController {
 	def downloadFile(long id) {
 
 		println("Teste --- download" )
-		
+
 		println("URL --- " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "\\" + "bla.txt")
-		
+
 		def anexo = Anexo.get(id)
 		//def file = new File("${sub.location}/${sub.fileName}")
 		println("Anexo --- " + anexo.arquivo)

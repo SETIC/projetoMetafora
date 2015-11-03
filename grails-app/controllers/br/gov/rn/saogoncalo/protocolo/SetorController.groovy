@@ -24,11 +24,15 @@ class SetorController {
 
 			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
-
+			def msg
+			
+			
 			if (perm1 || perm2) {
 
 				def setor
 				def funcionarios
+				
+				msg = params.msg
 
 				if (session["escid"] == 0) {
 					setor = Setor.findAll()
@@ -42,9 +46,9 @@ class SetorController {
 
 				}
 
-				render(view:"/setor/listarSetor.gsp", model:[setor:setor, perm2:perm2, funcionarios:funcionarios])
+				render(view:"/setor/listarSetor.gsp", model:[ok:msg, setor:setor, perm2:perm2, funcionarios:funcionarios])
 			}else{
-				render(view:"/error403.gsp")
+				render(view:"/error403.gsp", model:[erro:msg])
 			}
 		}
 	}
@@ -152,10 +156,12 @@ class SetorController {
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), " Salvo Setor " + setor.id.toString(), "Create", "Setor", date)
 
-					listarMensagem("Setor cadastrada com sucesso", "ok")
+					redirect(action:"listarSetor", params:[msg:"Cadastrado com sucesso", tipo:"ok"])
+					//listarMensagem("Setor cadastrada com sucesso", "ok")
 				}else{
-
-					listarMensagem("Erro ao salvar", "erro")
+				
+				redirect(action:"listarSetor", params:[msg:"Erro ao cadastrar", tipo:"erro"])
+					//listarMensagem("Erro ao salvar", "erro")
 				}
 			}else{
 				render(view:"/error403.gsp")
@@ -319,9 +325,12 @@ class SetorController {
 
 					adm.salvaLog(session["usid"].toString().toInteger(), " Atualizada Setor " + setor.id.toString(), "Update", "Setor", date)
 
-					listarMensagem("Setor atualizado com sucesso", "ok")
+					//listarMensagem("Setor atualizado com sucesso", "ok")
+					redirect(action:"listarSetor", params:[msg:"Atualizado com sucesso", tipo:"ok"])
 				}else{
-					listarMensagem("Erro ao atualizar", "erro")
+					redirect(action:"listarSetor", params:[msg:"Erro ao atualizar", tipo:"erro"])
+					//listarMensagem("Erro ao atualizar", "erro")
+				
 				}
 			}
 		}
@@ -349,7 +358,7 @@ class SetorController {
 				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Setor: " + id, "DELETE", "Setor", date)
 
 
-				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
+				redirect(action:"listarSetor", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}

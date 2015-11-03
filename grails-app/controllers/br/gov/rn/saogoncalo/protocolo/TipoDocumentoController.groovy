@@ -7,10 +7,10 @@ class TipoDocumentoController {
 
     def index() { }
 	
-	def cadastrar(){
+	def salvar(){
 		
 				if((session["user"] == null) || (session["pass"] == null) ){
-					render (view:"/usuario/login.gsp", model:[ctl:"TipoDocumento", act:"cadastrar"])
+					render (view:"/usuario/login.gsp", model:[ctl:"TipoDocumento", act:"salvar"])
 				}else{
 					def user = session["user"]
 					def pass = session["pass"]
@@ -27,9 +27,11 @@ class TipoDocumentoController {
 		
 						if (tipoDocumento.save(flush:true)){
 		
-							listarMensagem("Tipo de Documento Cadastrado com Sucesso", "ok")
-						}else{
-							listarMensagem("Erro ao Salvar", "erro")
+							//listarMensagem("Tipo de Documento Cadastrado com Sucesso", "ok")
+							redirect(action:"listarTipoDocumento", params:[msg:"Cadastrado com sucesso", tipo:"ok"])
+						}else{						
+							//listarMensagem("Erro ao Salvar", "erro")
+							redirect(action:"listarSituacao", params:[msg:"Erro ao cadastrar", tipo:"erro"])
 						}
 					}else{
 						render(view:"/error403.gsp")
@@ -81,10 +83,11 @@ class TipoDocumentoController {
 						
 						  if(tipoDocumento.save(flush:true)){
 							
-							listarMensagem("Tipo de documento atualizada com sucesso", "ok")
-						}else{
-										
-							listarMensagem("Erro ao atualizar", "erro")
+							//listarMensagem("Tipo de documento atualizada com sucesso", "ok")
+							redirect(action:"listarTipoDocumento", params:[msg:"Atualizado com sucesso", tipo:"ok"])
+						}else{	
+							//listarMensagem("Erro ao atualizar", "erro")
+						redirect(action:"listarTipoDocumento", params:[msg:"Erro ao atualizar", tipo:"erro"])
 						}
 					}
 				}
@@ -159,6 +162,9 @@ class TipoDocumentoController {
 					if (perm1 || perm2) {
 		
 						def tipoDocumento
+						def msg
+						
+						msg = params.msg
 		
 						if (session["escid"] == 0) {
 		
@@ -169,7 +175,7 @@ class TipoDocumentoController {
 							tipoDocumento = TipoDocumento.findAll()
 
 						}
-						render(view:"/tipoDocumento/listarTipoDocumento.gsp", model:[tipoDocumento:tipoDocumento, perm2:perm2])
+						render(view:"/tipoDocumento/listarTipoDocumento.gsp", model:[ok:msg, tipoDocumento:tipoDocumento, perm2:perm2])
 					}else{
 						render(view:"/error403.gsp")
 					}
