@@ -111,6 +111,7 @@
 							<th>Data da Emissao</th>
 							<th>Numero do Documento</th>
 							<th>Assunto</th>
+							<th>Situação</th>
 						</tr>
 					</thead>
 					
@@ -152,12 +153,17 @@
 								</td>
 
 								<td>
-									${it.numero}
+									${it.numero_Documento}
 								</td>
 
 								<td>
 									${it.assunto}
 								</td>
+								
+								<td>
+									${it.nome}
+								</td>
+								
 							</tr>
 						</g:each>
 					</tbody>

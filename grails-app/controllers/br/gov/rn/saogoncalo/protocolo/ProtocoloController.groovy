@@ -41,7 +41,8 @@ class ProtocoloController {
 				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 
-
+				def protocolos
+				
 				def sqlString = " select * from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
 						"                 from cadastro_unico_protocolo.tramite t " +
 						"                group by t.protocolo_id) as t1 , cadastro_unico_protocolo.protocolo p, " +
@@ -56,17 +57,21 @@ class ProtocoloController {
 						"  and fs.id = p.funcionario_setor_id "
 
 				if(params.tipoBusca == "numero"){
+					
 					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
+					protocolos = sql.rows(sqlString)
 				}
 				if(params.tipoBusca == "data"){
 					sqlString = sqlString + " and p.data_Emissao between'" + params.dataInicial + "' and '" + params.dataFinal +"'"
+					protocolos = sql.rows(sqlString)
 				}
 				if(params.tipoBusca == "setor"){
 					sqlString = sqlString + " and se.id = " + params.setor
+					protocolos = sql.rows(sqlString)
 				}
 
 				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
-				def protocolos = sql.rows(sqlString)
+				
 
 				// ------------------
 
@@ -531,8 +536,8 @@ class ProtocoloController {
 
 			def usuario = new UsuarioController()
 
-			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm1 || perm2) {
 
@@ -568,8 +573,8 @@ class ProtocoloController {
 
 			def usuario = new UsuarioController()
 
-			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm1 || perm2) {
 
@@ -595,8 +600,8 @@ class ProtocoloController {
 
 			def usuario = new UsuarioController()
 
-			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "SETOR", "2")
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm1 || perm2) {
 
