@@ -24,13 +24,18 @@
 
            switch(value){
            case 'numero':
-			  newInput.innerHTML = "<label>Número do protocolo: </label/><input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>"
+
+			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
+			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
+			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
               break;
 
            case 'data':
  			  newInput.innerHTML = "<label>Data Inicial: </label/><input type='date' name ='dataInicial' id='dataInicial' " +
- 	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>"
- 	 	               
+ 	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>" +
+ 	 		 "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
                // newInput.innerHTML = "<input data-provide='datepicker' value='09-10-2015' language='pt-br'/>"
               break;
            
@@ -42,8 +47,10 @@
    			   "data-live-search='true' name='setor' id='setor'"+
    			   "<option value='0'>Setor</option>" +
    			   "<g:each in="${setor}">"+
-   			   "<option value='${it.id}'>"+
-   			   "${it.nome}</option></g:each></select></div>"
+   			   "<option value='${it.id}'>" +
+   			   "${it.nome}</option></g:each></select></div>" +
+   			   "<button type='submit' class='btn btn-primary btn-flat'>" +
+			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
             	   
               break;
            }
@@ -64,7 +71,8 @@
 			<div class="form-heading" style="width:150px;">
 				<label>Tipo de Busca</label>
 				<div class="controls">
-					<select class="form-control" id ="tipoBusca" name="tipoBusca" onchange = "mudarSelecao();">
+
+					<select class="form-control selectpicker" id ="tipoBusca" name="tipoBusca" onchange = "mudarSelecao();">
 						<option value="null">SELECIONE...</option>
 						<option value="numero">NUMERO</option>
 						<option value="data">DATA</option>
@@ -72,15 +80,12 @@
 					</select>
 				</div>
 			</div>
-		<button style="margin-left:155px; margin-top: -57px;" type="submit"
-				class="btn btn-primary btn-flat">
-				<i class="glyphicon glyphicon-search"></i>Buscar
-		</button>
-		<div id='newInput'>
+			<br>
+			<div id='newInput'>
 			<!-- lugar onde aparecerao os campos -->
-		   </div>
+		   	</div>
 			</g:form>
-			</section>
+		</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
 		<div>
@@ -101,17 +106,20 @@
 					<thead>
 						<tr>
 						
-							<th style="width: 50px;"></th>
+
+							<th>Funções</th>
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
 							<th>Numero do Documento</th>
 							<th>Assunto</th>
+
+							<th>Situação</th>
 						</tr>
 					</thead>
 					
 					<tbody>
-						<g:each in='${protocolo?}'>
+						<g:each in='${protocolos?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: 10px" class="opcoes">
@@ -119,8 +127,15 @@
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
+												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo_id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li> 
+																					
+											<g:if test="${ (it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id)}">
+												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+											</g:if>
 										</ul>
 									</div>
 								</td>
@@ -128,18 +143,24 @@
 									${it.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataProtocolo}" /></td>
+								<td>
+								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_disponibilizacao}" />
+								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataEmissao}" /></td>
+								<td> 
+									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_recebimento}" />
+								</td>
 
 								<td>
-									${it.numeroDocumento}
+									${it.numero_Documento}
 								</td>
 
 								<td>
 									${it.assunto}
+								</td>
+								
+								<td>
+									${it.nome}
 								</td>
 							</tr>
 						</g:each>

@@ -113,7 +113,7 @@ function printDiv(id)
 							<h4 class="modal-title" id="myModalLabel">Cadastro Tipo de Documento</h4>
 						</div>
 						<div class="modal-body">
-							<g:form controller="tipoDocumento" action="cadastrar" class="form">
+							<g:form controller="tipoDocumento" action="salvar" class="form">
 								<fieldset>
 									
 									<div class="form-heading">

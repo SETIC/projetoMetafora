@@ -27,7 +27,7 @@ class FileUploadServiceController {
 			
 			file.transferTo(new File(storagePath +"/" + nome))
 			println("arquivo salvo")
-			return("/anexos/" + nome)
+			return(nome)
 			
 		}else{
 		

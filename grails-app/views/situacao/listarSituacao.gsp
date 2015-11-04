@@ -123,7 +123,7 @@ function printDiv(id)
 							<h4 class="modal-title" id="myModalLabel">Cadastro de Situacão</h4>
 						</div>
 						<div class="modal-body">
-							<g:form controller="Situacao" action="cadastrar" class="form">
+							<g:form controller="Situacao" action="salvar" class="form">
 								<fieldset>
 									
 									<div class="form-heading">

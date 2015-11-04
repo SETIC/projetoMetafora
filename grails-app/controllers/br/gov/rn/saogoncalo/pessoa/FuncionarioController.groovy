@@ -3,6 +3,8 @@ import groovy.sql.Sql
 
 import java.sql.Driver
 
+import br.gov.rn.saogoncalo.academico.Disciplina
+import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
@@ -13,12 +15,13 @@ import br.gov.rn.saogoncalo.organizacao.Lotacao
 class FuncionarioController {
 
 	def index() { }
-	
+
 	def gerarRelatorio(){
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
 		}else{
+
 
 			def user = session["user"]
 			def pass = session["pass"]
@@ -38,8 +41,9 @@ class FuncionarioController {
 						"and p.escid = 8"+
 						"and f.id = l.funcionario.id")
 				println("aaaaaaaaaaaa"+funcionario)
-				
+
 				def escolas =  Escola.findAll()
+
 
 				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo,escolas:escolas])
 			}else{
@@ -47,48 +51,37 @@ class FuncionarioController {
 			}
 		}
 	}
-	
-	
-	
+
+
+
 	/*def gerarRelatorioByEscola(){
-		
-		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
-		}else{
+	 if((session["user"] == null) || (session["pass"] == null) ){
+	 render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+	 }else{
+	 def user = session["user"]
+	 def pass = session["pass"]
+	 def usuario = new UsuarioController()
+	 def perm1 = usuario.getPermissoes(user, pass , "ADMINISTRACAO_REGISTRO", "LOG", "1")
+	 def perm2 = usuario.getPermissoes(user, pass, "ADMINISTRACAO_REGISTRO", "LOG", "2")
+	 if (perm1 || perm2){
+	 def funcionario
+	 def lotacao
+	 def cargo
+	 funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
+	 " where p.id = f.id "+
+	 " and l.cargo.id = c.id "+
+	 " and f.id = l.funcionario.id " +
+	 " order by p.id ")
+	 def escolas = Escola.findAll()
+	 println("aaaaaaaaaaaa"+funcionario)
+	 render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo, escolas:escolas])
+	 }else{
+	 render(view:"/error403.gsp")
+	 }
+	 }
+	 }
+	 */
 
-			def user = session["user"]
-			def pass = session["pass"]
-
-			def usuario = new UsuarioController()
-			def perm1 = usuario.getPermissoes(user, pass , "ADMINISTRACAO_REGISTRO", "LOG", "1")
-			def perm2 = usuario.getPermissoes(user, pass, "ADMINISTRACAO_REGISTRO", "LOG", "2")
-
-			if (perm1 || perm2){
-
-				def funcionario
-				def lotacao
-				def cargo
-				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
-						" where p.id = f.id "+
-
-						" and l.cargo.id = c.id "+
-						" and f.id = l.funcionario.id " +
-						" order by p.id ")
-
-				def escolas = Escola.findAll()
-
-
-				println("aaaaaaaaaaaa"+funcionario)
-
-				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo, escolas:escolas])
-
-			}else{
-				render(view:"/error403.gsp")
-			}
-		}
-	}
-
-*/
 
 	def pesquisarFuncionarios(){
 
@@ -110,13 +103,11 @@ class FuncionarioController {
 				def funcionarios
 				def cargos
 				def lotacao
-
-
 				def parametro = params.pesquisa
 				if (session["escid"] == 0){
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
 							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-                        
+
 					//cargos = Cargo.findAll()
 					//print("printcargos "+ cargos )
 
@@ -250,8 +241,6 @@ class FuncionarioController {
 
 				if(lotacao != null) {
 
-					println ("lotacao "+lotacao)
-
 					if( lotacao.turno.toString().contains("M")){
 
 						charManha="M"
@@ -269,7 +258,19 @@ class FuncionarioController {
 
 
 
-				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite])
+				Cargo cargoProfessor = Cargo.get(lotacao.cargo.id)
+				def dlpp, dlppl, disc
+				Professor professores = new Professor()
+
+				if (cargoProfessor.cargo == "PROFESSOR" || cargoProfessor.cargo == "PROFESSOR PI G") {
+					professores = Professor.get(id)
+					dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professores)
+					dlppl =  dlpp.disciplina.id
+					disc  = Disciplina.findAll()
+				}
+
+
+				render (view:"/funcionario/editarFuncionario.gsp", model:[funcionarios:funcionarios,lotacao:lotacao,cargo:cargo,charManha:charManha,charTarde:charTarde,charNoite:charNoite, professores:professores, dlppl:dlppl, disc:disc])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -344,6 +345,7 @@ class FuncionarioController {
 
 				//def funcionarios = Funcionario.findAll()
 
+				def professor = Professor.get(params.id)
 
 				if(funcionario.save(flush:true)){
 
@@ -426,6 +428,105 @@ class FuncionarioController {
 						println("Lotação - " + lotacao)
 						listarMensagem("Funcionário atualizado com sucesso!", "ok")
 					}
+
+
+					// ----------- disciplina lecionada por professor
+
+
+					def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professor)
+					def dp = dlpp.disciplina.id
+					def disciplinaNovo = params.disciplinaLecionadaPorProfessor
+					def idDisc
+
+
+					println(" disciiplinaNovo - " + disciplinaNovo)
+
+					if ((disciplinaNovo.getClass() != java.lang.String) && (disciplinaNovo != null))
+					{
+
+						for (int i=0; i<disciplinaNovo.size(); i++){
+
+							idDisc = disciplinaNovo[i]
+
+							if (!dp.contains(idDisc.toLong())){
+								DisciplinaLecionadaPorProfessor professorDisciplina = new DisciplinaLecionadaPorProfessor()
+
+								def dpi = Disciplina.get(idDisc)
+
+								professorDisciplina.professor = professor
+								professorDisciplina.disciplina = dpi
+								professorDisciplina.data = new Date()
+								professorDisciplina.situacao = "ATIVA"
+
+								professorDisciplina.save(flush:true)
+
+
+							}
+						}
+
+
+
+					}else{
+
+
+						idDisc = disciplinaNovo
+
+						if(idDisc != null){
+							if (!dp.contains(idDisc.toLong()) ){
+								DisciplinaLecionadaPorProfessor professorDisciplina = new DisciplinaLecionadaPorProfessor()
+
+								def dpi = Disciplina.get(idDisc)
+
+								professorDisciplina.professor = professor
+								professorDisciplina.disciplina = dpi
+								professorDisciplina.data = new Date()
+								professorDisciplina.situacao = "ATIVA"
+
+								professorDisciplina.save(flush:true)
+
+
+							}
+						}
+					}
+
+
+					if (disciplinaNovo.getClass() != java.lang.String) {
+						for (int i=0; i<dp.size(); i++){
+
+							def cont = 0
+							for (int j = 0;j<disciplinaNovo.size(); j++) {
+								if (dp[i].toString() == disciplinaNovo[j].toString()){
+									cont = cont+1
+								}
+								idDisc = dp[i]
+							}
+
+							if (cont == 0){
+								def disc = Disciplina.get(idDisc)
+								def dlppl = DisciplinaLecionadaPorProfessor.findByDisciplinaAndProfessor(disc, professor)
+
+								dlppl.delete()
+							}
+						}
+					}else {
+						for (int i=0; i<dp.size(); i++){
+							def cont = 0
+							if (dp[i].toString() == disciplinaNovo){
+								cont = cont+1
+							}
+							idDisc = dp[i]
+
+							if (cont == 0){
+
+								def disc = Disciplina.get(idDisc)
+								def dlppl = DisciplinaLecionadaPorProfessor.findByDisciplinaAndProfessor(disc, professor)
+
+								dlppl.delete()
+							}
+						}
+					}
+
+					// -----------------------------------------------
 
 
 
@@ -514,6 +615,7 @@ class FuncionarioController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
 
 			def funcionarios
+
 			def lotacao
 			if (perm1 || perm2) {
 				// def msg="Funcionario cadastrado com sucesso"
@@ -522,7 +624,7 @@ class FuncionarioController {
 					//lotacao = Lotacao.findAll()
 
 				}else{
-					//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+					//	funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
 				}
 
 				//lotacao = Lotacao.findAll()
@@ -650,15 +752,44 @@ class FuncionarioController {
 					funcionario.observacao = params.observacao
 					funcionario.cidadao = cidadao
 
-
 					if(funcionario.save(flush:true)){
 						funcionario.errors.each{ println it }
 
-						println("Salvou funcionario")
-						def dataAtual = new Date()
-						Cargo cargo = Cargo.get(params.cargoId)
+						def dataAtual=new Date()
 
-						println("Cargo aqui --- " + cargo + " com id --- " + params.cargoId)
+						Cargo cargo= Cargo.get(params.cargoId)
+						
+						if (cargo.cargo == "PROFESSOR" || cargo.cargo == "PROFESSOR PI G") {
+							def professor = new Professor()
+							professor.identificacao = ""
+							professor.funcionario = funcionario
+
+							if(professor.save(flush:true)){
+								DisciplinaLecionadaPorProfessor disciplinaProfessor = new DisciplinaLecionadaPorProfessor()
+								Disciplina disciplina
+
+								for (var in params.disciplinaProf) {
+
+									disciplinaProfessor = new DisciplinaLecionadaPorProfessor()
+									disciplina = new Disciplina()
+
+									//disciplina = Disciplina.get(Integer.parseInt(var))
+									disciplina = Disciplina.get(var)
+
+
+									disciplinaProfessor.professor = professor
+									disciplinaProfessor.disciplina = disciplina
+
+									disciplinaProfessor.data = new Date()
+
+
+									disciplinaProfessor.situacao = "ATIVA"
+									disciplinaProfessor.save(flush:true)
+								}
+							}
+						}
+
+						
 
 						Lotacao lotacao = new Lotacao()
 						lotacao.cargo= cargo
@@ -709,6 +840,7 @@ class FuncionarioController {
 						println("turnoCompleto"+turnoCompleto)
 
 						println("Lotação --- " + lotacao)
+
 
 						//				def funcionarios = Funcionario.findAll()
 						//				render(view:"/funcionario/listarFuncionario.gsp", model:[

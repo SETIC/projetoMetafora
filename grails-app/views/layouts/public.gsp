@@ -76,8 +76,11 @@
     		display: block;
     	}
     </style>
+    <!-- jQuery 2.1.3 -->
+    <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
   </head>
   <body class="skin-blue">
+  	
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
@@ -224,8 +227,7 @@
       </footer>
 
     </div><!-- ./wrapper -->
-    <!-- jQuery 2.1.3 -->
-    <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
+    
     <!-- Bootstrap 3.3.2 JS -->
     <g:javascript src="bootstrap.min.js" />
     <!-- Jasny Mask Bootstrap -->

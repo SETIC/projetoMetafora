@@ -12,10 +12,6 @@ import br.gov.rn.saogoncalo.protocolo.TipoDocumento
 import br.gov.rn.saogoncalo.protocolo.Tramite
 
 
-
-
-
-
 class ProtocoloController {
 
 	def index() { }
