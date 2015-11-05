@@ -757,7 +757,8 @@ class FuncionarioController {
 
 						def dataAtual=new Date()
 
-
+						Cargo cargo= Cargo.get(params.cargoId)
+						
 						if (cargo.cargo == "PROFESSOR" || cargo.cargo == "PROFESSOR PI G") {
 							def professor = new Professor()
 							professor.identificacao = ""
@@ -788,7 +789,7 @@ class FuncionarioController {
 							}
 						}
 
-						Cargo cargo= Cargo.get(params.cargoId)
+						
 
 						Lotacao lotacao = new Lotacao()
 						lotacao.cargo= cargo

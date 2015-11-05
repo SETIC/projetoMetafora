@@ -91,7 +91,7 @@
 												</div>
 												<div class="col-md-5">
 												<label> Responsáveis </label>
-													<select multiple id="select2" name="funcionariosResponsaveis" class="form-control">
+													<select multiple id="select2" name="funcionariosResponsaveis" class="form-control" required="true">
 													
 													<g:each in="${funcionariosSetorResponsaveis?}">
 								 							<option value="${it?.funcionario.cidadao.pessoaFisica.pessoa.id}"> ${it?.funcionario.cidadao.pessoaFisica.pessoa.nome} </option>
@@ -202,10 +202,16 @@
 			    }
 
 			}
+			
 			function addSelectOptions(){
 
 				
 				var x = document.getElementById("select1");
+				var y = document.getElementById("select2");
+
+				var listOptions;
+
+				listOptions = document.getElementById("select2").options;
 				
 				x.options.length = 0;
 					
@@ -219,15 +225,81 @@
 				 
 			    var str = funcionarios[0].innerText;
 			    var res = str.split(",");
+				var contOption;
+
+				contOption = 0;
 			    
 				for (i = 0; i < res.length; i++){
+
 			        var option = document.createElement("option");
 			        option.value = values[i];
 			        option.text = res[i];
-			        x.add(option);
+
+			        //x.add(option);
+
+			        //alterado aqui
+					for (j = 0; j < listOptions.length; j++){
+						console.log("Teste ++ " + values[i] + " == " + listOptions[j].value);
+
+						if(values[i] == listOptions[j].value ){
+							contOption = contOption + 1;
+							
+							}
+					}
+					
+
+					if(contOption == 0){
+						x.add(option);
+						}
+					contOption = 0;
+					//----------------
 
 				}
+
+				//continuar aqui
+				var contOption2;
+				contOption2 = 0;
+				var contLinha = 0;
 				
+				for (j = 0; j < listOptions.length; j++){
+					for (i = 0; i < res.length; i++){
+
+						console.log("Teste --- " + values[i] + " == " + listOptions[j].value);
+						if(values[i] == listOptions[j].value ){
+							contOption2 = contOption2 + 1;
+							contLinha = i
+							}
+
+						
+						}
+
+					if(contOption2 == 0){
+						console.log("Remover >>> " + contLinha);
+						listOptions.remove(j);
+						}
+					contLinha = 0;
+					contOption2 = 0;
+										
+				}
+
+/*
+				if(contOption2 == 0){
+					console.log("Remover >>> " + contLinha);
+					listOptions.remove(contLinha);
+					}
+				else{
+					console.log("else >>> " contlinha);
+					}
+				contLinha = 0;
+				contOption2 = 0;
+				*/
+
+
+
+
+
+				
+
 		    }
 		    
 			function ClearOptionsFast(id){
