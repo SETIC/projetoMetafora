@@ -103,17 +103,8 @@
 										</div>
 										<br/>
 									</fieldset>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-primary btn-flat" onclick="getResponsaveis()">
-											<i class="fa fa-save"></i> Cadastrar
-										</button>
-										<input type="reset" class="btn btn btn-flat" value="Limpar">
-									</div>
-						
-						
-						
-						
-					</fieldset>
+																	
+					
 					<div style="margin: 0 15% auto">
 						<button type="submit" class="btn btn-primary btn-flat" onclick="getResponsaveis()"><i
 									class="fa fa-refresh"></i> Atualizar</button>				

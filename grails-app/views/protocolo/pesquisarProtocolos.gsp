@@ -25,7 +25,7 @@
            switch(value){
            case 'numero':
 			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
-			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
+			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo' required='true'/>" +
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
               break;
