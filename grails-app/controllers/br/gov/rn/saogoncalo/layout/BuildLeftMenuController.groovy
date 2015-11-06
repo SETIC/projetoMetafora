@@ -198,6 +198,7 @@ class BuildLeftMenuController {
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SITUACAO', perm)){
 			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-th-list"></i>Situacão</a></li>'
+
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
@@ -214,6 +215,7 @@ class BuildLeftMenuController {
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
 			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="glyphicon glyphicon-search"></i>Pesquisar Protocolos</a></li>'
+			
 			verificador = true
 		}
 

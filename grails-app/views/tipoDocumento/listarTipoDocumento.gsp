@@ -67,6 +67,7 @@ function printDiv(id)
 	
 											<g:if test="${perm2}">
 												<li title="Editar tipo de documento"
+
 												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/tipoDocumento/editarTipoDocumento/${it.id}"><span

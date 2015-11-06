@@ -202,6 +202,7 @@ function printDiv(id)
 														date="${it.dataAnexo}" /></td>
 												<td>
 													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+
 												</td>
 											</tr>
 										</g:each>

@@ -66,7 +66,6 @@ function printDiv(id)
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
-	
 											<g:if test="${perm2}">
 												<li title="Editar situação"
 												    class="btn btn-primary btn-xs btn-flat"><a
