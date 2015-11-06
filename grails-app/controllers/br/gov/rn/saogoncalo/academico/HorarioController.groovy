@@ -3,6 +3,7 @@ package br.gov.rn.saogoncalo.academico
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Professor
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 
 class HorarioController {
 
@@ -130,6 +131,11 @@ class HorarioController {
 
 			if (perm2) {
 				Horario.deleteAll(Horario.get(id))
+				
+				def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Horario: " + id.toString(), "DELETE", "Horario", date)
+				
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 				//redirect(action:"listar" )
 			}else{
@@ -168,6 +174,11 @@ class HorarioController {
 					//			render(view:"/horario/listarHorario.gsp", model:[horarios:horarios,
 					//				ok : "Horário cadastrado com sucesso!"
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Criar Horario: " + horarioL.id.toString(), "CREATE", "Horario", date)
+					
 					listarMensagem("Horário cadastrado com sucesso!", "ok")
 				}
 				else{
@@ -246,6 +257,11 @@ class HorarioController {
 					//			render(view:"/horario/listarHorario.gsp", model:[horarios:horarios,
 					//				ok : "Horário atualizado com sucesso!"
 					//			])
+					
+					def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Horario: " + horarioL.id.toString(), "UPDATE", "Horario", date)
+					
 					listarMensagem("Horário atualizado com sucesso!", "ok")
 				}
 				else{

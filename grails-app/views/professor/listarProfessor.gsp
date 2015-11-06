@@ -58,7 +58,7 @@ function printDiv(id)
 						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
-								style="width: 300px" value="${ }" />
+								style="width: 300px" value="" />
 								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
@@ -66,7 +66,7 @@ function printDiv(id)
 						</div>
 					</div>
 				</g:form>
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarProfessor" class="table table-striped table-hover example">
 					<g:if test="${!professores?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -143,7 +143,7 @@ function printDiv(id)
 			</button>
 			</g:if>
 
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarProfessor')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			<!-- Modal -->
@@ -188,7 +188,7 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
+				<!--					<div class="form-heading">
 										<label>Número do Registro de Cartório</label>
 										<div class="controls">
 											<g:textField class="form-control" name="rcNumero" value="" />
@@ -217,7 +217,7 @@ function printDiv(id)
 											<g:textField class="form-control" name="rcFolhaDoLivro"
 												value="" />
 										</div>
-										<br>
+										<br> -->
 										<div class="form-heading">
 											<label>Sexo</label>
 											<div class="controls">
@@ -277,13 +277,6 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-
-
-
-
-
-
-
 
 
 									<div class="form-heading">

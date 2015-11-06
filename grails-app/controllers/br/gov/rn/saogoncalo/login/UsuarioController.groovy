@@ -1,6 +1,5 @@
 package br.gov.rn.saogoncalo.login
 
-import grails.converters.JSON
 import br.gov.rn.saogoncalo.pessoa.Escola
 import br.gov.rn.saogoncalo.pessoa.Pessoa
 
@@ -51,17 +50,17 @@ class UsuarioController {
 			session["pesnome"] = usuarioA.pessoa.nome
 			session["escid"] = usuarioA.pessoa.escid
 			session["master"] = usuarioA.grupoUsuario.grupo.master //rever pra a situação de ter mais de um grupo
-			
-			
-			
+
+
+
 			if (usuarioA.pessoa.escid == 0)
-			 {
-				//aqui 
+			{
+				//aqui
 				session["escname"] = "Administração"
-			 }else{
-			 	session["escname"] = escolaA.pessoaJuridica.pessoa.nome
-			 }
-			
+			}else{
+				session["escname"] = escolaA.pessoaJuridica.pessoa.nome
+			}
+
 
 
 			//println("Escola - " + escolaA.pessoaJuridica.pessoa.nome)
@@ -166,6 +165,7 @@ class UsuarioController {
 			}
 		}
 	}
+
 	def editarUsuario(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -194,6 +194,7 @@ class UsuarioController {
 			}
 		}
 	}
+
 	def atualizar(){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -222,46 +223,130 @@ class UsuarioController {
 					render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, erro:"Erro ao salvar usuário.", perm2:perm2])
 				}
 
-				def	gruposUsadosBanco = GrupoUsuario.findAllByUsuario(Usuario.get(Integer.parseInt(params.idUsuario)))
-				def gruposUsadosGSP = params.grupoUsuario
+				ArrayList gruposUsadosBanco = new ArrayList()
+				ArrayList gruposUsadosGSP = new ArrayList()
+				
+				gruposUsadosBanco = GrupoUsuario.findAllByUsuario(Usuario.get(Integer.parseInt(params.idUsuario)))
+				gruposUsadosGSP.addAll(params.grupoUsuario) 
+				
+
+				println("Grupos Usados Banco - " + gruposUsadosBanco.grupo.id)
+				println("Grupos Usados GSP - " + gruposUsadosGSP)
+
+
+				int contem = 0
+				ArrayList listaDelete = new ArrayList()
+				ArrayList listaInsert = new ArrayList()
+
+				//Delete
+				for(int i=0;i<gruposUsadosBanco.size();i++){
+					for (int cont=0; cont<gruposUsadosGSP.size(); cont++){
+						if(gruposUsadosBanco[i].grupo.id.toString() == gruposUsadosGSP[cont]){
+							contem = contem + 1
+							
+						}
+					}
+					if(contem == 0){
+						listaDelete.add(gruposUsadosBanco[i].id.toString())
+						
+					}
+					contem = 0
+				}
+				def grupoUsuario
+				if (listaDelete.size > 0){
+					if (listaDelete.size == 1){
+						grupoUsuario = GrupoUsuario.get(Integer.parseInt(listaDelete[0].toString()))
+						GrupoUsuario.deleteAll(grupoUsuario)
+						
+					}else{
+						for (int cont2=0; cont2<listaDelete.size(); cont2++){
+							println("ListaDelete 2 -- " + listaDelete)
+							grupoUsuario = GrupoUsuario.get(listaDelete[cont2].toString().toInteger())
+							GrupoUsuario.deleteAll(grupoUsuario)
+						}
+					}
+				}
+				//final Delete
+
+
+				//insert
+
+				
+				
+				println("gruposUsadosGSP -- " + gruposUsadosGSP.size() + " tipo " + gruposUsadosGSP.getClass().getName() )
+				
+				for(int i=0;i<gruposUsadosGSP.size();i++){
+					for (int cont=0; cont<gruposUsadosBanco.size(); cont++){
+						if(gruposUsadosGSP[i].toString() == gruposUsadosBanco[cont].grupo.id.toString()){
+							contem = contem + 1
+						}
+					}
+
+					if(contem == 0){
+						listaInsert.add(gruposUsadosGSP[i])
+					}
+					contem = 0
+				}
+
+				
+				println("ListaInsert -- " + listaInsert + " size -- " +listaInsert.size() )
+				if (listaInsert.size > 0){
+					if (listaInsert.size == 1){
+					
+						GrupoUsuario gpu = new GrupoUsuario()
+						gpu.grupo = Grupo.get(listaInsert[0].toString().toInteger())
+						gpu.usuario = usuario
+						gpu.save(flush:true)
+					}else{
+
+						for (int cont2=0; cont2<listaInsert.size(); cont2++){
+
+							GrupoUsuario gpu = new GrupoUsuario()
+							gpu.grupo = Grupo.get(listaInsert[cont2].toString().toInteger())
+							gpu.usuario = usuario
+							gpu.save(flush:true)
+						}
+					}
+				}
+
+				//final Insert
+
+
 
 
 				//deletar
-				for(int i=0;i<gruposUsadosBanco.size();i++){
+				/*	for(int i=0;i<gruposUsadosBanco.size();i++){
+				 String str = gruposUsadosBanco[i].grupo.id
+				 if (gruposUsadosGSP.contains(str)){
+				 //if (str in gruposUsadosGSP){
+				 println("str aqui - " + str)
+				 //aqui
+				 }
+				 else{
+				 def gr = GrupoUsuario.get(gruposUsadosBanco[i].id)
+				 GrupoUsuario.deleteAll(gr)
+				 }
+				 println(gruposUsadosBanco[i].grupoId)
+				 } */
 
-					String str = gruposUsadosBanco[i].grupoId
-					if (gruposUsadosGSP.contains(str) ){
-
-						//aqui
-					}
-					else{
-						def gr = GrupoUsuario.get(gruposUsadosBanco[i].id)
-						GrupoUsuario.deleteAll(gr)
-					}
-
-					println(gruposUsadosBanco[i].grupoId)
-				}
 
 
-				//inserir
-				for(int j=0;j<gruposUsadosGSP.size();j++){
-
-					int str = gruposUsadosGSP[j]
-					if (gruposUsadosBanco.grupoId.contains(Integer.parseInt(gruposUsadosGSP[j])) ){
-						//aqui
-					}
-					else{
-
-						GrupoUsuario gpu = new GrupoUsuario()
-						gpu.grupo = Grupo.get(gruposUsadosGSP[j])
-						gpu.usuario = usuario
-						gpu.save(flush:true)
-
-					}
-
-					println(gruposUsadosGSP[j])
-				}
-				//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, ok:"Salvo com sucesso"])
+				/*
+				 //inserir
+				 for(int j=0;j<gruposUsadosGSP.size();j++){
+				 int str = gruposUsadosGSP[j].toString().toInteger()
+				 if (gruposUsadosBanco.grupoId.contains(Integer.parseInt(gruposUsadosGSP[j])) ){
+				 //aqui
+				 }
+				 else{
+				 GrupoUsuario gpu = new GrupoUsuario()
+				 gpu.grupo = Grupo.get(gruposUsadosGSP[j])
+				 gpu.usuario = usuario
+				 gpu.save(flush:true)
+				 }
+				 println(gruposUsadosGSP[j])
+				 }
+				 //render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, ok:"Salvo com sucesso"]) */
 				listarMensagem("Salvo com sucesso", "ok")
 
 			}
@@ -389,9 +474,9 @@ class UsuarioController {
 			return false
 	}
 
-	
+
 	def getAllPermissoes(){
-		
+
 		def permissoes = []
 		def grupos = getGrupos(session["user"], session["pass"])
 
@@ -417,7 +502,7 @@ class UsuarioController {
 		}
 
 		return permissoes
-		
+
 	}
 
 }

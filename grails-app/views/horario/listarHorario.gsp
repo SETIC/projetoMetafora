@@ -183,7 +183,7 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="" class="table table-striped table-hover example">
+				<table id="listarHorario" class="table table-striped table-hover example">
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
@@ -246,7 +246,7 @@ function printDiv(id)
 			</button>
 			</g:if>
 			
-			<button class="btn btn-danger btn-flat" onClick="printDiv('example')">
+			<button class="btn btn-danger btn-flat" onClick="printDiv('listarHorario')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			
@@ -293,7 +293,7 @@ function printDiv(id)
 										<div class="controls">
 											<div id="teste"></div>
 											<select id="comboSalas" name="sala" class="form-control">
-												<option value="0">Selecione uma Escola</option>
+												<option value="0">Selecione uma Sala</option>
 											</select>
 										</div>
 									</div>
@@ -328,7 +328,7 @@ function printDiv(id)
 												class="form-control">
 												
 													<option value="0">
-														Selecione uma turma
+														Selecione uma Disciplina - Professor
 													</option>
 												
 											</select>

@@ -74,6 +74,7 @@
 									style="width: 300px" value="${pessoa.cpfCnpj }" />
 							</div>
 						</div>
+						<!-- 
 						<br>
 						<div class="form-group">
 							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
@@ -110,7 +111,7 @@
 								<g:textField class="form-control" name="rcFolhaDoLivro"
 									style="width: 300px" value="${pessoaFisica.rcFolhaDoLivro }" />
 							</div>
-						</div>
+						</div> -->
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>

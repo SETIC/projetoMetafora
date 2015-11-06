@@ -37,6 +37,9 @@
     <!-- Jasny Mask Bootstrap -->
     <link href="${resource(dir: 'css', file: 'jasny-bootstrap.min.css')}" rel="stylesheet">
     
+    <!-- Bootstrap Master -->
+    <link href="${resource(dir: 'css', file: 'bootstrap-modal-master/css/bootstrap-modal.css')}" rel="stylesheet">    
+    
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="${resource(dir: 'css', file: 'skins/_all-skins.min.css')}" rel="stylesheet">
@@ -78,8 +81,11 @@
     		display: block;
     	}
     </style>
+    <!-- jQuery 2.1.3 -->
+    <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
   </head>
   <body class="skin-blue">
+  	
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
@@ -105,8 +111,18 @@
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
 
-                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}
 
+                      ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}<br>
+
+                      <p style="font-size:12px;">
+                      
+                       ${session["user"].split(" ")[0]}
+                      
+                      </>
+
+                    </p>
+                    <p style="font-size: 12px;">
+                    	${session["user"].split(" ")[0]}
                     </p>
                   </li>
                   <!--Menu Body 
@@ -147,6 +163,12 @@
             </div>
             <div class="pull-left info">
               <p style="margin-top: 10.5px;">${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}</p>
+
+                      <p style="font-size:12px;">
+                      
+                       ${session["user"].split(" ")[0]}
+                      
+                      </>
               
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
@@ -210,8 +232,7 @@
       </footer>
 
     </div><!-- ./wrapper -->
-    <!-- jQuery 2.1.3 -->
-    <g:javascript src="jQuery/jQuery-2.1.3.min.js" />
+    
     <!-- Bootstrap 3.3.2 JS -->
     <g:javascript src="bootstrap.js" />
     <!-- Jasny Mask Bootstrap -->
@@ -249,6 +270,7 @@
 	<g:javascript src="bootstrap-modal-master/js/bootstrap-modal.js" />
 	<!-- Bootstrap Master -->
 	<g:javascript src="bootstrap-modal-master/js/bootstrap-modalmanager.js" />
+
 	
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 	<g:javascript src="dashboard2.js" /> -->

@@ -43,7 +43,7 @@ function printDiv(id)
   
   newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
 
-newWin.print();
+  newWin.print();
   newWin.close();
 }
 </script>
@@ -83,33 +83,33 @@ newWin.print();
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
 							<div class="col-sm-10">
-								${pessoa.nome }
+								${pessoa?.nome }
 							</div>
 						</div>
 						<br>
+						
 						<div class="form-group">
-							<label for="inputData3" class="col-sm-2 control-label">Data
-								de Nascimento</label>
+							<label for="inputData3" class="col-sm-2 control-label">Data de Nascimento
+								</label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" required="true" name="dataDeNascimento"
-									value="${pessoa.dataDeNascimento}" />
+								<g:formatDate format="dd/MM/yyyy" date="${pessoa.dataDeNascimento}" />
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">CPF</label>
 							<div class="col-sm-10">
-								${pessoa.cpfCnpj }
+								${pessoa?.cpfCnpj }
 							</div>
 						</div>
+						
+						<!-- 
 						<br>
 						<div class="form-group">
 							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
 								do Registro de Cartório</label>
 							<div class="col-sm-10">
-								${pessoaFisica.rcNumero }
+								${pessoaFisica?.rcNumero }
 							</div>
 						</div>
 						<br>
@@ -118,7 +118,7 @@ newWin.print();
 								class="col-sm-2 control-label">Nome do Cartório do
 								Registro de Cartório</label>
 							<div class="col-sm-10">
-								${pessoaFisica.rcNomeDoCartorio }
+								${pessoaFisica?.rcNomeDoCartorio }
 							</div>
 						</div>
 						<br>
@@ -126,7 +126,7 @@ newWin.print();
 							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Nome
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
-								${pessoaFisica.rcNomeDoLivro }
+								${pessoaFisica?.rcNomeDoLivro }
 							</div>
 						</div>
 						<br>
@@ -134,39 +134,62 @@ newWin.print();
 							<label for="inputrcFolhaDoLivro3" class="col-sm-2 control-label">Folha
 								do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
-								${pessoaFisica.rcFolhaDoLivro }
+								${pessoaFisica?.rcFolhaDoLivro }
 							</div>
 						</div>
+						
+						-->
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
 							<div class="col-sm-10">
-								${pessoaFisica.sexo}
+								${pessoaFisica?.sexo}
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade</label>
 							<div class="col-sm-10">
-								${cidadao.nacionalidade}
+								${cidadao?.nacionalidade}
 							</div>
 						</div>
 						<br>
+						<div class="form-group">
+							<label for="inputvinculo3" class="col-sm-2 control-label">Vinculo</label>
+							<div class="col-sm-10">
+								${it?.lotacao?.vinculo[0]}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputfuncao3" class="col-sm-2 control-label">Função</label>
+							<div class="col-sm-10">
+								${it?.lotacao?.funcao[0]}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputcargo3" class="col-sm-2 control-label">Cargo</label>
+							<div class="col-sm-10">
+								${it?.lotacao?.cargo?.cargo[0]}
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputturno3" class="col-sm-2 control-label">Turno</label>
+							<div class="col-sm-10">
+								${it?.lotacao?.turno[0]}
+							</div>
+						</div>
+						<br>
+						
 						<div class="form-group">
 							<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
 								Civil</label>
 							<div class="col-sm-10">
-								
-											${cidadao.estadoCivil}
-									
 
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputprofissao3" class="col-sm-2 control-label">Profissão</label>
-							<div class="col-sm-10">
-								${cidadao.profissao }
+								${cidadao?.estadoCivil}
 							</div>
 						</div>
 						<br>
@@ -174,14 +197,21 @@ newWin.print();
 							<label for="inputcargaHoraria3" class="col-sm-2 control-label">Carga
 								Horária</label>
 							<div class="col-sm-10">
-								${it.cargaHoraria}
+								${it?.cargaHoraria}
 							</div>
 						</div>
 						<br>
 						<div class="form-group">
 							<label for="inputmatricula3" class="col-sm-2 control-label">Matricula</label>
 							<div class="col-sm-10">
-								${it.matricula}
+								${it?.matricula}
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputCpfCnpj3" class="col-sm-2 control-label">Observação</label>
+							<div class="col-sm-10">
+								<h5>${it.observacao}</h5>
 							</div>
 						</div>
 						<br>
@@ -195,10 +225,12 @@ newWin.print();
 							<li class="btn btn-info btn-flat"><a
 								href="/projetoMetafora/funcionario/listar/">Voltar</a></li>
 						</ul>
+						</button>
 					</div>
-				</g:form>
-			</div>
-			<script type="text/javascript">
+			    </div>
+			</g:form>
+		</div>
+		<script type="text/javascript">
 				$(document).ready(function() {
 					$('#example').DataTable();
 					var tabela = $('#example').dataTable();

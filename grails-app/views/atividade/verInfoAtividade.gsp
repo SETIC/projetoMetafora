@@ -135,7 +135,7 @@ newWin.print();
 						<br>
 						<div class="form-group">
 							<label for="inputCpfCnpj3" class="col-sm-2 control-label">Descrição da atividade</label>
-							<div class="col-s-10">
+							<div class="col-sm-10">
 								<h5>${atividade.descricaoAtividade}</h5>
 							</div>
 						</div>

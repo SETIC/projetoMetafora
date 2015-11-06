@@ -22,7 +22,7 @@ function printDiv(id)
   newWin.document.write("<p align='Justify' style='center;margin-top:20px;line-height:200%;  font-family: sans-serif;margin-left: 25px;margin-right: 25px;'> ");
   newWin.document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que  o aluno "); 
   newWin.document.write("<b>"+nomeAluno+"</b>");
-  newWin.document.write(", está sendo transferido para a ");	
+  newWin.document.write(", está sendo transferido para a(o) ");	
   newWin.document.write("<b>"+itemSelecionado+"<b>");
   newWin.document.write(". ");
   newWin.document.write(" ");

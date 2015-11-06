@@ -141,14 +141,12 @@ newWin.print();
 							</div>
 						</div>
 						<br>
+						
 						<div class="form-group">
-							<label for="inputData3" class="col-sm-2 control-label">Data
-								de Fundação</label>
+							<label for="inputData3" class="col-sm-2 control-label">Data de Fundação
+								</label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" required="true" name="dataDeNascimento"
-									value="${pessoa.dataDeNascimento}" />
+								<g:formatDate format="dd/MM/yyyy" date="${pessoa.dataDeNascimento}" />
 							</div>
 						</div>
 						<br>
