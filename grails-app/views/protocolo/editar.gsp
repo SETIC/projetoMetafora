@@ -38,7 +38,7 @@
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
 						<div class="form-group">
-							<label for="inputNome3" class="col-sm-2 control-label">Numero</label>
+							<label for="inputNome3" class="col-sm-2 control-label">Número</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="numero" type="text"
 								<g:if test="${tipoEdicao == 'ACEITO'}">
@@ -80,8 +80,6 @@
 								de Emissão </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								
-								
 								<g:if test="${tipoEdicao == 'ACEITO'}">
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				

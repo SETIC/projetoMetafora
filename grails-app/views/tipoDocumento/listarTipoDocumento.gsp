@@ -54,7 +54,7 @@ function printDiv(id)
 				<table id="listartipoDocumento" class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
+							<th style="width: 120px;">Função</th>
 							<th>Nome</th>
 						</tr>
 					</thead>
@@ -66,11 +66,13 @@ function printDiv(id)
 										<ul style="display: inline">
 	
 											<g:if test="${perm2}">
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<li title="Editar tipo de documento"
+												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/tipoDocumento/editarTipoDocumento/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+												<li title="Excluir tipo de documento"
+												    onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 											</g:if>

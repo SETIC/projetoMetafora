@@ -26,7 +26,7 @@
            case 'numero':
 
 			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
-			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
+			  "<input type='text' required = 'true' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
               break;
@@ -51,7 +51,6 @@
    			   "${it.nome}</option></g:each></select></div>" +
    			   "<button type='submit' class='btn btn-primary btn-flat'>" +
 			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
-            	   
               break;
            }
 			
@@ -105,19 +104,15 @@
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-						
-
-							<th>Funções</th>
-							<th>Numero</th>
+							<th style="width:60px;padding-left:60px">Funções</th>
+							<th>Número</th>
 							<th>Data do Protocolo</th>
-							<th>Data da Emissao</th>
-							<th>Numero do Documento</th>
+							<th>Data da Emissão</th>
+							<th>Número do Documento</th>
 							<th>Assunto</th>
-
 							<th>Situação</th>
 						</tr>
 					</thead>
-					
 					<tbody>
 						<g:each in='${protocolos?}'>
 							<tr class='linha_registro'>
