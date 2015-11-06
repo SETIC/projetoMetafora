@@ -61,9 +61,9 @@ function deletar(id) {
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Numero</th>
+							<th>Número</th>
 							<th>Data do Protocolo</th>
-							<th>Data da Emissao</th>
+							<th>Data da Emissão</th>
 							<th>Destino</th>
 							<th>Assunto</th>
 							<th>Situação</th>
@@ -99,10 +99,10 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
+								<td><g:formatDate format="dd/MM/yyyy" 
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
+								<td><g:formatDate format="dd/MM/yyyy" 
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -140,9 +140,9 @@ function preencheCampoHidden(id){
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Numero</th>
+							<th>Número</th>
 							<th>Data do Protocolo</th>
-							<th>Data da Emissao</th>
+							<th>Data da Emissão</th>
 							<th>Origem</th>
 							<th>Assunto</th>
 							<th>Situação</th>
@@ -187,10 +187,10 @@ function preencheCampoHidden(id){
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -287,21 +287,7 @@ function preencheCampoHidden(id){
 											</div>
 										</div>
 										<br>
-										<div class="form-heading">
-											<label>Funcionario Setor</label>
-											<div class="controls ">
-												<select class="form-control selectpicker"
-													data-live-search="true" name="funcionarioSetor"
-													id="idFuncionarioSetor" onchange="">
-													<g:each in="${funcionariosSetor}">
-														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
-														</option>
-													</g:each>
-												</select>
-											</div>
-										</div>
-										<br>
+										
 
 										<div class="form-heading">
 											<label>Funcionario Setor de Destino</label>

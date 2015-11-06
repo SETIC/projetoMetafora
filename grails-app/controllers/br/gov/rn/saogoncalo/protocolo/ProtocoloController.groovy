@@ -6,6 +6,7 @@ import java.sql.Driver
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController;
 import br.gov.rn.saogoncalo.login.UsuarioController
 
 
@@ -42,7 +43,8 @@ class ProtocoloController {
 				def sql = new Sql(conn)
 
 				def protocolos
-				
+
+
 				def sqlString = " select * from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
 						"                 from cadastro_unico_protocolo.tramite t " +
 						"                group by t.protocolo_id) as t1 , cadastro_unico_protocolo.protocolo p, " +
@@ -57,7 +59,8 @@ class ProtocoloController {
 						"  and fs.id = p.funcionario_setor_id "
 
 				if(params.tipoBusca == "numero"){
-					
+
+
 					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
 					protocolos = sql.rows(sqlString)
 				}
@@ -71,7 +74,8 @@ class ProtocoloController {
 				}
 
 				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
-				
+
+
 
 				// ------------------
 
@@ -106,6 +110,13 @@ class ProtocoloController {
 
 			if (perm2) {
 
+
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+						+ "where u.pessoa.id = f.id "
+						+ "and fs.funcionario.id = f.id "
+						+ "and s.id = fs.setor.id "
+						+ "and f.id = " + session["pesid"])
+
 				println("parametros " + params.arquivos)
 				Protocolo protocolo = new Protocolo(params)
 				protocolo.numero = params.numero.toInteger()
@@ -114,7 +125,10 @@ class ProtocoloController {
 				protocolo.dataProtocolo = params.dataProtocolo
 				protocolo.dataEmissao = params.dataEmissao
 
-				def funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
+				//def funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
+
+				def funcionarioSetor = FuncionarioSetor.get(funcionarioSetorLogado.id)
+
 				def tipoDocumento = TipoDocumento.get(params.tipoDocumento)
 				def situacao = Situacao.get(params.situacao)
 
@@ -122,6 +136,9 @@ class ProtocoloController {
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
 
+				//println("Funcionario Setor -- " + FuncionarioSetor.get(funcionarioSetorLogado.id))
+
+				//protocolo.funcionarioSetor = FuncionarioSetor.get(funcionarioSetorLogado.id)
 
 				if (protocolo.save(flush:true)){
 					Observacao observacao = new Observacao(params)
@@ -336,20 +353,20 @@ class ProtocoloController {
 						tramite.status = "FECHADO"
 						tramite.save(flush:true)
 					}else{
-						
+
 						Tramite tramite = new Tramite()
 						def tramite1 = Tramite.executeQuery(" select t from Tramite t " +
-														" where t.protocolo.id = :protocolo " + 
-														" order by t.id desc "
-														, [protocolo : protocolos.id, max : 1])
-			
+								" where t.protocolo.id = :protocolo " +
+								" order by t.id desc "
+								, [protocolo : protocolos.id, max : 1])
+
 						println("status +++ " +tramite1)
 						tramite = Tramite.get(tramite1.id)
 						tramite.status = "ABERTO"
 						//tramite.save(flush:true)
-					
-					
-					
+
+
+
 					}
 
 
@@ -697,21 +714,33 @@ class ProtocoloController {
 		println("URL --- " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "\\" + "bla.txt")
 
 		def anexo = Anexo.get(id)
-		//def file = new File("${sub.location}/${sub.fileName}")
 		println("Anexo --- " + anexo.arquivo)
-		def file = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "\\" + anexo.arquivo)
+		def file = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo)
+		
+		/*def date = new Date()
+		AdministracaoController adm = new AdministracaoController()
+		adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo , 
+						"DOWNLOAD", "Anexo", date)*/
+		
 		if (file.exists())
 		{
+
 			response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
 			//response.setHeader("Content-disposition", "attachment;filename=\"${file.name}\"")
-			response.setHeader("Content-disposition", " attachment; filename=\\" + anexo.arquivo )
+			response.setHeader("Content-disposition", " attachment; filename=" + anexo.arquivo )
 			response.outputStream << file.bytes
+			response.outputStream.flush()
+			response.outputStream.close()
+
+
 		}
-		else render "Error!" // appropriate error handling
 
-
-		//render file: new File("C:/Users/ieber.moura/Documents/workspace-ggts-3.6.3.RELEASE/projetoMetafora/web-app/anexos/bla.txt"), contentType: 'text/plain'
-
+		else{
+			def erros
+			anexo.errors.each {erros = it}
+			print("erros: "+erros)
+			listarMensagem("Erro ao baixar o arquivo", "erro")
+		}
 	}
 
 
@@ -728,6 +757,12 @@ class ProtocoloController {
 		zip.putNextEntry(file2Entry);
 		zip.write("This is the content of the second file".bytes);
 		zip.close();
+	}
+
+	def getMyFile(){
+
+
+		render file: new File ("anexos/im5.png"), fileName: 'im5.png'
 	}
 
 }
