@@ -25,7 +25,7 @@
            switch(value){
            case 'numero':
 			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
-			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
+			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo' required='true'/>" +
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
               break;
@@ -105,17 +105,20 @@
 					<thead>
 						<tr>
 						
-							<th style="width: 50px;"></th>
+							<th>Funções</th>
 							<th>Numero</th>
 							<th>Data do Protocolo</th>
 							<th>Data da Emissao</th>
 							<th>Numero do Documento</th>
 							<th>Assunto</th>
+							<th>Situação</th>
 						</tr>
 					</thead>
 					
 					<tbody>
-						<g:each in='${protocolo?}'>
+					
+				
+						<g:each in='${protocolos?}'>
 							<tr class='linha_registro'>
 								<td>
 									<div style="margin-left: 10px" class="opcoes">
@@ -123,8 +126,17 @@
 											<li title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
+												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo_id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a></li> 
+																					
+											<g:if test="${ (it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id)}">
+												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+													style="color: #fff"
+													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
+														class="glyphicon glyphicon-pencil"></span></a></li>
+											</g:if>
+											
+																			
 										</ul>
 									</div>
 								</td>
@@ -132,19 +144,26 @@
 									${it.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataProtocolo}" /></td>
+								<td>
+								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_disponibilizacao}" />
+								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataEmissao}" /></td>
+								<td> 
+									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_recebimento}" />
+								</td>
 
 								<td>
-									${it.numeroDocumento}
+									${it.numero_Documento}
 								</td>
 
 								<td>
 									${it.assunto}
 								</td>
+								
+								<td>
+									${it.nome}
+								</td>
+								
 							</tr>
 						</g:each>
 					</tbody>

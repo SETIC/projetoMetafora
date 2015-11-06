@@ -193,15 +193,15 @@ class BuildLeftMenuController {
 				'<ul class="treeview-menu"> '
 
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SETOR', perm)){
-			menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-clipboard"></i>Setor</a></li>'
+			menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-sitemap"></i>Setor</a></li>'
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SITUACAO', perm)){
-			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-clipboard"></i>Situacao</a></li>'
+			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-th-list"></i>Situação</a></li>'
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-			menu+= '<li><a href="/projetoMetafora/Protocolo/listarProtocolo"><i class="fa fa-clipboard"></i>Protocolo de Documentos</a></li>'
+			menu+= '<li><a href="/projetoMetafora/Protocolo/listarProtocolo"><i class="fa fa-clipboard"></i>Protocolos</a></li>'
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'TIPO_DOCUMENTO', perm)){
@@ -209,11 +209,11 @@ class BuildLeftMenuController {
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-			menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-clipboard"></i>Pendentes</a></li>'
+			menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-arrow-down"></i>Pendentes</a></li>'
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="fa fa-clipboard"></i>Pesquisar Protocolos</a></li>'
+			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="glyphicon glyphicon-search "></i>Pesquisar Protocolos</a></li>'
 			verificador = true
 		}
 

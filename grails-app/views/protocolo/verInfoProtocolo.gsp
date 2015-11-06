@@ -152,10 +152,10 @@ function printDiv(id)
 										<g:each in='${tramites?}'>
 											<tr class="info">
 
-												<td><g:formatDate format="dd/MM/yyyy"
+												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 														date="${it.dataDisponibilizacao}" /></td>
 
-												<td><g:formatDate format="dd/MM/yyyy"
+												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 														date="${it.dataRecebimento}" /></td>
 
 												<td>
@@ -180,11 +180,11 @@ function printDiv(id)
 											<th>Data</th>
 										</tr>
 										<g:each in='${observacoes?}'>
-											<tr class="success">
+											<tr class="info">
 												<td>
 													${it.texto}
 												</td>
-												<td><g:formatDate format="dd/MM/yyyy"
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataObservacao}" /></td>
 											</tr>
 										</g:each>
@@ -196,20 +196,19 @@ function printDiv(id)
 									<thead>
 										<tr>
 											<th>Nome do Arquivo</th>
-											<th>Data</th>
-											<th>Ação</th>
+											<th style="width:838px">Data</th>
+											<th> </th>
 										</tr>
 										<g:each in="${anexos}">
-											<tr class="success">
+											<tr class="info">
 												<td>
 													${it.arquivo}
 												</td>
 
-												<td><g:formatDate format="dd/MM/yyyy"
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
 														date="${it.dataAnexo}" /></td>
 												<td>
-													<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>
-													
+													<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
 												</td>
 											</tr>
 										</g:each>

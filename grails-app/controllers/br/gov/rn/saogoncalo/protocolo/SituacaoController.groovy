@@ -8,10 +8,10 @@ class SituacaoController {
 	def index() { }
 
 
-	def cadastrar(){
+	def salvar(){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
-			render (view:"/usuario/login.gsp", model:[ctl:"Situacao", act:"cadastrar"])
+			render (view:"/usuario/login.gsp", model:[ctl:"Situacao", act:"salvar"])
 		}else{
 			def user = session["user"]
 			def pass = session["pass"]
@@ -29,9 +29,11 @@ class SituacaoController {
                  println ("tiposituacao" + params.tipo)
 				if (situacao.save(flush:true)){
 
-					listarMensagem("Situacao cadastrada com sucesso", "ok")
+					//listarMensagem("Situacao cadastrada com sucesso", "ok")
+					redirect(action:"listarSituacao", params:[msg:"Cadastrado com sucesso", tipo:"ok"])
 				}else{
-					listarMensagem("Erro ao salvar", "erro")
+					redirect(action:"listarSituacao", params:[msg:"Erro ao cadastrar", tipo:"erro"])
+					//listarMensagem("Erro ao salvar", "erro")
 				}
 			}else{
 				render(view:"/error403.gsp")
@@ -82,7 +84,7 @@ class SituacaoController {
 
 				Situacao.deleteAll(Situacao.get(id))
 				
-				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
+				redirect(action:"listarSituacao", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -139,10 +141,11 @@ class SituacaoController {
 						  println("toi" +params)
 						
 						  if(situacoes.save(flush:true)){
-							listarMensagem("Situaçao atualizada com sucesso", "ok")
+							//listarMensagem("Situaçao atualizada com sucesso", "ok")
+							redirect(action:"listarSituacao", params:[msg:"Atualizado com sucesso", tipo:"ok"])
 						}else{
-										
-							listarMensagem("Erro ao atualizar", "erro")
+						redirect(action:"listarSituacao", params:[msg:"Erro ao atualizar", tipo:"erro"])
+							//listarMensagem("Erro ao atualizar", "erro")
 						}
 					}
 				}
@@ -166,15 +169,18 @@ class SituacaoController {
 			if (perm1 || perm2) {
 
 				def situacao
+				def msg
 
+				msg = params.msg
+				
 				if (session["escid"] == 0) {
-
+					
 					situacao = Situacao.findAll()
 				}else{
 
 					situacao = Situacao.findAll()
 				}
-				render(view:"/situacao/listarSituacao.gsp", model:[situacao:situacao, perm2:perm2])
+				render(view:"/situacao/listarSituacao.gsp", model:[ok:msg, situacao:situacao, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}

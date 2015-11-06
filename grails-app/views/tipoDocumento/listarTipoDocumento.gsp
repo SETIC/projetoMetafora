@@ -66,11 +66,13 @@ function printDiv(id)
 										<ul style="display: inline">
 	
 											<g:if test="${perm2}">
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<li title="Editar documento"
+												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/tipoDocumento/editarTipoDocumento/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+												<li title ="Excluir documento"
+												    onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 											</g:if>
@@ -113,7 +115,7 @@ function printDiv(id)
 							<h4 class="modal-title" id="myModalLabel">Cadastro Tipo de Documento</h4>
 						</div>
 						<div class="modal-body">
-							<g:form controller="tipoDocumento" action="cadastrar" class="form">
+							<g:form controller="tipoDocumento" action="salvar" class="form">
 								<fieldset>
 									
 									<div class="form-heading">
