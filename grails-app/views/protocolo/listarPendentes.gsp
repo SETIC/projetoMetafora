@@ -77,6 +77,7 @@
 					</tbody>
 				</table>
 			</div>
+			
 			<!-- Button trigger modal -->
 			<g:if test="${perm2 }">
 				<button class="btn btn-primary btn-flat" data-toggle="modal" data-target="#myModal">
