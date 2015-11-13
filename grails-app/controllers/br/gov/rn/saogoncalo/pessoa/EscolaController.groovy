@@ -147,6 +147,8 @@ class EscolaController {
 			if (perm1 || perm2) {
 
 				Escola escolas = Escola.get(id)
+				//Bairro bairro = 
+				
 
 				render (view:"/escola/verInfoEscola.gsp", model:[escolas:escolas])
 			}else{
@@ -253,27 +255,16 @@ class EscolaController {
 
 				Pessoa pessoa = new Pessoa(params)
 				Escola escola = new Escola(params)
-				Bairro bairro = Bairro.get(params.bairro)
-				Logradouro logradouro = Logradouro.get(params.logradouro)
+				Bairro bairro = Bairro.get(params.bairr)
+				Logradouro logradouro = Logradouro.get(params.lg)
+				
+				
+				println(" Pessoa - " + pessoa)
+				println(" Escola - " + escola)
+				println(" Bairro - " + bairro)
+				println(" Logradouro - " + logradouro)
 				
 			
-				Reside reside = new Reside()
-				
-				reside.logradouro = logradouro
-				reside.bairro = bairro
-				reside.pessoa = pessoa
-				reside.numero = params.numero
-				reside.complemento = params.complemento
-				reside.cep = params.cep
-								
-
-				if(reside.save(flush:true) == false){
-
-						listarMensagem("Erro ao Salvar!", "erro")
-				}
-				
-				
-
 				if (pessoa.save(flush:true)){
 					pessoa.errors.each{ println it }
 
@@ -286,6 +277,23 @@ class EscolaController {
 					escola.pessoaJuridica = pessoaJuridica
 
 					if(escola.save(flush:true)){
+						
+						Reside reside = new Reside()
+						
+						reside.logradouro = logradouro
+						reside.bairro = bairro
+						reside.pessoa = pessoa
+						reside.numero = params.numero
+						reside.complemento = params.complemento
+						reside.cep = params.cep
+										
+		
+						if(reside.save(flush:true) == false){
+							listarMensagem("Erro ao Salvar!", "erro")
+						}else{
+							 println("Reside salvo")
+						}
+						
 						escola.errors.each{ println it }
 						
 						println escola

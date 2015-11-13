@@ -48,7 +48,7 @@ function printDiv(id)
 			<div style="margin-left: 120px;">
 				<g:form controller="Turma" action="listar" class="form-horizontal">
 					<g:hiddenField name="id" value="${it.id}" />
-					<fieldset id="print">
+					<div id="print">
 						<div class="form-group">
 							<label for="escola" class="col-sm-2 control-label">Escola</label>
 							<div class="col-sm-8">
@@ -142,7 +142,7 @@ function printDiv(id)
 						</div>
 						<br>
 
-					</fieldset>
+					</div>
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat"
 							onClick="printDiv('print')">

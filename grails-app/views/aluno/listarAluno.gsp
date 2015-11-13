@@ -84,7 +84,7 @@ function mudarCombo(){
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 100px;">Funções</th>
+							<th style="width: 100px;"> </th>
 							<th style="width: 350px;">Nome</th>
 							<th style="width: 80px;">CPF</th>
 							<th style="width: 80px;">Data de Nascimento</th>
@@ -438,7 +438,7 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												<select name="estado" name="uf" id="iUf" class="form-control"> 
+												<select name="uf" id="iUf" class="form-control"> 
 													<option value="AC">Acre</option> 
 													<option value="AL">Alagoas</option> 
 													<option value="AM">Amazonas</option> 

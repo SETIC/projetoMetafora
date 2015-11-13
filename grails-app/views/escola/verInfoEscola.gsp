@@ -180,6 +180,64 @@ newWin.print();
 							</div>
 						</div>
 						<br>
+						
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Latitude</label>
+							<div class="col-sm-10">
+								${it.latitude}
+							</div>
+						</div>
+						<br>
+						
+												<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Logitude</label>
+							<div class="col-sm-10">
+								${it.longitude}
+							</div>
+						</div>
+						<br>
+						
+  						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Bairro</label>
+							<div class="col-sm-10">
+								${ escolas.pessoaJuridica.pessoa.reside.bairro.bairro[0]}
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Logradouro</label>
+							<div class="col-sm-10">
+								${ escolas.pessoaJuridica.pessoa.reside.logradouro.logradouro[0]}
+							</div>
+						</div>
+						<br>
+		
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Número</label>
+							<div class="col-sm-10">
+								${it.pessoaJuridica.pessoa.reside.numero[0]}
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Complemento</label>
+							<div class="col-sm-10">
+								${escolas.pessoaJuridica.pessoa.reside.complemento[0]}
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">CEP</label>
+							<div class="col-sm-10">
+								${escolas.pessoaJuridica.pessoa.reside.cep[0]}
+							</div>
+						</div>
+						<br>
+						
+						
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat"

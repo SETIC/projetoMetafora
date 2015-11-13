@@ -489,7 +489,7 @@
 								<label for="iUf" class="col-sm-2 control-label">UF</label>
 								<div class="col-sm-10">
 										
-										<select name="estado" name="uf" id="iUf" class="form-control"> 
+										<select name="uf" id="iUf" class="form-control"> 
 													<option value="AC" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if> >Acre</option> 
 													<option value="AL" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AL'}"> selected </g:if> >Alagoas</option> 
 													<option value="AM" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AM'}"> selected </g:if> >Amazonas</option> 
@@ -518,9 +518,7 @@
 													<option value="SP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if> >São Paulo</option> 
 													<option value="TO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if> >Tocantins</option> 
 												</select>
-										
-										
-										
+
 										
 								</div>
 							</div>

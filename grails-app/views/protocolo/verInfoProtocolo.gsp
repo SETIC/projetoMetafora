@@ -222,7 +222,7 @@ function printDiv(id)
 						</button>
 						<ul style="display: inline-block; margin-left: -30px">
 							<li class="btn btn-info btn-flat"><a
-								href="/projetoMetafora/funcionario/listar/">Voltar</a></li>
+								href="/projetoMetafora/protocolo/listarProtocolo/">Voltar</a></li>
 						</ul>
 						</button>
 					</div>

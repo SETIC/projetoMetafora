@@ -297,7 +297,7 @@ function printDiv(id)
 												<div class="form-heading">
 													<label>Matricula</label>
 													<div class="controls">
-														<g:textField class="form-control" required="true" name="matricula" value="" />
+														<g:textField class="form-control" name="matricula" value="" />
 													</div>
 												</div>
 												<br>
