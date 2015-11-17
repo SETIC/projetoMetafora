@@ -90,7 +90,6 @@ function mudarCombo(){
 							<th style="width: 80px;">Data de Nascimento</th>
 							<th style="width: 110px;">Sexo</th>
 							<th style="width: 80px;">Estado Civil</th>
-							<th style="width: 100px; text-align: center;">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -157,12 +156,6 @@ function mudarCombo(){
 									<td>
 										${cidadao.estadoCivil}
 									</td>
-									<td style="text-align: center;"><g:if
-											test="${pessoa.status == 'Ativo'}">
-											<span class="label label-success">Ativo</span>
-										</g:if> <g:else>
-											<span class="label label-danger">Inativo</span>
-										</g:else></td>
 								</tr>
 							</g:if>
 						</g:each>

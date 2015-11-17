@@ -1,4 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
+import grails.converters.JSON
 import groovy.sql.Sql
 
 import java.sql.Driver
@@ -38,10 +39,10 @@ class FuncionarioController {
 				def cargo
 
 				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
-						" where p.id = f.id "+
-						" and l.cargo.id = c.id "+
-						" and f.id = l.funcionario.id " +
-						" order by p.id ")
+				" where p.id = f.id "+
+				" and l.cargo.id = c.id "+
+				" and f.id = l.funcionario.id " +
+				" order by p.id ")
 
 				def escolas = Escola.findAll()
 
@@ -83,14 +84,14 @@ class FuncionarioController {
 				def parametro = params.pesquisa
 				if (session["escid"] == 0){
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
-							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 
 					//cargos = Cargo.findAll()
 					//print("printcargos "+ cargos )
 
 				}else{
 					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
-							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
 				}
 
 				//lotacao = Lotacao.findAll()
@@ -161,16 +162,16 @@ class FuncionarioController {
 
 
 				//verificar com matriculas
-				funcionarios = sql.rows(" select p.nome, f.matricula, c.cargo, l.turno, l.funcao, l.vinculo, "+
-						" (select e.nome from cadastro_unico_pessoal.pessoa e " +
-						" where e.id = p.escid ) as escola " +
-						" from cadastro_unico_pessoal.Pessoa p, cadastro_unico_pessoal.Funcionario f, " +
-						" administracao_organizacao.Lotacao l, administracao_organizacao.Cargo c "+
-						" where p.id = f.id "+
-						" and l.cargo_id = c.id "+
-						" and f.id = l.funcionario_id "+
-						" and p.escid = " + params.escola +
-						" order by p.nome");
+				funcionarios = sql.rows(" select p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
+				" (select e.nome from cadastro_unico_pessoal.pessoa e " +
+				" where e.id = p.escid ) as escola " +
+				" from cadastro_unico_pessoal.Pessoa p, cadastro_unico_pessoal.Funcionario f, " +
+				" administracao_organizacao.Lotacao l, administracao_organizacao.Cargo c "+
+				" where p.id = f.id "+
+				" and l.cargo_id = c.id "+
+				" and f.id = l.funcionario_id "+
+				" and p.escid = " + params.escola +
+				" order by p.nome");
 
 				// ------------------
 
@@ -288,9 +289,9 @@ class FuncionarioController {
 				pessoa.nome = params.nome
 				pessoa.dataDeNascimento = params.dataDeNascimento
 				if (!params.cpfCnpj.trim().equals(''))
-					pessoa.cpfCnpj = params.cpfCnpj
+				pessoa.cpfCnpj = params.cpfCnpj
 				else
-					pessoa.cpfCnpj = null
+				pessoa.cpfCnpj = null
 
 				def pessoaFisica = PessoaFisica.get(params.id)
 				pessoaFisica.rcNumero = params.rcNumero
@@ -325,8 +326,6 @@ class FuncionarioController {
 					def turnoCompleto = ""
 					if (params.opcao1 != null ){
 						turnoCompleto = turnoCompleto + params.opcao1
-					}else{
-
 						turnoCompleto = turnoCompleto + ""
 					}
 					if (params.opcao2 != null ){
@@ -552,6 +551,40 @@ class FuncionarioController {
 			}
 		}
 	}
+	def  getFuncionarioByIdParaRelatorio(long id){
+		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+		def props = new Properties()
+		props.setProperty("user", "admin_db_sr")
+		props.setProperty("password", "bgt54rfvcde3")
+		List <String> lista = new ArrayList();
+
+		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+		def sql = new Sql(conn)
+		//verificar com matriculas
+		def horario= sql.rows("select p.id, p.nome, td.turma_id, dis.disciplina, hr.horario, " +
+			" hr.hora_aula, length(substring(hr.horario, 3, length(hr.horario))) as qtd " +
+			" from cadastro_unico_pessoal.pessoa as p, cadastro_unico_pessoal.professor as prof, " + 
+			" educacao_academico.disciplina as dis, " +
+			" educacao_academico.disciplina_lecionada_por_professor as dlpp, " +
+			" educacao_academico.turma_disciplina as td, educacao_academico.horario as hr " +
+			" where p.id = prof.id " +
+			" and prof.id = dlpp.professor_id " +
+			" and dlpp.disciplina_id = dis.id " +
+			" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+			" and hr.turma_disciplina_id = td.id " +
+			" and p.id = "+id.toString());
+	
+				//println("dados da lista"+horario)
+				def funcionario = Funcionario.get(id)
+				def escola = Escola.get(funcionario.cidadao.pessoaFisica.pessoa.escid)
+		
+				def result = ["nomeFuncionario":funcionario.cidadao.pessoaFisica.pessoa.nome, "escola":escola.pessoaJuridica.pessoa.nome,
+					"cargaHoraria":funcionario.cargaHoraria, "cargo":funcionario.lotacao.cargo.cargo, "funcao":funcionario.lotacao.funcao,
+					"horario":horario]
+		
+				render( result as JSON)
+		
+			}
 
 	def deletar(int id){
 

@@ -164,10 +164,12 @@ class HorarioController {
 
 				def tm = TurmaDisciplina.get(params.comboProfessorDisciplina)
 
-
+				def horaDeAula1 = params.horaDeAula
+				print("hora de aula ->>>>>> "+horaDeAula1)
 				horarioL.sala = sala
 				horarioL.turmaDisciplina = tm
 				horarioL.horario = horario
+				horarioL.horaAula = horaDeAula1
 
 				if (horarioL.save(flush:true)){
 					//			def horarios = Horario.findAll()
@@ -182,7 +184,9 @@ class HorarioController {
 					listarMensagem("Horário cadastrado com sucesso!", "ok")
 				}
 				else{
-					def erros = horarioL.errors
+					def erros  
+					horarioL.errors.each { erros = it}
+					print("erros "+erros)
 					def horarios = Horario.findAll()
 					def professores = Professor.findAll()
 					//			def series = Serie.findAll()

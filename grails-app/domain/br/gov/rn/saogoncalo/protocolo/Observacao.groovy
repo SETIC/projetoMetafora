@@ -15,7 +15,7 @@ class Observacao {
 	}
 	
 	static mapping = {
-		table name: "Observacao", schema:"cadastro_unico_protocolo"
+		table name: "observacao", schema:"cadastro_unico_protocolo"
 		version false
 		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.observacao_id_seq']
 	}

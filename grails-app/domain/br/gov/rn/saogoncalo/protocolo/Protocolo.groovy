@@ -9,12 +9,11 @@ class Protocolo {
 	Date dataEmissao
 	String numeroDocumento
 	String assunto
-	FuncionarioSetor funcionarioSetorOrigem
-	FuncionarioSetor funcionarioSetorDestino
+	FuncionarioSetor funcionarioSetor
 	
 	
-	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao , usuario:Usuario]
-	static hasMany = [anexo:Anexo,  anexo:Anexo , observacao:Observacao , tramite:Tramite]
+	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao]
+	static hasMany = [anexo:Anexo, observacao:Observacao , tramite:Tramite]
 	
 
 	static constraints = {
@@ -26,7 +25,7 @@ class Protocolo {
 	}
 	
 	static mapping = {
-		table name: "Protocolo", schema:"cadastro_unico_protocolo"
+		table name: "protocolo", schema:"cadastro_unico_protocolo"
 		version false
 		id generator: 'sequence', params:[sequence:'cadastro_unico_protocolo.protocolo_id_seq']
 	}

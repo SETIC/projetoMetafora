@@ -20,7 +20,7 @@ function printDiv(id)
 </script>
 
 	<script type="text/javascript">
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
 	
 		      function deletar(id) {
 			        var resposta = confirm("Deseja exluir este Horário?");
@@ -273,10 +273,11 @@ function printDiv(id)
 										
 										<select class="form-control selectpicker" data-live-search="true" name="escola"
 												id="comboEscola"  onchange="mudarEscola();">
+												<option value="0" disabled="disabled" selected="selected">
+														Selecione uma escola</option>
 													<g:each in="${escolas}" >
-														<option value="0" disabled="disabled" selected="selected">
-														Selecione uma escola
-													</option>
+														
+													
 													<option value="${it.id}">
 														${it.pessoaJuridica.razaoSocial}
 													</option>
@@ -293,7 +294,7 @@ function printDiv(id)
 										<div class="controls">
 											<div id="teste"></div>
 											<select id="comboSalas" name="sala" class="form-control">
-												<option value="0">Selecione uma Escola</option>
+												<option value="0">Selecione uma Sala</option>
 											</select>
 										</div>
 									</div>
@@ -398,6 +399,13 @@ function printDiv(id)
 												name="cbHorario" id="cbHorario6" onclick="afixar()"
 												value="6" /> 6
 											</label>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Hora/Aula</label>
+										<div class="controls">
+											<input class="form-control" name="horaDeAula" id="horaAula" placeholder="quantidade de minutos que equivalem a 1 hora aula" />
 										</div>
 									</div>
 									<br>

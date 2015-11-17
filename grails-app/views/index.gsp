@@ -169,7 +169,7 @@
     <script>
       $(function () {
 
-    	  var endereco = "192.168.1.247";
+    	  var endereco = "localhost";
    			
           $.ajax({
               type: "GET",
@@ -216,7 +216,7 @@
       $(function () {
 
 
-    	  var endereco = "192.168.1.247";
+    	  var endereco = "localhost";
 
    			
           $.ajax({
@@ -264,7 +264,7 @@
       $(function () {
 
 
-    	  var endereco = "192.168.1.247";
+    	  var endereco = "localhost";
 
    			
           $.ajax({
