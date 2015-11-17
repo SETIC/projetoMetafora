@@ -100,47 +100,57 @@ class MatriculaController {
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
 							"    and p.id = m.aluno.id" +
+
 							"    and m.status <>'finalizado' " +
 
 							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					series = Serie.findAll()
 
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+
 							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
 
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid =? and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+
 							"   				     	and t.anoLetivo >= ?  ) and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " , [session["escid"], ano])
+
 					print("print matriculas "+ matricula )
 				}else{
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
 							"  where t.id = m.turma.id " +
-							"  and p.escid ="+Long.parseLong(session["escid"].toString())+" and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
+							"    and m.status = 'Ativo' " +
+							"  and p.escid = "+Long.parseLong(session["escid"].toString())+" and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					series = Serie.findAll()
 
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+
 							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 
+
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 				}
 
@@ -188,17 +198,20 @@ class MatriculaController {
 					def series = Serie.findAll()
 
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+
 							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 
+
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [ano])
 
 
@@ -213,17 +226,20 @@ class MatriculaController {
 
 
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
+
 							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 
+
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 
 				}
@@ -268,6 +284,7 @@ class MatriculaController {
 
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
 							"  where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"  and t.anoLetivo = ?",[ano])
 
 					escolas = Escola.findAll()
@@ -278,11 +295,13 @@ class MatriculaController {
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [ano])
 				}else{
 
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
 							"  where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
@@ -293,6 +312,7 @@ class MatriculaController {
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
+							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
 				}
 

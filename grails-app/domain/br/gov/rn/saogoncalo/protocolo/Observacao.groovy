@@ -5,7 +5,6 @@ class Observacao {
 	Date dataObservacao
 
 	
-	
 	static belongsTo = [protocolo:Protocolo]
 	
 	

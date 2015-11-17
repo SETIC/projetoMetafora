@@ -7,7 +7,7 @@ class Usuario {
 	
 	String senha
 	String username
-
+    
 	
 	static hasMany = [grupoUsuario:GrupoUsuario , protocolo:Protocolo]
 	static belongsTo = [pessoa:Pessoa]

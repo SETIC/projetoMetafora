@@ -167,10 +167,13 @@
 			}
              </script>
 
+
+
 	<section class="content-header">
 		<h1>
 			<center>Relação de Servidores</center>
 		</h1>
+		<br>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -260,7 +263,6 @@
 				<g:set var="i" value="${1}" />
 
 				<g:each in='${funcionarios?}'>
-
 					<g:set var="t" value="it.id == 8" />
 					<tr class="success">
 						<td>

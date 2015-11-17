@@ -12,7 +12,7 @@ $(document).ready(function() {
             "sLoadingRecords": "Carregando...",
             "sProcessing": "Processando...",
             "sZeroRecords": "Nenhum registro encontrado",
-            "sSearch": "Sub-pesquisa",
+            "sSearch": "Sub-pesquisa: ",
             "sLengthMenu": 'Mostrar <select>'+
             '<option value="10">10</option>'+
             '<option value="25">25</option>'+

@@ -9,6 +9,7 @@ import br.gov.rn.saogoncalo.academico.Serie
 import br.gov.rn.saogoncalo.academico.Turma
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.localizacao.Bairro
+import br.gov.rn.saogoncalo.localizacao.DivisaoAdministrativa
 import br.gov.rn.saogoncalo.localizacao.Estado
 import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.localizacao.Municipio
@@ -24,14 +25,18 @@ class AlunoController {
 	}
 
 	def buscarCEP(String cep) {
+		
+		println("CEP --- " + cep)
+		
 		String urlCompleta
 		String urlBase = "http://cep.correiocontrol.com.br/"
+		//String urlBase = "http://api.postmon.com.br/"
 
 		urlCompleta = urlBase + cep + ".json"
 
 		print urlCompleta
 
-		URL urlReferenteAAPI = new URL(urlCompleta)e 3
+		URL urlReferenteAAPI = new URL(urlCompleta)
 
 		def dadosReferenteAoCep
 
@@ -641,11 +646,11 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-
+                   
 
 					println("Pessoa --- " + params)
 
-
+                       
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
@@ -691,6 +696,7 @@ class AlunoController {
 
 					TipoLogradouro tipoLogradouro = new TipoLogradouro()
 					Logradouro logradouro = new Logradouro()
+					
 					Bairro bairro = new Bairro()
 					Municipio municipio = new Municipio()
 					Estado estado = new Estado()
@@ -737,12 +743,13 @@ class AlunoController {
 						}
 					}
 
-					if(params.estado != ""){
-						estado = Estado.findByAbreviacao(params.estado.toString().toUpperCase())
+					println("UF aqui -- " + params.uf)
+					if(params.uf != ""){
+						estado = Estado.findByAbreviacao(params.uf.toString().toUpperCase())
 						if(estado == null){
 							Estado newEstado = new Estado()
-							newEstado.estado = params.estado.toString().toUpperCase()
-							newEstado.abreviacao = params.estado.toString().toUpperCase()
+							newEstado.estado = params.uf.toString().toUpperCase()
+							newEstado.abreviacao = params.uf.toString().toUpperCase()
 							newEstado.save(flush:true)
 							println("Estado --- " + newEstado.estado)
 							estado = newEstado
@@ -770,6 +777,10 @@ class AlunoController {
 							newBairro.save(flush:true)
 							println("Bairro --- " + newBairro.bairro)
 							bairro = newBairro
+							
+							DivisaoAdministrativa newDivisaoAdministrativa = new DivisaoAdministrativa()
+							newDivisaoAdministrativa
+							
 						}
 					}
 

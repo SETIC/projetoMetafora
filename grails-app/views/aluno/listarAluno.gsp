@@ -84,7 +84,7 @@ function mudarCombo(){
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 100px;">Funções</th>
+							<th style="width: 100px;"> </th>
 							<th style="width: 350px;">Nome</th>
 							<th style="width: 80px;">CPF</th>
 							<th style="width: 80px;">Data de Nascimento</th>
@@ -431,7 +431,7 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												<select name="estado" name="uf" id="iUf" class="form-control"> 
+												<select name="uf" id="iUf" class="form-control"> 
 													<option value="AC">Acre</option> 
 													<option value="AL">Alagoas</option> 
 													<option value="AM">Amazonas</option> 
@@ -637,6 +637,8 @@ function mudarCombo(){
 			</div>
 		</div>
 		
+		
+		<g:javascript src="script-buscar-cep.js" />
 	<!-- valida campos -->
 		<script type="text/javascript"> 
          //validaçao dos campos de aluno
@@ -680,10 +682,10 @@ function mudarCombo(){
 		</script>
 		
 		<!-- Script buscar dados de acordo com CEP -->
-		<g:javascript src="script-buscar-cep.js" />
+		
 		<script type="text/javascript">
 
-			//var host = '192.168.1.247'
+		
 
 			function hiddenInput(){
 				console.log('Hidden...');

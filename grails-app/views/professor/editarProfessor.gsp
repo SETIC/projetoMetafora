@@ -255,7 +255,7 @@
 							</div>
 						</div>
 						<br>
-						<div class="form-group" style="min-height: 150px;">
+						<div class="form-group" style="min-height: 50px;">
 							<label for="inputdlpp3" class="col-sm-2 control-label">Disciplinas
 								do Professor</label>
 							<div class="col-sm-10">
@@ -282,7 +282,7 @@
 								</select>
 							</div>
 						</div>
-						<br>
+					
 
 					</fieldset>
 					<div style="margin: 0 15% auto">

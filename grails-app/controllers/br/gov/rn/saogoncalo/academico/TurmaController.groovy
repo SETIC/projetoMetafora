@@ -41,27 +41,27 @@ class TurmaController {
 				def turmas
 				def disciplinas
 				def escolas
-				
-				
-				
+
+
+
 				if ((session["escid"] == 0) )
 				{
 
-					 turmas = Horario.executeQuery(" select t from Turma as t " +
+					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where  t.anoLetivo >= ? ", [ano])
 
-					 escolas = Escola.executeQuery(" select e from Escola e, Pessoa p where p.id = e.id and p.status = 'Ativo' ")
+					escolas = Escola.executeQuery(" select e from Escola e, Pessoa p where p.id = e.id and p.status = 'Ativo' ")
 
-					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
+					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
 
 				}else{
 
-					 turmas = Horario.executeQuery(" select t from Turma as t " +
+					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
 
-					 escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
-					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
+					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
 							"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
 
 				}
@@ -136,8 +136,8 @@ class TurmaController {
 
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
-				
-				
+
+
 				def turmas
 				def disciplinas
 				def escolas
@@ -145,25 +145,25 @@ class TurmaController {
 				if ((session["escid"] == 0))
 				{
 
-					 turmas = Horario.executeQuery(" select t from Turma as t " +
+					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where  t.anoLetivo >= ? ", [ano])
 
-					 escolas = Escola.findAll()
+					escolas = Escola.findAll()
 
-					 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
+					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
 
 				}else{
-				
-				 turmas = Horario.executeQuery(" select t from Turma as t " +
-						"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
 
-				 escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+					turmas = Horario.executeQuery(" select t from Turma as t " +
+							"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
 
-				 disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
-						"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
+					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+
+					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
+							"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
 				}
 
-				
+
 				//render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas])
 				if (tipo == "ok") {
 					render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, ok:msg, perm2:perm2])
@@ -286,26 +286,48 @@ class TurmaController {
 
 
 				//inserir
-				for (int i=0; i<disciplinaNovo.size(); i++){
-
-					idDisc = disciplinaNovo[i]
-
-					if (!td.contains(idDisc)) {
-						TurmaDisciplina turmaDisciplina = new TurmaDisciplina()
-						turmaDisciplina.turma = turma
 
 
-						def dp =  DisciplinaLecionadaPorProfessor.get(idDisc)
+				if (disciplinaNovo.getClass() != java.lang.String) {
+
+					for (int i=0; i<disciplinaNovo.size(); i++){
+
+						idDisc = disciplinaNovo[i]
+
+						if (!td.contains(idDisc)) {
+							TurmaDisciplina turmaDisciplina = new TurmaDisciplina()
+							turmaDisciplina.turma = turma
 
 
-						turmaDisciplina.disciplinaLecionadaPorProfessor = dp
+							def dp =  DisciplinaLecionadaPorProfessor.get(idDisc)
 
-						turmaDisciplina.dataInicio = new Date()
-						turmaDisciplina.dataTermino = new Date()
-						turmaDisciplina.identificacao = "Automatico - "+ turma.id + " - " + idDisc + " - " + i.toString()
 
-						turmaDisciplina.save(flush:true)
+							turmaDisciplina.disciplinaLecionadaPorProfessor = dp
+
+							turmaDisciplina.dataInicio = new Date()
+							turmaDisciplina.dataTermino = new Date()
+							turmaDisciplina.identificacao = "Automatico - "+ turma.id + " - " + idDisc + " - " + i.toString()
+
+							turmaDisciplina.save(flush:true)
+						}
 					}
+				}else{
+
+					TurmaDisciplina turmaDisciplina = new TurmaDisciplina()
+					turmaDisciplina.turma = turma
+
+
+					def dp =  DisciplinaLecionadaPorProfessor.get(params.disciplina.toString().toInteger())
+
+
+					turmaDisciplina.disciplinaLecionadaPorProfessor = dp
+
+					turmaDisciplina.dataInicio = new Date()
+					turmaDisciplina.dataTermino = new Date()
+					turmaDisciplina.identificacao = "Automatico - "+ turma.id + " - " + idDisc + " - " + params.disciplina.toString()
+
+					turmaDisciplina.save(flush:true)
+
 				}
 
 
@@ -358,7 +380,7 @@ class TurmaController {
 					//				ok : "Turma atualizada com sucesso!"
 					//
 					//			])
-					
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "Atualizar Turma: " + params.id.toString(), "UPDATE", "Turma", date)
@@ -403,7 +425,7 @@ class TurmaController {
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Turma: " + id.toString(), "DELETE", "Turma", date)
 
-				
+
 				//redirect(action:"listar" )
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 				//listarMensagem("Turma excluída com sucesso", "ok")
@@ -445,8 +467,8 @@ class TurmaController {
 
 
 				if(turma.save(flush:true)){
-					
-					
+
+
 					if (params.disciplinas.getClass() != java.lang.String) {
 
 
@@ -502,11 +524,11 @@ class TurmaController {
 						//
 						//				])
 						//				redirect(action:"listar" )
-						
+
 						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Turma: " + turma.id.toString(), "CREATE", "Turma", date)
-						
+
 						listarMensagem("Turma cadastrada com sucesso!", "ok")
 
 					}else{

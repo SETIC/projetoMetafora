@@ -329,7 +329,7 @@ function printDiv(id)
 												class="form-control">
 												
 													<option value="0">
-														Selecione uma turma
+														Selecione uma Disciplina - Professor
 													</option>
 												
 											</select>

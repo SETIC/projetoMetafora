@@ -11,6 +11,7 @@ class Anexo {
 	static constraints = {
 		arquivo blank:false, nullable:false
 		dataAnexo blank:false, nullable:false
+
 	}
 	
 	static mapping = {
