@@ -44,7 +44,7 @@
 	  
 	  newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
 
-	newWin.print();
+	  newWin.print();
 	  newWin.close();
 	}
 </script>

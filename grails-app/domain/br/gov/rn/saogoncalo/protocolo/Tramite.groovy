@@ -9,8 +9,6 @@ class Tramite {
 	String status
 
 	static belongsTo = [protocolo:Protocolo]
-
-	
 	static constraints = {
 
 		dataDisponibilizacao blank:false, nullable:true

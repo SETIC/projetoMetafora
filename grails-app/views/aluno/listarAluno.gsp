@@ -48,7 +48,6 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -70,7 +69,7 @@ function mudarCombo(){
 								style="width: 300px" value="" />
 							<button style="margin-left: 310px; margin-top: -56px;"
 								type="submit" class="btn btn-primary btn-flat">
-								<i class="glyphicon glyphicon-search"></i> Buscar
+								<i class="glyphicon glyphicon-search"></i>Buscar
 
 							</button>
 
@@ -105,7 +104,6 @@ function mudarCombo(){
 									<td>
 										<div style="margin-left: -35px" class="opcoes">
 
-
 											<ul style="display: inline">
 
 												<g:if test="${perm2}">
@@ -116,13 +114,9 @@ function mudarCombo(){
 														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 															class="glyphicon glyphicon-pencil"></span></a></li>
 
-
-
 													<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
 														class="btn btn-danger btn-xs btn-flat"><span
 														class="glyphicon glyphicon-remove"></span></li>
-
-
 
 													<li title="Transferir Aluno" data-toggle="tooltip"
 														data-placement="top"
@@ -132,14 +126,11 @@ function mudarCombo(){
 															class="glyphicon glyphicon-arrow-right"></span></a></li>
 
 												</g:if>
-
-
-												<li title="Ver detalhes de Aluno"
+  											<li title="Ver detalhes de Aluno"
 													class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/aluno/verInfoAluno/${pessoa.id}"><span
 														class="glyphicon glyphicon-eye-open"></span></a></li>
-
 											</ul>
 										</div>
 									</td>
@@ -224,7 +215,7 @@ function mudarCombo(){
 												</div>
 											</div>
 											<div id="div2" class="col-md-4 mouse-point"
-												onclick="javascript: resetActive(div2, event, 35, 'step-2');">
+												onclick="validaDados();"><!-- javascript:resetActive(div2, event, 35, 'step-2'); -->
 												<div class="row">
 													<span class="fa fa-home"></span>
 													<p>Endereço</p>
@@ -438,7 +429,7 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												<select name="estado" name="uf" id="iUf" class="form-control"> 
+												<select  name="uf" id="iUf" class="form-control"> 
 													<option value="AC">Acre</option> 
 													<option value="AL">Alagoas</option> 
 													<option value="AM">Amazonas</option> 
@@ -493,7 +484,6 @@ function mudarCombo(){
 									</div>
 									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
 										<h3>Matrícula</h3>
-										
 										
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Realizar Matricula?</label>
@@ -656,8 +646,8 @@ function mudarCombo(){
 		     var nacionalidade = iNacionalidade.value;
 		     var estadoCivil = iEstadoCivil.value;
 		     var selecionaEstadoCivil = document.getElementById("iEstadoCivil");  
-		     
-			 if (nome == "" || nome == null){
+		    // var iconHome = div2.value;
+			  if (nome == "" || nome == null){
 			   alert('preencha o campo nome');
 			   document.getElementById("iNome").focus();
 			   return false;
@@ -677,7 +667,6 @@ function mudarCombo(){
 			       return false;
                  				  
 			     } 
-			     
 		
 			else{
 			

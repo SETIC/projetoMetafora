@@ -261,7 +261,7 @@ class TurmaController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
+			
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "TURMA", "2")
 
 			if (perm2)
@@ -284,7 +284,6 @@ class TurmaController {
 				def idDisc
 				turma.save(flush:true)
 
-
 				//inserir
 				for (int i=0; i<disciplinaNovo.size(); i++){
 
@@ -296,14 +295,10 @@ class TurmaController {
 
 
 						def dp =  DisciplinaLecionadaPorProfessor.get(idDisc)
-
-
 						turmaDisciplina.disciplinaLecionadaPorProfessor = dp
-
 						turmaDisciplina.dataInicio = new Date()
 						turmaDisciplina.dataTermino = new Date()
 						turmaDisciplina.identificacao = "Automatico - "+ turma.id + " - " + idDisc + " - " + i.toString()
-
 						turmaDisciplina.save(flush:true)
 					}
 				}

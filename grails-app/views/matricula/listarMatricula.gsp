@@ -88,7 +88,7 @@ function printDiv(id)
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
 			    divToPrint.innerHTML +=  "<style=''>";   
-		        divToPrint.innerHTML  += "<img src='../static/images/brasao.jpg' style='width:90px;float:left;margin-top:-9px;'>";
+		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
 		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
@@ -287,7 +287,6 @@ function printDiv(id)
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
 			        
-			        
 			        $.ajax({
 			            type: "GET",
 			            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
@@ -300,14 +299,13 @@ function printDiv(id)
 							for (i=0;i<result.id.length;i++){
 								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 			           		}
-				        }
+				          }
 			            }
 			        });
-					
-			   }
+			     }
 
 			  function mudarSerie(){
-				  var endereco = "192.168.1.247";
+				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -330,14 +328,9 @@ function printDiv(id)
 				        }
 			            }
 			        });
-
-			    
 			       }
 
-
 		</script>
-
-
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 				<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -348,11 +341,7 @@ function printDiv(id)
 				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
-				
-				
 			</g:if>
-
-
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"
 				aria-hidden="true">
@@ -366,8 +355,6 @@ function printDiv(id)
 						</div>
 						<div class="modal-body">
 							<form action="" method="POST">
-
-
 								<div class="form-heading">
 									<input type="hidden" id="idMatriculaParaRelatorio" /> <label>Tipo
 										de Relatório</label>
@@ -440,7 +427,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -456,7 +442,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -464,7 +449,6 @@ function printDiv(id)
 											<label>Turma</label>
 											<div class="controls">
 												<div id="teste"></div>
-
 												<select class="form-control" name="turma" id="comboTurma">
 												</select>
 											</div>
@@ -503,10 +487,7 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
-	
 	<div id="reportPrint" style="visibility: hidden;">
-	
 	</div>
-
-</body>
+  </body>
 </html>

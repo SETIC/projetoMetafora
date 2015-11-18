@@ -266,11 +266,12 @@ function printDiv(id)
 												<div class="controls">
 													<label class="checkbox-inline"> <input
 														type="checkbox" name="opcao1" value="M" checked>Manhã
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao2" value="T">Tarde
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao3" value="N">Noite
 													</label>
+                                                    													
 												</div>
 												</br>
 											</div>

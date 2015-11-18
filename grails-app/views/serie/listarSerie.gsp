@@ -11,8 +11,8 @@ function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
+  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE<br>");
+  newWin.document.write("RELATÓRIO GERENCIAL<br><br>");
   newWin.document.write(" ");
   newWin.document.write(divToPrint.outerHTML);
   newWin.print();
@@ -55,13 +55,11 @@ function printDiv(id)
 			<div class="box box-white">
 				<table id="listarSerie" class="table table-striped table-hover example">
 					<thead>
-						<tr>
-							<th style="width: 60px;"></th>
+						 <tr><th style="width:40px"></th>
 							<th>Série</th>
 							<th>Vagas</th>
 							<th>Data de Inicio</th>
 							<th>Data do Termino</th>
-	
 						</tr>
 					</thead>
 					<tbody>

@@ -8,13 +8,13 @@
 	<script type="text/javascript">
 function printDiv(id)
 {
-  var divToPrint=document.getElementById(id);
-  var comboEscola=document.getElementById("comboEscola")
+  var divToPrint = document.getElementById(id);
+  var comboEscola = document.getElementById("comboEscola")
   var itemSelecionado = comboEscola.options[comboEscola.selectedIndex].text;;
-  var nomeAluno =document.getElementById("nomeAluno").innerHTML;
+  var nomeAluno = document.getElementById("nomeAluno").innerHTML;
   
   newWin= window.open("");
-  newWin.document.write("<img src='http://192.168.1.247:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
+  newWin.document.write("<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg'; style='width:80px;float:left;margin-top:-9px;'>");
   newWin.document.write("<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>");
   newWin.document.write("<h4 style='margin-top:-50px;text-align:center'>SÃO GONÇALO DO AMARANTE</h4></br>");
   newWin.document.write("<hr><br/><br/> ");
@@ -27,7 +27,7 @@ function printDiv(id)
   newWin.document.write(". ");
   newWin.document.write(" ");
   newWin.document.write("<p style='text-align:center;margin-top:15%;'>________________________________________");
-  newWin.document.write("<h4 style='text-align:center'>ASSINATURA DO RESPOSÁVEL</h4><br/><br/>");
+  newWin.document.write("<h4 style='text-align:center'>ASSINATURA DO RESPONSÁVEL</h4><br/><br/>");
   
   newWin.document.write(" ");
   newWin.document.write("</p> ");
@@ -64,10 +64,8 @@ function printDiv(id)
   NomeMes[10] = "Novembro"
   NomeMes[11] = "Dezembro"
 
-	  //divToPrint +=document.write("São Paulo, "+ Data + " de " + NomeMes[Mes] + " de " + Ano);
-	  
+  //divToPrint +=document.write("São Paulo, "+ Data + " de " + NomeMes[Mes] + " de " + Ano);
   //newWin.innerHTML  += "<p style='font-size:12px;margin-top:1px; margin-left:55%;'><br/>Gerado dia " +Data + " de " +NomeMes[Mes]  + " de " + Ano + " às " + now.getHours()+":"+now.getMinutes()+" pelo SISEduc</p>";
-
   newWin.document.write("<p style='font-size:12px;margin-top:100px; margin-left:55%;'>"+"Gerado dia, " +Data + " de " +NomeMes[Mes]  + " de " + Ano + " às " + Hoje.getHours()+":"+Hoje.getMinutes()+" pelo SISEduc"+"</p>");
   newWin.print();
   newWin.close();

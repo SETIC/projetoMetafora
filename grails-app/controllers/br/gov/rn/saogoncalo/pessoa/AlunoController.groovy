@@ -275,7 +275,7 @@ class AlunoController {
 					newEstado.estado = params.uf.toString().toUpperCase()
 					newEstado.abreviacao = params.uf.toString().toUpperCase()
 					newEstado.save(flush:true)
-					println("Estado --- " + newEstado.estado)
+					println("UF --- "+newEstado.abreviacao)
 					estado = newEstado
 				}
 
@@ -627,7 +627,6 @@ class AlunoController {
 					 }
 					 }*/
 
-
 					pessoaFisica.save(flush:true)
 
 
@@ -643,9 +642,7 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-
 					println("Pessoa --- " + params)
-
                        
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
@@ -689,7 +686,6 @@ class AlunoController {
 
 					//endereço
 
-
 					TipoLogradouro tipoLogradouro = new TipoLogradouro()
 					Logradouro logradouro = new Logradouro()
 					Bairro bairro = new Bairro()
@@ -698,7 +694,6 @@ class AlunoController {
 					Reside newReside = new Reside()
 					def tipoLogradouroSimple
 					def logradouroSimple
-					
 					
 					if(params.endereco != ""){
 						//def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
@@ -714,9 +709,7 @@ class AlunoController {
 						}
 						
 
-
 						println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
-
 
 						tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
 						if(tipoLogradouro == null){
