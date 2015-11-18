@@ -10,7 +10,17 @@ function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
+
+  newWin.document.write("<table border='0'>");
+  newWin.document.write("<tr>");
+  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  newWin.document.write("<td>");
+  newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+  newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+  newWin.document.write("</td>");
+  newWin.document.write("</tr>");
+  newWin.document.write("</table><br>");
+  
   newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
   newWin.document.write(" ");
   newWin.document.write(divToPrint.outerHTML);
@@ -20,7 +30,10 @@ function printDiv(id)
 </script>
 
 	<script type="text/javascript">
-		var endereco = "192.168.1.247";
+
+		//var endereco = "192.168.1.247";
+		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+		
 	
 		      function deletar(id) {
 			        var resposta = confirm("Deseja exluir este Horário?");
