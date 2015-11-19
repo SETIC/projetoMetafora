@@ -68,11 +68,13 @@ function printDiv(id)
 										<ul style="display: inline">
 
 											<g:if test="${perm2}">
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<li title ="Editar setor"
+												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/setor/editarSetor/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+												<li title="Excluir setor"
+												    onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 											</g:if>
@@ -119,6 +121,9 @@ function printDiv(id)
 							</div>
 							<div class="modal-body">
 								<g:form controller="Setor" action="salvar" class="form">
+								
+									<input type="hidden" name="funcionariosResponsaveisHidden" id="funcionariosResponsaveisHiddenId">								
+								
 									<fieldset>
 
 										<div class="form-heading">
@@ -144,41 +149,57 @@ function printDiv(id)
 												<g:select class="form-control selectpicker"
 													data-live-search="true" name="funcionarios"
 													multiple="multiple"
-													from="${funcionarios.cidadao.pessoaFisica.pessoa}" value=""
-													optionKey="id" optionValue="nome" onchange="myFunction()"/>
+													from="${funcionarios?.cidadao?.pessoaFisica?.pessoa}" value=""
+													optionKey="id" optionValue="nome" onchange="addSelectOptions()" />
 											</div>
 										</div>
-										
-										
-									
-										
-										
-										<br />
-										<div class="form-heading" >
+										<br/>
+
+										<%--<div class="form-heading">
 											<label>Responsável</label>
 											<table id="table-responsavel" class="table table-hover">
 												<thead>
 													<tr>
-														<th>#</th>
+														<th>Responsável</th>
 														<th>Nome</th>
 														<th>Opções</th>
 													</tr>
 												</thead>
 												</div id="dv" >
 												<tbody>
-												
+
 												</tbody>
 												</div>
 											</table>
 										</div>
-										<br>
+										<br> --%>
+										
+										<div class="form-heading">
+											<div class="row">
+												<div class="col-md-5">
+												<label> Funcionarios </label>
+													<select multiple id="select1" name="funcionariosSelecionados" class="form-control"></select>
+							 
+												</div>
+												<div class="col-md-2" style="margin-top: 4.2rem;">
+													<a class="btn btn-primary btn-flat btn-sm" href="#" role="button" id="add"><i class="fa fa-plus"></i></a>
+													<a class="btn btn-danger btn-flat btn-sm" href="#" role="button" id="remove"><i class="fa fa-minus"></i></a>
+												</div>
+												<div class="col-md-5">
+												<label> Responsáveis </label>
+													<select multiple id="select2" name="funcionariosResponsaveis" class="form-control"></select>
+												</div>
+											</div>
+										</div>
+										<br/>
 									</fieldset>
 									<div class="modal-footer">
-										<button type="submit" class="btn btn-primary btn-flat">
+										<button type="submit" class="btn btn-primary btn-flat" onclick="getResponsaveis()">
 											<i class="fa fa-save"></i> Cadastrar
 										</button>
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
+									
 								</g:form>
 							</div>
 						</div>
@@ -186,6 +207,23 @@ function printDiv(id)
 				</div>
 			</g:if>
 		</div>
+
+		<script type="text/javascript">  
+		  $().ready(function() {  
+		   $('#add').click(function() {
+			   
+		    return !$('#select1 option:selected').remove().appendTo('#select2');
+		      
+		   });  
+		   $('#remove').click(function() {  
+			   
+			   return !$('#select2 option:selected').remove().appendTo('#select1');
+		   });
+		    
+		  });  
+		 </script>
+
+
 		<script>
 			function myFunction() {
 
@@ -216,8 +254,10 @@ function printDiv(id)
 			    
 
 			    var res = str.split(",");
+			    var vetFunc
 
 			    console.log(str);
+			    
 			    
 			    for (i = 0; i < res.length; i++){
 
@@ -226,14 +266,69 @@ function printDiv(id)
 				    var id = row.insertCell(0);
 				    var nome = row.insertCell(1);
 				    var opcoes = row.insertCell(2);
+
+					vetFunc
 				    
 			    	id.innerHTML = "<input type=\"checkbox\" value=\""+res[i]+"\">";
 			    	nome.innerHTML = res[i];
 			    	opcoes.innerHTML = "<button type=\"button\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-minus\"></i></button>";
+			    	
 			    }
 
 			}
-	
+			function addSelectOptions(){
+
+				
+				var x = document.getElementById("select1");
+				
+				x.options.length = 0;
+					
+				var funcionarios = document.getElementsByClassName("filter-option pull-left");
+
+				var values = $('#funcionarios').val();
+				console.log("Teste - " + values);
+
+				
+				console.log(funcionarios[0].innerText);
+				 
+			    var str = funcionarios[0].innerText;
+			    var res = str.split(",");
+			    
+				for (i = 0; i < res.length; i++){
+			        var option = document.createElement("option");
+			        option.value = values[i];
+			        option.text = res[i];
+			        x.add(option);
+
+				}
+				
+		    }
+		    
+			function ClearOptionsFast(id){
+				var selectObj = document.getElementById(id);
+				var selectParentNode = selectObj.parentNode;
+				var newSelectObj = selectObj.cloneNode(false); // Make a shallow copy
+				selectParentNode.replaceChild(newSelectObj, selectObj);
+				return newSelectObj;
+			}
+
+			function getResponsaveis() {
+				
+			    var txt = '';
+			    var texto
+			    var x = document.getElementById("select2");
+			    if (x.value != null){
+				    for(i = 0; i < x.options.length; i++){
+				        txt = txt + ' ' + x.options[i].value;
+					}
+				    console.log(txt);
+				    var hiddenResponsaveis =  document.getElementById("funcionariosResponsaveisHiddenId");
+				    texto = txt1.trim();
+				    hiddenResponsaveis.value = texto.replaceAll(' ',',');
+			    }
+			    
+			}
+			
 		</script>
 	</section>
 </body>

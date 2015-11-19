@@ -15,9 +15,8 @@ class BuildLeftMenuController {
 		render  buildPessoalMenu(permissoes) +
 				buildAcademicoMenu(permissoes) +
 				buildProfessorMenu(permissoes)+
-				buildRelatorioFuncionarioMenu(permissoes) +
+				buildRelatorioFuncionarioMenu(permissoes)+
 				buildProtocoloMenu(permissoes)
-				
 	}
 
 	def buildPessoalMenu(perm){
@@ -132,11 +131,13 @@ class BuildLeftMenuController {
 			menu+='<li><a href="/projetoMetafora/Nota/notasTurma" ><i class="fa fa-sitemap"></i> Notas Geral</a></li>'
 			verificador = true
 		}
-		 
+
 		if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
 			menu+='<li><a href="/projetoMetafora/Frequencia/frequencia" ><i class="fa fa-check-square-o"></i> Aula/Frequência</a></li>'
 			verificador = true
 		}
+
+
 
 		menu +='</ul>'
 		'</li>'
@@ -146,26 +147,28 @@ class BuildLeftMenuController {
 
 		return menu
 	}
-	
+
 	//adição de mais um link para gerar o relatorio de funcionarios
-	
+
 	def buildRelatorioFuncionarioMenu(perm){
-		
-				def menu = '';
-				def verificador = false
-		
-				menu ='<li class="treeview"> '+
-						'<a href="#"> '+
-						'<i class="fa fa-briefcase"></i> <span>Administração</span> '+
-						'<i class="fa fa-angle-left pull-right"></i> '+
-						'</a> '+
-						'<ul class="treeview-menu"> '
-		
-				if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
-					menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Visualizar Relatorios</a></li>'
-					verificador = true
-				}
-				menu +='</ul> '  +
+
+		def menu = '';
+		def verificador = false
+
+		menu ='<li class="treeview"> '+
+				'<a href="#"> '+
+				'<i class="fa fa-briefcase"></i> <span>Administração</span> '+
+				'<i class="fa fa-angle-left pull-right"></i> '+
+				'</a> '+
+				'<ul class="treeview-menu"> '
+
+		if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+			menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Situação</a></li>'
+			verificador = true
+		}
+
+
+		menu +='</ul> '  +
 				' </li> '
 
 		if (!verificador)
@@ -173,29 +176,48 @@ class BuildLeftMenuController {
 
 		return menu
 	}
-	
-	
+
+
+	// menu do protocolo
+
 	def buildProtocoloMenu(perm){
-		
-				def menu = '';
-				def verificador = false
-		
-				menu ='<li class="treeview"> '+
-						'<a href="#"> '+
-						'<i class="fa fa-briefcase"></i> <span>Protocolo</span> '+
-						'<i class="fa fa-angle-left pull-right"></i> '+
-						'</a> '+
-						'<ul class="treeview-menu"> '
-		
-				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-					menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-clipboard"></i>Setor</a></li>'
-					verificador = true
-				}
-				if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-					menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-clipboard"></i>Pendentes</a></li>'
-					verificador = true
-				}
-				menu +='</ul> '  +
+
+		def menu = '';
+		def verificador = false
+
+		menu ='<li class="treeview"> '+
+				'<a href="#"> '+
+				'<i class="fa fa-briefcase"></i> <span>Protocolo</span> '+
+				'<i class="fa fa-angle-left pull-right"></i> '+
+				'</a> '+
+				'<ul class="treeview-menu"> '
+
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SETOR', perm)){
+			menu+= '<li><a href="/projetoMetafora/setor/listarSetor"><i class="fa fa-sitemap"></i>Setor</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SITUACAO', perm)){
+			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-th-list"></i>Situação</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+			menu+= '<li><a href="/projetoMetafora/Protocolo/listarProtocolo"><i class="fa fa-clipboard"></i>Protocolos</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'TIPO_DOCUMENTO', perm)){
+			menu+= '<li><a href="/projetoMetafora/tipoDocumento/listarTipoDocumento"><i class="glyphicon glyphicon-file"></i>Tipos de Documentos</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+			menu+= '<li><a href="/projetoMetafora/protocolo/listarPendentes"><i class="fa fa-arrow-down"></i>Pendentes</a></li>'
+			verificador = true
+		}
+		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
+			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="glyphicon glyphicon-search "></i>Pesquisar Protocolos</a></li>'
+			verificador = true
+		}
+
+		menu +='</ul> '  +
 				' </li> '
 
 		if (!verificador)
@@ -203,7 +225,7 @@ class BuildLeftMenuController {
 
 		return menu
 	}
-	
+
 
 
 	def verificaPerm(sch, tab, perm){

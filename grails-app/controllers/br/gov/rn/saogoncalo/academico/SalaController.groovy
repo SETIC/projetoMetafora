@@ -86,13 +86,13 @@ class SalaController {
 					//				ok : "Sala atualizado com sucesso!"
 					//
 					//			])
-					
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 
 					adm.salvaLog(session["usid"].toString().toInteger(), " Atualizada Sala " + salas.id.toString(), "Update", "Sala", date)
 
-					
+
 					listarMensagem("Sala atualizada com sucesso", "ok")
 				}else{
 
@@ -138,14 +138,12 @@ class SalaController {
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 
 
-				/*	def date = new Date()
-					AdministracaoController adm = new AdministracaoController()
-					adm.salvaLog(session["usid"].toString().toInteger(), "listar", "listar", "Sala", date)*/
-					
-
+					/*	def date = new Date()
+					 AdministracaoController adm = new AdministracaoController()
+					 adm.salvaLog(session["usid"].toString().toInteger(), "listar", "listar", "Sala", date)*/
 				}
-				
-				
+
+
 				render(view:"/sala/listarSala.gsp", model:[sala:sala, escolas:escolas, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -211,19 +209,19 @@ class SalaController {
 			if (perm2) {
 
 				Sala.deleteAll(Sala.get(id))
-				
+
 				def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Sala: " + id, "DELETE", "Sala", date)
 
-				
+
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
-		
+
 	def salvar(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Sala", act:"listar"])
@@ -251,23 +249,21 @@ class SalaController {
 
 
 				//Trecho de tranzação de teste
-			/*	Sala.withTransaction{ status ->
-					try{
-						
-						salaL.save(flush:true)
-						//def x = 78/0
-						listarMensagem("Sala cadastrada com sucesso", "ok")
-						
-					}catch(Exception exp){
-						//salaL.errors.reject( 'Erro em pessoa' )
-						status.setRollbackOnly()
-						listarMensagem("Erro ao salvar", "erro")
-					} 
-				} */
-				
+				 /*Sala.withTransaction{ status ->
+				 try{
+				 salaL.save(flush:true)
+				 //def x = 78/0
+				 listarMensagem("Sala cadastrada com sucesso", "ok")
+				 }catch(Exception exp){
+				 //salaL.errors.reject( 'Erro em pessoa' )
+				 status.setRollbackOnly()
+				 listarMensagem("Erro ao salvar", "erro")
+				 } 
+				 }*/
+
 
 				if (salaL.save(flush:true)){
-					
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), " Salvo Sala " + salaL.id.toString(), "Create", "Sala", date)
@@ -283,10 +279,8 @@ class SalaController {
 				}
 
 				/*def date = new Date()
-				AdministracaoController adm = new AdministracaoController()
-				adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
-				
-				
+				 AdministracaoController adm = new AdministracaoController()
+				 adm.salvaLog(session["usid"].toString().toInteger(), "Criar Sala: " + salaL.id, "CREATE", "Sala", date)*/
 
 
 			}else{
@@ -296,5 +290,5 @@ class SalaController {
 		}
 	}
 
-	
+
 }

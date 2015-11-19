@@ -1,20 +1,21 @@
 package br.gov.rn.saogoncalo.protocolo
 
-
-
 class Tramite {
 	
 	Date dataDisponibilizacao
 	Date dataRecebimento
 	FuncionarioSetor funcionarioSetorOrigem
 	FuncionarioSetor funcionarioSetorDestino
+	String status
 
-	static belongsTo = [protocolo:Protocolo ]
-	
+	static belongsTo = [protocolo:Protocolo]
+
 	
 	static constraints = {
-		dataDisponibilizacao blank:false, nullable:false
-		dataRecebimento blank:false, nullable:false
+
+		dataDisponibilizacao blank:false, nullable:true
+		dataRecebimento blank:true, nullable:true
+		status blank:false, nullable:false
 		
 	}
 	

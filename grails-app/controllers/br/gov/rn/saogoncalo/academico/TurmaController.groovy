@@ -442,8 +442,94 @@ class TurmaController {
 
 				def disciplinas = DisciplinaLecionadaPorProfessor.findAll()
 				def erros
-
-
+				
+				Turma.withTransaction{ status ->
+					try {
+						turma.save(flush:true)
+						if (params.disciplinas.getClass() != java.lang.String) {
+							
+							
+							for (i in 0..params.disciplinas.size()-1) {
+							
+							
+								t = new TurmaDisciplina()
+								t.turma = turma
+							
+								DisciplinaLecionadaPorProfessor dlpp = DisciplinaLecionadaPorProfessor.get(Integer.parseInt(params.disciplinas[i]))
+							
+								t.disciplinaLecionadaPorProfessor = dlpp
+								t.dataInicio = new Date()
+								t.dataTermino = new Date()
+								t.identificacao = "Automatico - "+ turma.id + " - " + params.disciplinas[i] + " - " + i.toString()
+							
+								if (!t.save(flush:true)) {
+									erros = t.errors
+									verifica = false
+								}
+							}
+							
+						} else{
+							
+							t = new TurmaDisciplina()
+							t.turma = turma
+							
+							DisciplinaLecionadaPorProfessor dlpp = DisciplinaLecionadaPorProfessor.get(Integer.parseInt(params.disciplinas))
+							
+							t.disciplinaLecionadaPorProfessor = dlpp
+							t.dataInicio = new Date()
+							t.dataTermino = new Date()
+							t.identificacao = "Automatico - "+ turma.id + " - " + params.disciplinas + " - 0"
+							if (!t.save(flush:true)) {
+								erros = t.errors
+								verifica = false
+							}
+							
+						}
+						if (verifica) {
+							Calendar ca = Calendar.getInstance()
+							int ano = ca.get(Calendar.YEAR)
+							
+							def turmas = Horario.executeQuery(" select t from Turma as t " +
+								"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
+							
+							//				render(view:"/turma/listarTurma.gsp", model:[
+							//					turmas:turmas,disciplinas:disciplinas,
+							//					ok : "Turma cadastrada com sucesso!"
+							//
+							//				])
+							//				redirect(action:"listar" )
+													
+							def date = new Date()
+							AdministracaoController adm = new AdministracaoController()
+							adm.salvaLog(session["usid"].toString().toInteger(), "Criar Turma: " + turma.id.toString(), "CREATE", "Turma", date)
+													
+							listarMensagem("Turma cadastrada com sucesso!", "ok")
+							
+						} else {
+							
+							
+							Calendar ca = Calendar.getInstance()
+							int ano = ca.get(Calendar.YEAR)
+							
+							def turmas = Horario.executeQuery(" select t from Turma as t " +
+								"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
+						
+						
+							turma.errors.each {println it}
+							//				render(view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas,
+							//					erro : erros
+							//				])
+							listarMensagem("erro ao Salvar", "erro")
+						} 
+					} catch(Exception exp){
+						//salaL.errors.reject( 'Erro em pessoa' )
+						status.setRollbackOnly()
+						listarMensagem("Erro ao salvar", "erro")
+					}
+				}
+				
+				//Código sem transação
+				/*
 				if(turma.save(flush:true)){
 					
 					
@@ -525,14 +611,11 @@ class TurmaController {
 						//				])
 						listarMensagem("erro ao Salvar", "erro")
 					}
-
-
-
-				}
-				else{
+					
+				} else{
 					render turma.errors
-				}
-			}else{
+				}*/
+			} else {
 				render(view:"/error403.gsp")
 			}
 

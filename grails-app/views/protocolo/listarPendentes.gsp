@@ -50,8 +50,9 @@
 											<g:if test="${perm2}">
 												<li class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/protocolo/aceitarProtocolos/${it.id}"><span
-														class="glyphicon glyphicon-ok">Aceitar</span></a></li>
+													href="/projetoMetafora/protocolo/aceitarProtocolos/${it.id}"
+													title="Aceitar" ><span
+														class="glyphicon glyphicon-ok" ></span></a></li>
 											</g:if>
 										</ul>
 	

@@ -293,7 +293,7 @@ function printDiv(id)
 										<div class="controls">
 											<div id="teste"></div>
 											<select id="comboSalas" name="sala" class="form-control">
-												<option value="0">Selecione uma Escola</option>
+												<option value="0">Selecione uma Sala</option>
 											</select>
 										</div>
 									</div>
@@ -328,7 +328,7 @@ function printDiv(id)
 												class="form-control">
 												
 													<option value="0">
-														Selecione uma turma
+														Selecione uma Disciplina - Professor
 													</option>
 												
 											</select>

@@ -123,7 +123,6 @@
 										style="width: 300px">
 										<option value="EFETIVO" selected>EFETIVO</option>
 										<option value="COMISSIONADO">COMISSIONADO</option>
-
 										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
 										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
 									</select>
