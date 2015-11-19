@@ -180,6 +180,7 @@ function mudarCombo(){
 			</button>
 
 			<!-- Modal -->
+
 			<div class="modal fade" id="modalCadastrarAluno" tabindex="-1"
 				role="dialog" data-focus-on="input:first"
 				aria-labelledby="myModalLabel">
@@ -204,6 +205,7 @@ function mudarCombo(){
 												style="width: 0%;"></div>
 											<span class="progress-type">Progresso Geral</span> <span
 												class="progress-completed">0%</span>
+
 										</div>
 									</div>
 									<div class="row"
@@ -446,6 +448,7 @@ function mudarCombo(){
 													digite um CEP válido.</p>
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label for="iLogradouro" class="col-sm-2 control-label">Logradouro</label>
 											<div class="col-sm-10">
@@ -532,6 +535,7 @@ function mudarCombo(){
 												</button>
 											</div>
 										</div>
+
 									</div>
 									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
 										<h3>Matrícula</h3>
@@ -551,7 +555,6 @@ function mudarCombo(){
 												</label>
 											</div>
 										</div>
-
 
 										<div class="form-group">
 											<label for="iEscola" class="col-sm-2 control-label">Escola</label>
@@ -622,52 +625,49 @@ function mudarCombo(){
 											</div>
 										</div>
 									</div>
+
 								</div>
 							</g:form>
+
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarPai" tabindex="-1"
-				role="dialog" data-focus-on="input:first"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document" style="margin-top: 20%">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
+
+			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document" style="margin-top: 20%">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
+						<div class="col-sm-11">
+
+							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
 						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<label style="padding-top: 5px;" for="iNomePai"
-									class="col-sm-1 control-label">Nome:</label>
-								<div class="col-sm-11">
-									<g:textField class="form-control" id="iNomePai" name="nomePai"
-										placeholder="Nome" required="false" />
-								</div>
-								<label for="iCpf" style="margin-top: 5px; padding-top: 5px;"
-									class="col-sm-1 control-label">CPF:</label>
-								<div class="col-sm-11">
-									<g:textField style="margin-top: 5px;" class="form-control"
-										id="iCPFPai" name="cpfPai" />
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success btn-flat"
-								data-dismiss="modal" onclick="salvarPai()">Cadastrar</button>
-							<button type="button" class="btn btn-default btn-flat"
-								data-dismiss="modal">Cancelar</button>
+						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
+						<div class="col-sm-11">
+							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" />
+
 						</div>
 					</div>
-				</div>
+			      </div>
+			      <hr/>
+			      <div class="modal-footer">
+
+			        <button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarPai()">Cadastrar</button>
+			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" >Cancelar</button>
+
+			      </div>
+			    </div>
+			  </div>
 			</div>
+
 
 			<!-- Modal -->
 			<div class="modal fade" id="modalCadastrarMae" tabindex="-1"
@@ -753,6 +753,7 @@ function mudarCombo(){
 			  }
 		
 		</script>
+
 
 		<!-- Script buscar dados de acordo com CEP -->
 

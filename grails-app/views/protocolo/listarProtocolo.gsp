@@ -358,7 +358,7 @@ function deletar(id) {
 										
 										$(document).ready(function(){  
 										 
-										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -370,14 +370,15 @@ function deletar(id) {
 										 
 						                 }); 
 										 
-										</script>  
-								        <label style="display: block"> <input type="button" name="addFile1" value="Novo Anexo" /></label>
-								        
-								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
+										</script> 
+								        <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
+								        <br />
 								        <fieldset id="inputs_adicionais" style="border: none">  
 								        </fieldset> 
-
+								        <br />
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
+								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
+								        
 									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
@@ -432,7 +433,9 @@ function deletar(id) {
 									</div>
 									<br>
 									<div class="form-heading">
+
 									<label>Anexo</label>
+
 										<script type="text/javascript">  
 
 										function limparCampoFile(){
@@ -443,25 +446,24 @@ function deletar(id) {
 										 
 										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile']").click(function(e){  
-										        $('#inputs_adicionais').append( input );  
+										        $('#inputs_adicionais_tramite').append( input );  
 										    });  
 										 
-										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										    $('#inputs_adicionais_tramite').delegate('a','click',function(e){  
 										        e.preventDefault();  
 										        $(this).parent('label').remove();  
 										    });  
 										 
 										}); 
 										 
-										</script>  
-								        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
-								        
-								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
-								        <fieldset id="inputs_adicionais" style="border: none">  
+										</script>
+										<input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
+								        <br />
+								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-										
-										
+								        <br />
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
+								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
 									</div>
 									<br>
 								</fieldset>
@@ -471,13 +473,11 @@ function deletar(id) {
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
-							
 							</g:form>
 						</div>
 					</div>
 				</div>
 			</div>
-			
 	</section>
 </body>
 </html>
