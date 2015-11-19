@@ -25,7 +25,8 @@
 			document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 		}
 		function salvarPai() {
-			var endereco = "192.168.1.247";
+			//var endereco = "192.168.1.247";
+			var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			var nome = document.getElementById("iNome").value;
 
 			
@@ -53,7 +54,8 @@
 		}
 
 		function salvarMae() {
-			var endereco = "192.168.1.247";
+			//var endereco = "192.168.1.247";
+			var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			var nome = document.getElementById("iNomeMae").value;
 
 			
@@ -185,7 +187,8 @@
 
 
 							<div class="form-group">
-								<label for="inputNome3" class="col-sm-2 control-label">Nome *</label>
+								<label for="inputNome3" class="col-sm-2 control-label">Nome
+									*</label>
 								<div class="col-sm-10">
 									<input class="form-control" required name="nome" type="text"
 										style="width: 300px" value="${pessoa.nome }">
@@ -353,7 +356,8 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade *</label>
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">Nacionalidade
+									*</label>
 								<div class="col-sm-10">
 									<g:textField class="form-control" required="true"
 										name="nacionalidade" style="width: 300px"
@@ -362,8 +366,8 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="inputestadoCivil3" class="col-sm-2 control-label" required="true">Estado
-									Civil *</label>
+								<label for="inputestadoCivil3" class="col-sm-2 control-label"
+									required="true">Estado Civil *</label>
 								<div class="col-sm-10">
 									<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)' }">
 										<select class="form-control" name="estadoCivil"
@@ -488,38 +492,75 @@
 							<div class="form-group">
 								<label for="iUf" class="col-sm-2 control-label">UF</label>
 								<div class="col-sm-10">
-										
-										<select name="uf" id="iUf" class="form-control"> 
-													<option value="AC" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if> >Acre</option> 
-													<option value="AL" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AL'}"> selected </g:if> >Alagoas</option> 
-													<option value="AM" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AM'}"> selected </g:if> >Amazonas</option> 
-													<option value="AP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AP'}"> selected </g:if> >Amapá</option> 
-													<option value="BA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'BA'}"> selected </g:if> >Bahia</option> 
-													<option value="CE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'CE'}"> selected </g:if> >Ceará</option> 
-													<option value="DF" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if> >Distrito Federal</option> 
-													<option value="ES" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if> >Espírito Santo</option> 
-													<option value="GO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'GO'}"> selected </g:if> >Goiás</option> 
-													<option value="MA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MA'}"> selected </g:if> >Maranhão</option> 
-													<option value="MT" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if> >Mato Grosso</option> 
-													<option value="MS" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if> >Mato Grosso do Sul</option> 
-													<option value="MG" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if> >Minas Gerais</option> 
-													<option value="PA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PA'}"> selected </g:if> >Pará</option> 
-													<option value="PB" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PB'}"> selected </g:if> >Paraíba</option> 
-													<option value="PR" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PR'}"> selected </g:if> >Paraná</option> 
-													<option value="PE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PE'}"> selected </g:if> >Pernambuco</option> 
-													<option value="PI" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PI'}"> selected </g:if> >Piauí</option> 
-													<option value="RJ" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if> >Rio de Janeiro</option> 
-													<option value="RN" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if> >Rio Grande do Norte</option> 
-													<option value="RO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RO'}"> selected </g:if> >Rondônia</option> 
-													<option value="RS" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if> >Rio Grande do Sul</option> 
-													<option value="RR" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RR'}"> selected </g:if> >Roraima</option> 
-													<option value="SC" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if> >Santa Catarina</option> 
-													<option value="SE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SE'}"> selected </g:if> >Sergipe</option> 
-													<option value="SP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if> >São Paulo</option> 
-													<option value="TO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if> >Tocantins</option> 
-												</select>
 
-										
+									<select name="uf" id="iUf" class="form-control">
+										<option value="AC"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if>>Acre</option>
+										<option value="AL"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AL'}"> selected </g:if>>Alagoas</option>
+										<option value="AM"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AM'}"> selected </g:if>>Amazonas</option>
+										<option value="AP"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AP'}"> selected </g:if>>Amapá</option>
+										<option value="BA"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'BA'}"> selected </g:if>>Bahia</option>
+										<option value="CE"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'CE'}"> selected </g:if>>Ceará</option>
+										<option value="DF"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if>>Distrito
+											Federal</option>
+										<option value="ES"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if>>Espírito
+											Santo</option>
+										<option value="GO"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'GO'}"> selected </g:if>>Goiás</option>
+										<option value="MA"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MA'}"> selected </g:if>>Maranhão</option>
+										<option value="MT"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if>>Mato
+											Grosso</option>
+										<option value="MS"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if>>Mato
+											Grosso do Sul</option>
+										<option value="MG"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if>>Minas
+											Gerais</option>
+										<option value="PA"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PA'}"> selected </g:if>>Pará</option>
+										<option value="PB"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PB'}"> selected </g:if>>Paraíba</option>
+										<option value="PR"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PR'}"> selected </g:if>>Paraná</option>
+										<option value="PE"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PE'}"> selected </g:if>>Pernambuco</option>
+										<option value="PI"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PI'}"> selected </g:if>>Piauí</option>
+										<option value="RJ"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if>>Rio
+											de Janeiro</option>
+										<option value="RN"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if>>Rio
+											Grande do Norte</option>
+										<option value="RO"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RO'}"> selected </g:if>>Rondônia</option>
+										<option value="RS"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if>>Rio
+											Grande do Sul</option>
+										<option value="RR"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RR'}"> selected </g:if>>Roraima</option>
+										<option value="SC"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if>>Santa
+											Catarina</option>
+										<option value="SE"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SE'}"> selected </g:if>>Sergipe</option>
+										<option value="SP"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if>>São
+											Paulo</option>
+										<option value="TO"
+											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if>>Tocantins</option>
+									</select>
+
+
 								</div>
 							</div>
 							<div class="form-group">
@@ -674,7 +715,8 @@
 			
 
 			function salvarPai(){
-			   var endereco = "192.168.1.247";
+			   //var endereco = "192.168.1.247";
+			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var nome = document.getElementById("iNomePai").value;
 			   var cpf = document.getElementById("iCPFPai").value;
 			   
@@ -699,7 +741,8 @@
 			}
 			
 			function salvarMae(){
-				var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.247";
+				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 				   var nome = document.getElementById("iNomeMae").value;
 				   var cpf = document.getElementById("iCPFMae").value;
 				   
@@ -726,7 +769,8 @@
 
 			function mudarEscola(){
 		    	  
-				var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.247";
+				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -753,34 +797,38 @@
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
-			   var comboTurma = document.getElementById("comboTurma");
-		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+			  //var endereco = "192.168.1.247";
+			  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+				var comboTurma = document.getElementById("comboTurma");
+				comboTurma.options[comboTurma.options.length] = new Option(
+						"Buscando Turmas", 0);
 
-		        var idEscola = document.getElementById("comboEscola").value;
+				var idEscola = document.getElementById("comboEscola").value;
 				var idSerie = document.getElementById("comboSerie").value;
 
-		        
-		        $.ajax({
-		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
-		            dataType: "json",
-		            success: function(result){
-		            	comboTurma.options.length = 0;
-			        if (result.id.length == 0){
-			        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
-			        }else{
-						for (i=0;i<result.id.length;i++){
-							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
-		           		}
-			        }
-		            }
-		        });
+				$
+						.ajax({
+							type : "GET",
+							url : "http://"
+									+ endereco
+									+ ":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="
+									+ idEscola + "&idSerie=" + idSerie,
+							dataType : "json",
+							success : function(result) {
+								comboTurma.options.length = 0;
+								if (result.id.length == 0) {
+									comboTurma.options[comboTurma.options.length] = new Option(
+											"Não há turma cadastrada", 0);
+								} else {
+									for (i = 0; i < result.id.length; i++) {
+										comboTurma.options[comboTurma.options.length] = new Option(
+												result.turma[i], result.id[i]);
+									}
+								}
+							}
+						});
 
-		    
-		       }
-	       
-			
+			}
 		</script>
 	</section>
 </body>

@@ -9,7 +9,8 @@
 </head>
 <body>
 	<script type="text/javascript">
-	var endereco ="192.168.1.247";
+	//var endereco ="192.168.1.247";
+	var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		function deletar(id) {
 			var resposta = confirm("Deseja exluir este Horário?");
 

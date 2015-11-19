@@ -13,7 +13,18 @@ function printDive(id)
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
   newWin.document.write("<style=''>");
-  newWin.document.write("<img src='/projetoMetafora/static/images/brasao.jpg;' style='width:80px;float:left;margin-top:-9px;'>");
+  newWin.document.write("<img src='../static/images/brasao.jpg'; style='width:80px;float:left;margin-top:-9px;'>");
+
+  newWin.document.write("<table border='0'>");
+  newWin.document.write("<tr>");
+  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  newWin.document.write("<td>");
+  newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+  newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+  newWin.document.write("</td>");
+  newWin.document.write("</tr>");
+  newWin.document.write("</table>");
+  
   newWin.document.write("<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>");
   newWin.document.write("<h4 style='margin-top:-38px; text-align:center;'>TERMO DE RESPONSABILIDADE</h4>");
   newWin.document.write("<hr><br/><br/>");
@@ -66,10 +77,21 @@ newWin.print();
 	  var divToPrint=document.getElementById(id);
 	  newWin= window.open("");
 	  newWin.document.write("<style=''>");
+
+	  newWin.document.write("<table border='0'>");
+	  newWin.document.write("<tr>");
+	  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+	  newWin.document.write("<td>");
+	  newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+	  newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+	  newWin.document.write("</td>");
+	  newWin.document.write("</tr>");
+	  newWin.document.write("</table>");
+
 	  newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
 	  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DA ESCOLA");
 	  newWin.document.write("<hr>");
-	  newWin.document.write("</br>");
+      newWin.document.write("</br>");
 	  newWin.document.write("<style type='text/css' >");
 	  newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
 	  newWin.document.write("body{font-family:Arial;}");
@@ -103,6 +125,7 @@ newWin.print();
 </script>
 
 	<section class="content-header">
+
 		<h1>
 			Escolas <small>Visualizar dados</small>
 		</h1>

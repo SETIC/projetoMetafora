@@ -177,7 +177,8 @@ class FuncionarioController {
 				props.setProperty("user", "admin_db_sr")
 				props.setProperty("password", "bgt54rfvcde3")
 
-
+				def endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+				
 				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 				//dadosDoGrafico2();

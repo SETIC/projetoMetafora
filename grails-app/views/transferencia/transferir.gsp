@@ -14,9 +14,18 @@ function printDiv(id)
   var nomeAluno =document.getElementById("nomeAluno").innerHTML;
   
   newWin= window.open("");
-  newWin.document.write("<img src='http://192.168.1.247:8080/projetoMetafora/static/images/brasao.jpg' style='width:80px;float:left;margin-top:-9px;'>");
+
+  newWin.document.write("<table border='0'>");
+  newWin.document.write("<tr>");
+  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  newWin.document.write("<td>");
+  newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+  newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+  newWin.document.write("</td>");
+  newWin.document.write("</tr>");
+  newWin.document.write("</table><br>");  
+
   newWin.document.write("<h4 style='text-align:center;margin-top:50px;'>${session["escname"]}</h4><br/><br/>");
-  newWin.document.write("<h4 style='margin-top:-50px;text-align:center'>SÃO GONÇALO DO AMARANTE</h4></br>");
   newWin.document.write("<hr><br/><br/> ");
   newWin.document.write("<h3 style='text-align:center;margin-top:10px;'>TERMO DE RESPONSABILIDADE PARA TRANSFERÊNCIA</h3><br/><br/> ");
   newWin.document.write("<p align='Justify' style='center;margin-top:20px;line-height:200%;  font-family: sans-serif;margin-left: 25px;margin-right: 25px;'> ");

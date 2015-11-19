@@ -12,6 +12,17 @@ function printDiv(id)
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
   newWin.document.write("<style=''>");
+
+  newWin.document.write("<table border='0'>");
+  newWin.document.write("<tr>");
+  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  newWin.document.write("<td>");
+  newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+  newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+  newWin.document.write("</td>");
+  newWin.document.write("</tr>");
+  newWin.document.write("</table>");	
+  
   newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
   newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
   newWin.document.write("<hr>");
@@ -71,7 +82,11 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "localhost";
+	
+		//var endereco = "192.168.1.247";
+		
+		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
@@ -88,12 +103,28 @@ function printDiv(id)
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
 			    divToPrint.innerHTML +=  "<style=''>";   
+<<<<<<< HEAD
 		        divToPrint.innerHTML  += "<img src='../images/brasao.jpg' style='float:left;width: 180;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
 		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
 		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
 		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
+=======
+
+			    divToPrint.innerHTML  += "<table border='0'>";
+			    divToPrint.innerHTML  += "<tr>";
+        		divToPrint.innerHTML  += " <td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>";
+        		divToPrint.innerHTML  += "<td>";
+        		divToPrint.innerHTML  += "<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>";
+        		divToPrint.innerHTML  += "<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
+        		divToPrint.innerHTML  += "</td>";
+        		divToPrint.innerHTML  += "</tr>";
+        		divToPrint.innerHTML  += "</table>";
+
+				divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
+
+>>>>>>> protocIeber
 		        divToPrint.innerHTML  += "<hr>";
 		        divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
 		        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:30%;line-height:200%;'>";
@@ -304,8 +335,11 @@ function printDiv(id)
 			
 				function mudarEscola(){
 		    	  
-					var endereco = "localhost";
-			        var comboTurma = document.getElementById("comboTurma");
+
+					//var endereco = "192.168.1.247";
+					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+
+					var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
 			        var idEscola = document.getElementById("comboEscola").value;
@@ -359,7 +393,10 @@ function printDiv(id)
 				   
 
 			  function mudarSerie(){
-				  var endereco = "localhost";
+
+				  //var endereco = "192.168.1.247";
+				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

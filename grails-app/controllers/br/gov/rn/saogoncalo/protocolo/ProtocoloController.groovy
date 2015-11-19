@@ -38,8 +38,8 @@ class ProtocoloController {
 				props.setProperty("user", "admin_db_sr")
 				props.setProperty("password", "bgt54rfvcde3")
 
-
 				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+
 				def sql = new Sql(conn)
 
 				def protocolos

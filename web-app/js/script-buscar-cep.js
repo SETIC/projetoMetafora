@@ -10,6 +10,10 @@ window.onload = function() {
 
 function requestAjax(elementoCep) {
 	var elementoCep = document.getElementById("iCep");
+	
+	var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+	
+	
 	if (!elementoCep.value == "") {
 		var elementoLogradouro = document.getElementById("iLogradouro");
 		var elementoBairro = document.getElementById("iBairro");
@@ -24,6 +28,7 @@ function requestAjax(elementoCep) {
 					$.ajax({
 						type : "GET",
 						url : "http://192.168.1.247:8080/projetoMetafora/aluno/buscarCEP?cep="
+						//url : "http://"+endereco+":8080/projetoMetafora/aluno/buscarCEP?cep="
 								+ cep + "",
 						dataType : "json",
 						success : function(result) {

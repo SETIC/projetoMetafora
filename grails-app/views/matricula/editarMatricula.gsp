@@ -48,7 +48,8 @@
 			<script type="text/javascript">
 			
 				function mudarEscola() {
-					var endereco = "192.168.1.247";
+					//var endereco = "192.168.1.247";
+					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 					var comboTurma = document.getElementById("comboTurma");
 					comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
@@ -76,7 +77,8 @@
 				}
 
 				  function mudarSerie(){
-						var endereco = "192.168.1.247";
+						//var endereco = "192.168.1.247";
+						var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 						
 					   var comboTurma = document.getElementById("comboTurma");
 				        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
