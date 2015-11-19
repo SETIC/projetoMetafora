@@ -61,7 +61,7 @@ function mudarCombo(){
 			</g:if>
 			<div class="box box-white">
 
-				<g:form controller="Aluno" action="pesquisarAlunos" class="form">
+				<g:form controller="Aluno" action="pesquisarAlunos" class="form" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
@@ -191,8 +191,7 @@ function mudarCombo(){
 							<h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
 						</div>
 						<div class="modal-body" style="margin-left: 50px;">
-							<g:form controller="Aluno" action="salvar"
-								class="form-horizontal" style="width: 96%;">
+							<g:form controller="Aluno"  action="salvar" class="form-horizontal" style="width: 96%;" enctype="multipart/form-data">
 								<!-- Steps Progress and Details - START -->
 								<div class="" style="margin-top:; margin-bottom: 0px;">
 									<div class="row">
@@ -378,15 +377,44 @@ function mudarCombo(){
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
 									</div>
-								</div>
-								<div class="form-group" style="margin-top: 3%;">
-									<hr style="border-top: 2px solid #DFDFDF;"/>
+									 
+									    <label>Documentos</label>
+										<script type="text/javascript">  
+										function limparCampoFile1(){
+											document.getElementById("documentos[]").value = "";
+										}
+										
+										 $(document).ready(function(){  
+										 
+										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+										    $("input[name='addFile1']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+						                 }); 
+										 
+										</script>  
+								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+								        
+								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+								         
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset>
+								   </div>
+                                    <div class="form-group" style="margin-top: 3%;">
+											<hr style="border-top: 2px solid #DFDFDF;" />
 									<div class="col-md-1 col-md-offset-11">
-							 <button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
+									<button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
 									</div>
-								</div>
+							  </div>
 							</div>
-							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
+
 										<h3>Endereço</h3>
 										<div class="form-group">
 											<label for="iCep" class="col-sm-2 control-label">CEP</label>

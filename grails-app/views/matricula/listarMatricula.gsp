@@ -13,7 +13,7 @@ function printDiv(id)
   newWin= window.open("");
   newWin.document.write("<style=''>");
   newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
-  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO ALUNO</h4>");
   newWin.document.write("<hr>");
   newWin.document.write("<style type='text/css' >");
   newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
@@ -58,9 +58,11 @@ function printDiv(id)
 	var cod = document.getElementById("tipoRelatorio").value;
 		
 	switch (cod){
+	
 	case '1':
 		printRelatorioDeclaracaoVinculo()
 		break;
+		
 	default:
 		break;
 		
@@ -71,13 +73,10 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-		var endereco = "192.168.1.247";
+		var endereco = "localhost";
         var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
-        
-        
-        
         divToPrint.innerHtml = "";
         
         $.ajax({
@@ -87,7 +86,7 @@ function printDiv(id)
             success: function(result){
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
-			    divToPrint.innerHTML +=  "<style=''>";   
+			    divToPrint.innerHTML  += "<style=''>";   
 		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
@@ -98,7 +97,7 @@ function printDiv(id)
 		        divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
 		        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:30%;line-height:200%;'>";
 		        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
-		        divToPrint.innerHTML  +=  result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
+		        divToPrint.innerHTML  +=   result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
 		        divToPrint.innerHTML  +=" ___________________________ ";
 		        divToPrint.innerHTML  +=" sendo filho de _________________________________________ e de _____________________________________ ";
 		        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";

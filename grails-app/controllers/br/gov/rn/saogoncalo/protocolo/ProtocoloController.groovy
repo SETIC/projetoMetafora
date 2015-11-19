@@ -76,7 +76,7 @@ class ProtocoloController {
 
 				// ------------------
 
-				def setor=  Setor.findAll()
+				def setor = Setor.findAll()
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -106,7 +106,6 @@ class ProtocoloController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm2) {
-
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -143,11 +142,12 @@ class ProtocoloController {
 					observacao.dataObservacao = new Date()
 					observacao.protocolo = protocolo
 
-					if(observacao.save(flush:true)){
+				if(observacao.save(flush:true)){
 
 						println("salvou observacao ")
 						println ("observacao" + observacao)
 						listarMensagem("Protocolo cadastrado com sucesso", "ok")
+					
 					}else{
 
 						def erros

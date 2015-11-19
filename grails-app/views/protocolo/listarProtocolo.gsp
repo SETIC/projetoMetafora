@@ -369,7 +369,6 @@ function deletar(id) {
 								        </fieldset> 
 
 									</fieldset>
-
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
 											<i class="fa fa-save"></i> Cadastrar
