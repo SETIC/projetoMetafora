@@ -14,7 +14,6 @@ class Protocolo {
 			
 	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao]
 	static hasMany = [anexo:Anexo, observacao: Observacao , tramite:Tramite]
-
 	
 	static constraints = {
 		numero blank:false, nullable:false

@@ -22,6 +22,7 @@ function printDiv(id)
   newWin.document.write("</tr>");
   newWin.document.write("</table><br>");
   newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
+
   newWin.document.write(" ");
   newWin.document.write(divToPrint.outerHTML);
   newWin.print();

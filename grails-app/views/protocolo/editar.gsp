@@ -50,7 +50,11 @@
 								do Protocolo </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+<<<<<<< HEAD
 						<g:if test="${tipoEdicao == 'ACEITO'}">
+=======
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+>>>>>>> protocJadson
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
 									required="true" disabled="true"/>
@@ -60,7 +64,10 @@
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
 									required="true"/>
 								</g:else>
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 							</div>
 						</div>
 						<br>
@@ -69,7 +76,10 @@
 								de Emissão </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 								<g:if test="${tipoEdicao == 'ACEITO'}">
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				
@@ -146,7 +156,11 @@
 								</select>
 							</div>
 						</div>
+<<<<<<< HEAD
 
+=======
+						<br>
+>>>>>>> protocJadson
 						<br>
 					
 					</fieldset>

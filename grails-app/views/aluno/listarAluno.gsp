@@ -222,6 +222,7 @@ function mudarCombo(){
 
 												onclick="validaDados()"> <!-- javascript: resetActive(div2, event, 35, 'step-2'); -->
 
+
 												<div class="row">
 													<span class="fa fa-home"></span>
 													<p>Endereço</p>
@@ -383,6 +384,7 @@ function mudarCombo(){
 													required="true" />
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
 												Civil *</label>
@@ -397,7 +399,6 @@ function mudarCombo(){
 												</select>
 											</div>
 										</div>
-										
 										
 									    <label>Documentos</label>
 										<script type="text/javascript">  

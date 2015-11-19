@@ -205,11 +205,6 @@
 				</div>
 			</g:if>
 
-
-
-
-
-
 				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
 				<div class="form-heading">
 				<label style="margin-left:15px;">Escola</label>

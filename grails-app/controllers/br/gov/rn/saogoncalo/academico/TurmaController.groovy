@@ -298,7 +298,6 @@ class TurmaController {
 							turmaDisciplina.turma = turma
 
 
-
 							def dp =  DisciplinaLecionadaPorProfessor.get(idDisc)
 
 
@@ -310,6 +309,7 @@ class TurmaController {
 
 							turmaDisciplina.save(flush:true)
 						}
+
 
 					}
 				}else{

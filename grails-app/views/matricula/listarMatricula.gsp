@@ -89,6 +89,7 @@ function printDiv(id)
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
         divToPrint.innerHtml = "";
@@ -360,6 +361,7 @@ function printDiv(id)
 
 				  //var endereco = "192.168.1.247";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -387,6 +389,7 @@ function printDiv(id)
 				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma1");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
 
 			        var idEscola = document.getElementById("comboEscola1").value;
 					var idSerie = document.getElementById("comboSerie1").value;
@@ -674,6 +677,7 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
+
 	<div id="reportPrint" style="visibility: hidden;"></div>
 	<script>
 		function matriculaENomeDoAluno(matricula, nome){
@@ -684,6 +688,7 @@ function printDiv(id)
 			inputHiddenMatriculaAluno[0].value = matricula;
 		}
 	</script>
+
 </body>
-	
+
 </html>

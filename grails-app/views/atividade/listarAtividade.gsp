@@ -63,6 +63,7 @@ function printDiv(id)
 			</g:if>
 			
 
+
 			<%--
 			
 											<div class="form-heading">
@@ -73,6 +74,7 @@ function printDiv(id)
 						<select id="esc" name="escolas"
 							class="form-control selectpicker" data-live-search="true">
 							<g:each in='${escola}'>
+
 
 								<option value="${it.id}">
 									${it.pessoaJuridica.pessoa.nome}
@@ -85,6 +87,7 @@ function printDiv(id)
 				<div class="form-heading">
 					<label>Professor</label>
 					<div class="controls">
+
 
 						<select id="prof" name="professores"
 							class="form-control selectpicker" data-live-search="true">
@@ -101,11 +104,13 @@ function printDiv(id)
 			--%>
 			
 
+				
+
+
 					</div>
 				</div>
 				<br>
 				
-
 			<div class="box box-white" >
 			<div id="print">
 				<table id="" class="table table-striped table-hover example">

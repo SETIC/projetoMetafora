@@ -523,7 +523,6 @@
 													<option value="SP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if> >São Paulo</option> 
 													<option value="TO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if> >Tocantins</option> 
 												</select>
-										
 
 								</div>
 							</div>
