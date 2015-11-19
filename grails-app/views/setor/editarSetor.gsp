@@ -32,50 +32,50 @@
 			</g:if>
 			<g:each in='${setor?}'>
 			</g:each>
-			<div style="margin-left: 120px">
+			<div class="row">
+			<div class="col-md-10 col-md-offset-1">
 				<g:form controller="Setor" action="atualizar" class="form-horizontal">
 				
 				
 				
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
-						<div class="form-group">
-							<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
-							<div class="col-sm-10">
-								<input class="form-control" required name="nome" type="text"
-									style="width: 300px" value="${it.nome}">
+						<div>
+							<label for="inputNome3">Nome</label>
+							<div >
+								<input class="form-control" required name="nome" type="text" value="${it.nome}">
 							</div>
 						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputnumeroDeInscricao3"
-								class="col-sm-2 control-label">Sigla</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" name="sigla"
-									style="width: 300px" value="${it.sigla}" />
+						<br />
+						<div>
+							<label for="inputnumeroDeInscricao3">Sigla</label>
+							<div>
+								<g:textField class="form-control" name="sigla" value="${it.sigla}" />
 							</div>
 						</div>
-						<br>
-						
-						
+						<br />
 						<input type="hidden" name="funcionariosNaoResponsaveisHidden" id="funcionariosNaoResponsaveisHiddenId">
 						<input type="hidden" name="funcionariosResponsaveisHidden" id="funcionariosResponsaveisHiddenId">
 						<div class="form-heading">
-											<label>Funcionários</label>
-											<div class="controls">
+							<label>Funcionários</label>
+							<div>
 
-												<g:select class="form-control selectpicker"
-													data-live-search="true" name="funcionarios"
-													multiple="multiple"
-													from="${funcionarios?.cidadao?.pessoaFisica?.pessoa}" value="${funcionariosSetor?.funcionario.id}"
-													optionKey="id" optionValue="nome" onchange="addSelectOptions()" />
-											</div>
-										</div>
+								<g:select class="form-control selectpicker"
+									data-live-search="true" name="funcionarios"
+									multiple="multiple"
+									from="${funcionarios?.cidadao?.pessoaFisica?.pessoa}" value="${funcionariosSetor?.funcionario.id}"
+									optionKey="id" optionValue="nome" onchange="addSelectOptions()" />
+							</div>
+						</div>
+						<br>
+						
+						
+						
 										<br/>
 									
 										<div class="form-heading">
 											<div class="row">
-												<div class="col-md-5">
+												<div class="col-md-6">
 												<label> Funcionários </label>
 													<select multiple id="select1" name="funcionariosSelecionados" class="form-control">
 								 						<g:each in="${funcionariosSetorNaoResponsaveis?}">
@@ -85,11 +85,8 @@
 							 						
 							 													 						
 												</div>
-												<div class="col-md-2" style="margin-top: 4.2rem;">
-													<a class="btn btn-primary btn-flat btn-sm" href="#" role="button" id="add"><i class="fa fa-plus"></i></a>
-													<a class="btn btn-danger btn-flat btn-sm" href="#" role="button" id="remove"><i class="fa fa-minus"></i></a>
-												</div>
-												<div class="col-md-5">
+												<div class="col-md-2"></div>
+												<div class="col-md-6">
 												<label> Responsáveis </label>
 													<select multiple id="select2" name="funcionariosResponsaveis" class="form-control" required="true">
 													
@@ -99,20 +96,32 @@
 													
 													</select>
 												</div>
+												<div>
+													<div class="col-md-6" style="margin-top: 1rem;">
+														<a class="btn btn-primary btn-flat btn-sm" style="width: 100%;" href="#" role="button" id="add"><i class="fa fa-plus"></i></a>
+													</div>
+													<div class="col-md-2"></div>
+													<div class="col-md-6" style="margin-top: 1rem;">
+														<a class="btn btn-danger btn-flat btn-sm" style="width: 100%;" href="#" role="button" id="remove"><i class="fa fa-minus"></i></a>
+													</div>
+												</div>
 											</div>
 										</div>
+										<br/>
+										<br/>
 										<br/>
 									</fieldset>
 																	
 					
-					<div style="margin: 0 15% auto">
+					<div>
 						<button type="submit" class="btn btn-primary btn-flat" onclick="getResponsaveis()"><i
 									class="fa fa-refresh"></i> Atualizar</button>				
 						<ul style="display: inline-block; margin-left: -30px">
-							<li class="btn btn-default btn-flat"><a href="/projetoMetafora/setor/listar/">Cancelar</a></li>
+							<li class="btn btn-default btn-flat"><a href="/projetoMetafora/setor/listarSetor/">Cancelar</a></li>
 						</ul>
 					</div>
 				</g:form>
+			</div>
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function() {

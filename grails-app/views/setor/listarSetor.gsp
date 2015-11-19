@@ -6,18 +6,23 @@
 </head>
 <body>
 	<script>
-function printDiv(id)
-{
-  var divToPrint=document.getElementById(id);
-  newWin= window.open("");
-  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
-  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
-  newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
-  newWin.print();
-  newWin.close();
-}
-</script>
+		function printDiv(id)
+		{
+		  var divToPrint=document.getElementById(id);
+		  newWin= window.open("");
+		  newWin.document.write("<div style=\"display: table;\">");
+		  newWin.document.write("<img style=\"float: left;\" src=\"https://static.pciconcursos.com.br/i/cf1e331da4b5e93b2f266b3ece7e4dca.jpg\">");
+		  newWin.document.write("<div style=\"float: left; margin-left: 20px;\">");
+		  newWin.document.write("<br><br> PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
+		  newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
+		  newWin.document.write("</div>");
+		  newWin.document.write("</div>");
+		  newWin.document.write(" ");
+		  newWin.document.write(divToPrint.outerHTML);
+		  newWin.print();
+		  newWin.close();
+		}
+	</script>
 	<script>
        function deletar(id) {
         var resposta = confirm("Deseja exluir este Setor?");
@@ -26,7 +31,7 @@ function printDiv(id)
         location.href="/projetoMetafora/setor/deletar/"+id }
 
        }
- </script>
+ 	</script>
 	<section class="content-header">
 		<h1>
 			Setores <small>Visualização e Gerenciamento</small>
@@ -176,18 +181,24 @@ function printDiv(id)
 										
 										<div class="form-heading">
 											<div class="row">
-												<div class="col-md-5">
+												<div class="col-md-6">
 												<label> Funcionarios </label>
 													<select multiple id="select1" name="funcionariosSelecionados" class="form-control"></select>
 							 
 												</div>
-												<div class="col-md-2" style="margin-top: 4.2rem;">
-													<a class="btn btn-primary btn-flat btn-sm" href="#" role="button" id="add"><i class="fa fa-plus"></i></a>
-													<a class="btn btn-danger btn-flat btn-sm" href="#" role="button" id="remove"><i class="fa fa-minus"></i></a>
-												</div>
-												<div class="col-md-5">
+												<div class="col-md-2"></div>
+												<div class="col-md-6">
 												<label> Responsáveis </label>
 													<select multiple id="select2" name="funcionariosResponsaveis" class="form-control"></select>
+												</div>
+												<div>
+													<div class="col-md-6" style="margin-top: 1rem;">
+														<a class="btn btn-primary btn-flat btn-sm" style="width: 100%;" href="#" role="button" id="add"><i class="fa fa-plus"></i></a>
+													</div>
+													<div class="col-md-2"></div>
+													<div class="col-md-6" style="margin-top: 1rem;">
+														<a class="btn btn-danger btn-flat btn-sm" style="width: 100%;" href="#" role="button" id="remove"><i class="fa fa-minus"></i></a>
+													</div>
 												</div>
 											</div>
 										</div>

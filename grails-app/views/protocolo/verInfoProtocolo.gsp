@@ -71,163 +71,167 @@ function printDiv(id)
 				</div>
 			</g:if>
 
-			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="verInfoProtocolo"
-					class="form-horizontal">
-					<g:hiddenField type="number" name="id" value="${protocolos.id}" />
-					<fieldset id="print">
-						<div class="form-group">
-							<label for="inputNumero" class="col-sm-2 control-label">Numero</label>
-							<div class="col-sm-10">
-								${protocolos?.numero}
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<g:form controller="Protocolo" action="verInfoProtocolo"
+						class="form-horizontal">
+						<g:hiddenField type="number" name="id" value="${protocolos.id}" />
+						<fieldset id="print">
+							<div class="row">
+							<div class="form-group">
+								<label for="inputNumero" class="col-sm-2">Numero</label>
+								<div class="col-sm-10">
+									${protocolos?.numero}
+								</div>
 							</div>
-						</div>
-						<br>
-
-						<div class="form-group">
-							<label for="iProtocolo" class="col-sm-2 control-label">Data
-								do Protocolo </label>
-							<div class="col-sm-14">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataProtocolo" name="dataProtocolo"
-									required="true" />
+							<br>
+	
+							<div class="form-group">
+								<label for="iProtocolo" class="col-sm-2">Data
+									do Protocolo </label>
+								<div class="col-sm-14">
+									<g:formatDate format="yyyy-MM-dd" date="${date}" />
+									<g:datePicker noSelection="['':'']" precision="day"
+										class="form-control" id="iDataProtocolo" name="dataProtocolo"
+										required="true" />
+								</div>
 							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="iDataEmissao" class="col-sm-2 control-label">Data
-								de Emissão </label>
-							<div class="col-sm-14">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataEmissao" name="dataEmissao"
-									required="true" />
+							<br>
+							<div class="form-group">
+								<label for="iDataEmissao" class="col-sm-2">Data
+									de Emissão </label>
+								<div class="col-sm-14">
+									<g:formatDate format="yyyy-MM-dd" date="${date}" />
+									<g:datePicker noSelection="['':'']" precision="day"
+										class="form-control" id="iDataEmissao" name="dataEmissao"
+										required="true" />
+								</div>
 							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputNumeroDocumento" class="col-sm-2 control-label">Numero
-								do Documento</label>
-							<div class="col-sm-10">
-								${protocolos.numeroDocumento}
+							<br>
+							<div class="form-group">
+								<label for="inputNumeroDocumento" class="col-sm-2">Numero
+									do Documento</label>
+								<div class="col-sm-10">
+									${protocolos.numeroDocumento}
+								</div>
 							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputAssunto" class="col-sm-2 control-label">Assunto</label>
-							<div class="col-sm-10">
-								${protocolos.assunto}
+							<br>
+							<div class="form-group">
+								<label for="inputAssunto" class="col-sm-2">Assunto</label>
+								<div class="col-sm-10">
+									${protocolos.assunto}
+								</div>
 							</div>
-						</div>
-						<br>
-
-						<div class="form-group">
-							<label for="inputSituacao" class="col-sm-2 control-label">Situação</label>
-							<div class="col-sm-10">
-								${protocolos.situacao.nome}
+							<br>
+	
+							<div class="form-group">
+								<label for="inputSituacao" class="col-sm-2">Situação</label>
+								<div class="col-sm-10">
+									${protocolos.situacao.nome}
+								</div>
 							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
-								de Documento</label>
-							<div class="col-sm-10">
-								${protocolos.tipoDocumento.nome}
+	
+							<div class="form-group">
+								<label for="inputTipoDocumento" class="col-sm-2">Tipo
+									de Documento</label>
+								<div class="col-sm-10">
+									${protocolos.tipoDocumento.nome}
+								</div>
 							</div>
-						</div>
-						<br>
-
-						<div class="form-group">
-							<div class="box box-white">
-								<table id="listarTramites" class="table table-bordered ">
-									<legend class="scheduler-border">Tramitação</legend>
-									<thead>
-										<tr>
-											<th>Data de Disponibilização</th>
-											<th>Data de Recebimento</th>
-											<th>Funcionário Setor Origem</th>
-											<th>Funcionário Setor Destino</th>
-										</tr>
-										<g:each in='${tramites?}'>
-											<tr class="info">
-
-												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-														date="${it.dataDisponibilizacao}" /></td>
-
-												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-														date="${it.dataRecebimento}" /></td>
-
-												<td>
-													${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													-${ it.funcionarioSetorOrigem.setor.nome}
-												</td>
-												<td>
-													${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													-${ it.funcionarioSetorOrigem.setor.nome}
-												</td>
+							</div>
+							<br>
+	
+							<div class="form-group">
+								<div class="box box-white">
+									<table id="listarTramites" class="table table-bordered ">
+										<legend class="scheduler-border">Tramitação</legend>
+										<thead>
+											<tr>
+												<th>Data de Disponibilização</th>
+												<th>Data de Recebimento</th>
+												<th>Funcionário Setor Origem</th>
+												<th>Funcionário Setor Destino</th>
 											</tr>
-										</g:each>
-									</thead>
-								</table>
-								</br> </br>
-
-								<table id="listarObservacoes" class="table table-bordered">
-									<legend class="scheduler-border">Observações</legend>
-									<thead>
-										<tr>
-											<th>Observação</th>
-											<th>Data</th>
-										</tr>
-										<g:each in='${observacoes?}'>
-											<tr class="info">
-												<td>
-													${it.texto}
-												</td>
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-														date="${it.dataObservacao}" /></td>
+											<g:each in='${tramites?}'>
+												<tr class="info">
+	
+													<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+															date="${it.dataDisponibilizacao}" /></td>
+	
+													<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+															date="${it.dataRecebimento}" /></td>
+	
+													<td>
+														${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
+														-${ it.funcionarioSetorOrigem.setor.nome}
+													</td>
+													<td>
+														${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
+														-${ it.funcionarioSetorOrigem.setor.nome}
+													</td>
+												</tr>
+											</g:each>
+										</thead>
+									</table>
+									</br> </br>
+	
+									<table id="listarObservacoes" class="table table-bordered">
+										<legend class="scheduler-border">Observações</legend>
+										<thead>
+											<tr>
+												<th class="col-md-8">Observação</th>
+												<th class="col-md-4">Data</th>
 											</tr>
-										</g:each>
-									</thead>
-								</table>
-
-								<table id="listarAnexos" class="table table-bordered">
-									<legend class="scheduler-border">Anexos</legend>
-									<thead>
-										<tr>
-											<th>Nome do Arquivo</th>
-											<th style="width:838px">Data</th>
-											<th> </th>
-										</tr>
-										<g:each in="${anexos}">
-											<tr class="info">
-												<td>
-													${it.arquivo}
-												</td>
-
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
-														date="${it.dataAnexo}" /></td>
-												<td>
-													<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
-												</td>
+											<g:each in='${observacoes?}'>
+												<tr class="info">
+													<td>
+														${it.texto}
+													</td>
+													<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+															date="${it.dataObservacao}" /></td>
+												</tr>
+											</g:each>
+										</thead>
+									</table>
+	
+									<table id="listarAnexos" class="table table-bordered">
+										<legend class="scheduler-border">Anexos</legend>
+										<thead>
+											<tr>
+												<th class="col-md-8">Nome do Arquivo</th>
+												<th class="col-md-4">Data</th>
+												<th> </th>
 											</tr>
-										</g:each>
-									</thead>
-								</table>
-					</fieldset>
-					<div style="margin: 0 -1% auto">
-						<button class="btn btn-danger btn-flat"
-							onClick="printDiv('print')">
-							<i class="glyphicon glyphicon-print"></i> Imprimir
-						</button>
-						<ul style="display: inline-block; margin-left: -30px">
-							<li class="btn btn-info btn-flat"><a
-								href="/projetoMetafora/funcionario/listar/">Voltar</a></li>
-						</ul>
-						</button>
-					</div>
+											<g:each in="${anexos}">
+												<tr class="info">
+													<td>
+														${it.arquivo}
+													</td>
+	
+													<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
+															date="${it.dataAnexo}" /></td>
+													<td>
+														<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
+													</td>
+												</tr>
+											</g:each>
+										</thead>
+									</table>
+						</fieldset>
+						<div style="margin: 0 -1% auto">
+							<button class="btn btn-danger btn-flat"
+								onClick="printDiv('print')">
+								<i class="glyphicon glyphicon-print"></i> Imprimir
+							</button>
+							<ul style="display: inline-block; margin-left: -30px;">
+								<li class="btn btn-primary btn-flat"><a
+									href="/projetoMetafora/Protocolo/listarProtocolo" style="color: #fff;">Voltar</a></li>
+							</ul>
+							</button>
+						</div>
+				</div>
+				</g:form>
 			</div>
-			</g:form>
 		</div>
 		<script type="text/javascript">
 				$(document).ready(function() {
