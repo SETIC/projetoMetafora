@@ -76,14 +76,13 @@ function printDiv(id)
 								<td>
 									<div style="margin-left: -35px" class="opcoes">
 										<ul style="display: inline">
-	
 											<g:if test="${perm2}">
-												<li title="Editar situacao"
+												<li title="Editar situação"
 												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/situacao/editarSituacao/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li title="Excluir situacao"
+												<li title="Excluir situação"
 												    onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
@@ -100,9 +99,7 @@ function printDiv(id)
 						      <g:if test="${ it.tipo == 'I'}">
 									Inicio
 									 </g:if>
-						      <g:if test="${ it.tipo == 'N'}">
-									 Nenhum
-									 </g:if>
+						     
 						      <g:if test="${ it.tipo == 'F'}">
 									Fim
 									 </g:if> 
@@ -154,7 +151,7 @@ function printDiv(id)
 											<select class="form-control" name="tipo">
 												<option value='I'>Inicio</option>
 												<option value='N'>Fim</option>
-												<option value='F' selected>Nenhum</option>
+												
 											</select>
 										</div>
 									<br>

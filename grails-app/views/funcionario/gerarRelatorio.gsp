@@ -208,11 +208,13 @@
 
 
 
-			<g:form controller="Funcionario"
-				action="pesquisarFuncionariosByEscola" class="form">
+
+
+				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
 				<div class="form-heading">
-					<label style="margin-left: 15px;">Escola</label> <select
-						class="col-sm-6 selectpicker" data-live-search="true"
+				<label style="margin-left:15px;">Escola</label>
+					<select class="col-sm-6 selectpicker" data-live-search="true"
+
 						name="escola" id="comboEscola">
 						<option value="0" disabled="disabled" selected="selected">
 							Selecione uma escola</option>

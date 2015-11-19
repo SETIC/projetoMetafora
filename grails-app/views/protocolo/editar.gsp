@@ -38,7 +38,7 @@
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
 						<div class="form-group">
-							<label for="inputNome3" class="col-sm-2 control-label">Numero</label>
+							<label for="inputNome3" class="col-sm-2 control-label">Número</label>
 							<div class="col-sm-10">
 								<input class="form-control" required name="numero" type="text"
 									style="width: 300px" value="${it.numero}" />
@@ -50,9 +50,17 @@
 								do Protocolo </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataProtocolo" name="dataProtocolo"
-									required="true" />
+						<g:if test="${tipoEdicao == 'ACEITO'}">
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true" disabled="true"/>
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true"/>
+								</g:else>
+
 							</div>
 						</div>
 						<br>
@@ -61,9 +69,17 @@
 								de Emissão </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataEmissao" name="dataEmissao"
+
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
+									required="true" disabled="true" />
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
 									required="true" />
+								</g:else>
 							</div>
 						</div>
 						<br>
@@ -130,9 +146,34 @@
 								</select>
 							</div>
 						</div>
-						</select> 
+
 						<br>
+					
 					</fieldset>
+					
+					<table id="listarAnexos" class="table table-bordered">
+									<legend class="scheduler-border">Anexos</legend>
+									<thead>
+										<tr>
+											<th>Nome do Arquivo</th>
+											<th style="width:395px">Data</th>
+											<th> </th>
+										</tr>
+										<g:each in="${anexos}">
+											<tr class="info">
+												<td>
+													${it.arquivo}
+												</td>
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+														date="${it.dataAnexo}" /></td>
+												<td>
+													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+
+												</td>
+											</tr>
+										</g:each>
+									</thead>
+								</table>
 					<div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar

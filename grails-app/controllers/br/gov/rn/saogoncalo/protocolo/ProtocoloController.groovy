@@ -14,7 +14,6 @@ class ProtocoloController {
 
 	def index() { }
 
-
 	def pesquisarProtocolos(){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
@@ -29,8 +28,6 @@ class ProtocoloController {
 
 			if (perm1 || perm2){
 
-
-
 				// ----- consulta ---
 
 				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
@@ -43,6 +40,7 @@ class ProtocoloController {
 				def sql = new Sql(conn)
 
 				def protocolos
+
 
 				def sqlString = " select * from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
 						"                 from cadastro_unico_protocolo.tramite t " +
@@ -59,6 +57,7 @@ class ProtocoloController {
 
 				if(params.tipoBusca == "numero"){
 
+
 					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
 					protocolos = sql.rows(sqlString)
 				}
@@ -74,9 +73,10 @@ class ProtocoloController {
 				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
 
 
+
 				// ------------------
 
-				def setor=  Setor.findAll()
+				def setor = Setor.findAll()
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -106,7 +106,6 @@ class ProtocoloController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm2) {
-
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -143,11 +142,12 @@ class ProtocoloController {
 					observacao.dataObservacao = new Date()
 					observacao.protocolo = protocolo
 
-					if(observacao.save(flush:true)){
+				if(observacao.save(flush:true)){
 
 						println("salvou observacao ")
 						println ("observacao" + observacao)
 						listarMensagem("Protocolo cadastrado com sucesso", "ok")
+					
 					}else{
 
 						def erros
@@ -186,22 +186,24 @@ class ProtocoloController {
 						println("Dado -- " + tramite.dataDisponibilizacao)
 						println("tramite salvo" + tramite)
 						println("parametros do tramite" +protocolo)
+					
 					}else{
+					
 						def erros
 						tramite.errors.each { erros = it }
 						print("erros: "+erros)
 					}
 
 
-					redirect(controller:"Protocolo", action: "listarProtocolo", params: [msg: "Protocolo cadastrado com sucesso.", tipo:"ok"])
-				}else{
+					    redirect(controller:"Protocolo", action: "listarProtocolo", params: [msg: "Protocolo cadastrado com sucesso.", tipo:"ok"])
+				    }else{
 
 					def erros
 					protocolo.errors.each { erros = it }
 					print("erros: "+erros)
 					listarMensagem("Erro ao salvar", "erro")
-				}
-			}else{
+				    }
+			     }else{
 				render(view:"/error403.gsp")
 			}
 		}
@@ -397,7 +399,6 @@ class ProtocoloController {
 			if (perm2) {
 
 				Protocolo.deleteAll(Protocolo.get(id))
-
 
 				redirect(action:"listarProtocolo", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
@@ -690,7 +691,6 @@ class ProtocoloController {
 					println("Tramite novo salvo  ----- ")
 				}
 
-
 				redirect(action: "listarProtocolo")
 
 				//render(view:"/protocolo/listar.gsp", model:[perm2:perm2, tramite:tramite])
@@ -698,11 +698,7 @@ class ProtocoloController {
 				render(view:"/error403.gsp")
 			}
 		}
-
-
-
 	}
-
 
 	def downloadFile(long id) {
 
@@ -720,6 +716,7 @@ class ProtocoloController {
 						"DOWNLOAD", "Anexo", date)*/
 		
 		if (file.exists())
+
 		{
 
 			response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
@@ -739,8 +736,6 @@ class ProtocoloController {
 			listarMensagem("Erro ao baixar o arquivo", "erro")
 		}
 	}
-
-
 
 	def downloadSampleZip() {
 		response.setContentType('APPLICATION/OCTET-STREAM')

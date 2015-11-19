@@ -24,7 +24,7 @@ function printDiv(id)
   newWin.document.write("</table>");	
   
   newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
-  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO ALUNO</h4>");
   newWin.document.write("<hr>");
   newWin.document.write("<style type='text/css' >");
   newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
@@ -69,9 +69,11 @@ function printDiv(id)
 	var cod = document.getElementById("tipoRelatorio").value;
 		
 	switch (cod){
+	
 	case '1':
 		printRelatorioDeclaracaoVinculo()
 		break;
+		
 	default:
 		break;
 		
@@ -84,15 +86,11 @@ function printDiv(id)
 
 	
 		//var endereco = "192.168.1.247";
-		
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
-        var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
-        
-        
-        
         divToPrint.innerHtml = "";
         
         $.ajax({
@@ -102,16 +100,14 @@ function printDiv(id)
             success: function(result){
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
-			    divToPrint.innerHTML +=  "<style=''>";   
-<<<<<<< HEAD
-		        divToPrint.innerHTML  += "<img src='../images/brasao.jpg' style='float:left;width: 180;'>";
+
+			    divToPrint.innerHTML  += "<style=''>";   
+		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
 		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
 		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
 		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
-=======
-
 			    divToPrint.innerHTML  += "<table border='0'>";
 			    divToPrint.innerHTML  += "<tr>";
         		divToPrint.innerHTML  += " <td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>";
@@ -121,15 +117,12 @@ function printDiv(id)
         		divToPrint.innerHTML  += "</td>";
         		divToPrint.innerHTML  += "</tr>";
         		divToPrint.innerHTML  += "</table>";
-
 				divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
-
->>>>>>> protocIeber
 		        divToPrint.innerHTML  += "<hr>";
 		        divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
 		        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:30%;line-height:200%;'>";
 		        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
-		        divToPrint.innerHTML  +=  result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
+		        divToPrint.innerHTML  +=   result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
 		        divToPrint.innerHTML  +=" ___________________________ ";
 		        divToPrint.innerHTML  +=" sendo filho de _________________________________________ e de _____________________________________ ";
 		        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
@@ -345,7 +338,6 @@ function printDiv(id)
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
 			        
-			        
 			        $.ajax({
 			            type: "GET",
 			            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
@@ -358,45 +350,16 @@ function printDiv(id)
 							for (i=0;i<result.id.length;i++){
 								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 			           		}
-				        }
+				          }
 			            }
 			        });
-					
-			   }
-				function mudarEscola1(){
-			    	  
-					var endereco = "localhost";
-			        var comboTurma = document.getElementById("comboTurma1");
-			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
-			        var idEscola = document.getElementById("comboEscola1").value;
-					var idSerie = document.getElementById("comboSerie1").value;
-			        
-			        
-			        $.ajax({
-			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
-			            dataType: "json",
-			            success: function(result){
-			            	comboTurma.options.length = 0;
-				        if (result.id.length == 0){
-				        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
-				        }else{
-							for (i=0;i<result.id.length;i++){
-								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
-			           		}
-				        }
-			            }
-			        });
-					
-			   }
 				   
 
 			  function mudarSerie(){
 
 				  //var endereco = "192.168.1.247";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -419,8 +382,6 @@ function printDiv(id)
 				        }
 			            }
 			        });
-
-			    
 			       }
 			  function mudarSerie1(){
 				  var endereco = "localhost";
@@ -451,10 +412,7 @@ function printDiv(id)
 			       }
 		       
 
-
 		</script>
-
-
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 				<button class="btn btn-primary btn-flat" data-toggle="modal"
@@ -466,6 +424,7 @@ function printDiv(id)
 					onClick="printDiv('listarMatricula')">
 					<i class="glyphicon glyphicon-print"></i> Imprimir
 				</button>
+
 			</g:if>
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"
@@ -480,8 +439,6 @@ function printDiv(id)
 						</div>
 						<div class="modal-body">
 							<form action="" method="POST">
-
-
 								<div class="form-heading">
 									<input type="hidden" id="idMatriculaParaRelatorio" /> <label>Tipo
 										de Relatório</label>
@@ -657,7 +614,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -673,7 +629,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -681,7 +636,6 @@ function printDiv(id)
 											<label>Turma</label>
 											<div class="controls">
 												<div id="teste"></div>
-
 												<select class="form-control" name="turma" id="comboTurma">
 												</select>
 											</div>
@@ -720,7 +674,6 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
-
 	<div id="reportPrint" style="visibility: hidden;"></div>
 	<script>
 		function matriculaENomeDoAluno(matricula, nome){
@@ -732,4 +685,5 @@ function printDiv(id)
 		}
 	</script>
 </body>
+	
 </html>

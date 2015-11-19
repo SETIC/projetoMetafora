@@ -58,7 +58,6 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -72,7 +71,7 @@ function mudarCombo(){
 			</g:if>
 			<div class="box box-white">
 
-				<g:form controller="Aluno" action="pesquisarAlunos" class="form">
+				<g:form controller="Aluno" action="pesquisarAlunos" class="form" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
@@ -80,7 +79,7 @@ function mudarCombo(){
 								style="width: 300px" value="" />
 							<button style="margin-left: 310px; margin-top: -56px;"
 								type="submit" class="btn btn-primary btn-flat">
-								<i class="glyphicon glyphicon-search"></i> Buscar
+								<i class="glyphicon glyphicon-search"></i>Buscar
 
 							</button>
 
@@ -114,7 +113,6 @@ function mudarCombo(){
 									<td>
 										<div style="margin-left: -35px" class="opcoes">
 
-
 											<ul style="display: inline">
 
 												<g:if test="${perm2}">
@@ -125,13 +123,9 @@ function mudarCombo(){
 														href="/projetoMetafora/aluno/editarAluno/${pessoa.id}"><span
 															class="glyphicon glyphicon-pencil"></span></a></li>
 
-
-
 													<li title="Remover Aluno" onclick="deletar(${pessoa.id})"
 														class="btn btn-danger btn-xs btn-flat"><span
 														class="glyphicon glyphicon-remove"></span></li>
-
-
 
 													<li title="Transferir Aluno" data-toggle="tooltip"
 														data-placement="top"
@@ -141,14 +135,11 @@ function mudarCombo(){
 															class="glyphicon glyphicon-arrow-right"></span></a></li>
 
 												</g:if>
-
-
-												<li title="Ver detalhes de Aluno"
+  											<li title="Ver detalhes de Aluno"
 													class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/aluno/verInfoAluno/${pessoa.id}"><span
 														class="glyphicon glyphicon-eye-open"></span></a></li>
-
 											</ul>
 										</div>
 									</td>
@@ -203,8 +194,7 @@ function mudarCombo(){
 							<h4 class="modal-title" id="myModalLabel">Cadastro de Aluno</h4>
 						</div>
 						<div class="modal-body" style="margin-left: 50px;">
-							<g:form controller="Aluno" action="salvar"
-								class="form-horizontal" style="width: 96%;">
+							<g:form controller="Aluno"  action="salvar" class="form-horizontal" style="width: 96%;" enctype="multipart/form-data">
 								<!-- Steps Progress and Details - START -->
 								<div class="" style="margin-top:; margin-bottom: 0px;">
 									<div class="row">
@@ -227,8 +217,9 @@ function mudarCombo(){
 												</div>
 											</div>
 											<div id="div2" class="col-md-4 mouse-point"
-												onclick="validaDados()">
-												<!-- javascript: resetActive(div2, event, 35, 'step-2'); -->
+
+												onclick="validaDados()"> <!-- javascript: resetActive(div2, event, 35, 'step-2'); -->
+
 												<div class="row">
 													<span class="fa fa-home"></span>
 													<p>Endereço</p>
@@ -404,20 +395,45 @@ function mudarCombo(){
 												</select>
 											</div>
 										</div>
-										<div class="form-group" style="margin-top: 3%;">
+										
+										
+									    <label>Documentos</label>
+										<script type="text/javascript">  
+										function limparCampoFile1(){
+											document.getElementById("documentos[]").value = "";
+										}
+										
+										 $(document).ready(function(){  
+										 
+										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+										    $("input[name='addFile1']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+						                 }); 
+										 
+										</script>  
+								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+								        
+								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+								         
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset>
+								   </div>
+                                    <div class="form-group" style="margin-top: 3%;">
 											<hr style="border-top: 2px solid #DFDFDF;" />
-											<div class="col-md-1 col-md-offset-11">
-												<button type="button" class="btn btn-primary btn-flat"
-													onclick="validaDados();">
-													Próximo<i class="fa fa-chevron-circle-right"></i>
-												</button>
-											</div>
-										</div>
-										
-										
-										
+									<div class="col-md-1 col-md-offset-11">
+									<button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
 									</div>
-									<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
+							  </div>
+							</div>
+							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
+
 										<h3>Endereço</h3>
 										<div class="form-group">
 											<label for="iCep" class="col-sm-2 control-label">CEP</label>
@@ -462,34 +478,36 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
-												<select name="uf" id="iUf" class="form-control">
-													<option value="AC">Acre</option>
-													<option value="AL">Alagoas</option>
-													<option value="AM">Amazonas</option>
-													<option value="AP">Amapá</option>
-													<option value="BA">Bahia</option>
-													<option value="CE">Ceará</option>
-													<option value="DF">Distrito Federal</option>
-													<option value="ES">Espírito Santo</option>
-													<option value="GO">Goiás</option>
-													<option value="MA">Maranhão</option>
-													<option value="MT">Mato Grosso</option>
-													<option value="MS">Mato Grosso do Sul</option>
-													<option value="MG">Minas Gerais</option>
-													<option value="PA">Pará</option>
-													<option value="PB">Paraíba</option>
-													<option value="PR">Paraná</option>
-													<option value="PE">Pernambuco</option>
-													<option value="PI">Piauí</option>
-													<option value="RJ">Rio de Janeiro</option>
-													<option value="RN" selected>Rio Grande do Norte</option>
-													<option value="RO">Rondônia</option>
-													<option value="RS">Rio Grande do Sul</option>
-													<option value="RR">Roraima</option>
-													<option value="SC">Santa Catarina</option>
-													<option value="SE">Sergipe</option>
-													<option value="SP">São Paulo</option>
-													<option value="TO">Tocantins</option>
+
+												<select  name="uf" id="iUf" class="form-control"> 
+													<option value="AC">Acre</option> 
+													<option value="AL">Alagoas</option> 
+													<option value="AM">Amazonas</option> 
+													<option value="AP">Amapá</option> 
+													<option value="BA">Bahia</option> 
+													<option value="CE">Ceará</option> 
+													<option value="DF">Distrito Federal</option> 
+													<option value="ES">Espírito Santo</option> 
+													<option value="GO">Goiás</option> 
+													<option value="MA">Maranhão</option> 
+													<option value="MT">Mato Grosso</option> 
+													<option value="MS">Mato Grosso do Sul</option> 
+													<option value="MG">Minas Gerais</option> 
+													<option value="PA">Pará</option> 
+													<option value="PB">Paraíba</option> 
+													<option value="PR">Paraná</option> 
+													<option value="PE">Pernambuco</option> 
+													<option value="PI">Piauí</option> 
+													<option value="RJ">Rio de Janeiro</option> 
+													<option value="RN" selected>Rio Grande do Norte</option> 
+													<option value="RO">Rondônia</option> 
+													<option value="RS">Rio Grande do Sul</option> 
+													<option value="RR">Roraima</option> 
+													<option value="SC">Santa Catarina</option> 
+													<option value="SE">Sergipe</option> 
+													<option value="SP">São Paulo</option> 
+													<option value="TO">Tocantins</option> 
+
 												</select>
 											</div>
 										</div>
@@ -517,7 +535,6 @@ function mudarCombo(){
 									</div>
 									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
 										<h3>Matrícula</h3>
-
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Realizar
@@ -706,8 +723,8 @@ function mudarCombo(){
 		     var nacionalidade = iNacionalidade.value;
 		     var estadoCivil = iEstadoCivil.value;
 		     var selecionaEstadoCivil = document.getElementById("iEstadoCivil");  
-		     
-			 if (nome == "" || nome == null){
+		    // var iconHome = div2.value;
+			  if (nome == "" || nome == null){
 			   alert('preencha o campo nome');
 			   document.getElementById("iNome").focus();
 			   return false;
@@ -727,7 +744,6 @@ function mudarCombo(){
 			       return false;
                  				  
 			     } 
-			     
 		
 			else{
 			

@@ -81,20 +81,17 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-
 			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="verInfoProtocolo"
-					class="form-horizontal">
+				<g:form controller="Protocolo" action="verInfoProtocolo" class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${protocolos.id}" />
 					<fieldset id="print">
 						<div class="form-group">
-							<label for="inputNumero" class="col-sm-2 control-label">Numero</label>
+							<label for="inputNumero" class="col-sm-2 control-label">Número</label>
 							<div class="col-sm-10">
 								${protocolos?.numero}
 							</div>
 						</div>
 						<br>
-
 						<div class="form-group">
 							<label for="iProtocolo" class="col-sm-2 control-label">Data
 								do Protocolo </label>
@@ -118,7 +115,7 @@ function printDiv(id)
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputNumeroDocumento" class="col-sm-2 control-label">Numero
+							<label for="inputNumeroDocumento" class="col-sm-2 control-label">Número
 								do Documento</label>
 							<div class="col-sm-10">
 								${protocolos.numeroDocumento}
@@ -162,16 +159,13 @@ function printDiv(id)
 										</tr>
 										<g:each in='${tramites?}'>
 											<tr class="info">
-
-												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataDisponibilizacao}" /></td>
-
-												<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataRecebimento}" /></td>
-
 												<td>
 													${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													-${ it.funcionarioSetorOrigem.setor.nome}
+													-${it.funcionarioSetorOrigem.setor.nome}
 												</td>
 												<td>
 													${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
@@ -188,7 +182,7 @@ function printDiv(id)
 									<thead>
 										<tr>
 											<th>Observação</th>
-											<th>Data</th>
+											<th style="width:570px">Data</th>
 										</tr>
 										<g:each in='${observacoes?}'>
 											<tr class="info">
@@ -207,7 +201,7 @@ function printDiv(id)
 									<thead>
 										<tr>
 											<th>Nome do Arquivo</th>
-											<th style="width:838px">Data</th>
+											<th style="width:395px">Data</th>
 											<th> </th>
 										</tr>
 										<g:each in="${anexos}">
@@ -215,17 +209,17 @@ function printDiv(id)
 												<td>
 													${it.arquivo}
 												</td>
-
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataAnexo}" /></td>
 												<td>
-													<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
+													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+
 												</td>
 											</tr>
 										</g:each>
 									</thead>
 								</table>
-					</fieldset>
+					 </fieldset>
 					<div style="margin: 0 -1% auto">
 						<button class="btn btn-danger btn-flat"
 							onClick="printDiv('print')">
@@ -237,18 +231,10 @@ function printDiv(id)
 						</ul>
 						</button>
 					</div>
-			</div>
+			   </div>
 			</g:form>
-		</div>
-		<script type="text/javascript">
-				$(document).ready(function() {
-					$('#example').DataTable();
-					var tabela = $('#example').dataTable();
-					// Ordena por nome e "desempata" com o id
-					tabela.fnSort([ [ 1, 'asc' ] ]);
-				});
-			</script>
+		  </div>
 		</div>
 	</section>
-</body>
+ </body>
 </html>

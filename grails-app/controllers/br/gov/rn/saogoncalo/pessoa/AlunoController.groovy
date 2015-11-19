@@ -15,6 +15,7 @@ import br.gov.rn.saogoncalo.localizacao.Logradouro
 import br.gov.rn.saogoncalo.localizacao.Municipio
 import br.gov.rn.saogoncalo.localizacao.TipoLogradouro
 import br.gov.rn.saogoncalo.login.UsuarioController
+import br.gov.rn.saogoncalo.protocolo.FileUploadServiceController
 
 class AlunoController {
 
@@ -25,9 +26,9 @@ class AlunoController {
 	}
 
 	def buscarCEP(String cep) {
-		
+
 		println("CEP --- " + cep)
-		
+
 		String urlCompleta
 		String urlBase = "http://cep.correiocontrol.com.br/"
 		//String urlBase = "http://api.postmon.com.br/"
@@ -237,7 +238,7 @@ class AlunoController {
 
 					def tipoLogradouroSimple
 					def logradouroSimple
-					
+
 					if (params.endereco.toString().indexOf(" ") != -1) {
 						tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
 						logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
@@ -276,7 +277,7 @@ class AlunoController {
 					newEstado.estado = params.uf.toString().toUpperCase()
 					newEstado.abreviacao = params.uf.toString().toUpperCase()
 					newEstado.save(flush:true)
-					println("Estado --- " + newEstado.estado)
+					println("UF --- "+newEstado.abreviacao)
 					estado = newEstado
 				}
 
@@ -358,11 +359,11 @@ class AlunoController {
 				//def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 
 				if(aluno.save(flush:true)){
-					
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
-					
+
 					listarMensagem("Aluno atualizado com sucesso", "ok")
 				}else{
 
@@ -485,7 +486,7 @@ class AlunoController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
-			
+
 			def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 					" where p.id not in (select e.id from Escola e) " +
 					" and pf.id = p.id " +
@@ -537,13 +538,13 @@ class AlunoController {
 			if (perm2){
 				Pessoa.deleteAll(Pessoa.get(id))
 				//redirect(action:"listar" )
-				
+
 				//log
 				Aluno aluno  = Aluno.get(id)
 				def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "aluno deletado " + aluno.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Aluno", date)
-				
+
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
@@ -563,8 +564,6 @@ class AlunoController {
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
-
-
 
 
 			if (perm1 || perm2)
@@ -588,6 +587,7 @@ class AlunoController {
 	}
 
 	def salvar(){
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -601,7 +601,6 @@ class AlunoController {
 			if (perm2)
 			{
 
-
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
 				pessoa.nome = params.nome.toString().toUpperCase()
@@ -610,12 +609,9 @@ class AlunoController {
 				def value = reg[0]+1
 				def year = Calendar.getInstance().get(Calendar.YEAR);
 
-
 				if (pessoa.save(flush:true)){
 
 					pessoa.errors.each{println it}
-
-
 
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
@@ -629,7 +625,6 @@ class AlunoController {
 					 status.setRollbackOnly()
 					 }
 					 }*/
-
 
 					pessoaFisica.save(flush:true)
 
@@ -646,11 +641,8 @@ class AlunoController {
 					//aluno.cidadao = cidadao
 
 					aluno.numeroDeInscricao = year+""+value
-                   
-
 					println("Pessoa --- " + params)
 
-                       
 					//parentesco
 					Parentesco parentescoPai = new Parentesco()
 					Parentesco parentescoMae = new Parentesco()
@@ -691,8 +683,8 @@ class AlunoController {
 						parentescoMae.save(flush:true)
 					}
 
-					//endereço
 
+					//endereço
 
 					TipoLogradouro tipoLogradouro = new TipoLogradouro()
 					Logradouro logradouro = new Logradouro()
@@ -703,13 +695,12 @@ class AlunoController {
 					Reside newReside = new Reside()
 					def tipoLogradouroSimple
 					def logradouroSimple
-					
-					
+
 					if(params.endereco != ""){
 						//def tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
 						//def logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
-						
-						
+
+
 						if (params.endereco.toString().indexOf(" ") != -1) {
 							tipoLogradouroSimple = params.endereco.toString().substring(0, params.endereco.toString().indexOf(" "))
 							logradouroSimple = params.endereco.toString().substring((params.endereco.toString().indexOf(" ")+1) , params.endereco.toString().size())
@@ -717,11 +708,9 @@ class AlunoController {
 							tipoLogradouroSimple = "RUA"
 							logradouroSimple = params.endereco
 						}
-						
 
 
 						println("Teste tipo --- " + tipoLogradouroSimple + " Logradouro --- " + logradouroSimple)
-
 
 						tipoLogradouro = TipoLogradouro.findByTipoLogradouro(tipoLogradouroSimple.toUpperCase())
 						if(tipoLogradouro == null){
@@ -839,8 +828,8 @@ class AlunoController {
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
-						
-												
+   
+
 						aluno.errors.each{println it}
 
 						println("params matricula ---- " + params)
@@ -867,10 +856,38 @@ class AlunoController {
 
 						}
 						
+						
+						//documento
+						
+						request.getFiles("documentos[]").each { file ->
+	
+							println("Documentos aqui ---+++ " + file.originalFilename)
+	
+							Documento documento = new Documento()
+							FileUploadServiceController fc = new FileUploadServiceController()
+							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos")
+							documento.dataDocumento = new Date()
+							documento.aluno = aluno
+							
+							if(documento.save(flush:true)){
+								println("documento salvo")
+	
+							}
+	
+							else{
+	
+								def erros
+								documento.errors.each {erros = it}
+								print("erros: "+erros)
+								listarMensagem("Erro ao salvar o documento", "erro")
+							}
+						}
+	
+
 						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "aluno matriculado " + aluno.id.toString(),"cadastrar", "Aluno", date)
-						
+
 
 						/*				def alunos = Aluno.findAll()
 						 render(view:"/aluno/listarAluno.gsp", model:[
@@ -895,18 +912,18 @@ class AlunoController {
 					}
 
 					def alunos = Aluno.findAll()
-					
+
 					def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 							" where p.id not in (select e.id from Escola e) " +
 							" and pf.id = p.id " +
 							" and pf.sexo = 'MASCULINO' ")
-	
-	
+
+
 					def pMulheres = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 							" where p.id not in (select e.id from Escola e) " +
 							" and pf.id = p.id " +
 							" and pf.sexo = 'FEMININO' ")
-					
+
 					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos,	erro : erros, pHomens:pHomens, pMulheres:pMulheres	])
 				}
 			}else{
@@ -924,7 +941,7 @@ class AlunoController {
 		if (params.cpf != "0"){
 			pessoa.cpfCnpj = params.cpf
 		}
-		
+
 		println(" cpf " + params.cpf + " " + params.nome)
 
 		if(pessoa.save(flush:true)){
@@ -935,17 +952,17 @@ class AlunoController {
 
 			if (pf.save(flush:true)){
 
-			//	def vetorPais = []
+				//	def vetorPais = []
 				//vetorPais = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 				//		" where p.id not in (select e.id from Escola e) " +
-			//			" and pf.id = p.id " +
-			//			" and pf.sexo = 'MASCULINO'")
+				//			" and pf.id = p.id " +
+				//			" and pf.sexo = 'MASCULINO'")
 				//render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
 
 				def result = []
-				
+
 				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
-				
+
 				println result
 
 				//for (int i=0; i<vetorPais.size();i++) {
@@ -973,8 +990,8 @@ class AlunoController {
 			pessoa.cpfCnpj = params.cpf
 		}
 
-		
-		
+
+
 		if(pessoa.save(flush:true)){
 
 			PessoaFisica pf = new PessoaFisica()
@@ -983,23 +1000,21 @@ class AlunoController {
 			pf.sexo = "FEMININO"
 
 			if (pf.save(flush:true)){
-			/*	def vertorMae = []
-				vertorMae = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
-						" where p.id not in (select e.id from Escola e) " +
-						" and pf.id = p.id " +
-						" and pf.sexo = 'FEMININO'")
-
-				render(view:"/aluno/listarAluno.gsp", model:[vetorMae:vertorMae])*/
+				/*	def vertorMae = []
+				 vertorMae = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
+				 " where p.id not in (select e.id from Escola e) " +
+				 " and pf.id = p.id " +
+				 " and pf.sexo = 'FEMININO'")
+				 render(view:"/aluno/listarAluno.gsp", model:[vetorMae:vertorMae])*/
 
 				def result = [];
-				
+
 				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
 
 				/*for (int i=0; i<vertorMae.size();i++) {
-					result[i] = ["id":vertorMae[i].id, "nome":vertorMae[i].nome]
-
-				}
-*/
+				 result[i] = ["id":vertorMae[i].id, "nome":vertorMae[i].nome]
+				 }
+				 */
 				render result as JSON
 			}
 
@@ -1095,26 +1110,13 @@ class AlunoController {
 
 
 
-
 			def result = ["id":pais?.id, "pessoa":pais?.pessoa?.nome]
-
-
-
 			println("pais[pais.size]->> "+pais[(pais.size-1)]?.pessoa?.nome)
-
-
-
 			render (result as JSON)
 
 		}
 
 	}
-
-
-
-
-
-
 
 
 }

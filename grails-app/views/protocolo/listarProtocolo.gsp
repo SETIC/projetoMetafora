@@ -7,8 +7,6 @@
 <body>
 	<script>
 
-
-
 function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
@@ -70,13 +68,13 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Destino</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="width: 60px;">Funções</th>
+							<th style="width:20px;padding-left:12px">Número</th>
+							<th style="width: 60px">Data do Protocolo</th>
+							<th style="width: 60px">Data da Emissão</th>
+							<th style="width: 60px">Destino</th>
+							<th style="width: 60px">Assunto</th>
+							<th style="width: 60px">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -109,10 +107,11 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" 
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy" 
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -126,7 +125,6 @@ function deletar(id) {
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
-
 							</tr>
 						</g:each>
 					</tbody>
@@ -135,13 +133,13 @@ function deletar(id) {
 			<br> <br>
 
 
-<script>
-function preencheCampoHidden(id){
-	var campo = document.getElementById("idProtocoloHidden");
-	campo.value = id;
-	
-}
-</script>
+			<script>
+			function preencheCampoHidden(id){
+				var campo = document.getElementById("idProtocoloHidden");
+				campo.value = id;
+				
+			}
+			</script>
 
 			<div class="box box-white">
 				<label>Protocolos Recebidos</label>
@@ -149,13 +147,13 @@ function preencheCampoHidden(id){
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Origem</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="width:60px; padding-left:12px">Funções</th>
+							<th style="width:60px; padding-left:10px">Número</th>
+							<th style="width:60px; padding-left:10px">Data do Protocolo</th>
+							<th style="width:60px; padding-left:10px">Data da Emissão</th>
+							<th style="width:60px; padding-left:10px">Origem</th>
+							<th style="width:60px; padding-left:10px">Assunto</th>
+							<th style="width:60px; padding-left:10px">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -171,7 +169,6 @@ function preencheCampoHidden(id){
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 											</g:if>
-
 											<li title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
 											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
 											<span class="glyphicon glyphicon-eye-open">
@@ -187,20 +184,17 @@ function preencheCampoHidden(id){
 											</li>
 											
 											</ul>
-
-
-
 									</div>
 								</td>
-
 								<td>
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -251,7 +245,7 @@ function preencheCampoHidden(id){
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
-											<label>Numero</label>
+											<label>Número</label>
 											<div class="controls">
 												<g:textField class="form-control" name="numero" value=""
 													required="true" />
@@ -282,7 +276,7 @@ function preencheCampoHidden(id){
 										</div>
 										<br>
 										<div class="form-heading">
-											<label>Numero do Documento</label>
+											<label>Número do Documento</label>
 											<div class="controls">
 												<g:textField class="form-control" name="numeroDocumento"
 													value="" required="true" />
@@ -292,7 +286,7 @@ function preencheCampoHidden(id){
 										<div class="form-heading">
 											<label>Assunto</label>
 											<div class="controls">
-												<g:textField class="form-control" name="assunto" value=""
+												<g:textField class="form-control" name="assunto" value="" 
 													required="true" />
 											</div>
 										</div>
@@ -353,12 +347,11 @@ function preencheCampoHidden(id){
 													placeholder="Insira uma observação relacionada ao protocolo"></textarea>
 											</div>
 										</div>
+
 										<br> 
 										
 									<label>Anexo</label>
-																		
 										<script type="text/javascript">  
-
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
 										}
@@ -375,7 +368,7 @@ function preencheCampoHidden(id){
 										        $(this).parent('label').remove();  
 										    });  
 										 
-										}); 
+						                 }); 
 										 
 										</script>  
 								        <label style="display: block"> <input type="button" name="addFile1" value="Novo Anexo" /></label>
@@ -393,8 +386,7 @@ function preencheCampoHidden(id){
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-			</g:if>
-
+			          </g:if>
 
 			<!-- ModalTramite -->
 			<div class="modal fade" id="myModalTramite" tabindex="-1"
@@ -413,7 +405,6 @@ function preencheCampoHidden(id){
 								class="form" enctype="multipart/form-data">
 								<fieldset>
 									<div class="form-heading">
-										
 										<input type="hidden" name="protocoloHidden" id="idProtocoloHidden"/>
 										<label>Destino</label>
 										<div class="controls ">
@@ -441,9 +432,7 @@ function preencheCampoHidden(id){
 									</div>
 									<br>
 									<div class="form-heading">
-										
 									<label>Anexo</label>
-																		
 										<script type="text/javascript">  
 
 										function limparCampoFile(){

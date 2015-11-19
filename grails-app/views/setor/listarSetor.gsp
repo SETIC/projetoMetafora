@@ -78,7 +78,7 @@ function printDiv(id)
 										<ul style="display: inline">
 
 											<g:if test="${perm2}">
-												<li title ="Editar setor"
+												<li title="Editar setor" 
 												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/setor/editarSetor/${it.id}"><span

@@ -43,13 +43,10 @@ function mudarCombo(){
 }
 
 </script>
-
-
 	<section class="content-header">
 		<h1>
 			Alunos <small>Visualização e Gerenciamento</small>
 		</h1>
-
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
@@ -58,8 +55,6 @@ function mudarCombo(){
 	</section>
 	<!-- CORPO DA PÁGINA -->
 	<section class="content">
-
-
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -72,8 +67,6 @@ function mudarCombo(){
 				</div>
 			</g:if>
 			<div class="box box-white">
-
-
 				<g:form controller ="Aluno" action="pesquisarAlunos" class ="form">
 					<div class = "form-group">
 						<label  for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
@@ -89,7 +82,6 @@ function mudarCombo(){
 						</div>
 					</div>
 				</g:form>
-
 
 				<table id="" class="table table-striped table-hover example">
 

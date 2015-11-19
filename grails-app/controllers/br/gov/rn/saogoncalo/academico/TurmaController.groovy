@@ -261,7 +261,7 @@ class TurmaController {
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
+			
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "TURMA", "2")
 
 			if (perm2)
@@ -284,7 +284,6 @@ class TurmaController {
 				def idDisc
 				turma.save(flush:true)
 
-
 				//inserir
 
 
@@ -299,6 +298,7 @@ class TurmaController {
 							turmaDisciplina.turma = turma
 
 
+
 							def dp =  DisciplinaLecionadaPorProfessor.get(idDisc)
 
 
@@ -310,6 +310,7 @@ class TurmaController {
 
 							turmaDisciplina.save(flush:true)
 						}
+
 					}
 				}else{
 

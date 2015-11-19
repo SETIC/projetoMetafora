@@ -215,7 +215,7 @@ function printDiv(id)
 									</div>
 									<br>
 									<div class="form-heading">
-										<label>Vinculo </label>
+										<label>Vinculo</label>
 										<div class="controls">
 											<select class="form-control" name="vinculo">
 												<option value="EFETIVO">EFETIVO</option>
@@ -276,11 +276,12 @@ function printDiv(id)
 												<div class="controls">
 													<label class="checkbox-inline"> <input
 														type="checkbox" name="opcao1" value="M" checked>Manhã
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao2" value="T">Tarde
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao3" value="N">Noite
 													</label>
+                                                    													
 												</div>
 												</br>
 											</div>
