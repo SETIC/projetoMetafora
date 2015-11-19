@@ -498,7 +498,9 @@ class TurmaController {
 							//
 							//				])
 							//				redirect(action:"listar" )
-													
+							
+							def a = 9/0;
+							
 							def date = new Date()
 							AdministracaoController adm = new AdministracaoController()
 							adm.salvaLog(session["usid"].toString().toInteger(), "Criar Turma: " + turma.id.toString(), "CREATE", "Turma", date)
@@ -524,7 +526,7 @@ class TurmaController {
 					} catch(Exception exp){
 						//salaL.errors.reject( 'Erro em pessoa' )
 						status.setRollbackOnly()
-						listarMensagem("Erro ao salvar", "erro")
+						redirect(controller: "Turma", action: "listarMensagem", params:[msg:"Erro ao criar a Turma", tipo:"erro"])
 					}
 				}
 				
