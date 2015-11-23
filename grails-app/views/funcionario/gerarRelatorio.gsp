@@ -56,19 +56,18 @@
 				        divToPrint.innerHTML  += "<h3>Carga horária semanal a cumprir:</h3>"+result.cargaHoraria+" Horas";
 				        divToPrint.innerHTML  += "<h3>Carga horária mensal a cumprir: </h3>"+result.cargaHoraria*4+" Horas";
 				        divToPrint.innerHTML  +="<br/>";
-				        divToPrint.innerHTML  += result.horario[0].nome;
 				        divToPrint.innerHTML  +="<br/>";
-				        divToPrint.innerHTML  += result.horario[0].horario;
+
 				        var disciplina = null;
 				        var qtd = null;
 				        var horarioL = null;
 				        for (var i = 0; i <result.horario.length; i++) {
-				        disciplina = disciplina+ result.horario[i].disciplina
-				        qtd = qtd+ result.horario[i].qtd
-				        horarioL = horarioL+ result.horario[i].horario
+				       		disciplina = disciplina+ result.horario[i].disciplina
+				        	qtd = qtd+ result.horario[i].qtd
+				        	horarioL = horarioL+ result.horario[i].horario
 				        }
 				      
-				      		divToPrint.innerHTML += disciplina[i]
+				      		//divToPrint.innerHTML += disciplina[i]
 					   
 				        if(result.cargo=="PROFESSOR"){
 					        
@@ -76,13 +75,19 @@
 				        "<thead>"+
 				        "  <tr>"+
 				            "<th style=\"width: 200px;\">Matérias Lecionadas</th>"+
-				            "<th style=\"width: 200px;\">hora exercida</th>"+
-				            "<th style=\"width: 100px;\">Total</th>"+
+				            "<th style=\"width: 200px;\">Carga horária</th>"+
+				            "<th style=\"width: 200px;\">Carga horária exercída</th>"+				            
+				            "<th style=\"width: 100px;\">Diferença</th>"+
 				          "</tr>"+
 				        "</thead>"+
 				        "<tbody>"+
 				          "<tr>"+
-				            "<td>kkkkkkkkk</td>"+
+			            	"<g:each in='${horasDisciplinas}'> " +
+			            		"<td>" +" ${it.disciplina} " + "</td>"+
+			            		"<td>" +" ${it.carga_horaria} " + "</td>"+
+			            		"<td>" + " <g:formatNumber number="${it.soma}"  />" + "</td>"+
+			            		"<td>" +" ${it.carga_horaria.toString().toFloat() - it.soma.toString().toFloat()} " + "</td>"+
+							"</g:each>" +
 				          "</tr>"+
 				        "</tbody>"+
 				      "</table>";
@@ -248,6 +253,7 @@
 
 		</div>
 
+		
 
 
 		<table id="listarFuncionarios"
@@ -264,7 +270,6 @@
 					<th style="width: 20px;">Turno</th>
 					<th style="width: 20px;">Funcão</th>
 					<th style="width: 20px;">Vinculo</th>
-
 				</tr>
 			</thead>
 			<tbody>
@@ -310,8 +315,8 @@
 
 			</tbody>
 		</table>
-
-
+		
+		
 		<button class="btn btn-danger btn-flat"
 			onClick="printDiv('listarFuncionarios')">
 			<i class="glyphicon glyphicon-print"></i> Relatório Geral

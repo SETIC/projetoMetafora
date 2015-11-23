@@ -108,7 +108,7 @@ function printDiv(id)
 
 
 					</div>
-				</div>
+
 				<br>
 				
 			<div class="box box-white" >
