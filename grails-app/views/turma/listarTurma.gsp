@@ -55,39 +55,39 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Escola</th>
-							<th>Série</th>
-							<th>Turma</th>
-							<th>Turno</th>
-							<th>Vagas</th>
+							<th style="text-align: left;">Escola</th>
+							<th style="text-align: left;">Série</th>
+							<th style="text-align: left;">Turma</th>
+							<th style="text-align: left;">Turno</th>
+							<th style="text-align: left;">Vagas</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${turmas?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -45px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 											
 											<g:if test="${perm2}">
 											
-											<li class="btn btn-primary btn-xs btn-flat"><a
+											<div class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/turma/editarTurma/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${it.id})"
+													class="glyphicon glyphicon-pencil"></span></a></div>
+											<div onclick="deletar(${it.id})"
 												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
+												class="glyphicon glyphicon-remove"></span></div>
 											
 											
 											</g:if>
 											
 											
-											<li class="btn btn-success btn-xs btn-flat"><a
+											<div class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/turma/verInfoTurma/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 									</div>
 								</td>
 								<td>

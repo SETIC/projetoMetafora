@@ -9,14 +9,17 @@
 
 
 
-function printDiv(id)
+function printDiv(id1, id2)
 {
-  var divToPrint=document.getElementById(id);
+  var divToPrint1=document.getElementById(id1);
+  var divToPrint2=document.getElementById(id2);
   newWin= window.open("");
   newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE <br>");
   newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
   newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
+  newWin.document.write(divToPrint1.outerHTML);
+  newWin.document.write("<hr/>");
+  newWin.document.write(divToPrint2.outerHTML);
   newWin.print();
   newWin.close();
  
@@ -61,36 +64,36 @@ function deletar(id) {
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Destino</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="text-align: left;">Número</th>
+							<th style="text-align: left;">Data do Protocolo</th>
+							<th style="text-align: left;">Data da Emissão</th>
+							<th style="text-align: left;">Destino</th>
+							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
-											<li title="Ver detalhes do protocolo"
+											<div title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 
 									</div>
 								</td>
@@ -140,43 +143,43 @@ function preencheCampoHidden(id){
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Origem</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="text-align: left;">Número</th>
+							<th style="text-align: left;">Data do Protocolo</th>
+							<th style="text-align: left;">Data da Emissão</th>
+							<th style="text-align: left;">Origem</th>
+							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline" width="400" >
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
+														class="glyphicon glyphicon-pencil"></span></a></div>
 											</g:if>
 
-											<li title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+											<div title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
 											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
 											<span class="glyphicon glyphicon-eye-open">
 											</span>
 											</a>
-											</li>
+											</div>
 
-											<li title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
+											<div title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
 											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
 											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.protocolo.id})">
 											</span>
 											</a>
-											</li>
+											</div>
 											
-											</ul>
+											</div>
 
 
 
@@ -220,7 +223,7 @@ function preencheCampoHidden(id){
 			</g:if>
 
 			<button class="btn btn-danger btn-flat"
-				onClick="printDiv('listarprotocolo')">
+				onClick="printDiv('listarprotocolosEnviados', 'listarprotocolosAceitos')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			<!-- Modal -->
@@ -442,7 +445,7 @@ function preencheCampoHidden(id){
 										
 										$(document).ready(function(){  
 										 
-										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile']").click(function(e){  
 										        $('#inputs_adicionais_tramite').append( input );  
 										    });  
@@ -460,7 +463,7 @@ function preencheCampoHidden(id){
 								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
 								        <br />
-								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
 								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
 									</div>
 									<br>

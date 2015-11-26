@@ -215,12 +215,12 @@ function printDiv(id)
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 50px;"></th>
-							<th style="width: 280px;">Nome do Aluno</th>
-							<th style="width: 60px;">Data da Matrícula</th>
-							<th style="width: 320px;">Nome da Escola</th>
-							<th style="width: 40px;">Série</th>
-							<th style="width: 60px;">Turma</th>
+							<th style="width: 50px;text-align: left;"></th>
+							<th style="width: 280px;text-align: left;">Nome do Aluno</th>
+							<th style="width: 60px;text-align: left;">Data da Matrícula</th>
+							<th style="width: 320px;text-align: left;">Nome da Escola</th>
+							<th style="width: 40px;text-align: left;">Série</th>
+							<th style="width: 60px;text-align: left;">Turma</th>
 
 						</tr>
 					</thead>
@@ -229,27 +229,27 @@ function printDiv(id)
 
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes" style="width: 80px;">
+										<div style="display: inline;">
 
 
 											<g:if test="${perm2}">
 
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<div class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 
 											</g:if>
-											<li data-toggle="modal" data-target="#relatorioModal"
+											<div data-toggle="modal" data-target="#relatorioModal"
 												onclick="changeIdMatriculaParaRelatorio(${it.id});"
 												class="btn btn-warning btn-xs btn-flat"><span
-												class="glyphicon glyphicon-file"></span></li>
+												class="glyphicon glyphicon-file"></span></div>
 
-										</ul>
+										</div>
 
 									</div>
 								</td>

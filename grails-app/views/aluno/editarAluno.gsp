@@ -82,7 +82,8 @@
 	</script>
 	<style onload="hiddenInput();"></style>
 	<section class="content">
-
+		<div class="row">
+		<div class="col-md-10 col-md-offset-1">
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -187,8 +188,7 @@
 							<div class="form-group">
 								<label for="inputNome3" class="col-sm-2 control-label">Nome *</label>
 								<div class="col-sm-10">
-									<input class="form-control" required name="nome" type="text"
-										style="width: 300px" value="${pessoa.nome }">
+									<input class="form-control" required name="nome" type="text" value="${pessoa.nome }">
 								</div>
 							</div>
 							<br>
@@ -440,9 +440,11 @@
 								</div>
 							</div>
 						</div>
+						
+						<!-- ENDEREÇO -->
+						
 						<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 							<h3>Endereço</h3>
-
 							<div class="form-group">
 								<label for="iCep" class="col-sm-2 control-label">CEP</label>
 								<div id="iDivInputCep" class="col-sm-10">
@@ -545,7 +547,7 @@
 									</button>
 									<button style="display: inline-block;" type="submit"
 										class="btn btn-default btn-flat">
-										<a href="/projetoMetafora/aluno/listar/">Cancelar</a>
+										<a href="/projetoMetafora/aluno/pesquisarAlunos">Cancelar</a>
 								</div>
 							</div>
 						</div>
@@ -784,6 +786,8 @@
 	       
 			
 		</script>
+		</div>
+		</div>
 	</section>
 </body>
 </html>
