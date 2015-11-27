@@ -706,10 +706,7 @@ function mudarCombo(){
 		</script>
 		
 		<!-- Script buscar dados de acordo com CEP -->
-		
 		<script type="text/javascript">
-
-		
 
 			function hiddenInput(){
 				console.log('Hidden...');

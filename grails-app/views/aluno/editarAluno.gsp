@@ -103,7 +103,7 @@
 				<br>
 				<!-- modais-->
 				<div class="modal fade" id="twoModalsExample"
-					style="background-color: white; height: 300px;"
+					style="background-color: white; height: 500px;"
 					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
 					aria-hidden="true">
 					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
@@ -126,7 +126,7 @@
 				</div>
 				<br>
 				<div class="modal fade" id="twoModalsExample1"
-					style="background-color: white; height: 300px;"
+					style="background-color: white; height: 500px;"
 					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
 					aria-hidden="true">
 					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
@@ -148,7 +148,7 @@
 						<!--  	</g:form> -->
 					</div>
 				</div>
-				<g:form controller="Aluno" action="atualizar"
+				<g:form controller="Aluno" action="atualizar" enctype="multipart/form-data"
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<fieldset>
@@ -430,6 +430,59 @@
 
 							</div>
 							<br>
+							
+							 <fieldset>
+         <table id="listarDocumentosAluno" class="table table-bordered">
+				<legend class="scheduler-border">Documentos</legend>
+				<thead>
+					<tr>
+						<th>Nome do Documento</th>
+						<th style="width:395px">Data</th>
+						<th>Remover</th>
+					</tr>
+					<g:each in="${documentosAluno}">
+						<tr class="info">
+							<td>
+								${it.arquivo}
+							</td>
+							<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+									date="${it.dataDocumento}" /></td>
+							<td>
+                           <a href="/projetoMetafora/aluno/removerDocumento/${it.id}"><span 
+							class="glyphicon glyphicon-remove"></span></a>
+							</td>
+						</tr>
+					</g:each>
+				</thead>
+			</table>
+         </fieldset>
+         <br>
+			<script type="text/javascript">  
+			function limparCampoFile1(){
+				document.getElementById("documentos[]").value = "";
+			}
+			
+			 $(document).ready(function(){  
+			 
+			    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+			    $("input[name='addFile1']").click(function(e){  
+			        $('#inputs_adicionais').append( input );  
+			    });  
+			 
+			    $('#inputs_adicionais').delegate('a','click',function(e){  
+			        e.preventDefault();  
+			        $(this).parent('label').remove();  
+			    });  
+			 
+                }); 
+			 
+			</script>  
+	        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+	        
+	        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+	         
+	        <fieldset id="inputs_adicionais" style="border: none">  
+       </fieldset>
 							<div class="form-group" style="margin-top: 3%;">
 								<div class="col-sm-offset-10 col-sm-2"
 									style="margin-left: 87.2%;">
@@ -624,21 +677,19 @@
 										required="true" />
 								</div>
 							</div>
-						</div>
-						<hr />
+						 </div>
+						<hr/>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success btn-flat"
 								data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
 							<button type="button" class="btn btn-default btn-flat"
 								data-dismiss="modal">Cancelar</button>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
+        
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">

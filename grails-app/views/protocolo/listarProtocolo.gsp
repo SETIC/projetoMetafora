@@ -237,7 +237,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número</label>
 											<div class="controls">
-												<g:textField class="form-control" name="numero" value=""
+												<g:field type = "number" class="form-control" name="numero" value=""
 													required="true" />
 											</div>
 										</div>
@@ -268,7 +268,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
-												<g:textField class="form-control" name="numeroDocumento"
+												<g:field type="text"class="form-control" name="numeroDocumento"
 													value="" required="true" />
 											</div>
 										</div>
@@ -428,7 +428,7 @@ function deletar(id) {
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";
 										}
-										
+
 										$(document).ready(function(){  
 										 
 										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  

@@ -264,7 +264,7 @@ function printDiv(id)
 											<div class="form-heading">
 												<label>Turno</label>
 												<div class="controls">
-													<label class="checkbox-inline"> <input
+													<label class="checkbox-inline"><input
 														type="checkbox" name="opcao1" value="M" checked>Manhã
 													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao2" value="T">Tarde
