@@ -71,6 +71,7 @@ class FuncionarioController {
 				
 				def escolas = Escola.findAll()
 
+
 				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario, lotacao:lotacao, cargo:cargo, escolas:escolas, horasDisciplinas: horasDisciplinas])
 				
 			}else{

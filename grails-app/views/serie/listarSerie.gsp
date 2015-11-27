@@ -11,6 +11,7 @@ function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
   newWin= window.open("");
+<<<<<<< HEAD
 
   newWin.document.write("<table border='0'>");
   newWin.document.write("<tr>");
@@ -23,6 +24,10 @@ function printDiv(id)
   newWin.document.write("</table><br>");
   newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
 
+=======
+  newWin.document.write("PREFEITURA DE SÃO GONÇALO DO AMARANTE<br>");
+  newWin.document.write("RELATÓRIO GERENCIAL<br><br>");
+>>>>>>> protocJadson
   newWin.document.write(" ");
   newWin.document.write(divToPrint.outerHTML);
   newWin.print();

@@ -84,12 +84,17 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
+<<<<<<< HEAD
 	
 		//var endereco = "192.168.1.247";
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
 
+=======
+		var endereco = "localhost";
+        var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+>>>>>>> protocJadson
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
         divToPrint.innerHtml = "";
@@ -101,7 +106,10 @@ function printDiv(id)
             success: function(result){
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 			    divToPrint.innerHTML  += "<style=''>";   
 		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
@@ -354,6 +362,7 @@ function printDiv(id)
 				          }
 			            }
 			        });
+<<<<<<< HEAD
 
 				   
 
@@ -362,6 +371,12 @@ function printDiv(id)
 				  //var endereco = "192.168.1.247";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
+=======
+			     }
+
+			  function mudarSerie(){
+				  var endereco = "localhost";
+>>>>>>> protocJadson
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -390,6 +405,7 @@ function printDiv(id)
 				   var comboTurma = document.getElementById("comboTurma1");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
+<<<<<<< HEAD
 
 			        var idEscola = document.getElementById("comboEscola1").value;
 					var idSerie = document.getElementById("comboSerie1").value;
@@ -415,6 +431,8 @@ function printDiv(id)
 			       }
 		       
 
+=======
+>>>>>>> protocJadson
 		</script>
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
@@ -422,12 +440,19 @@ function printDiv(id)
 					data-target="#myModal">
 					<i class="fa fa-plus"></i> Realizar Matrícula
 				</button>
+<<<<<<< HEAD
 
 				<button class="btn btn-danger btn-flat"
 					onClick="printDiv('listarMatricula')">
 					<i class="glyphicon glyphicon-print"></i> Imprimir
 				</button>
 
+=======
+													
+				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
+				<i class="glyphicon glyphicon-print"></i> Imprimir
+			</button>
+>>>>>>> protocJadson
 			</g:if>
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"
@@ -677,6 +702,7 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
+<<<<<<< HEAD
 
 	<div id="reportPrint" style="visibility: hidden;"></div>
 	<script>
@@ -691,4 +717,9 @@ function printDiv(id)
 
 </body>
 
+=======
+	<div id="reportPrint" style="visibility: hidden;">
+	</div>
+  </body>
+>>>>>>> protocJadson
 </html>

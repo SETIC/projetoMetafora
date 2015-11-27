@@ -51,8 +51,11 @@
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<g:if test="${tipoEdicao == 'ACEITO'}">
 =======
+=======
+>>>>>>> protocJadson
 								<g:if test="${tipoEdicao == 'ACEITO'}">
 >>>>>>> protocJadson
 									<g:datePicker noSelection="['':'']" precision="day"
@@ -65,7 +68,10 @@
 									required="true"/>
 								</g:else>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 =======
 >>>>>>> protocJadson
 							</div>
@@ -77,7 +83,10 @@
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 =======
 >>>>>>> protocJadson
 								<g:if test="${tipoEdicao == 'ACEITO'}">
@@ -157,7 +166,11 @@
 							</div>
 						</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+						<br>
+>>>>>>> protocJadson
 =======
 						<br>
 >>>>>>> protocJadson

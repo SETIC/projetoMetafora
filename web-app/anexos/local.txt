@@ -1,0 +1,34 @@
+<html>  
+<head> 
+
+<script type="text/javascript">
+var id = 1;
+function novoCampo(){
+var inp = document.createElement("input");
+inp.setAttribute("id", id );
+var lab = document.createElement("label");
+lab.setAttribute("id", "l"+id);
+var lab_content = document.createTextNode("Campo de Texto " + id + " ");
+var quebra = document.createElement("br");
+lab.appendChild(lab_content);
+var inpP = document.getElementById(id-1);
+var parentInp = inpP.parentNode;
+parentInp.insertBefore(lab, inpP.nextSibling);
+parentInp.insertBefore(inp, lab.nextSibling);
+parentInp.insertBefore(quebra, lab);
+++id;
+}
+</script>
+ 
+</head>  
+  
+<body>  
+ 
+<form name="form1" method="post" action="">
+<label id="l0">Campo de Texto 0</label>
+<input type="text" name="textfield" id="0"><br />
+<input type="submit" name="Submit" value="+ 1 Campo" onClick="novoCampo();return false;">
+</form>
+  
+</body>  
+</html>

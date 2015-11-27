@@ -219,10 +219,14 @@ function mudarCombo(){
 												</div>
 											</div>
 											<div id="div2" class="col-md-4 mouse-point"
+<<<<<<< HEAD
 
 												onclick="validaDados()"> <!-- javascript: resetActive(div2, event, 35, 'step-2'); -->
 
 
+=======
+												onclick="validaDados();"><!-- javascript:resetActive(div2, event, 35, 'step-2'); -->
+>>>>>>> protocJadson
 												<div class="row">
 													<span class="fa fa-home"></span>
 													<p>Endereço</p>
@@ -384,6 +388,7 @@ function mudarCombo(){
 													required="true" />
 											</div>
 										</div>
+<<<<<<< HEAD
 
 										<div class="form-group">
 											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
@@ -400,6 +405,28 @@ function mudarCombo(){
 											</div>
 										</div>
 										
+=======
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
+									<div class="col-sm-10">
+										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
+									<div class="col-sm-10">
+										<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
+											<option value="null" selected disabled>Selecione...</option>
+											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+											<option value="CASADO(A)">CASADO(A)</option>
+											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+											<option value="VIÚVO(A)">VIÚVO(A)</option>
+										</select>
+									</div>
+									 
+>>>>>>> protocJadson
 									    <label>Documentos</label>
 										<script type="text/javascript">  
 										function limparCampoFile1(){
@@ -482,7 +509,10 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iUf" class="col-sm-2 control-label">UF</label>
 											<div class="col-sm-10">
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 												<select  name="uf" id="iUf" class="form-control"> 
 													<option value="AC">Acre</option> 
 													<option value="AL">Alagoas</option> 
@@ -540,7 +570,11 @@ function mudarCombo(){
 									</div>
 									<div class="hiddenStepInfo" id="step-3" style="margin-top: 2%;">
 										<h3>Matrícula</h3>
+<<<<<<< HEAD
 
+=======
+										
+>>>>>>> protocJadson
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Realizar
 												Matricula?</label>

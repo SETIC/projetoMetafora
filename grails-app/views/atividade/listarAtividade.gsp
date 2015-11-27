@@ -62,6 +62,7 @@ function printDiv(id)
 				</div>
 			</g:if>
 			
+<<<<<<< HEAD
 
 
 			<%--
@@ -76,6 +77,16 @@ function printDiv(id)
 							<g:each in='${escola}'>
 
 
+=======
+					<div class="form-heading">
+					<label>Escola</label>
+					<div class="controls">
+
+						<select id="esc" name="escolas"
+							class="form-control selectpicker" data-live-search="true">
+							<g:each in='${escola}'>
+
+>>>>>>> protocJadson
 								<option value="${it.id}">
 									${it.pessoaJuridica.pessoa.nome}
 								</option>
@@ -87,7 +98,10 @@ function printDiv(id)
 				<div class="form-heading">
 					<label>Professor</label>
 					<div class="controls">
+<<<<<<< HEAD
 
+=======
+>>>>>>> protocJadson
 
 						<select id="prof" name="professores"
 							class="form-control selectpicker" data-live-search="true">
@@ -99,6 +113,7 @@ function printDiv(id)
 
 							</g:each>
 						</select>
+<<<<<<< HEAD
 
 
 			--%>
@@ -109,6 +124,11 @@ function printDiv(id)
 
 					</div>
 
+=======
+
+					</div>
+				</div>
+>>>>>>> protocJadson
 				<br>
 				
 			<div class="box box-white" >

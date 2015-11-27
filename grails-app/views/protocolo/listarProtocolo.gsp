@@ -433,9 +433,13 @@ function deletar(id) {
 									</div>
 									<br>
 									<div class="form-heading">
+<<<<<<< HEAD
 
 									<label>Anexo</label>
 
+=======
+									<label>Anexo</label>
+>>>>>>> protocJadson
 										<script type="text/javascript">  
 
 										function limparCampoFile(){
