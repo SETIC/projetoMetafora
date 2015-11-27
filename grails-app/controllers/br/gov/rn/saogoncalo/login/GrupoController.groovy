@@ -84,7 +84,6 @@ class GrupoController {
 						println("Permissoes: "+permission+"\n")
 
 
-
 						//salvando no banco cada objeto
 						Permissao p = new Permissao()
 						p.permissao = permission

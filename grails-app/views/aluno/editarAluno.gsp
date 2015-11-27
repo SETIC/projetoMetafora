@@ -657,21 +657,18 @@
 
 				if(type=="hide"){
 					console.log('Hidden inputs...');
-					//document.getElementById("comboEscola").disabled = true;
+
 					document.getElementById("comboSerie").disabled = true;
 					document.getElementById("comboTurma").disabled = true;
 					document.getElementById("numMatricula").disabled = true;
-					//document.getElementById("dataMatricula").disabled = true;
-
 					
 					}
 				else{
 					console.log('show inputs...');
-					//document.getElementById("comboEscola").disabled = false;
 					document.getElementById("comboSerie").disabled = false;
 					document.getElementById("comboTurma").disabled = false;
 					document.getElementById("numMatricula").disabled = false;
-					//document.getElementById("dataMatricula").disabled = false;
+
 					}
 
 				}
