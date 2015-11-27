@@ -84,17 +84,13 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-<<<<<<< HEAD
 	
 		//var endereco = "192.168.1.247";
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
 
-=======
-		var endereco = "localhost";
-        var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
->>>>>>> protocJadson
+
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
         divToPrint.innerHtml = "";
@@ -106,10 +102,6 @@ function printDiv(id)
             success: function(result){
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
-<<<<<<< HEAD
-
-=======
->>>>>>> protocJadson
 			    divToPrint.innerHTML  += "<style=''>";   
 		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
 		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
@@ -249,13 +241,13 @@ function printDiv(id)
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 95px;"></th>
-							<th style="width: 290px;">Nome do Aluno</th>
-							<th style="width: 60px;">Data da Matrícula</th>
-							<th style="width: 320px;">Nome da Escola</th>
-							<th style="width: 40px;">Série</th>
-							<th style="width: 60px;">Turma</th>
-							<th style="width: 80px;">Situação da Matrícula</th>
+
+							<th style="width: 50px;text-align: left;"></th>
+							<th style="width: 280px;text-align: left;">Nome do Aluno</th>
+							<th style="width: 60px;text-align: left;">Data da Matrícula</th>
+							<th style="width: 320px;text-align: left;">Nome da Escola</th>
+							<th style="width: 40px;text-align: left;">Série</th>
+							<th style="width: 60px;text-align: left;">Turma</th>
 
 						</tr>
 					</thead>
@@ -264,43 +256,29 @@ function printDiv(id)
 
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes" style="width: 80px;">
+										<div style="display: inline;">
 
 
 											<g:if test="${perm2}">
 
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<div class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 
 											</g:if>
-											<li data-toggle="modal" data-target="#relatorioModal"
+											<div data-toggle="modal" data-target="#relatorioModal"
 												onclick="changeIdMatriculaParaRelatorio(${it.id});"
 												class="btn btn-warning btn-xs btn-flat"><span
-												class="glyphicon glyphicon-file"></span></li>
-											<%Calendar ca = Calendar.getInstance()
-												int ano = ca.get(Calendar.YEAR)
-												%>
-											<g:if
-												test="${it.dataDaMatricula.toString().contains(ano.toString())}">
+
+												class="glyphicon glyphicon-file"></span></div>
 
 
-											</g:if>
-											<g:else>
-												<li
-													onclick="matriculaENomeDoAluno(${it.id}, '${it.aluno.cidadao.pessoaFisica.pessoa.nome}');"
-													data-toggle="modal" data-target="#renovarMatricula"
-													title="Renovar matricula"
-													class="btn btn-success btn-xs btn-flat"><span
-													class="glyphicon glyphicon-repeat"></span></li>
-											</g:else>
-
-										</ul>
+										</div>
 
 									</div>
 								</td>
@@ -362,7 +340,6 @@ function printDiv(id)
 				          }
 			            }
 			        });
-<<<<<<< HEAD
 
 				   
 
@@ -371,12 +348,7 @@ function printDiv(id)
 				  //var endereco = "192.168.1.247";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
-=======
-			     }
 
-			  function mudarSerie(){
-				  var endereco = "localhost";
->>>>>>> protocJadson
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -405,8 +377,6 @@ function printDiv(id)
 				   var comboTurma = document.getElementById("comboTurma1");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
-<<<<<<< HEAD
-
 			        var idEscola = document.getElementById("comboEscola1").value;
 					var idSerie = document.getElementById("comboSerie1").value;
 
@@ -431,8 +401,7 @@ function printDiv(id)
 			       }
 		       
 
-=======
->>>>>>> protocJadson
+
 		</script>
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
@@ -440,19 +409,12 @@ function printDiv(id)
 					data-target="#myModal">
 					<i class="fa fa-plus"></i> Realizar Matrícula
 				</button>
-<<<<<<< HEAD
 
-				<button class="btn btn-danger btn-flat"
-					onClick="printDiv('listarMatricula')">
+				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
 					<i class="glyphicon glyphicon-print"></i> Imprimir
 				</button>
 
-=======
-													
-				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
-				<i class="glyphicon glyphicon-print"></i> Imprimir
-			</button>
->>>>>>> protocJadson
+
 			</g:if>
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"
@@ -702,7 +664,7 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
-<<<<<<< HEAD
+
 
 	<div id="reportPrint" style="visibility: hidden;"></div>
 	<script>
@@ -717,9 +679,5 @@ function printDiv(id)
 
 </body>
 
-=======
-	<div id="reportPrint" style="visibility: hidden;">
-	</div>
-  </body>
->>>>>>> protocJadson
+
 </html>

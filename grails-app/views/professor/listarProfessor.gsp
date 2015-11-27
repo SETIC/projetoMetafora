@@ -81,12 +81,12 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 65px;"></th>
-							<th style="width: 280px;">Nome</th>
-							<th style="width: 60px;">CPF</th>
-							<th style="width:;">Matricula</th>
-							<th style="width:;">Data de Nascimento</th>
-							<th style="width:;">Sexo</th>
-							<th style="width:;">Estado Civil</th>
+							<th style="width: 280px;text-align: left;">Nome</th>
+							<th style="width: 60px;text-align: left;">CPF</th>
+							<th style="text-align: left;">Matricula</th>
+							<th style="text-align: left;">Data de Nascimento</th>
+							<th style="text-align: left;">Sexo</th>
+							<th style="text-align: left;">Estado Civil</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -99,26 +99,26 @@ function printDiv(id)
 							<g:set var="cidadao" value="${it.funcionario.cidadao}" />
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline">
 											
 											<g:if test="${perm2}">
-											<li title="Editar Professor"
+											<div title="Editar Professor"
 											    class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/professor/editarProfessor/${pessoa.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li title="Remover Professor"
+													class="glyphicon glyphicon-pencil"></span></a></div>
+											<div title="Remover Professor"
 											    onclick="deletar(${pessoa.id})"
 												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
+												class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
 											
-											<li title="ver detalhes do professor"
+											<div title="ver detalhes do professor"
 											    class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
 												href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 	
 									</div>
 								</td>

@@ -65,8 +65,8 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Nome</th>
-							<th>Tipo</th>
+							<th style="text-align: left;">Nome</th>
+							<th style="text-align: left;">Tipo</th>
 							
 						</tr>
 					</thead>
@@ -74,20 +74,22 @@ function printDiv(id)
 						<g:each in='${situacao?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+
+									<div class="opcoes">
+										<div style="display: inline">
+	
 											<g:if test="${perm2}">
-												<li title="Editar situação"
+												<div title="Editar situacao"
 												    class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/situacao/editarSituacao/${it.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li title="Excluir situação"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Excluir situacao"
 												    onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
-										</ul>
+										</div>
 	
 									</div>
 								</td>
