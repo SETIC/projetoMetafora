@@ -6,6 +6,8 @@ import java.sql.Driver
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+import org.h2.store.fs.FilePath;
+
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController;
 import br.gov.rn.saogoncalo.login.UsuarioController
 
@@ -115,7 +117,7 @@ class ProtocoloController {
 
 				println("parametros " + params.arquivos)
 				Protocolo protocolo = new Protocolo(params)
-				protocolo.numero = params.numero.toInteger()
+				protocolo.numero = params.numero.toLong()
 				protocolo.numeroDocumento = params.numeroDocumento
 				protocolo.assunto = params.assunto
 				protocolo.dataProtocolo = params.dataProtocolo
@@ -259,6 +261,7 @@ class ProtocoloController {
 			def situacoes
 			def tipoDocumentos
 			def tipoEdicao, tramitesCriados
+			def anexos
 
 			if (perm2) {
 
@@ -267,10 +270,17 @@ class ProtocoloController {
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
 						+ "and f.id = " + session["pesid"])
-
+               
+			   
 				situacoes = Situacao.findAll()
 				Protocolo protocolo = Protocolo.get(id)
+				println("Impressão de protocolo aqui =---" + protocolo)
 				tipoDocumentos = TipoDocumento.findAll()
+			    anexos = Anexo.findAllByProtocolo(protocolo)
+				println("anexos do "+anexos)
+				
+				println("dados aqui " + protocolo.id )
+								
 				tramitesCriados = Tramite.executeQuery(" select t from Tramite t, Protocolo p " +
 						"  where p.id = t.protocolo.id " +
 						"    and t.dataRecebimento is null " +
@@ -289,7 +299,7 @@ class ProtocoloController {
 
 				println("Tipo -- " + tipoEdicao)
 
-				render (view:"/protocolo/editar.gsp", model:[protocolo:protocolo , situacoes:situacoes , tipoDocumentos:tipoDocumentos, tipoEdicao:tipoEdicao ])
+				render (view:"/protocolo/editar.gsp", model:[protocolo:protocolo , situacoes:situacoes , tipoDocumentos:tipoDocumentos, tipoEdicao:tipoEdicao , anexos:anexos ])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -311,6 +321,7 @@ class ProtocoloController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
 			if (perm2) {
+				println("params akiiiiii" +params)
 
 				def tipoDocumento
 				def situacoes
@@ -340,7 +351,7 @@ class ProtocoloController {
 				println ("assunto" +params.situacao)
 
 				if(protocolos.save(flush:true)){
-
+                   
 					//atualização de tramites
 
 					if(protocolos.situacao.tipo == "F"){
@@ -351,6 +362,7 @@ class ProtocoloController {
 						println("status --- " +tramite)
 						tramite.status = "FECHADO"
 						tramite.save(flush:true)
+					
 					}else{
 
 						Tramite tramite = new Tramite()
@@ -364,20 +376,37 @@ class ProtocoloController {
 						tramite.status = "ABERTO"
 						//tramite.save(flush:true)
 
-
-
 					}
-
-
+					
+					//adicionarAnexo(request)
+					//adicionara anexos --------------------
+					
+					request.getFiles("arquivo[]").each { file ->
+						println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
+						
+						Anexo anexo = new Anexo()
+												
+						FileUploadServiceController fil = new  FileUploadServiceController()
+						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						anexo.dataAnexo = new Date()
+						anexo.protocolo = protocolos
+						if(anexo.save(flush:true)){
+							println("anexo salvo -----")
+						 }
+						
+					   //redirect(action:"editar" , params:[id:anexo.protocolo.id])
+						}
+					
+					//--------------------------------------
+					
 
 					redirect(controller:"Protocolo", action:"listarProtocolo",params:[msg:"Protocolo atualizado com sucesso.",tipo:"ok"])
 					//listarMensagem("Protocolo atualizado com sucesso", "ok")
 				}else{
-					def erros
+					
+				    def erros
 					protocolos.errors.each {erros = it}
 					print("erros: "+erros)
-
-
 					listarMensagem("Erro ao atualizar", "erro")
 				}
 			}
@@ -385,7 +414,8 @@ class ProtocoloController {
 	}
 
 
-	def deletar(int id){
+	def deletar(long id){
+		
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
 		}else{
@@ -730,13 +760,83 @@ class ProtocoloController {
 		}
 
 		else{
+			
 			def erros
 			anexo.errors.each {erros = it}
 			print("erros: "+erros)
 			listarMensagem("Erro ao baixar o arquivo", "erro")
 		}
 	}
+	
+	
+	//remover anexo no metodo editar
+	
+	def removerAnexo(long id){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+		
+		}else{
+		  
+		   println("parametros do anexo" +params.id)
+			def user = session["user"]
+			def pass = session["pass"]
 
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+
+			if (perm2){
+				
+                Anexo anexo = new Anexo()
+				anexo = Anexo.get(id)
+				Protocolo protocolo = new Protocolo()
+				
+				println(" Protocolo aqui ---  " + anexo.protocolo.id)
+				protocolo = Protocolo.get(anexo.protocolo.id)
+				
+				//def idprotocolo = anexo.protocolo.id
+			
+				Anexo.deleteAll(anexo)
+				def deletaAnexo = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo).delete()
+				
+				def anexos = Anexo.findAllByProtocolo(protocolo)
+				
+				def situacoes = Situacao.findAll()
+				def tipoDocumentos = TipoDocumento.findAll() 
+				
+				//atualizar(params)
+				
+                //render (view:"/protocolo/editar.gsp", model:[protocolo:protocolo, anexos:anexos , perm2:perm2])
+				redirect(action:"editar", params:[id:protocolo.id, protocolo:protocolo, anexos:anexos, situacoes:situacoes, tipoDocumentos:tipoDocumentos, perm2:perm2])
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+
+	def adicionarAnexo(request){
+		
+		request.getFiles("arquivo[]").each { file ->
+		println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
+		
+		Anexo anexo = new Anexo()
+		Protocolo protocolo = new Protocolo()
+		protocolo = Protocolo.get(anexo.protocolo.id)
+		
+		FileUploadServiceController fil = new  FileUploadServiceController()
+		anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+		anexo.dataAnexo = new Date()
+		anexo.protocolo = protocolo
+		if(anexo.save(flush:true)){
+			println("anexo salvo -----")
+		 }	
+		
+       redirect(action:"editar" , params:[id:anexo.protocolo.id])
+		}
+	}
+    
+	
 	def downloadSampleZip() {
 		response.setContentType('APPLICATION/OCTET-STREAM')
 		response.setHeader('Content-Disposition', 'Attachment;Filename="example.zip"')

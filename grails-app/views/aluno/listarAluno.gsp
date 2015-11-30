@@ -906,8 +906,6 @@ function mudarCombo(){
 
 		<script type="text/javascript">
 
-		
-
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';

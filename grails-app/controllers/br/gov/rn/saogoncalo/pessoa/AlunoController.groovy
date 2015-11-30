@@ -79,6 +79,7 @@ class AlunoController {
 				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
 
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
+				def documentosAluno = Documento.findAllByAluno(alunos)
 
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
@@ -88,7 +89,7 @@ class AlunoController {
 				println("objeto parentescoPai aquiiiiiiiiiiiiiii------ "+parentescoPai)
 				println("objeto parentescoMae aquiiiiiiiiiiiiiii------ "+parentescoMae)
 
-				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae])
+				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae , documentosAluno:documentosAluno])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -220,8 +221,6 @@ class AlunoController {
 				}
 				//println("parentencoPai.parentesco "+parentescoPai.parentesco)
 				//println("idPai "+idPai.nome)
-
-
 
 
 				//bloco de endereço
@@ -359,7 +358,22 @@ class AlunoController {
 				//def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
 
 				if(aluno.save(flush:true)){
-
+					
+					//salvar documento
+					println("documento akiiiiiiii" +aluno)
+					request.getFiles("documentos[]").each { file ->
+						println("documento do atualizar akikkkkkk ---+++ " + file.originalFilename)
+						
+						Documento documento = new Documento()
+						FileUploadServiceController fil = new  FileUploadServiceController()
+						documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
+						documento.dataDocumento = new Date()
+						documento.aluno = aluno						
+						 if(documento.save(flush:true)){
+							println("documento salvo -----")
+						  }
+					}
+					
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
@@ -523,7 +537,7 @@ class AlunoController {
 		}
 	}
 
-	def deletar(int id){
+	def deletar(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
@@ -575,11 +589,13 @@ class AlunoController {
 				Parentesco parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "MÃE")
 
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-
+				
+                def documentosAluno  = Documento.findAllByAluno(alunos)
+				
 				println("Reside -- " + reside)
 
 
-				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside])
+				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside , documentosAluno:documentosAluno])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -1117,6 +1133,80 @@ class AlunoController {
 		}
 
 	}
+	
+	
+	def adicionarDocumento(request){
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 
-}
+			if (perm2)
+			
+			{
+				
+			request.getFiles("arquivo[]").each { file ->
+			println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
+			
+			Documento documento = new Documento()
+			Aluno aluno = new Aluno()
+		    aluno = Aluno.get(documento.aluno.id)
+			
+			FileUploadServiceController fil = new  FileUploadServiceController()
+		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
+			documento.dataDocumento = new Date()
+			documento.aluno = aluno
+			if(documento.save(flush:true)){
+				println("documento salvo -----")
+			  }
+			
+		   redirect(action:"editarAluno" , params:[id:documento.aluno.id])
+			
+      		 }	
+	   
+		   }
+		 }
+	  }
+	// documentos referentes a view de editar
+	def removerDocumento(long id){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+
+			if (perm2)
+			
+			{
+				
+		     def documento = Documento.get(id)	
+			  Aluno aluno  = new Aluno()
+			  aluno = Aluno.get(documento.aluno.id)
+			  documento.deleteAll(documento)
+			  def documentosAluno = Documento.findAllByAluno(aluno)
+			  
+			  
+			  redirect(action:"editarAluno", params:[id:aluno.id, aluno:aluno, documento:documento , perm2:perm2])
+			
+			}else{
+				  
+				  render(view:"/error403.gsp")
+				  }
+		    	}
+			}
+	     }
+
+	
+

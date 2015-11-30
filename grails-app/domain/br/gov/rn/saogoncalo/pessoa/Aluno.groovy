@@ -6,7 +6,7 @@ class Aluno {
 	Cidadao cidadao	
 	String numeroDeInscricao
 	
-	static hasMany = [matricula:Matricula]
+	static hasMany = [matricula:Matricula , documento:Documento]
 	
 	static constraints = {
 		numeroDeInscricao blank:true, nullable:true
