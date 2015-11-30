@@ -135,7 +135,7 @@
 						<div class="form-group">
 							<label for="inputbimestre" class="col-sm-2 control-label">Bimestre</label>
 							<div class="col-sm-10">
-D
+
 								<g:if test="${atividade.bimestre == '1º BIMESTRE' }">
 
 									<select class="form-control" name="bimestre"
@@ -193,8 +193,6 @@ D
 								<g:else>
 									<select class="form-control" name="bimestre"
 										style="width: 300px">
-
-
 										<option value="1º BIMESTRE">1° BIMESTRE</option>
 										<option value="2º BIMESTRE">2° BIMESTRE</option>
 										<option value="3º BIMESTRE">3° BIMESTRE</option>

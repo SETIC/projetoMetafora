@@ -62,48 +62,75 @@ function printDiv(id)
 				</div>
 			</g:if>
 			
+<<<<<<< HEAD
+
+
 			<%--
 			
 											<div class="form-heading">
 											<label>Escola</label>
 											<div class="controls">
 
-												<select id="esc" name="escolas"
-													class="form-control selectpicker" data-live-search="true">
-													<g:each in='${escola}'>
 
-														<option value="${it.id}">
-															${it.pessoaJuridica.pessoa.nome}
-														</option>
+						<select id="esc" name="escolas"
+							class="form-control selectpicker" data-live-search="true">
+							<g:each in='${escola}'>
 
-													</g:each>
-												</select>
 
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Professor</label>
-											<div class="controls">
+=======
+					<div class="form-heading">
+					<label>Escola</label>
+					<div class="controls">
 
-												<select id="prof" name="professores"
-													class="form-control selectpicker" data-live-search="true">
-													<g:each in='${professor}'>
+						<select id="esc" name="escolas"
+							class="form-control selectpicker" data-live-search="true">
+							<g:each in='${escola}'>
 
-														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
-														</option>
+>>>>>>> protocJadson
+								<option value="${it.id}">
+									${it.pessoaJuridica.pessoa.nome}
+								</option>
+							</g:each>
+						</select>
+					</div>
+				</div>
+				<br>
+				<div class="form-heading">
+					<label>Professor</label>
+					<div class="controls">
+<<<<<<< HEAD
 
-													</g:each>
-												</select>
+=======
+>>>>>>> protocJadson
 
-											</div>
-										</div>
-										<br>
-										
+						<select id="prof" name="professores"
+							class="form-control selectpicker" data-live-search="true">
+							<g:each in='${professor}'>
+
+								<option value="${it.id}">
+									${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
+								</option>
+
+							</g:each>
+						</select>
+<<<<<<< HEAD
+
 
 			--%>
 			
+
+				
+
+
+					</div>
+
+=======
+
+					</div>
+				</div>
+>>>>>>> protocJadson
+				<br>
+				
 			<div class="box box-white" >
 			<div id="print">
 				<table id="" class="table table-striped table-hover example">
@@ -124,26 +151,17 @@ function printDiv(id)
 						
 								<tr class='linha_registro'>
 									<td>
-									
 										<div style="margin-left: -35px" class="opcoes">
-											
-
-											
 											<ul style="display: inline">
-												
-										
-											
 											<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 												
-
 												<li title="Remover Atividade" onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 	
-													
 												<li title="Ver detalhes da Atividade" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/atividade/verInfoAtividade/${it.id}"><span
@@ -153,7 +171,6 @@ function printDiv(id)
 													style="color: #fff"
 													href="/projetoMetafora/atividade/lancarNota/${it.id}"><span
 														class="glyphicon glyphicon-th-list"></span></a></li>
-		
 											</ul>
 										</div>
 									</td>

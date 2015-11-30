@@ -66,12 +66,12 @@ function printDiv(id)
 					<g:if test="${!escolas?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 65px;"></th>
-							<th style="width: 500px;">Nome</th>
-							<th style="width: 200px;">CNPJ</th>
-							<th style="width:;">Data de Fundação</th>
-							<th style="width:;">INEP</th>
-							<th style="width:;">Situação</th>
+							<th style="width: 40px;"></th>
+							<th style="width: 500px;text-align: left;">Nome</th>
+							<th style="width: 200px;text-align: left;">CNPJ</th>
+							<th style="text-align: left;">Data de Fundação</th>
+							<th style="text-align: left;">INEP</th>
+							<th style="text-align: left;">Situação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -86,23 +86,23 @@ function printDiv(id)
 								<tr class='linha_registro'>
 							</g:else>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline">
 											
 												<g:if test="${perm2}">
-											<li class="btn btn-primary btn-xs btn-flat"><a
+											<div class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/escola/editarEscola/${pessoa.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${pessoa.id})"
+													class="glyphicon glyphicon-pencil"></span></a></div>
+											<div onclick="deletar(${pessoa.id})"
 												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
+												class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
 											
-											<li class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
+											<div class="btn btn-success btn-xs btn-flat"><a style="color: #fff"
 												href="/projetoMetafora/escola/verInfoEscola/${pessoa.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 	
 									</div>
 								</td>

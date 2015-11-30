@@ -32,6 +32,7 @@ class GrupoController {
 			}
 		}
 	}
+	
 	def salvar() {
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Grupo", act:"listar"])
@@ -82,7 +83,6 @@ class GrupoController {
 						println("Tabelas: "+table+"\n")
 
 						println("Permissoes: "+permission+"\n")
-
 
 
 						//salvando no banco cada objeto

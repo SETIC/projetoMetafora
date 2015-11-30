@@ -33,7 +33,6 @@ function printDiv(id)
 
 		//var endereco = "192.168.1.247";
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-		
 	
 		      function deletar(id) {
 			        var resposta = confirm("Deseja exluir este Horário?");
@@ -200,11 +199,11 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Horário</th>
-							<th>Sala</th>
-							<th>Turma Disciplina</th>
-							<th>Turma</th>
-							<th>Disciplina</th>
+							<th style="text-align: left;">Horário</th>
+							<th style="text-align: left;">Sala</th>
+							<th style="text-align: left;">Turma Disciplina</th>
+							<th style="text-align: left;">Turma</th>
+							<th style="text-align: left;">Disciplina</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -213,20 +212,20 @@ function printDiv(id)
 							<g:set var="turmaDisciplina" value="${it.turmaDisciplina}" />
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 											
 											<g:if test="${perm2}">
-											<li class="btn btn-primary btn-xs btn-flat"><a
+											<div class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/horario/editarHorario/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></li>
-											<li onclick="deletar(${it.id})"
+													class="glyphicon glyphicon-pencil"></span></a></div>
+											<div onclick="deletar(${it.id})"
 												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></li>
+												class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
 												
-										</ul>
+										</div>
 									</div>
 								</td>
 								<td>
@@ -286,10 +285,11 @@ function printDiv(id)
 										
 										<select class="form-control selectpicker" data-live-search="true" name="escola"
 												id="comboEscola"  onchange="mudarEscola();">
+												<option value="0" disabled="disabled" selected="selected">
+														Selecione uma escola</option>
 													<g:each in="${escolas}" >
-														<option value="0" disabled="disabled" selected="selected">
-														Selecione uma escola
-													</option>
+														
+													
 													<option value="${it.id}">
 														${it.pessoaJuridica.razaoSocial}
 													</option>
@@ -411,6 +411,13 @@ function printDiv(id)
 												name="cbHorario" id="cbHorario6" onclick="afixar()"
 												value="6" /> 6
 											</label>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Hora/Aula</label>
+										<div class="controls">
+											<input class="form-control" name="horaDeAula" id="horaAula" placeholder="quantidade de minutos que equivalem a 1 hora aula" />
 										</div>
 									</div>
 									<br>

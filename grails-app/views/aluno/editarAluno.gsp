@@ -84,7 +84,8 @@
 	</script>
 	<style onload="hiddenInput();"></style>
 	<section class="content">
-
+		<div class="row">
+		<div class="col-md-10 col-md-offset-1">
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">
@@ -105,7 +106,7 @@
 				<br>
 				<!-- modais-->
 				<div class="modal fade" id="twoModalsExample"
-					style="background-color: white; height: 300px;"
+					style="background-color: white; height: 500px;"
 					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
 					aria-hidden="true">
 					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
@@ -128,7 +129,7 @@
 				</div>
 				<br>
 				<div class="modal fade" id="twoModalsExample1"
-					style="background-color: white; height: 300px;"
+					style="background-color: white; height: 500px;"
 					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
 					aria-hidden="true">
 					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
@@ -150,7 +151,7 @@
 						<!--  	</g:form> -->
 					</div>
 				</div>
-				<g:form controller="Aluno" action="atualizar"
+				<g:form controller="Aluno" action="atualizar" enctype="multipart/form-data"
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<fieldset>
@@ -190,8 +191,7 @@
 								<label for="inputNome3" class="col-sm-2 control-label">Nome
 									*</label>
 								<div class="col-sm-10">
-									<input class="form-control" required name="nome" type="text"
-										style="width: 300px" value="${pessoa.nome }">
+									<input class="form-control" required name="nome" type="text" value="${pessoa.nome }">
 								</div>
 							</div>
 							<br>
@@ -434,6 +434,59 @@
 
 							</div>
 							<br>
+							
+							 <fieldset>
+         <table id="listarDocumentosAluno" class="table table-bordered">
+				<legend class="scheduler-border">Documentos</legend>
+				<thead>
+					<tr>
+						<th>Nome do Documento</th>
+						<th style="width:395px">Data</th>
+						<th>Remover</th>
+					</tr>
+					<g:each in="${documentosAluno}">
+						<tr class="info">
+							<td>
+								${it.arquivo}
+							</td>
+							<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+									date="${it.dataDocumento}" /></td>
+							<td>
+                           <a href="/projetoMetafora/aluno/removerDocumento/${it.id}"><span 
+							class="glyphicon glyphicon-remove"></span></a>
+							</td>
+						</tr>
+					</g:each>
+				</thead>
+			</table>
+         </fieldset>
+         <br>
+			<script type="text/javascript">  
+			function limparCampoFile1(){
+				document.getElementById("documentos[]").value = "";
+			}
+			
+			 $(document).ready(function(){  
+			 
+			    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+			    $("input[name='addFile1']").click(function(e){  
+			        $('#inputs_adicionais').append( input );  
+			    });  
+			 
+			    $('#inputs_adicionais').delegate('a','click',function(e){  
+			        e.preventDefault();  
+			        $(this).parent('label').remove();  
+			    });  
+			 
+                }); 
+			 
+			</script>  
+	        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+	        
+	        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+	         
+	        <fieldset id="inputs_adicionais" style="border: none">  
+       </fieldset>
 							<div class="form-group" style="margin-top: 3%;">
 								<div class="col-sm-offset-10 col-sm-2"
 									style="margin-left: 87.2%;">
@@ -444,9 +497,11 @@
 								</div>
 							</div>
 						</div>
+						
+						<!-- ENDEREÇO -->
+						
 						<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 							<h3>Endereço</h3>
-
 							<div class="form-group">
 								<label for="iCep" class="col-sm-2 control-label">CEP</label>
 								<div id="iDivInputCep" class="col-sm-10">
@@ -493,74 +548,41 @@
 								<label for="iUf" class="col-sm-2 control-label">UF</label>
 								<div class="col-sm-10">
 
-									<select name="uf" id="iUf" class="form-control">
-										<option value="AC"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if>>Acre</option>
-										<option value="AL"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AL'}"> selected </g:if>>Alagoas</option>
-										<option value="AM"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AM'}"> selected </g:if>>Amazonas</option>
-										<option value="AP"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AP'}"> selected </g:if>>Amapá</option>
-										<option value="BA"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'BA'}"> selected </g:if>>Bahia</option>
-										<option value="CE"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'CE'}"> selected </g:if>>Ceará</option>
-										<option value="DF"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if>>Distrito
-											Federal</option>
-										<option value="ES"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if>>Espírito
-											Santo</option>
-										<option value="GO"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'GO'}"> selected </g:if>>Goiás</option>
-										<option value="MA"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MA'}"> selected </g:if>>Maranhão</option>
-										<option value="MT"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if>>Mato
-											Grosso</option>
-										<option value="MS"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if>>Mato
-											Grosso do Sul</option>
-										<option value="MG"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if>>Minas
-											Gerais</option>
-										<option value="PA"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PA'}"> selected </g:if>>Pará</option>
-										<option value="PB"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PB'}"> selected </g:if>>Paraíba</option>
-										<option value="PR"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PR'}"> selected </g:if>>Paraná</option>
-										<option value="PE"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PE'}"> selected </g:if>>Pernambuco</option>
-										<option value="PI"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PI'}"> selected </g:if>>Piauí</option>
-										<option value="RJ"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if>>Rio
-											de Janeiro</option>
-										<option value="RN"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if>>Rio
-											Grande do Norte</option>
-										<option value="RO"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RO'}"> selected </g:if>>Rondônia</option>
-										<option value="RS"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if>>Rio
-											Grande do Sul</option>
-										<option value="RR"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RR'}"> selected </g:if>>Roraima</option>
-										<option value="SC"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if>>Santa
-											Catarina</option>
-										<option value="SE"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SE'}"> selected </g:if>>Sergipe</option>
-										<option value="SP"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if>>São
-											Paulo</option>
-										<option value="TO"
-											<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if>>Tocantins</option>
-									</select>
+										
+										       <select  name="uf" id="iUf" class="form-control"> 
+													<option value="AC" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if> >Acre</option> 
+													<option value="AL" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AL'}"> selected </g:if> >Alagoas</option> 
+													<option value="AM" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AM'}"> selected </g:if> >Amazonas</option> 
+													<option value="AP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AP'}"> selected </g:if> >Amapá</option> 
+													<option value="BA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'BA'}"> selected </g:if> >Bahia</option> 
+													<option value="CE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'CE'}"> selected </g:if> >Ceará</option> 
+													<option value="DF" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if> >Distrito Federal</option> 
+													<option value="ES" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if> >Espírito Santo</option> 
+													<option value="GO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'GO'}"> selected </g:if> >Goiás</option> 
+													<option value="MA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MA'}"> selected </g:if> >Maranhão</option> 
+													<option value="MT" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if> >Mato Grosso</option> 
+													<option value="MS" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if> >Mato Grosso do Sul</option> 
+													<option value="MG" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if> >Minas Gerais</option> 
+													<option value="PA" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PA'}"> selected </g:if> >Pará</option> 
+													<option value="PB" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PB'}"> selected </g:if> >Paraíba</option> 
+													<option value="PR" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PR'}"> selected </g:if> >Paraná</option> 
+													<option value="PE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PE'}"> selected </g:if> >Pernambuco</option> 
+													<option value="PI" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PI'}"> selected </g:if> >Piauí</option> 
+													<option value="RJ" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if> >Rio de Janeiro</option> 
+													<option value="RN" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if> >Rio Grande do Norte</option> 
+													<option value="RO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RO'}"> selected </g:if> >Rondônia</option> 
+													<option value="RS" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if> >Rio Grande do Sul</option> 
+													<option value="RR" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RR'}"> selected </g:if> >Roraima</option> 
+													<option value="SC" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if> >Santa Catarina</option> 
+													<option value="SE" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SE'}"> selected </g:if> >Sergipe</option> 
+													<option value="SP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if> >São Paulo</option> 
+													<option value="TO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if> >Tocantins</option> 
+												</select>
+<<<<<<< HEAD
 
-
+=======
+										
+>>>>>>> protocJadson
 								</div>
 							</div>
 							<div class="form-group">
@@ -584,7 +606,7 @@
 									</button>
 									<button style="display: inline-block;" type="submit"
 										class="btn btn-default btn-flat">
-										<a href="/projetoMetafora/aluno/listar/">Cancelar</a>
+										<a href="/projetoMetafora/aluno/pesquisarAlunos">Cancelar</a>
 								</div>
 							</div>
 						</div>
@@ -666,21 +688,19 @@
 										required="true" />
 								</div>
 							</div>
-						</div>
-						<hr />
+						 </div>
+						<hr/>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success btn-flat"
 								data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
 							<button type="button" class="btn btn-default btn-flat"
 								data-dismiss="modal">Cancelar</button>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
+        
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
@@ -694,21 +714,18 @@
 
 				if(type=="hide"){
 					console.log('Hidden inputs...');
-					//document.getElementById("comboEscola").disabled = true;
+
 					document.getElementById("comboSerie").disabled = true;
 					document.getElementById("comboTurma").disabled = true;
 					document.getElementById("numMatricula").disabled = true;
-					//document.getElementById("dataMatricula").disabled = true;
-
 					
 					}
 				else{
 					console.log('show inputs...');
-					//document.getElementById("comboEscola").disabled = false;
 					document.getElementById("comboSerie").disabled = false;
 					document.getElementById("comboTurma").disabled = false;
 					document.getElementById("numMatricula").disabled = false;
-					//document.getElementById("dataMatricula").disabled = false;
+
 					}
 
 				}
@@ -830,6 +847,8 @@
 
 			}
 		</script>
+		</div>
+		</div>
 	</section>
 </body>
 </html>

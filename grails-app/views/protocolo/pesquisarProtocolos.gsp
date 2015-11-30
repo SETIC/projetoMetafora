@@ -34,8 +34,9 @@
 
            switch(value){
            case 'numero':
+
 			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
-			  "<input type='text' name ='numeroProtocolo' id ='numeroProtocolo' required='true'/>" +
+			  "<input type='text' required = 'true' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
               break;
@@ -45,7 +46,6 @@
  	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>" +
  	 		 "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
-			  
                // newInput.innerHTML = "<input data-provide='datepicker' value='09-10-2015' language='pt-br'/>"
               break;
            
@@ -61,7 +61,6 @@
    			   "${it.nome}</option></g:each></select></div>" +
    			   "<button type='submit' class='btn btn-primary btn-flat'>" +
 			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
-            	   
               break;
            }
 			
@@ -81,6 +80,7 @@
 			<div class="form-heading" style="width:150px;">
 				<label>Tipo de Busca</label>
 				<div class="controls">
+
 					<select class="form-control selectpicker" id ="tipoBusca" name="tipoBusca" onchange = "mudarSelecao();">
 						<option value="null">SELECIONE...</option>
 						<option value="numero">NUMERO</option>
@@ -114,20 +114,16 @@
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-						
-							<th>Funções</th>
-							<th>Numero</th>
+							<th style="width:60px;padding-left:60px">Funções</th>
+							<th>Número</th>
 							<th>Data do Protocolo</th>
-							<th>Data da Emissao</th>
-							<th>Numero do Documento</th>
+							<th>Data da Emissão</th>
+							<th>Número do Documento</th>
 							<th>Assunto</th>
 							<th>Situação</th>
 						</tr>
 					</thead>
-					
 					<tbody>
-					
-				
 						<g:each in='${protocolos?}'>
 							<tr class='linha_registro'>
 								<td>
@@ -145,8 +141,6 @@
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 											</g:if>
-											
-																			
 										</ul>
 									</div>
 								</td>
@@ -173,7 +167,6 @@
 								<td>
 									${it.nome}
 								</td>
-								
 							</tr>
 						</g:each>
 					</tbody>

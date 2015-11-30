@@ -25,6 +25,7 @@ function printDiv(id)
   newWin.document.write("</table><br>");
   
   newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
+  newWin.document.write("<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg'; style='width:80px;float:left;margin-top:-9px;'>");
   newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
   newWin.document.write("<hr>");
   newWin.document.write("<style type='text/css' >");
@@ -38,7 +39,6 @@ function printDiv(id)
   var now = new Date();
 
   meses = new Array(12);
-
   meses[0] = "Janeiro";
   meses[1] = "Fevereiro";
   meses[2] = "Março";
@@ -53,7 +53,6 @@ function printDiv(id)
   meses[11] = "Dezembro";
   
   newWin.document.write ("<center style='font-size:11px;'><br/>Gerado dia " + now.getDate() + " de " + meses[now.getMonth()] + " de " + now.getFullYear() + " às " + now.getHours()+":"+now.getMinutes()+"</center>");
-
   newWin.print();
   newWin.close();
 }

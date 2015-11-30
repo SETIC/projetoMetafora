@@ -165,10 +165,7 @@ class AtividadeController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
 			if (perm2) {
-
-
 				def novaAtividade = new Atividade(params)
-
 				if (novaAtividade.save(flush:true)) {
 					listarMensagem("Atividade cadastrada com sucesso", "ok")
 				}else{

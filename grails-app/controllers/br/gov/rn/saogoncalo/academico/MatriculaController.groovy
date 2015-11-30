@@ -12,9 +12,66 @@ class MatriculaController {
 
 	def index() {
 	}
+
+	def renovarMatricula(){
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
 	
-	
-	
+			def usuario = new UsuarioController()
+		
+			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "MATRICULA", "2")
+			if(perm2){
+				// ATOS FEITOS PARA RENOVAR MATRÍCULA
+				println("aqui está o params _>>>>>> "+params)
+				def matriculaParaRenovar = Matricula.get(params.matriculaAluno);
+				matriculaParaRenovar.status = "finalizado";
+				println("id do aluno "+matriculaParaRenovar.alunoId)
+				
+				// criando nova instância de matricula
+				Matricula matricula = new Matricula()
+
+				matricula.aluno = Aluno.get(matriculaParaRenovar.alunoId)
+				matricula.turma = Turma.get(params.turma1.toInteger())
+				matricula.dataDaMatricula = params.dataDaMatricula1
+				matricula.matricula = params.matricula1
+				matricula.status = "Ativo"
+
+				def turma = Turma.findById(params.turma1)
+				def matriculados = Matricula.findAllByTurma(turma)
+
+				if(matriculados.size() >= turma.vagas){
+
+					listarMensagem("Turma não possui Vagas", "erro")
+				}else{
+
+
+					if(matricula.save(flush:true)){
+
+						def date = new Date()
+						AdministracaoController adm = new AdministracaoController()
+						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matricula.id, "CREATE", "Matricula", date)
+
+
+						//listarMensagem("Matrícula realizada com sucesso", "ok")
+						redirect(controller: "Matricula", action: "listarMensagem", params:[msg:"Aluno Matriculado com Sucesso!", tipo:"ok"])
+
+					}else{
+
+
+						listarMensagem("Erro ao salvar Matrícula", "erro")
+					}
+				}
+			}else{
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+
+
+
 	def pesquisarMatriculas(){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
@@ -31,7 +88,7 @@ class MatriculaController {
 			if (perm1 || perm2){
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
-				
+
 				def matricula
 				def alunos
 				def alunos1
@@ -39,33 +96,36 @@ class MatriculaController {
 				def series
 				def parametro = params.pesquisa
 				//session["escid"] == 0
-				if (parametro != null || parametro != ""){	
+				if (parametro != null || parametro != ""){
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
 							"    and p.id = m.aluno.id" +
-							"    and t.anoLetivo = ? "+
-							"    and p.escid = "+Long.parseLong(session["escid"].toString()) +
-							"    and m.status = 'Ativo' " +
-							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')",[ano])
+
+							"    and m.status <>'finalizado' " +
+
+							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					series = Serie.findAll()
-					
+
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"    and m.status = 'Ativo' " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
 
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid =? and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
 							"  						 from Matricula as m, Turma as t " +
 							" 					    where t.id = m.turma.id " +
-							"    and m.status = 'Ativo' " +
-							"   				     	and t.anoLetivo >= ?  ) and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " , [session["escid"],ano])
+
+							"   				     	and t.anoLetivo >= ?  ) and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"') " , [session["escid"], ano])
+
 					print("print matriculas "+ matricula )
 				}else{
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
@@ -75,14 +135,15 @@ class MatriculaController {
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
 					series = Serie.findAll()
-					
+
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"    and m.status = 'Ativo' " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
+							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
 
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid = ? and p.status = 'Ativo' " +
@@ -99,8 +160,8 @@ class MatriculaController {
 			}
 		}
 	}
-		
-		
+
+
 
 
 	def listar(){
@@ -117,7 +178,7 @@ class MatriculaController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "MATRICULA", "2")
 
 			if (perm1 || perm2) {
-				
+
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
@@ -126,7 +187,7 @@ class MatriculaController {
 				def alunos
 				def escolas
 				def alunos1
-			
+
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
 
 					//matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
@@ -135,14 +196,15 @@ class MatriculaController {
 
 					escolas = Escola.findAll()
 					def series = Serie.findAll()
-					
+
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"    and m.status = 'Ativo' " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
+							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
 
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
@@ -151,26 +213,27 @@ class MatriculaController {
 							" 					    where t.id = m.turma.id " +
 							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [ano])
-				
-					
-					
-					}else{
+
+
+
+				}else{
 
 					//matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
 					//		"  where t.id = m.turma.id " +
 					//		"  and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-				
+
 
 					alunos1 = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
-						"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
-						"    and a.id not in ( select m.aluno.id " +
-						"  						 from Matricula as m, Turma as t " +
-						" 					    where t.id = m.turma.id " +
-						"    and m.status = 'Ativo' " +
-						"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
-					
+
+							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
+							"    and a.id not in ( select m.aluno.id " +
+							"  						 from Matricula as m, Turma as t " +
+							" 					    where t.id = m.turma.id " +
+							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
+
+
 					alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a  " +
 							"  where p.id = a.id and p.escid = ?and p.escid ="+Long.parseLong(session["escid"].toString())+" and p.status = 'Ativo' " +
 							"    and a.id not in ( select m.aluno.id " +
@@ -178,13 +241,13 @@ class MatriculaController {
 							" 					    where t.id = m.turma.id " +
 							"    and m.status = 'Ativo' " +
 							"   				     	and t.anoLetivo >= ? ) " , [session["escid"], ano])
-							
+
 				}
 
 				def series = Serie.findAll()
 
 				println("Escolas - " + escolas)
-				
+
 				render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, alunos1:alunos1, series:series, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
@@ -215,8 +278,8 @@ class MatriculaController {
 				def escolas
 				tipo= params.tipo
 				msg = params.msg
-				
-				
+
+
 				if ((session["escid"] == 0) && ((session["master"] == true)) ) {
 
 					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
@@ -258,10 +321,10 @@ class MatriculaController {
 				println("Escolas - " + escolas)
 
 				if (tipo == "ok") {
-					
+
 					render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, series:series, ok:msg, perm2:perm2])
 				} else {
-				
+
 					render(view:"/matricula/listarMatricula.gsp", model:[matricula:matricula, escolas:escolas, alunos:alunos, series:series, erro:msg, perm2:perm2])
 				}
 			}else{
@@ -288,18 +351,18 @@ class MatriculaController {
 
 				//redirect(action:"listar" )
 				//listarMensagem("Matrícula excluída com sucesso ", "ok")
-				
+
 				def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "Deletar Matrícula: " + id.toString(), "DELETE", "Matricula", date)
-				
+
 				redirect(action:"listarMensagem", params:[msg:"Deletado com sucesso!", tipo:"ok"])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
-	
+
 	def editarMatricula(long id){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Matricula", act:"listar"])
@@ -393,10 +456,10 @@ class MatriculaController {
 
 			if (perm2) {
 
-                
+
 				Matricula matriculaM = new Matricula(params)
 				matriculaM.status = 'Ativo'
-                
+
 				def turma = Turma.findById(params.turma)
 				def matriculados = Matricula.findAllByTurma(turma)
 				Calendar ca = Calendar.getInstance()
@@ -414,7 +477,7 @@ class MatriculaController {
 						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matriculaM.id, "CREATE", "Matricula", date)
-	
+
 
 						//listarMensagem("Matrícula realizada com sucesso", "ok")
 						redirect(controller: "Matricula", action: "listarMensagem", params:[msg:"Aluno Matriculado com Sucesso!", tipo:"ok"])
@@ -436,7 +499,7 @@ class MatriculaController {
 		def matricula = Matricula.get(id)
 
 		def result = ["nomeAluno":matricula.aluno.cidadao.pessoaFisica.pessoa.nome, "dataAluno" : matricula.aluno.cidadao.pessoaFisica.pessoa.dataDeNascimento , "serie":matricula.turma.serie.serie,
-			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo, "nacionalidade" : matricula.aluno.cidadao.nacionalidade]		
+			"turma":matricula.turma.turma, "anoLetivo": matricula.turma.anoLetivo, "nacionalidade" : matricula.aluno.cidadao.nacionalidade]
 
 		render( result as JSON)
 

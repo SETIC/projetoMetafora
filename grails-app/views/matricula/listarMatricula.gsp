@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<script>
+	<script>
 function printDiv(id)
 {
   var divToPrint=document.getElementById(id);
@@ -24,7 +24,7 @@ function printDiv(id)
   newWin.document.write("</table>");	
   
   newWin.document.write("<h4 style='text-align:center'>${session["escname"]}</h4><br/><br/>");
-  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO FUNCIONARIO</h4>");
+  newWin.document.write("<h4 style='margin-top:-38px; text-align:center'>INFORMAÇÕES DO ALUNO</h4>");
   newWin.document.write("<hr>");
   newWin.document.write("<style type='text/css' >");
   newWin.document.write("#"+id+'{border:none; font-size: 12pt; }');
@@ -69,9 +69,11 @@ function printDiv(id)
 	var cod = document.getElementById("tipoRelatorio").value;
 		
 	switch (cod){
+	
 	case '1':
 		printRelatorioDeclaracaoVinculo()
 		break;
+		
 	default:
 		break;
 		
@@ -82,18 +84,15 @@ function printDiv(id)
 	function printRelatorioDeclaracaoVinculo()
 	{
 
-
-		
+	
 		//var endereco = "192.168.1.247";
-		
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-		
-        var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+
+		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
+
+
         var divToPrint  = document.getElementById("reportPrint");
         divToPrint.style.visibility = "visible";
-        
-        
-        
         divToPrint.innerHtml = "";
         
         $.ajax({
@@ -103,8 +102,13 @@ function printDiv(id)
             success: function(result){
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
-			    divToPrint.innerHTML +=  "<style=''>";   
-
+			    divToPrint.innerHTML  += "<style=''>";   
+		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
+		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
+		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
+		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
+		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
+		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
 			    divToPrint.innerHTML  += "<table border='0'>";
 			    divToPrint.innerHTML  += "<tr>";
         		divToPrint.innerHTML  += " <td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>";
@@ -114,14 +118,12 @@ function printDiv(id)
         		divToPrint.innerHTML  += "</td>";
         		divToPrint.innerHTML  += "</tr>";
         		divToPrint.innerHTML  += "</table>";
-
 				divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
-
 		        divToPrint.innerHTML  += "<hr>";
 		        divToPrint.innerHTML  += "<h1 style='text-align:center;margin-top:5%;'>DECLARAÇÃO</h1>";
 		        divToPrint.innerHTML  += "<p align='Justify' style='center;margin-top:30%;line-height:200%;'>";
 		        divToPrint.innerHTML  += " &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os fins que se fizerem necessários, e por nos haver sido solicitado, que ";
-		        divToPrint.innerHTML  +=  result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
+		        divToPrint.innerHTML  +=   result.nomeAluno+", nascido no dia "+dataFormatada+" , natural de __________" ;
 		        divToPrint.innerHTML  +=" ___________________________ ";
 		        divToPrint.innerHTML  +=" sendo filho de _________________________________________ e de _____________________________________ ";
 		        divToPrint.innerHTML  +=" é aluno(a) regularmente matriculado no ";
@@ -234,16 +236,18 @@ function printDiv(id)
 				</g:form>
 
 
-				<table id="listarMatricula" class="table table-striped table-hover example">
+				<table id="listarMatricula"
+					class="table table-striped table-hover example">
 					<g:if test="${!matricula?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 50px;"></th>
-							<th style="width: 280px;">Nome do Aluno</th>
-							<th style="width: 60px;">Data da Matrícula</th>
-							<th style="width: 320px;">Nome da Escola</th>
-							<th style="width: 40px;">Série</th>
-							<th style="width: 60px;">Turma</th>
+
+							<th style="width: 50px;text-align: left;"></th>
+							<th style="width: 280px;text-align: left;">Nome do Aluno</th>
+							<th style="width: 60px;text-align: left;">Data da Matrícula</th>
+							<th style="width: 320px;text-align: left;">Nome da Escola</th>
+							<th style="width: 40px;text-align: left;">Série</th>
+							<th style="width: 60px;text-align: left;">Turma</th>
 
 						</tr>
 					</thead>
@@ -252,27 +256,29 @@ function printDiv(id)
 
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes" style="width: 80px;">
+										<div style="display: inline;">
 
 
 											<g:if test="${perm2}">
 
-												<li class="btn btn-primary btn-xs btn-flat"><a
+												<div class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/matricula/editarMatricula/${it.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li onclick="deletar(${it.id})"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 
 											</g:if>
-											<li data-toggle="modal" data-target="#relatorioModal"
+											<div data-toggle="modal" data-target="#relatorioModal"
 												onclick="changeIdMatriculaParaRelatorio(${it.id});"
 												class="btn btn-warning btn-xs btn-flat"><span
-												class="glyphicon glyphicon-file"></span></li>
 
-										</ul>
+												class="glyphicon glyphicon-file"></span></div>
+
+
+										</div>
 
 									</div>
 								</td>
@@ -290,6 +296,12 @@ function printDiv(id)
 								<td>
 									${it.turma.turma}
 								</td>
+								<td style="text-align: center;"><g:if
+										test="${it.dataDaMatricula.toString().contains(ano.toString())}">
+										<span class="label label-success">Ativo</span>
+									</g:if> <g:else>
+										<span class="label label-danger">Inativo</span>
+									</g:else></td>
 
 							</tr>
 						</g:each>
@@ -303,14 +315,15 @@ function printDiv(id)
 			
 				function mudarEscola(){
 		    	  
+
 					//var endereco = "192.168.1.247";
 					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-			        var comboTurma = document.getElementById("comboTurma");
+
+					var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
-			        
 			        
 			        $.ajax({
 			            type: "GET",
@@ -324,15 +337,18 @@ function printDiv(id)
 							for (i=0;i<result.id.length;i++){
 								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 			           		}
-				        }
+				          }
 			            }
 			        });
-					
-			   }
+
+				   
 
 			  function mudarSerie(){
+
 				  //var endereco = "192.168.1.247";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+
+
 				   var comboTurma = document.getElementById("comboTurma");
 			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -355,29 +371,51 @@ function printDiv(id)
 				        }
 			            }
 			        });
+			       }
+			  function mudarSerie1(){
+				  var endereco = "localhost";
+				   var comboTurma = document.getElementById("comboTurma1");
+			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+
+			        var idEscola = document.getElementById("comboEscola1").value;
+					var idSerie = document.getElementById("comboSerie1").value;
+
+			        
+			        $.ajax({
+			            type: "GET",
+			            url: "http://"+endereco+":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="+idEscola+"&idSerie="+idSerie,
+			            dataType: "json",
+			            success: function(result){
+			            	comboTurma.options.length = 0;
+				        if (result.id.length == 0){
+				        	comboTurma.options[comboTurma.options.length] = new Option("Não há turma cadastrada", 0);
+				        }else{
+							for (i=0;i<result.id.length;i++){
+								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
+			           		}
+				        }
+			            }
+			        });
 
 			    
 			       }
+		       
 
 
 		</script>
-
-
 			<!-- Button trigger modal -->
 			<g:if test="${perm2}">
 				<button class="btn btn-primary btn-flat" data-toggle="modal"
 					data-target="#myModal">
 					<i class="fa fa-plus"></i> Realizar Matrícula
 				</button>
-													
+
 				<button class="btn btn-danger btn-flat" onClick="printDiv('listarMatricula')">
-				<i class="glyphicon glyphicon-print"></i> Imprimir
-			</button>
-				
-				
+					<i class="glyphicon glyphicon-print"></i> Imprimir
+				</button>
+
+
 			</g:if>
-
-
 			<div class="modal fade" id="relatorioModal" tabindex="-1"
 				role="dialog" aria-labelledby="relatorioModalLabel"
 				aria-hidden="true">
@@ -391,8 +429,6 @@ function printDiv(id)
 						</div>
 						<div class="modal-body">
 							<form action="" method="POST">
-
-
 								<div class="form-heading">
 									<input type="hidden" id="idMatriculaParaRelatorio" /> <label>Tipo
 										de Relatório</label>
@@ -413,6 +449,109 @@ function printDiv(id)
 					</div>
 				</div>
 			</div>
+			<!-- Modal renovação de matrícula-->
+			<g:if test="${perm2}">
+				<div class="modal fade" id="renovarMatricula" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Renovar Matrícula</h4>
+							</div>
+							<div class="modal-body">
+
+								<g:form controller="Matricula" action="renovarMatricula"
+									class="form" name="formHorario">
+									<fieldset>
+										<div class="form-heading">
+											<label>Aluno</label>
+											<div class="controls">
+												<g:textField class="form-control" name="nomeAluno" value="" />
+												<g:hiddenField name="matriculaAluno" value="" />
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Escola</label>
+											<div class="controls ">
+
+												<select class="form-control selectpicker"
+													data-live-search="true" name="escolas1" id="comboEscola1"
+													onchange="mudarEscola1();">
+													<option value="0" disabled="disabled" selected="selected">
+														Selecione uma escola</option>
+													<g:each in="${escolas?}">
+
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Série</label>
+											<div class="controls">
+
+												<select id="comboSerie1" name="series1" class="form-control "
+													onchange="mudarSerie1()">
+													<g:each in='${series?}'>
+														<option value="${it.id}">
+															${it.serie}
+														</option>
+													</g:each>
+												</select>
+
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Turma</label>
+											<div class="controls">
+												<div id="teste"></div>
+
+												<select class="form-control" name="turma1" id="comboTurma1">
+												</select>
+											</div>
+										</div>
+										<br>
+										<div class="controls">
+											<label>Nº Matrícula</label>
+											<g:textField class="form-control" name="matricula1" value="" />
+										</div>
+										<br>
+
+										<div class="form-heading">
+											<label>Data da matrícula</label>
+											<div class="controls">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" required="true" name="dataDaMatricula1"
+													value="" />
+											</div>
+										</div>
+										<br>
+
+									</fieldset>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary btn-flat">
+											<i class="fa fa-save"></i> Matricular
+										</button>
+										<input type="reset" class="btn btn btn-flat" value="Limpar">
+									</div>
+
+								</g:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</g:if>
+
 
 
 			<!-- Modal -->
@@ -465,7 +604,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -481,7 +619,6 @@ function printDiv(id)
 														</option>
 													</g:each>
 												</select>
-
 											</div>
 										</div>
 										<br>
@@ -489,7 +626,6 @@ function printDiv(id)
 											<label>Turma</label>
 											<div class="controls">
 												<div id="teste"></div>
-
 												<select class="form-control" name="turma" id="comboTurma">
 												</select>
 											</div>
@@ -519,7 +655,7 @@ function printDiv(id)
 										</button>
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
-								
+
 								</g:form>
 							</div>
 						</div>
@@ -528,10 +664,20 @@ function printDiv(id)
 			</g:if>
 		</div>
 	</section>
-	
-	<div id="reportPrint" style="visibility: hidden;">
-	
-	</div>
+
+
+	<div id="reportPrint" style="visibility: hidden;"></div>
+	<script>
+		function matriculaENomeDoAluno(matricula, nome){
+			console.log(matricula, nome);
+			var inputNomeAluno = document.getElementsByName("nomeAluno");
+			var inputHiddenMatriculaAluno = document.getElementsByName("matriculaAluno");
+			inputNomeAluno[0].value = nome;
+			inputHiddenMatriculaAluno[0].value = matricula;
+		}
+	</script>
 
 </body>
+
+
 </html>

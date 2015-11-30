@@ -7,6 +7,21 @@
 <g:javascript src="jquery.maskedinput.js" />
 </head>
 <body>
+
+<script>
+        	
+   	function verificaCheck(id){
+
+    var checkBox = document.getElementsByName("checkAnexo"); 
+    for (var i = 0; i < checkBox.length; i++){ 
+        if (checkBox[i].checked == true){ 
+        	location.href="/projetoMetafora/protocolo/removerAnexo/"+id}
+        	//alert(checkBox[i].value + " marcado.");
+      
+    }
+}
+   	   	
+         </script> 
 	<section class="content-header">
 		<h1>
 			Protocolos <small>Editar Dados</small>
@@ -33,15 +48,21 @@
 			<g:each in='${protocolo?}'>
 			</g:each>
 			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="atualizar"
+				<g:form controller="Protocolo" action="atualizar" enctype="multipart/form-data"
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
 						<div class="form-group">
-							<label for="inputNome3" class="col-sm-2 control-label">Numero</label>
+							<label for="inputNome3" class="col-sm-2 control-label">Número</label>
 							<div class="col-sm-10">
-								<input class="form-control" required name="numero" type="text"
-									style="width: 300px" value="${it.numero}" />
+								<input class="form-control" required name="numero" type="number"
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									readonly="readonly"
+								</g:if>
+								<g:else>
+									""
+								</g:else>
+								style="width: 300px" value="${it.numero}" />
 							</div>
 						</div>
 						<br>
@@ -50,9 +71,18 @@
 								do Protocolo </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataProtocolo" name="dataProtocolo"
-									required="true" />
+							<g:if test="${tipoEdicao == 'ACEITO'}">
+
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true" disabled="true"/>
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
+									required="true"/>
+								</g:else>
+
 							</div>
 						</div>
 						<br>
@@ -61,9 +91,17 @@
 								de Emissão </label>
 							<div class="col-sm-10">
 								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataEmissao" name="dataEmissao"
+
+								<g:if test="${tipoEdicao == 'ACEITO'}">
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
+									required="true" disabled="true" />
+								</g:if>
+								<g:else>
+									<g:datePicker noSelection="['':'']" precision="day"
+									class="form-control" id="iDataEmissao" name="dataEmissao"				
 									required="true" />
+								</g:else>
 							</div>
 						</div>
 						<br>
@@ -84,6 +122,7 @@
 							</div>
 						</div>
 						<br>
+
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção
 							</label>
@@ -107,7 +146,6 @@
 							</div>
 						</div>
 						<br>
-
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
 								Documento</label>
@@ -130,9 +168,65 @@
 								</select>
 							</div>
 						</div>
-						</select> 
 						<br>
+
+						<br>
+					
 					</fieldset>
+					
+					<table id="listarAnexos" class="table table-bordered">
+						<legend class="scheduler-border">Anexos</legend>
+						<thead>
+						<tbody>
+							<tr>
+								<th>Nome do Arquivo</th>
+								<th style="width:395px">Data</th>
+								<th>Remover</th>
+							</tr>
+							<g:each in="${anexos}">
+								<tr class="info">
+									<td>
+										${it.arquivo}
+									</td>
+										<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+												date="${it.dataAnexo}"/></td>
+										<td>  
+                                  <a href="/projetoMetafora/protocolo/removerAnexo/${it.id}"><span 
+													class="glyphicon glyphicon-remove"></span></a>										
+										</td>
+											</tr>
+										</g:each>
+									 </thead>
+									</tbody>
+								</table>
+								<div class="form-heading">
+										<script type="text/javascript">  
+
+										function limparCampoFile(){
+											document.getElementById("arquivo[]").value = "";
+										}
+										
+										$(document).ready(function(){  
+	                                        									 
+										    var input = '<label style="display: block"><input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
+										    $("input[name='addFile']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										}); 
+										 
+									</script>  
+							        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
+							        
+							        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+							         
+							        <fieldset id="inputs_adicionais" style="border: none">  
+							        </fieldset> 
 					<div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar

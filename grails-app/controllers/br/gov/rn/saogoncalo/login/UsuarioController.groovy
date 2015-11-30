@@ -270,8 +270,6 @@ class UsuarioController {
 
 
 				//insert
-
-				
 				
 				println("gruposUsadosGSP -- " + gruposUsadosGSP.size() + " tipo " + gruposUsadosGSP.getClass().getName() )
 				

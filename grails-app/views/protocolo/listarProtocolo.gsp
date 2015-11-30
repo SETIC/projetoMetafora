@@ -9,9 +9,12 @@
 
 
 
-function printDiv(id)
+
+function printDiv(id1, id2)
+
 {
-  var divToPrint=document.getElementById(id);
+  var divToPrint1=document.getElementById(id1);
+  var divToPrint2=document.getElementById(id2);
   newWin= window.open("");
 
   newWin.document.write("<table border='0'>");
@@ -26,7 +29,9 @@ function printDiv(id)
   
   newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
   newWin.document.write(" ");
-  newWin.document.write(divToPrint.outerHTML);
+  newWin.document.write(divToPrint1.outerHTML);
+  newWin.document.write("<hr/>");
+  newWin.document.write(divToPrint2.outerHTML);
   newWin.print();
   newWin.close();
  
@@ -71,36 +76,37 @@ function deletar(id) {
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Destino</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="text-align: left;">Número</th>
+							<th style="text-align: left;">Data do Protocolo</th>
+							<th style="text-align: left;">Data da Emissão</th>
+							<th style="text-align: left;">Destino</th>
+							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Situação</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 											</g:if>
-											<li title="Ver detalhes do protocolo"
+											<div title="Ver detalhes do protocolo"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 
 									</div>
 								</td>
@@ -109,10 +115,11 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" 
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy" 
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -126,7 +133,6 @@ function deletar(id) {
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
-
 							</tr>
 						</g:each>
 					</tbody>
@@ -135,13 +141,13 @@ function deletar(id) {
 			<br> <br>
 
 
-<script>
-function preencheCampoHidden(id){
-	var campo = document.getElementById("idProtocoloHidden");
-	campo.value = id;
-	
-}
-</script>
+			<script>
+			function preencheCampoHidden(id){
+				var campo = document.getElementById("idProtocoloHidden");
+				campo.value = id;
+				
+			}
+			</script>
 
 			<div class="box box-white">
 				<label>Protocolos Recebidos</label>
@@ -149,58 +155,60 @@ function preencheCampoHidden(id){
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
+
 							<th style="width: 60px;"></th>
-							<th>Número</th>
-							<th>Data do Protocolo</th>
-							<th>Data da Emissão</th>
-							<th>Origem</th>
-							<th>Assunto</th>
-							<th>Situação</th>
+							<th style="text-align: left;">Número</th>
+							<th style="text-align: left;">Data do Protocolo</th>
+							<th style="text-align: left;">Data da Emissão</th>
+							<th style="text-align: left;">Origem</th>
+							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Situação</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline" width="400" >
+									<div class="opcoes">
+										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
+												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
+														class="glyphicon glyphicon-pencil"></span></a></div>
 											</g:if>
 
-											<li title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+
+											<div title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+
 											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
 											<span class="glyphicon glyphicon-eye-open">
 											</span>
 											</a>
-											</li>
+											</div>
 
-											<li title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
+											<div title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
 											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
 											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.protocolo.id})">
 											</span>
 											</a>
-											</li>
+											</div>
 											
-											</ul>
-
-
+											</div>
 
 									</div>
 								</td>
-
 								<td>
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 										date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
+
 										date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
@@ -230,7 +238,7 @@ function preencheCampoHidden(id){
 			</g:if>
 
 			<button class="btn btn-danger btn-flat"
-				onClick="printDiv('listarprotocolo')">
+				onClick="printDiv('listarprotocolosEnviados', 'listarprotocolosAceitos')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
 			<!-- Modal -->
@@ -251,9 +259,9 @@ function preencheCampoHidden(id){
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
-											<label>Numero</label>
+											<label>Número</label>
 											<div class="controls">
-												<g:textField class="form-control" name="numero" value=""
+												<g:field type = "number" class="form-control" name="numero" value=""
 													required="true" />
 											</div>
 										</div>
@@ -282,9 +290,9 @@ function preencheCampoHidden(id){
 										</div>
 										<br>
 										<div class="form-heading">
-											<label>Numero do Documento</label>
+											<label>Número do Documento</label>
 											<div class="controls">
-												<g:textField class="form-control" name="numeroDocumento"
+												<g:field type="text"class="form-control" name="numeroDocumento"
 													value="" required="true" />
 											</div>
 										</div>
@@ -292,7 +300,7 @@ function preencheCampoHidden(id){
 										<div class="form-heading">
 											<label>Assunto</label>
 											<div class="controls">
-												<g:textField class="form-control" name="assunto" value=""
+												<g:textField class="form-control" name="assunto" value="" 
 													required="true" />
 											</div>
 										</div>
@@ -353,19 +361,18 @@ function preencheCampoHidden(id){
 													placeholder="Insira uma observação relacionada ao protocolo"></textarea>
 											</div>
 										</div>
+
 										<br> 
 										
 									<label>Anexo</label>
-																		
 										<script type="text/javascript">  
-
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
 										}
 										
 										$(document).ready(function(){  
 										 
-										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -375,16 +382,17 @@ function preencheCampoHidden(id){
 										        $(this).parent('label').remove();  
 										    });  
 										 
-										}); 
+						                 }); 
 										 
-										</script>  
-								        <label style="display: block"> <input type="button" name="addFile1" value="Novo Anexo" /></label>
-								        
-								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
+										</script> 
+								        <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
+								        <br />
 								        <fieldset id="inputs_adicionais" style="border: none">  
 								        </fieldset> 
-
+								        <br />
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
+								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
+								        
 									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
@@ -393,8 +401,7 @@ function preencheCampoHidden(id){
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-			</g:if>
-
+			          </g:if>
 
 			<!-- ModalTramite -->
 			<div class="modal fade" id="myModalTramite" tabindex="-1"
@@ -413,7 +420,6 @@ function preencheCampoHidden(id){
 								class="form" enctype="multipart/form-data">
 								<fieldset>
 									<div class="form-heading">
-										
 										<input type="hidden" name="protocoloHidden" id="idProtocoloHidden"/>
 										<label>Destino</label>
 										<div class="controls ">
@@ -441,38 +447,37 @@ function preencheCampoHidden(id){
 									</div>
 									<br>
 									<div class="form-heading">
-										
+
 									<label>Anexo</label>
-																		
+
 										<script type="text/javascript">  
 
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";
 										}
-										
+
 										$(document).ready(function(){  
 										 
-										    var input = '<label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile']").click(function(e){  
-										        $('#inputs_adicionais').append( input );  
+										        $('#inputs_adicionais_tramite').append( input );  
 										    });  
 										 
-										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										    $('#inputs_adicionais_tramite').delegate('a','click',function(e){  
 										        e.preventDefault();  
 										        $(this).parent('label').remove();  
 										    });  
 										 
 										}); 
 										 
-										</script>  
-								        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
-								        
-								        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
-								        <fieldset id="inputs_adicionais" style="border: none">  
+										</script>
+										<input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
+								        <br />
+								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-										
-										
+								        <br />
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
+								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
 									</div>
 									<br>
 								</fieldset>
@@ -482,13 +487,11 @@ function preencheCampoHidden(id){
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
-							
 							</g:form>
 						</div>
 					</div>
 				</div>
 			</div>
-			
 	</section>
 </body>
 </html>

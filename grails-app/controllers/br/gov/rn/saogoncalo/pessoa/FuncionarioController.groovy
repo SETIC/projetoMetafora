@@ -1,4 +1,5 @@
 package br.gov.rn.saogoncalo.pessoa
+import grails.converters.JSON
 import groovy.sql.Sql
 
 import java.sql.Driver
@@ -37,15 +38,42 @@ class FuncionarioController {
 				def cargo
 				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
 						" where p.id = f.id "+
-						"and l.cargo.id = c.id "+
-						"and p.escid = 8"+
-						"and f.id = l.funcionario.id")
-				println("aaaaaaaaaaaa"+funcionario)
+						" and l.cargo.id = c.id "+
+						" and f.id = l.funcionario.id " +
+						" order by p.id ")
+				
+				
+				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+				def props = new Properties()
+				props.setProperty("user", "admin_db_sr")
+				props.setProperty("password", "bgt54rfvcde3")
+						
+				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				def sql = new Sql(conn)
+				
+				def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
+					" from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp, " +
+					" cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h, " +
+					" educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s " +
+					" where dlpp.disciplina_id = d.id " +
+					"   and dlpp.professor_id = p.id " +
+					"   and pe.id = p.id " +
+					"   and h.turma_disciplina_id = td.id " +
+					"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
+					"   and td.turma_id = t.id " +
+					"   and s.id = t.serie_id " +
+					"   and t.ano_letivo = '2014' " +
+					"   and pe.id = 2100" + //+ id.toString() +
+					" group by d.disciplina, pe.nome, d.carga_horaria");
+				
 
-				def escolas =  Escola.findAll()
+				println("Aqui -- " + horasDisciplinas)
+				
+				def escolas = Escola.findAll()
 
 
-				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario,lotacao:lotacao,cargo:cargo,escolas:escolas])
+				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario, lotacao:lotacao, cargo:cargo, escolas:escolas, horasDisciplinas: horasDisciplinas])
+				
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -177,7 +205,7 @@ class FuncionarioController {
 				props.setProperty("password", "bgt54rfvcde3")
 
 				def endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-				
+
 				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
 				//dadosDoGrafico2();
@@ -185,7 +213,7 @@ class FuncionarioController {
 
 
 				//verificar com matriculas
-				funcionarios = sql.rows(" select p.nome, f.matricula, c.cargo, l.turno, l.funcao, l.vinculo, "+
+				funcionarios = sql.rows(" select p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
 						" (select e.nome from cadastro_unico_pessoal.pessoa e " +
 						" where e.id = p.escid ) as escola " +
 						" from cadastro_unico_pessoal.Pessoa p, cadastro_unico_pessoal.Funcionario f, " +
@@ -198,6 +226,21 @@ class FuncionarioController {
 
 				// ------------------
 
+					
+					def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
+						" from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp, " +
+						" cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h, " +
+						" educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s " +
+						" where dlpp.disciplina_id = d.id " +
+						"   and dlpp.professor_id = p.id " +
+						"   and pe.id = p.id " +
+						"   and h.turma_disciplina_id = td.id " +
+						"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
+						"   and td.turma_id = t.id " +
+						"   and s.id = t.serie_id " +
+						"   and t.ano_letivo = '2014' " +
+						"   and pe.id = 2100" + //+ id.toString() +
+						" group by d.disciplina, pe.nome, d.carga_horaria");
 
 
 
@@ -207,7 +250,7 @@ class FuncionarioController {
 
 				println("Teste : " + params + funcionarios)
 
-				render(view:"/funcionario/gerarRelatorio.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2, escolas:escolas])
+				render(view:"/funcionario/gerarRelatorio.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2, escolas:escolas, horasDisciplinas:horasDisciplinas])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -360,8 +403,6 @@ class FuncionarioController {
 					def turnoCompleto = ""
 					if (params.opcao1 != null ){
 						turnoCompleto = turnoCompleto + params.opcao1
-					}else{
-
 						turnoCompleto = turnoCompleto + ""
 					}
 					if (params.opcao2 != null ){
@@ -687,6 +728,41 @@ class FuncionarioController {
 			}
 		}
 	}
+	def  getFuncionarioByIdParaRelatorio(long id){
+		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+		def props = new Properties()
+		props.setProperty("user", "admin_db_sr")
+		props.setProperty("password", "bgt54rfvcde3")
+		List <String> lista = new ArrayList();
+
+		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+		def sql = new Sql(conn)
+		//verificar com matriculas
+		def horario= sql.rows("select p.id, p.nome, td.turma_id, dis.disciplina, hr.horario, " +
+				" hr.hora_aula, length(substring(hr.horario, 3, length(hr.horario))) as qtd " +
+				" from cadastro_unico_pessoal.pessoa as p, cadastro_unico_pessoal.professor as prof, " +
+				" educacao_academico.disciplina as dis, " +
+				" educacao_academico.disciplina_lecionada_por_professor as dlpp, " +
+				" educacao_academico.turma_disciplina as td, educacao_academico.horario as hr " +
+				" where p.id = prof.id " +
+				" and prof.id = dlpp.professor_id " +
+				" and dlpp.disciplina_id = dis.id " +
+				" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+				" and hr.turma_disciplina_id = td.id " +
+				" and p.id = "+id.toString());
+
+
+		//println("dados da lista"+horario)
+		def funcionario = Funcionario.get(id)
+		def escola = Escola.get(funcionario.cidadao.pessoaFisica.pessoa.escid)
+
+		def result = ["nomeFuncionario":funcionario.cidadao.pessoaFisica.pessoa.nome, "escola":escola.pessoaJuridica.pessoa.nome,
+			"cargaHoraria":funcionario.cargaHoraria, "cargo":funcionario.lotacao.cargo.cargo, "funcao":funcionario.lotacao.funcao,
+			"horario":horario]
+
+		render( result as JSON)
+
+	}
 
 	def deletar(int id){
 
@@ -759,7 +835,7 @@ class FuncionarioController {
 						def dataAtual=new Date()
 
 						Cargo cargo= Cargo.get(params.cargoId)
-						
+
 						if (cargo.cargo == "PROFESSOR" || cargo.cargo == "PROFESSOR PI G") {
 							def professor = new Professor()
 							professor.identificacao = ""
@@ -790,7 +866,7 @@ class FuncionarioController {
 							}
 						}
 
-						
+
 
 						Lotacao lotacao = new Lotacao()
 						lotacao.cargo= cargo

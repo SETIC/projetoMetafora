@@ -81,12 +81,12 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 65px;"></th>
-							<th style="width: 280px;">Nome</th>
-							<th style="width:;">Matricula</th>
-							<th style="width:;">Cargo</th>						
-							<th style="width:;">Vínculo</th>
-							<th style="width:;">Função</th>
-							<th style="width:65px;">Turno</th>
+							<th style="width: 280px;text-align: left;">Nome</th>
+							<th style="text-align: left;">Matricula</th>
+							<th style="text-align: left;">Cargo</th>						
+							<th style="text-align: left;">Vínculo</th>
+							<th style="text-align: left;">Função</th>
+							<th style="width:65px;text-align: left;">Turno</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -94,28 +94,28 @@ function printDiv(id)
 
 							<tr class='linha_registro'>
 								<td>
-									<div style="margin-left: -35px" class="opcoes">
-										<ul style="display: inline">
+									<div class="opcoes">
+										<div style="display: inline">
 
 											<g:if test="${perm2}">
 
-												<li title="Editar Funcionario "
+												<div title="Editar Funcionario "
 													class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></li>
-												<li title="Remover Funcionario"
+														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Remover Funcionario"
 													onclick="deletar(${it.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></li>
+													class="glyphicon glyphicon-remove"></span></div>
 
 											</g:if>
-											<li title="Ver detalhes do Funcionario"
+											<div title="Ver detalhes do Funcionario"
 												class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff"
 												href="/projetoMetafora/funcionario/verInfoFuncionario/${it.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></li>
-										</ul>
+													class="glyphicon glyphicon-eye-open"></span></a></div>
+										</div>
 									</div>
 								</td>
 								<td>
@@ -215,7 +215,7 @@ function printDiv(id)
 									</div>
 									<br>
 									<div class="form-heading">
-										<label>Vinculo </label>
+										<label>Vinculo</label>
 										<div class="controls">
 											<select class="form-control" name="vinculo">
 												<option value="EFETIVO">EFETIVO</option>
@@ -274,13 +274,14 @@ function printDiv(id)
 											<div class="form-heading">
 												<label>Turno</label>
 												<div class="controls">
-													<label class="checkbox-inline"> <input
+													<label class="checkbox-inline"><input
 														type="checkbox" name="opcao1" value="M" checked>Manhã
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao2" value="T">Tarde
-													</label> <label class="checkbox-inline"> <input
+													</label><label class="checkbox-inline"><input
 														type="checkbox" name="opcao3" value="N">Noite
 													</label>
+                                                    													
 												</div>
 												</br>
 											</div>

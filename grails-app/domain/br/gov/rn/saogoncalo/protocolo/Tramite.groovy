@@ -6,11 +6,11 @@ class Tramite {
 	Date dataRecebimento
 	FuncionarioSetor funcionarioSetorOrigem
 	FuncionarioSetor funcionarioSetorDestino
+
 	String status
 
 	static belongsTo = [protocolo:Protocolo]
 
-	
 	static constraints = {
 
 		dataDisponibilizacao blank:false, nullable:true

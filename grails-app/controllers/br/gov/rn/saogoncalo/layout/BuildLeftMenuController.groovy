@@ -197,7 +197,8 @@ class BuildLeftMenuController {
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'SITUACAO', perm)){
-			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-th-list"></i>Situação</a></li>'
+			menu+= '<li><a href="/projetoMetafora/Situacao/listarSituacao"><i class="fa fa-th-list"></i>Situacão</a></li>'
+
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
@@ -213,11 +214,13 @@ class BuildLeftMenuController {
 			verificador = true
 		}
 		if (verificaPerm('CADASTRO_UNICO_PROTOCOLO', 'PROTOCOLO', perm)){
-			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="glyphicon glyphicon-search "></i>Pesquisar Protocolos</a></li>'
+			menu+= '<li><a href="/projetoMetafora/protocolo/pesquisarProtocolos"><i class="glyphicon glyphicon-search"></i>Pesquisar Protocolos</a></li>'
+			
 			verificador = true
 		}
 
 		menu +='</ul> '  +
+
 				' </li> '
 
 		if (!verificador)
@@ -225,8 +228,6 @@ class BuildLeftMenuController {
 
 		return menu
 	}
-
-
 
 	def verificaPerm(sch, tab, perm){
 
