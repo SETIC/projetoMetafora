@@ -180,11 +180,9 @@ function mudarCombo(){
 								</tr>
 							</g:if>
 						</g:each>
-
 					</tbody>
 				</table>
 			</div>
-
 
 			<g:if test="${perm2}">
 				<!-- Button trigger modal -->
@@ -391,6 +389,7 @@ function mudarCombo(){
 												</div>
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
 												da Mãe</label>
@@ -418,6 +417,7 @@ function mudarCombo(){
 															data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
 													</div>
 												</div>
+
 											</div>
 										</div>
 										<div class="form-group">
@@ -462,12 +462,15 @@ function mudarCombo(){
 											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
-									</div>
-									</div> 
 
-									<div class="form-group">
-									    <label>Documentos</label>
-										<script type="text/javascript">  
+									   </div>
+									 </div>
+									    
+									    <div class="form-group">
+									     <label for="iEstadoCivil" class="col-sm-2 control-label"> Documentos </label>
+									         <div class="col-sm-10">
+									    <script type="text/javascript">  
+
 										function limparCampoFile1(){
 											document.getElementById("documentos[]").value = "";
 										}
@@ -694,11 +697,13 @@ function mudarCombo(){
 										</div>
 									</div>
 
+
 								</div>
 							</g:form>
 
 						</div>
 					</div>
+
 				</div>
 			</div>
 
@@ -778,10 +783,9 @@ function mudarCombo(){
 				</div>
 			</div>
 		</div>
-
-
 		<g:javascript src="script-buscar-cep.js" />
 		<!-- valida campos -->
+
 		<script type="text/javascript"> 
          //validaçao dos campos de aluno
 		

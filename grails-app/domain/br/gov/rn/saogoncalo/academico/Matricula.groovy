@@ -8,6 +8,7 @@ class Matricula {
 	String status
 	Integer nivelEspecial
 
+
 	static hasMany = [nota:Nota, frequencia:Frequencia]
 	
 	static belongsTo = [turma:Turma, aluno:Aluno]
@@ -17,7 +18,6 @@ class Matricula {
 		matricula unique:false, nullable:true, blank:true
 		status unique:false, nullable:true, blank:true
 		nivelEspecial nullable:true, blank:true
-		
 	}
 
 	static mapping = {

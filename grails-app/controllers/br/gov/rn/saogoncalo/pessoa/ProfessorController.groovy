@@ -438,10 +438,7 @@ class ProfessorController {
 							AdministracaoController adm = new AdministracaoController()
 							adm.salvaLog(session["usid"].toString().toInteger(), "professor cadastrado " + professor.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"cadastrado", "Professor", date)
 							
-
-
 						}
-						
 						
 						Cargo cargo= Cargo.findByCargo("PROFESSOR")
 						
@@ -455,7 +452,6 @@ class ProfessorController {
 						lotacao.dataInicio = new Date()
 						lotacao.dataTermino = new Date()
 						lotacao.save(flush:true)
-						
 
 
 

@@ -262,11 +262,8 @@
 								<select class="form-control selectpicker"
 									data-live-search="true" name="disciplinaLecionadaPorProfessor"
 									multiple="multiple">
-
 									<g:each in="${disc}" var="allDisc">
-										
 											<g:if test="${dlppl.contains(allDisc.id)}">
-											
 												<option value="${allDisc.id}" selected>
 													${allDisc.disciplina }
 												</option>

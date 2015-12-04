@@ -290,6 +290,7 @@ function printDiv(id)
 										date="${it.dataDaMatricula}" />
 								</td>
 
+
 								<td>
 									${it.turma.serie.serie}
 								</td>
