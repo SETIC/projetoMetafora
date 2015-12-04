@@ -237,7 +237,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número</label>
 											<div class="controls">
-												<g:field type = "number" class="form-control" name="numero" value=""
+												<g:field type = "number" class="form-control" name="numero" value="" 
 													required="true" />
 											</div>
 										</div>

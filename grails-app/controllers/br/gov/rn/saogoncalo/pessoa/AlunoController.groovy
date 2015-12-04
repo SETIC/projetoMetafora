@@ -312,7 +312,6 @@ class AlunoController {
 
 
 
-
 				/*				//atualizando reside
 				 Bairro bairro = new Bairro()
 				 bairro = Bairro.findByBairro(params.bairro.toString().toUpperCase())
@@ -365,7 +364,7 @@ class AlunoController {
 						
 						Documento documento = new Documento()
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
+						documento.arquivo = fil.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
 						documento.dataDocumento = new Date()
 						documento.aluno = aluno						
 						 if(documento.save(flush:true)){
@@ -378,7 +377,8 @@ class AlunoController {
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
 
 					listarMensagem("Aluno atualizado com sucesso", "ok")
-				}else{
+				
+				    }else{
 
 					listarMensagem("Erro ao Atualizar", "erro")
 				}
@@ -435,10 +435,6 @@ class AlunoController {
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO' ")
-
-
-
-
 
 				render (view:"/aluno/listarAluno.gsp", model:[perm2:perm2, escolas:escolas, series:series, pHomens:pHomens, pMulheres:pMulheres])
 			}else{
@@ -549,11 +545,21 @@ class AlunoController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
 			if (perm2){
-				Pessoa.deleteAll(Pessoa.get(id))
-				//redirect(action:"listar" )
-
-				//log
 				Aluno aluno  = Aluno.get(id)
+                def documentos  = Documento.findAllByAluno(aluno)
+			   for(def i = 0; i < documentos.size();i++){
+				   def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documentos[i].arquivo).delete()
+				   
+				   }
+					
+				//def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/").file.toString() + "/" + documento.arquivo).delete()
+				Pessoa.deleteAll(Aluno.get(id))
+				
+				
+				//redirect(action:"listar" )
+               
+				//log
+				
 				def date = new Date()
 				AdministracaoController adm = new AdministracaoController()
 				adm.salvaLog(session["usid"].toString().toInteger(), "aluno deletado " + aluno.cidadao.pessoaFisica.pessoa.id.toString(),"deletar", "Aluno", date)
@@ -643,7 +649,6 @@ class AlunoController {
 
 					pessoaFisica.save(flush:true)
 
-
 					pessoaFisica.errors.each{println it}
 
 					Cidadao cidadao = new Cidadao(params)
@@ -654,7 +659,7 @@ class AlunoController {
 
 					Aluno aluno = new Aluno()
 					//aluno.cidadao = cidadao
-
+                   
 					aluno.numeroDeInscricao = year+""+value
 					println("Pessoa --- " + params)
 
@@ -697,7 +702,6 @@ class AlunoController {
 						parentescoMae.parentesco = "MÃE"
 						parentescoMae.save(flush:true)
 					}
-
 
 					//endereço
 
@@ -782,8 +786,6 @@ class AlunoController {
 						}
 					}
 
-
-
 					newReside.bairro = bairro
 					newReside.logradouro = logradouro
 					newReside.pessoa = pessoa
@@ -833,7 +835,6 @@ class AlunoController {
 
 					//}
 
-
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
@@ -874,7 +875,7 @@ class AlunoController {
 	
 							Documento documento = new Documento()
 							FileUploadServiceController fc = new FileUploadServiceController()
-							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos")
+							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
 							documento.dataDocumento = new Date()
 							documento.aluno = aluno
 							
@@ -998,8 +999,6 @@ class AlunoController {
 		if (params.cpf != "0"){
 			pessoa.cpfCnpj = params.cpf
 		}
-
-
 
 		if(pessoa.save(flush:true)){
 
@@ -1152,7 +1151,7 @@ class AlunoController {
 		    aluno = Aluno.get(documento.aluno.id)
 			
 			FileUploadServiceController fil = new  FileUploadServiceController()
-		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
+		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos/" + aluno.id.toString())
 			documento.dataDocumento = new Date()
 			documento.aluno = aluno
 			if(documento.save(flush:true)){
@@ -1183,11 +1182,13 @@ class AlunoController {
 			if (perm2)
 			
 			{
-				
-		     def documento = Documento.get(id)	
+			  Documento documento = new Documento()	
+		      documento = Documento.get(id)	
 			  Aluno aluno  = new Aluno()
 			  aluno = Aluno.get(documento.aluno.id)
 			  documento.deleteAll(documento)
+			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documento.arquivo).delete()
+			  
 			  def documentosAluno = Documento.findAllByAluno(aluno)
 			  
 			  
@@ -1199,6 +1200,42 @@ class AlunoController {
 				  }
 		    	}
 			}
+	
+	    def downloadDocumento(long id) {
+	
+				println("URL --- " + grailsApplication.parentContext.getResource("/documentos/").file.toString() + "\\" + "bla.txt")
+				
+				Documento documento = Documento.get(id)
+				println("documento"+documento)
+				def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.aluno.id.toString()).file.toString() + "/" + documento.arquivo)
+				
+				/*def date = new Date()
+				AdministracaoController adm = new AdministracaoController()
+				adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo ,
+								"DOWNLOAD", "Anexo", date)*/
+				
+				if (file.exists())
+		
+				{
+		
+					response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
+					//response.setHeader("Content-disposition", "attachment;filename=\"${file.name}\"")
+					response.setHeader("Content-disposition", " attachment; filename=" + documento.arquivo )
+					response.outputStream << file.bytes
+					response.outputStream.flush()
+					response.outputStream.close()
+		
+				}
+		
+				else{
+					
+					def erros
+					documento.errors.each {erros = it}
+					print("erros: "+erros)
+					listarMensagem("Erro ao baixar o arquivo", "erro")
+				}
+			}
+	
 	     }
 
 	

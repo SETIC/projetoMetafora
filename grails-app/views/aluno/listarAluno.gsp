@@ -157,11 +157,9 @@ function mudarCombo(){
 								</tr>
 							</g:if>
 						</g:each>
-
 					</tbody>
 				</table>
 			</div>
-
 
 			<g:if test="${perm2}">
 				<!-- Button trigger modal -->
@@ -339,9 +337,7 @@ function mudarCombo(){
 								<div class="form-group">
 									<label for="iNomeDaMae" class="col-sm-2 control-label">Nome da Mãe</label>
 									<div class="col-md-10">
-										
 										<input type="hidden" name="idNomeMae" id="idNomeMaeId" value="">
-										
 										<g:textField class="form-control" id="iNomeMaeInput" name="nomeMaeInput"/>
 										<div id="iDivSelectPicker1" class="row">
 											<div class="col-sm-11">
@@ -376,10 +372,13 @@ function mudarCombo(){
 											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
-									</div>
-									 
-									    <label>Documentos</label>
-										<script type="text/javascript">  
+									   </div>
+									 </div>
+									    
+									    <div class="form-group">
+									     <label for="iEstadoCivil" class="col-sm-2 control-label"> Documentos </label>
+									         <div class="col-sm-10">
+									    <script type="text/javascript">  
 										function limparCampoFile1(){
 											document.getElementById("documentos[]").value = "";
 										}
@@ -527,7 +526,6 @@ function mudarCombo(){
 											</div>
 										</div>
 										
-										
 										<div class="form-group">
 											<label for="iEscola" class="col-sm-2 control-label">Escola</label>
 											<div class="col-sm-10">
@@ -595,11 +593,11 @@ function mudarCombo(){
 											</div>
 										</div>
 									</div>
-						</div>
-					</g:form>  
-			      </div>
-			    </div>
-			  </div>
+								</div>
+							</g:form>  
+					     </div>
+					 </div>
+				</div>
 			</div>
 			
 			<!-- Modal -->
@@ -662,9 +660,8 @@ function mudarCombo(){
 			</div>
 		</div>
 		
-		
 		<g:javascript src="script-buscar-cep.js" />
-	<!-- valida campos -->
+    	<!-- valida campos -->
 		<script type="text/javascript"> 
          //validaçao dos campos de aluno
 		

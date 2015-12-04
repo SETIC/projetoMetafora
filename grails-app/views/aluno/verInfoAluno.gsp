@@ -289,15 +289,13 @@
 												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataDocumento}" /></td>
 												<td>
-													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+												<g:link action="downloadDocumento" enctype="multipart/form-data" params="[id: it.id]">Baixar</g:link>
 
 												</td>
 											</tr>
 										</g:each>
 									</thead>
 								</table>
-						
-                      
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat" onClick="printDiv('print')">
 							<i class="glyphicon glyphicon-print"></i> Imprimir

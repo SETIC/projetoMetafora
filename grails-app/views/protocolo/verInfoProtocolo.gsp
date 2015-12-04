@@ -201,7 +201,7 @@ function printDiv(id)
 												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataAnexo}" /></td>
 												<td>
-													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+												<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]">Baixar</g:link>
 
 												</td>
 											</tr>

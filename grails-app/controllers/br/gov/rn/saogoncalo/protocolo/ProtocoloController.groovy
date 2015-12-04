@@ -164,16 +164,29 @@ class ProtocoloController {
 						println("Arquivo aqui ---+++ " + file.originalFilename)
 
 						Anexo anexo = new Anexo()
-
+						
+						/* criar a pasta com ano/mes/dia
+						Calendar calendar = Calendar.getInstance()
+				        int ano = calendar.get(Calendar.YEAR)
+						int mes = calendar.get(Calendar.MONTH)+1
+						int dia = calendar.get(Calendar.DAY_OF_MONTH)
+						
+						
+						println("ano aki+++"  +ano)
+						println("mes aki++++" +mes)
+						println("dia aki+++"  +dia) */
+					
+						
+						
+                        
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						anexo.arquivo = fil.uploadFile(file,file.originalFilename, "/anexos/${protocolo.id}")
 						anexo.dataAnexo = new Date()
 						anexo.protocolo = protocolo
 						if(anexo.save(flush:true)){
 							println("anexo salva -----")
 						}
 					}
-
 
 
 					Tramite tramite = new Tramite()
@@ -662,7 +675,6 @@ class ProtocoloController {
 
 				def funcionarioSetorDestino = FuncionarioSetor.get(params.funcionarioSetorDestinoTramite.toString().toInteger())
 				println("FuncionarioSetorDestino --- " + funcionarioSetorDestino)
-
 				def protocolo = Protocolo.get(params.protocoloHidden.toString().toInteger())
 				println("Protocolo --- " + protocolo)
 
@@ -692,22 +704,7 @@ class ProtocoloController {
 					println("observacao salva -----")
 				}
 
-				//Anexos
-
-				request.getFiles("arquivo[]").each { file ->
-
-					println("Arquivo aqui ---+++ " + file.originalFilename)
-
-					Anexo anexo = new Anexo()
-
-					FileUploadServiceController fil = new  FileUploadServiceController()
-					anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
-					anexo.dataAnexo = new Date()
-					anexo.protocolo = protocolo
-					if(anexo.save(flush:true)){
-						println("anexo salva -----")
-					}
-				}
+				
 
 				//tramite
 
@@ -717,6 +714,25 @@ class ProtocoloController {
 				tramite.funcionarioSetorDestino = funcionarioSetorDestino
 				tramite.protocolo = protocolo
 				tramite.status = "ABERTO"
+				
+				
+				//Anexos
+				
+				request.getFiles("arquivo[]").each { file ->
+
+					println("Arquivo aqui ---+++ " + file.originalFilename)
+
+					Anexo anexo = new Anexo()
+
+					FileUploadServiceController fil = new  FileUploadServiceController()
+					anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos/${tramite.protocolo.id}")
+					anexo.dataAnexo = new Date()
+					anexo.protocolo = protocolo
+					if(anexo.save(flush:true)){
+						println("anexo salva -----")
+					}
+				}
+				
 				if(tramite.save(flush:true)){
 					println("Tramite novo salvo  ----- ")
 				}
@@ -738,7 +754,7 @@ class ProtocoloController {
 
 		def anexo = Anexo.get(id)
 		println("Anexo --- " + anexo.arquivo)
-		def file = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo)
+		def file = new File(grailsApplication.parentContext.getResource("/anexos/" + anexo.protocolo.id.toString()).file.toString() + "/" + anexo.arquivo)
 		
 		/*def date = new Date()
 		AdministracaoController adm = new AdministracaoController()
@@ -798,7 +814,7 @@ class ProtocoloController {
 				//def idprotocolo = anexo.protocolo.id
 			
 				Anexo.deleteAll(anexo)
-				def deletaAnexo = new File(grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo).delete()
+				def deletaAnexo = new File(grailsApplication.parentContext.getResource("/anexos/${protocolo.id}").file.toString() + "/" + anexo.arquivo).delete()
 				
 				def anexos = Anexo.findAllByProtocolo(protocolo)
 				
@@ -835,7 +851,6 @@ class ProtocoloController {
        redirect(action:"editar" , params:[id:anexo.protocolo.id])
 		}
 	}
-    
 	
 	def downloadSampleZip() {
 		response.setContentType('APPLICATION/OCTET-STREAM')
@@ -852,8 +867,6 @@ class ProtocoloController {
 	}
 
 	def getMyFile(){
-
-
 		render file: new File ("anexos/im5.png"), fileName: 'im5.png'
 	}
 

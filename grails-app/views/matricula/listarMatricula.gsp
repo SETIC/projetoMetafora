@@ -217,7 +217,6 @@ function printDiv(id)
 							<th style="width: 50px;"></th>
 							<th style="width: 280px;">Nome do Aluno</th>
 							<th style="width: 60px;">Data da Matrícula</th>
-							<th style="width: 320px;">Nome da Escola</th>
 							<th style="width: 40px;">Série</th>
 							<th style="width: 60px;">Turma</th>
 
@@ -257,9 +256,9 @@ function printDiv(id)
 								</td>
 								<td><g:formatDate format="dd/MM/yyyy"
 										date="${it.dataDaMatricula}" /></td>
-								<td>
+								<!--  <td>
 									${it.turma.escola.pessoaJuridica.pessoa.nome}
-								</td>
+								</td>-->
 								<td>
 									${it.turma.serie.serie}
 								</td>

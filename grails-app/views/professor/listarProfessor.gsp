@@ -62,7 +62,6 @@ function printDiv(id)
 								<button style="margin-left: 36%; margin-top: -56px;" type="submit" class="btn btn-primary btn-flat">
 								<i class="fa fa-save"></i> Buscar
 							</button>
-							
 						</div>
 					</div>
 				</g:form>
@@ -109,7 +108,6 @@ function printDiv(id)
 												href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li>
 										</ul>
-	
 									</div>
 								</td>
 								<td>
@@ -277,7 +275,6 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-
 
 									<div class="form-heading">
 										<label>Disciplinas</label>

@@ -144,15 +144,12 @@
 							data-dismiss="twoModalsExample1" class="btn btn-success btn-flat"
 							onclick="salvarMae()">Cadastrar</button>
 
-
 						<!--  	</g:form> -->
 					</div>
 				</div>
-				<g:form controller="Aluno" action="atualizar" enctype="multipart/form-data"
-					class="form-horizontal">
+				<g:form controller="Aluno" action="atualizar" enctype="multipart/form-data" class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<fieldset>
-
 						<div class="row">
 							<div class="progress" id="progress1">
 								<div class="progress-bar" role="progressbar" aria-valuenow="20"
@@ -161,8 +158,7 @@
 									class="progress-completed">0%</span>
 							</div>
 						</div>
-						<div class="row"
-							style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);">
+						<div class="row" style="box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);">
 							<div class="step">
 								<div id="div1" class="col-md-6 mouse-point activestep"
 									onclick="javascript: resetActive(div1, event, 0, 'step-1');">
@@ -182,8 +178,6 @@
 						</div>
 						<div class="activeStepInfo" id="step-1" style="margin-top: 2%;">
 							<h3>Identificação</h3>
-
-
 							<div class="form-group">
 								<label for="inputNome3" class="col-sm-2 control-label">Nome *</label>
 								<div class="col-sm-10">
@@ -293,16 +287,12 @@
 														<option value="${it.id}" selected>
 															${it.nome}
 														</option>
-
 													</g:if>
 													<g:else>
-
 														<option value="${it.id}">
 															${it.nome}
 														</option>
-
 													</g:else>
-
 												</g:each>
 											</select>
 										</div>
@@ -430,11 +420,11 @@
 
 							</div>
 							<br>
-							
+							<br>
 							 <fieldset>
-         <table id="listarDocumentosAluno" class="table table-bordered">
-				<legend class="scheduler-border">Documentos</legend>
-				<thead>
+			       <table id="listarDocumentosAluno" class="table table-bordered">
+					<legend class="scheduler-border">Documentos</legend>
+				   <thead>
 					<tr>
 						<th>Nome do Documento</th>
 						<th style="width:395px">Data</th>
