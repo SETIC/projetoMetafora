@@ -286,10 +286,7 @@ class ProfessorController {
 						}
 					}
 
-
-
 				}else{
-
 
 					idDisc = disciplinaNovo
 
@@ -304,10 +301,8 @@ class ProfessorController {
 						professorDisciplina.situacao = "ATIVA"
 
 						professorDisciplina.save(flush:true)
-
      
 					}
-
 
 				}
 				

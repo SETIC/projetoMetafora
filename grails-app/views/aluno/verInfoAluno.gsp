@@ -282,6 +282,66 @@
 							</div>
 						</div>
 						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgNumero}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Data de emissão </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgDataDeEmissao}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Orgão expedidor </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgOrgaoExpeditor}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label">Cor/Raça </label>
+							<div class="col-sm-10">
+							
+								${pessoaFisica.cor}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label">Necessidades Especiais</label>
+							<div class="col-sm-10">
+							
+								<g:each in="${pessoaFisicaNecessidadesEspeciais}">
+									${it.necessidadesEspeciais.descricao} <br>								
+																	
+								</g:each>
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						
                       </fieldset>
                       
                       <table id="listarDocumentosAluno" class="table table-bordered">

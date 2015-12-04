@@ -295,7 +295,7 @@ function printDiv(id)
 											<g:select class="form-control selectpicker"
 												data-live-search="true" 
 												name="disciplinaProf" multiple="multiple"
-												from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
+												from="${br.gov.rn.saogoncalo.academico.Disciplina.list()}"
 												value="${id}" optionKey="id" optionValue="disciplina" />
 										</div>
 									</div>

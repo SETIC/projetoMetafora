@@ -242,12 +242,13 @@ function printDiv(id)
 					<thead>
 						<tr>
 
-							<th style="width: 50px;text-align: left;"></th>
+							<th style="width: 80px;text-align: left;"></th>
 							<th style="width: 280px;text-align: left;">Nome do Aluno</th>
-							<th style="width: 60px;text-align: left;">Data da Matrícula</th>
-							<th style="width: 320px;text-align: left;">Nome da Escola</th>
-							<th style="width: 40px;text-align: left;">Série</th>
+							<th style="width: 90px;text-align: left;">Data da Matrícula</th>
+							<th style="width: 60px;text-align: left;">Série</th>
 							<th style="width: 60px;text-align: left;">Turma</th>
+							<th style="width: 20px;text-align: left;">Nível Especial</th>
+							<th style="width: 20px;text-align: left;"> </th>
 
 						</tr>
 					</thead>
@@ -286,22 +287,26 @@ function printDiv(id)
 									${it.aluno.cidadao.pessoaFisica.pessoa.nome}
 								</td>
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataDaMatricula}" /></td>
-								<td>
-									${it.turma.escola.pessoaJuridica.pessoa.nome}
+										date="${it.dataDaMatricula}" />
 								</td>
+
 								<td>
 									${it.turma.serie.serie}
 								</td>
 								<td>
 									${it.turma.turma}
 								</td>
-								<td style="text-align: center;"><g:if
+								<td>
+									${it.nivelEspecial}
+								</td>
+								<td style="text-align: center;">
+									<g:if
 										test="${it.dataDaMatricula.toString().contains(ano.toString())}">
 										<span class="label label-success">Ativo</span>
 									</g:if> <g:else>
 										<span class="label label-danger">Inativo</span>
-									</g:else></td>
+									</g:else>
+								</td>
 
 							</tr>
 						</g:each>
@@ -340,6 +345,7 @@ function printDiv(id)
 				          }
 			            }
 			        });
+				}
 
 				   
 
@@ -350,7 +356,7 @@ function printDiv(id)
 
 
 				   var comboTurma = document.getElementById("comboTurma");
-			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+			       comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
@@ -372,6 +378,7 @@ function printDiv(id)
 			            }
 			        });
 			       }
+		       
 			  function mudarSerie1(){
 				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma1");
@@ -399,6 +406,7 @@ function printDiv(id)
 
 			    
 			       }
+				
 		       
 
 
@@ -647,6 +655,13 @@ function printDiv(id)
 											</div>
 										</div>
 										<br>
+										
+										<div class="controls">
+											<label>Nível Especial</label>
+											<g:field class="form-control" name="nivelEspecial" value="" type="number" />
+										</div>
+										<br>										
+										
 
 									</fieldset>
 									<div class="modal-footer">

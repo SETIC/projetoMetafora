@@ -160,13 +160,23 @@ function mudarCombo(){
 										${pessoa.cpfCnpj}
 									</td>
 									<td><g:formatDate format="dd/MM/yyyy"
-											date="${pessoa.dataDeNascimento}" /></td>
+											date="${pessoa.dataDeNascimento}" />
+									</td>
 									<td>
 										${pessoaFisica.sexo}
 									</td>
 									<td>
 										${cidadao.estadoCivil}
 									</td>
+													
+										<td style="text-align: center;"><g:if
+											test="${pessoa.status == 'Ativo'}">
+											<span class="label label-success">Ativo</span>
+										</g:if> <g:else>
+											<span class="label label-danger">Inativo</span>
+										</g:else></td>
+								
+									
 								</tr>
 							</g:if>
 						</g:each>
@@ -213,9 +223,9 @@ function mudarCombo(){
 											<div class="progress-bar" role="progressbar"
 												aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
 												style="width: 0%;"></div>
-											<span class="progress-type">Progresso Geral</span> <span
-												class="progress-completed">0%</span>
-
+												<span class="progress-type">Progresso Geral</span> <span
+													class="progress-completed">0%</span>
+											</div>
 										</div>
 									</div>
 									<div class="row"
@@ -277,16 +287,10 @@ function mudarCombo(){
 											<label for="iRG" class="col-sm-2 control-label">RG</label>
 											<div class="col-sm-10">
 												<g:textField class="form-control" id="iRG"
-													name="rG" placeholder="RG" />
+													name="rgNumero" placeholder="RG" />
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="iComplementoDaIdentidade" class="col-sm-2 control-label">Complemento da Identidade</label>
-											<div class="col-sm-10">
-												<g:textField class="form-control" id="iComplementoDaIdentidade"
-													name="complementoDaIdentidade" placeholder="Complemento da Identidade" />
-											</div>
-										</div>
+										<br>
 										<div class="form-group">
 											<label for="iOrgaoEmissorDaIdentidade" class="col-sm-2 control-label">Órgão Emissor da Identidade</label>
 											<div class="col-sm-10">
@@ -294,40 +298,7 @@ function mudarCombo(){
 													name="orgaoEmissorDaIdentidade" placeholder="Órgão Emissor da Identidade" />
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="iUfDaIdentidade" class="col-sm-2 control-label">UF da Identidade</label>
-											<div class="col-sm-10">
-												<select name="estado" name="ufDaIdentidade" id="iUfDaIdentidade" class="form-control"> 
-													<option value="AC">Acre</option> 
-													<option value="AL">Alagoas</option> 
-													<option value="AM">Amazonas</option> 
-													<option value="AP">Amapá</option> 
-													<option value="BA">Bahia</option> 
-													<option value="CE">Ceará</option> 
-													<option value="DF">Distrito Federal</option> 
-													<option value="ES">Espírito Santo</option> 
-													<option value="GO">Goiás</option> 
-													<option value="MA">Maranhão</option> 
-													<option value="MT">Mato Grosso</option> 
-													<option value="MS">Mato Grosso do Sul</option> 
-													<option value="MG">Minas Gerais</option> 
-													<option value="PA">Pará</option> 
-													<option value="PB">Paraíba</option> 
-													<option value="PR">Paraná</option> 
-													<option value="PE">Pernambuco</option> 
-													<option value="PI">Piauí</option> 
-													<option value="RJ">Rio de Janeiro</option> 
-													<option value="RN" selected>Rio Grande do Norte</option> 
-													<option value="RO">Rondônia</option> 
-													<option value="RS">Rio Grande do Sul</option> 
-													<option value="RR">Roraima</option> 
-													<option value="SC">Santa Catarina</option> 
-													<option value="SE">Sergipe</option> 
-													<option value="SP">São Paulo</option> 
-													<option value="TO">Tocantins</option> 
-												</select>
-											</div>
-										</div>
+										<br>
 										<div class="form-group">
 											<label for="iDataDaExpedicaoDaIdentidade" class="col-sm-2 control-label">Data
 												de Expedição da Identidade </label>
@@ -450,80 +421,28 @@ function mudarCombo(){
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade
-												*</label>
+											<label for="iCorRaca" class="col-sm-2 control-label">Cor/Raça</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNacionalidade"
-													name="nacionalidade" placeholder="Nacionalidade"
-													required="true" />
-											</div>
-										</div>
-
-
-										<div class="form-group">
-											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
-												Civil *</label>
-											<div class="col-sm-10">
-												<select class="form-control" id="iEstadoCivil"
-													name="estadoCivil" required="true">
-													<option value="null" selected disabled>Selecione...</option>
-													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-													<option value="CASADO(A)">CASADO(A)</option>
-													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												<select name="corRaca" id="iCorRaca" class="form-control"> 
+													<option value="Branca">Branca</option> 
+													<option value="Amarela">Amarela</option> 
+													<option value="Preta">Preta</option> 
+													<option value="Parda">Parda</option> 
+													<option value="Indigena">Indigena</option> 
+													<option value="Não Declarada" selected>Não Declarada</option>
 												</select>
 											</div>
 										</div>
-										
 
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iCorRaca" class="col-sm-2 control-label">Cor/Raça</label>
-									<div class="col-sm-10">
-										<select name="estado" name="corRaca" id="iCorRaca" class="form-control"> 
-											<option value="Branca">Branca</option> 
-											<option value="Amarela">Amarela</option> 
-											<option value="Preta">Preta</option> 
-											<option value="Parda">Parda</option> 
-											<option value="Indigena">Indigena</option> 
-											<option value="Não Declarada" selected>Não Declarada</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Deficiência?**</label>
-									<div class="col-sm-10 radio" style="padding-top: 0px;">
-										<label for="iDeficienciaNao" class="radio-inline"> <input
-											type="radio" name="deficiencia" id="iDeficienciaNao"
-											value="N" checked> Não
-										</label>
-										<label for="iDeficienciaSim" class="radio-inline"> <input
-											type="radio" name="deficiencia" id="iDeficienciaSim"
-											value="S"> Sim
-										</label> 
-									</div>
-									<label class="col-sm-offset-2 col-sm-10 control-label" style="font-weight: initial; text-align: left;">** Aluno com deficiência, transtorno global do desenvolvimento ou altas habilidades/superdotação.</label>
-								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Tipos de Deficiência</label>
 									<div class="col-sm-10 controls">
-										<select class="form-control selectpicker" multiple>
-											  <option>Baixa visão</option>
-										      <option>Cegueira</option>
-										      <option>Deficiência auditiva</option>
-										      <option>Deficiência física</option>
-										      <option>Deficiência intelectual</option>
-										      <option>Surdez</option>
-										      <option>Surdocegueira</option>
-										      <option>Deficiências multiplas</option>
-										      <option data-divider="true"></option>
-										      <option>Autismo infantil</option>
-										      <option>Síndrome de Asperger</option>
-										      <option>Síndrome de Rett</option>
-										      <option>Transtorno desintegrativo da infância</option>
-										      <option data-divider="true"></option>
-										      <option>Altas habilidades/Superdotação</option>
+										<select class="form-control selectpicker" name="necessidadesEspeciais" multiple="multiple" >
+										
+										<g:each in='${necessidadesEspeciais?}'>
+											<option value="${it.id}"> ${it.descricao} </option>
+										</g:each>      
+										      
 										</select>
 									</div>
 								</div>
@@ -544,8 +463,9 @@ function mudarCombo(){
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
 									</div>
-									 
+									</div> 
 
+									<div class="form-group">
 									    <label>Documentos</label>
 										<script type="text/javascript">  
 										function limparCampoFile1(){
@@ -554,7 +474,7 @@ function mudarCombo(){
 										
 										 $(document).ready(function(){  
 										 
-										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+										    var input = ' <div class="form-group">  <label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label></div>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -567,6 +487,7 @@ function mudarCombo(){
 						                 }); 
 										 
 										</script>  
+										
 								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
 								        
 								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>

@@ -6,6 +6,7 @@ class Matricula {
 	Date dataDaMatricula
 	String matricula
 	String status
+	Integer nivelEspecial
 
 	static hasMany = [nota:Nota, frequencia:Frequencia]
 	
@@ -15,6 +16,8 @@ class Matricula {
 		dataDaMatricula nullable:false, blank:false
 		matricula unique:false, nullable:true, blank:true
 		status unique:false, nullable:true, blank:true
+		nivelEspecial nullable:true, blank:true
+		
 	}
 
 	static mapping = {

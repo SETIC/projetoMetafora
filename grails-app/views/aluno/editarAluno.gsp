@@ -435,6 +435,72 @@
 							</div>
 							<br>
 							
+							<div class="form-group">
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">RG</label>
+								<div class="col-sm-10">
+									<g:textField class="form-control" required="true" name="rgNumero" style="width: 300px"
+										value="${cidadao.rgNumero}" />
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">RG - Data de emissão</label>
+								<div class="col-sm-10">
+									<g:textField class="form-control" required="true" name="rgDataDeEmissao" style="width: 300px"
+										value="${cidadao.rgDataDeEmissao}" />
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">RG - Orgao Expedidor</label>
+								<div class="col-sm-10">
+									<g:textField class="form-control" required="true" name="rgOrgaoExpedidor" style="width: 300px"
+										value="${cidadao.rgOrgaoExpeditor}" />
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputnacionalidade3" class="col-sm-2 control-label">Cor/Raça</label>
+								<div class="col-sm-10">
+									<g:textField class="form-control" required="true" name="cor" style="width: 300px"
+										value="${pessoaFisica.cor}" />
+								</div>
+							</div>
+							<br>
+			
+								
+							<div class="form-group" style="min-height: 50px;">
+							<label for="inputdlpp3" class="col-sm-2 control-label">Tipos de Deficiência</label>
+							<div class="col-sm-10">
+								<select class="form-control selectpicker"
+									data-live-search="true" name="necessidadesEspeciais" multiple="multiple">
+
+									<g:each in="${necessidadesEspeciais}" var="allNe">
+										
+											<g:if test="${pfne.contains(allNe.id)}">
+											
+												<option value="${allNe.id}" selected>
+													${allNe.descricao }
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${allNe.id}">
+													${allNe.descricao }
+												</option>
+											</g:else>
+										
+									</g:each>					
+
+								</select>
+							</div>
+						</div>
+							
+							
+							
+							
 							 <fieldset>
          <table id="listarDocumentosAluno" class="table table-bordered">
 				<legend class="scheduler-border">Documentos</legend>
@@ -578,11 +644,6 @@
 													<option value="SP" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if> >São Paulo</option> 
 													<option value="TO" <g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if> >Tocantins</option> 
 												</select>
-<<<<<<< HEAD
-
-=======
-										
->>>>>>> protocJadson
 								</div>
 							</div>
 							<div class="form-group">
@@ -704,6 +765,7 @@
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
+		
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
@@ -808,10 +870,10 @@
 							comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 		           		}
 			        }
-		            }
-		        });
+		            });
+		        }
 				
-		   }
+		   
 
 		  function mudarSerie(){
 			  //var endereco = "192.168.1.247";
@@ -826,10 +888,7 @@
 				$
 						.ajax({
 							type : "GET",
-							url : "http://"
-									+ endereco
-									+ ":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola="
-									+ idEscola + "&idSerie=" + idSerie,
+							url : "http://" + endereco + ":8080/projetoMetafora/turma/getTurmaByEscolaAndSerie?idEscola=" + idEscola + "&idSerie=" + idSerie,
 							dataType : "json",
 							success : function(result) {
 								comboTurma.options.length = 0;
@@ -846,6 +905,7 @@
 						});
 
 			}
+			
 		</script>
 		</div>
 		</div>

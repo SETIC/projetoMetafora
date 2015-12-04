@@ -193,6 +193,15 @@
 								name="matricula" value="${matriculas.matricula}" />
 						</div>
 						<br>
+						
+						<div class="controls">
+							<label>Nível Especial</label>
+							<g:field class="form-control" 
+								name="nivelEspecial" value="${matriculas.nivelEspecial}" type="number"/>
+						</div>
+						<br>
+						
+						
 
 					</fieldset>
 					<div style="margin: 0 15% auto">

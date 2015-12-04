@@ -38,6 +38,7 @@ class MatriculaController {
 				matricula.dataDaMatricula = params.dataDaMatricula1
 				matricula.matricula = params.matricula1
 				matricula.status = "Ativo"
+				matricula.nivelEspecial = params.nivelEspecial
 
 				def turma = Turma.findById(params.turma1)
 				def matriculados = Matricula.findAllByTurma(turma)
@@ -410,6 +411,7 @@ class MatriculaController {
 				matricula.turma = turma
 				matricula.dataDaMatricula = new Date()
 				matricula.matricula = params.matricula
+				matricula.nivelEspecial = params.nivelEspecial.toString().toInteger()
 
 				//def matriculas = Matricula.findAll()
 				Calendar ca = Calendar.getInstance()
@@ -459,6 +461,7 @@ class MatriculaController {
 
 				Matricula matriculaM = new Matricula(params)
 				matriculaM.status = 'Ativo'
+				matriculaM.nivelEspecial = params.nivelEspecial.toString().toInteger()
 
 				def turma = Turma.findById(params.turma)
 				def matriculados = Matricula.findAllByTurma(turma)

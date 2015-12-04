@@ -9,11 +9,17 @@ class Cidadao {
 	String estadoCivil
 	String profissao
 	
+	Date rgDataDeEmissao
+	String rgOrgaoExpeditor
+	
 	static constraints = {
 		nacionalidade blank:false, nullable:true
 		estadoCivil blank:false, nullable:false
 		profissao blank:false, nullable:true
 		rgNumero blank:true, nullable:true
+		rgDataDeEmissao blank:true, nullable:true
+		rgOrgaoExpeditor blank:true, nullable:true
+		
 		
 	}
 	

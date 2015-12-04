@@ -7,8 +7,10 @@ class PessoaFisica {
 	String rcNomeDoLivro
 	String rcFolhaDoLivro
 	String sexo
+	String cor
 
-	static hasMany = [parentesco:Parentesco]
+
+	static hasMany = [parentesco:Parentesco, pessoaFisicaNecessidadesEspeciais:PessoaFisicaNecessidadesEspeciais]
 	
 	static constraints = {
 	
@@ -17,6 +19,8 @@ class PessoaFisica {
 		rcNomeDoLivro blank:true, nullable:true
 		rcFolhaDoLivro blank:true, nullable:true
 		sexo blank:false, nullable:true
+		cor blank:true, nullable:true
+
 		
 		}
 	

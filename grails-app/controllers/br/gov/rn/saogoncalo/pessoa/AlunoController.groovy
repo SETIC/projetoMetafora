@@ -88,8 +88,16 @@ class AlunoController {
 
 				println("objeto parentescoPai aquiiiiiiiiiiiiiii------ "+parentescoPai)
 				println("objeto parentescoMae aquiiiiiiiiiiiiiii------ "+parentescoMae)
+				
+				PessoaFisica pessoaFisica = PessoaFisica.get(id)
+				def pessoaFisicaNecessidadesEspeciais = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
+				
+				def pfne = pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais.id
+				
+				def necessidadesEspeciais = NecessidadesEspeciais.findAll()
 
-				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae , documentosAluno:documentosAluno])
+				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae , 
+					    documentosAluno:documentosAluno, pfne:pfne, necessidadesEspeciais:necessidadesEspeciais])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -356,24 +364,127 @@ class AlunoController {
 
 				//def alunos = Aluno.findAll()
 				//def alunos = Aluno.executeQuery(" select a from Pessoa as p, Aluno as a where p.id = a.id and p.escid = ?",[session["escid"]])
+				
+				
+				//------------- Necessidades Especiais -----------------
+				
+				
+				def pfne = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
+				def dp = pfne.necessidadesEspeciais.id
+				def necessidadesEspeciaisNovo = params.necessidadesEspeciais
+				def idNe
+				
+				
+				//---- Insert -----
+				
+				if (necessidadesEspeciaisNovo.getClass() != java.lang.String) 
+				{
+
+					for (int i=0; i<necessidadesEspeciaisNovo.size(); i++){
+
+						idNe = necessidadesEspeciaisNovo[i]
+
+						if (!dp.contains(idNe.toLong())){
+							
+
+							def necessidadesEspeciais = NecessidadesEspeciais.get(idNe)
+							PessoaFisicaNecessidadesEspeciais pessoaFisicaNecessidadesEspeciais = new PessoaFisicaNecessidadesEspeciais()
+							pessoaFisicaNecessidadesEspeciais.pessoaFisica = pessoaFisica
+							pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais = necessidadesEspeciais
+							pessoaFisicaNecessidadesEspeciais.observacao = ""
+							
+							pessoaFisicaNecessidadesEspeciais.save(flush:true)
+
+
+						}
+					}
+
+				}else{
+
+					idNe = necessidadesEspeciaisNovo
+
+					if (!dp.contains(idNe.toLong())){
+						
+							def necessidadesEspeciais = NecessidadesEspeciais.get(idNe)
+							PessoaFisicaNecessidadesEspeciais pessoaFisicaNecessidadesEspeciais = new PessoaFisicaNecessidadesEspeciais()
+							pessoaFisicaNecessidadesEspeciais.pessoaFisica = pessoaFisica
+							pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais = necessidadesEspeciais
+							pessoaFisicaNecessidadesEspeciais.observacao = ""
+							
+							pessoaFisicaNecessidadesEspeciais.save(flush:true)
+	 
+					}
+
+				}
+				
+				// ---------------
+				
+				
+				// --- Delete ---
+				if (necessidadesEspeciaisNovo.getClass() != java.lang.String) {
+					for (int i=0; i<dp.size(); i++){
+
+						def cont = 0
+						for (int j = 0;j<necessidadesEspeciaisNovo.size(); j++) {
+							if (dp[i].toString() == necessidadesEspeciaisNovo[j].toString()){
+								cont = cont+1
+							}
+							idNe = dp[i]
+						}
+
+						if (cont == 0){
+							def necessidadesEspeciais = NecessidadesEspeciais.get(idNe)
+							def neDel = PessoaFisicaNecessidadesEspeciais.findByNecessidadesEspeciaisAndPessoaFisica(necessidadesEspeciais, pessoaFisica)
+
+							neDel.delete()
+						}
+					}
+				}else {
+					for (int i=0; i<dp.size(); i++){
+						def cont = 0
+						if (dp[i].toString() == necessidadesEspeciaisNovo){
+							cont = cont+1
+						}
+						idNe = dp[i]
+
+						if (cont == 0){
+							
+							def necessidadesEspeciais = NecessidadesEspeciais.get(idNe)
+							def neDel = PessoaFisicaNecessidadesEspeciais.findByNecessidadesEspeciaisAndPessoaFisica(necessidadesEspeciais, pessoaFisica)
+							
+
+							neDel.delete()
+						}
+					}
+				}
+				
+				//-----------------------
+				
+				//------------------------------------------------------
+				
+				
+				
+				
+				
+				
 
 				if(aluno.save(flush:true)){
-					
+
 					//salvar documento
 					println("documento akiiiiiiii" +aluno)
 					request.getFiles("documentos[]").each { file ->
 						println("documento do atualizar akikkkkkk ---+++ " + file.originalFilename)
-						
+
 						Documento documento = new Documento()
 						FileUploadServiceController fil = new  FileUploadServiceController()
 						documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
 						documento.dataDocumento = new Date()
-						documento.aluno = aluno						
-						 if(documento.save(flush:true)){
+						documento.aluno = aluno
+						if(documento.save(flush:true)){
 							println("documento salvo -----")
-						  }
+						}
 					}
-					
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
@@ -410,6 +521,8 @@ class AlunoController {
 
 				def series = Serie.findAll()
 
+				def necessidadesEspeciais = NecessidadesEspeciais.findAll()
+
 
 				//def pessoas = Pessoa.executeQuery(" select p from Pessoa p " +
 				//			                      "  where p.id not in (select e.id from Escola e) ")
@@ -441,7 +554,7 @@ class AlunoController {
 
 
 
-				render (view:"/aluno/listarAluno.gsp", model:[perm2:perm2, escolas:escolas, series:series, pHomens:pHomens, pMulheres:pMulheres])
+				render (view:"/aluno/listarAluno.gsp", model:[perm2:perm2, escolas:escolas, series:series, pHomens:pHomens, pMulheres:pMulheres, necessidadesEspeciais:necessidadesEspeciais])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -589,13 +702,18 @@ class AlunoController {
 				Parentesco parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "MÃE")
 
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				
-                def documentosAluno  = Documento.findAllByAluno(alunos)
-				
+
+				def documentosAluno  = Documento.findAllByAluno(alunos)
+
 				println("Reside -- " + reside)
+				
+				
+				PessoaFisica pessoaFisica = PessoaFisica.get(id)
+				def pessoaFisicaNecessidadesEspeciais = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
 
 
-				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside , documentosAluno:documentosAluno])
+				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside , 
+					    documentosAluno:documentosAluno, pessoaFisicaNecessidadesEspeciais:pessoaFisicaNecessidadesEspeciais])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -631,9 +749,10 @@ class AlunoController {
 
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
+					pessoaFisica.cor = params.corRaca
+					//pessoaFisica.necessidadesEspeciais = params.deficiencia
 
-
-					/*					PessoaFisica.withTransaction{ status ->
+					 /* PessoaFisica.withTransaction{ status ->
 					 try{
 					 pessoaFisica.save(flush:true)
 					 }catch(Exception exp){
@@ -642,13 +761,54 @@ class AlunoController {
 					 }
 					 }*/
 
-					pessoaFisica.save(flush:true)
+					if(pessoaFisica.save(flush:true)){
+						println("params akiiii" +params)
+						if(params.deficiencia == "S"){
+							//adicionar necessidades Especiais
+	
+							for (var in params.necessidadesEspeciais) {
+	
+								def necessidadesEspeciais = NecessidadesEspeciais.get(var.toString().toInteger())
+							    PessoaFisicaNecessidadesEspeciais pessoaFisicaNecessidadesEspeciais = new PessoaFisicaNecessidadesEspeciais()
+								println("necessidaespecia " +var)
+								
+								pessoaFisicaNecessidadesEspeciais.pessoaFisica = pessoaFisica
+								pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais = necessidadesEspeciais
+								pessoaFisicaNecessidadesEspeciais.observacao = ""
+								println("pessoa fisica  akiiii " + pessoaFisica)
+								
+					            			
+								if(pessoaFisicaNecessidadesEspeciais.save(flush:true)){
+									
+									def date = new Date()
+									AdministracaoController adm = new AdministracaoController()
+									adm.salvaLog(session["usid"].toString().toInteger(), "PessoaFisicaNecessidadesEspeciais " + 
+										         pessoaFisicaNecessidadesEspeciais.id.toString(),"cadastrado", "PessoaFisicaNecessidadesEspeciais", date)
+									
+								}else{
+									pessoaFisicaNecessidadesEspeciais.errors.each{println it}
+								
+								}
+	
+							}
+	
+						}
+										
+					}else{
+					pessoaFisica.errors.each{println it}
+					
+					
+					}
 
-
+					 
 					pessoaFisica.errors.each{println it}
 
 					Cidadao cidadao = new Cidadao(params)
 					cidadao.pessoaFisica = pessoaFisica
+					cidadao.rgNumero = params.rgNumero
+					cidadao.rgDataDeEmissao = params.dataDaExpedicaoDaIdentidade
+					cidadao.rgOrgaoExpeditor = params.orgaoEmissorDaIdentidade
+
 					cidadao.save(flush:true)
 					cidadao.errors.each{println it}
 
@@ -704,7 +864,7 @@ class AlunoController {
 
 					TipoLogradouro tipoLogradouro = new TipoLogradouro()
 					Logradouro logradouro = new Logradouro()
-					
+
 					Bairro bairro = new Bairro()
 					Municipio municipio = new Municipio()
 					Estado estado = new Estado()
@@ -782,10 +942,10 @@ class AlunoController {
 							newBairro.save(flush:true)
 							println("Bairro --- " + newBairro.bairro)
 							bairro = newBairro
-							
+
 							DivisaoAdministrativa newDivisaoAdministrativa = new DivisaoAdministrativa()
 							newDivisaoAdministrativa
-							
+
 						}
 					}
 
@@ -803,48 +963,10 @@ class AlunoController {
 					println("reside --- " + newReside.id)
 
 
-
-					//Bairro idBairro = new Bairro()
-					/*	
-					 def idBairro = Bairro.executeQuery("select b from Bairro as b where b.bairro = '" + params.bairro.toString().toUpperCase()+"'")
-					 def idLogradouro = Logradouro.executeQuery(" select l " +
-					 "  from Logradouro as l, TipoLogradouro as tl " +
-					 "  where l.tipoLogradouro.id = tl.id " +
-					 "  and (tl.tipoLogradouro || ' ' || l.logradouro) = '" + params.endereco.toString().toUpperCase() +"'")
-					 println("Bairro --- " + params.bairro)
-					 println("Logradouro --- " + params.endereco)
-					 println("Bairro banco --- " + idBairro.bairro)
-					 println("Logradouro banco --- " + idLogradouro.logradouro)
-					 if (idBairro.isEmpty() || idLogradouro.isEmpty()) {
-					 listarMensagem("Bairro ou Logradouro não encontrado.", "erro")
-					 }else{*/
-
-
-					/*						//codigo de cadastro de endereços
-					 if (params.cep != null){
-					 println("idBairro -- " + idBairro)
-					 Reside reside = new Reside()
-					 reside.bairro = Bairro.get(idBairro.id)
-					 reside.logradouro = Logradouro.get(idLogradouro.id)
-					 reside.pessoa = Pessoa.get(pessoa.id)
-					 reside.numero = params.numero
-					 reside.complemento = params.complemento
-					 reside.cep = params.cep
-					 if (reside.save(flush:true)){
-					 println("salvou reside")
-					 }else{
-					 listarMensagem("Erro ao salvar endereço", "erro")
-					 }
-					 }*/
-
-
-					//}
-
-
 					if(aluno.save(flush:true)){
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
-   
+
 
 						aluno.errors.each{println it}
 
@@ -871,34 +993,34 @@ class AlunoController {
 							}
 
 						}
-						
-						
+
+
 						//documento
-						
+
 						request.getFiles("documentos[]").each { file ->
-	
+
 							println("Documentos aqui ---+++ " + file.originalFilename)
-	
+
 							Documento documento = new Documento()
 							FileUploadServiceController fc = new FileUploadServiceController()
 							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos")
 							documento.dataDocumento = new Date()
 							documento.aluno = aluno
-							
+
 							if(documento.save(flush:true)){
 								println("documento salvo")
-	
+
 							}
-	
+
 							else{
-	
+
 								def erros
 								documento.errors.each {erros = it}
 								print("erros: "+erros)
 								listarMensagem("Erro ao salvar o documento", "erro")
 							}
 						}
-	
+
 
 						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
@@ -1133,8 +1255,8 @@ class AlunoController {
 		}
 
 	}
-	
-	
+
+
 	def adicionarDocumento(request){
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
@@ -1148,34 +1270,35 @@ class AlunoController {
 
 
 			if (perm2)
-			
+
 			{
-				
-			request.getFiles("arquivo[]").each { file ->
-			println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
-			
-			Documento documento = new Documento()
-			Aluno aluno = new Aluno()
-		    aluno = Aluno.get(documento.aluno.id)
-			
-			FileUploadServiceController fil = new  FileUploadServiceController()
-		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
-			documento.dataDocumento = new Date()
-			documento.aluno = aluno
-			if(documento.save(flush:true)){
-				println("documento salvo -----")
-			  }
-			
-		   redirect(action:"editarAluno" , params:[id:documento.aluno.id])
-			
-      		 }	
-	   
-		   }
-		 }
-	  }
+
+				request.getFiles("arquivo[]").each { file ->
+					println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
+
+					Documento documento = new Documento()
+					Aluno aluno = new Aluno()
+					aluno = Aluno.get(documento.aluno.id)
+
+					FileUploadServiceController fil = new  FileUploadServiceController()
+					documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos")
+					documento.dataDocumento = new Date()
+					documento.aluno = aluno
+					if(documento.save(flush:true)){
+						println("documento salvo -----")
+					}
+
+					redirect(action:"editarAluno" , params:[id:documento.aluno.id])
+
+				}
+
+			}
+		}
+	}
+
 	// documentos referentes a view de editar
 	def removerDocumento(long id){
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listar"])
 		}else{
@@ -1188,25 +1311,25 @@ class AlunoController {
 
 
 			if (perm2)
-			
-			{
-				
-		     def documento = Documento.get(id)	
-			  Aluno aluno  = new Aluno()
-			  aluno = Aluno.get(documento.aluno.id)
-			  documento.deleteAll(documento)
-			  def documentosAluno = Documento.findAllByAluno(aluno)
-			  
-			  
-			  redirect(action:"editarAluno", params:[id:aluno.id, aluno:aluno, documento:documento , perm2:perm2])
-			
-			}else{
-				  
-				  render(view:"/error403.gsp")
-				  }
-		    	}
-			}
-	     }
 
-	
+			{
+
+				def documento = Documento.get(id)
+				Aluno aluno  = new Aluno()
+				aluno = Aluno.get(documento.aluno.id)
+				documento.deleteAll(documento)
+				def documentosAluno = Documento.findAllByAluno(aluno)
+
+
+				redirect(action:"editarAluno", params:[id:aluno.id, aluno:aluno, documento:documento , perm2:perm2])
+
+			}else{
+
+				render(view:"/error403.gsp")
+			}
+		}
+	}
+}
+
+
 
