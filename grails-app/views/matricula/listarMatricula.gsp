@@ -247,7 +247,7 @@ function printDiv(id)
 							<th style="width: 90px;text-align: left;">Data da Matrícula</th>
 							<th style="width: 60px;text-align: left;">Série</th>
 							<th style="width: 60px;text-align: left;">Turma</th>
-							<th style="width: 20px;text-align: left;">Nível Especial</th>
+							<th style="width: 20px;text-align: left;">Etapa</th>
 							<th style="width: 20px;text-align: left;"> </th>
 
 						</tr>
@@ -658,7 +658,7 @@ function printDiv(id)
 										<br>
 										
 										<div class="controls">
-											<label>Nível Especial</label>
+											<label>Etapa</label>
 											<g:field class="form-control" name="nivelEspecial" value="" type="number" />
 										</div>
 										<br>										

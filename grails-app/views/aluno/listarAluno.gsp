@@ -284,29 +284,42 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iRG" class="col-sm-2 control-label">RG</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iRG"
+												<g:textField class="form-control" id="iRgNumero"
 													name="rgNumero" placeholder="RG" />
 											</div>
 										</div>
-										<br>
+									
 										<div class="form-group">
-											<label for="iOrgaoEmissorDaIdentidade" class="col-sm-2 control-label">Órgão Emissor da Identidade</label>
+											<label for="iOrgaoEmissorDaIdentidade" class="col-sm-2 control-label">RG - Orgão Expedidor</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iOrgaoEmissorDaIdentidade"
-													name="orgaoEmissorDaIdentidade" placeholder="Órgão Emissor da Identidade" />
+												<g:textField class="form-control" id="iOrgaoExpedidor"
+													name="rgOrgaoExpedidor" placeholder="Órgão Emissor da Identidade" />
 											</div>
 										</div>
-										<br>
+									
 										<div class="form-group">
-											<label for="iDataDaExpedicaoDaIdentidade" class="col-sm-2 control-label">Data
-												de Expedição da Identidade </label>
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">RG - Data de Emissão</label>
 											<div class="col-sm-10">
 												<g:formatDate format="yyyy-MM-dd" date="${date}" />
 												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataDaExpedicaoDaIdentidade"
-													name="dataDaExpedicaoDaIdentidade" required="true" />
+													class="form-control" id="iDataDeEmissao"
+													name="rgDataDeEmissao" required="true" />
 											</div>
 										</div>
+										
+										
+										<div class="form-group">
+											<label for="irgComplemento"
+												class="col-sm-2 control-label">RG - Complemento</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iRgComplemento" name="rgComplemento"
+													placeholder="Complemento de RG" />
+											</div>
+										</div>
+										
+										
+										
 										<div class="form-group">
 											<label for="iNumeroDoRegistroDeCartorio"
 												class="col-sm-2 control-label">Número do Registro de
@@ -348,6 +361,26 @@ function mudarCombo(){
 													placeholder="Folha do Livro do Registro de Cartório" />
 											</div>
 										</div>
+										
+										
+										<div class="form-group">
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">Data do Registro</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" id="iDataDoRegistro"
+													name="rcDataDoRegistro"  />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNomeDoCartorioDoRegistro"
+												class="col-sm-2 control-label">Cidade do Cartório do Registro</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iRcCidade" name="rcCidade"
+													placeholder="Cidade do registro " />
+											</div>
+										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Sexo</label>
 											<div class="col-sm-10 radio" style="padding-top: 0px;">
@@ -369,7 +402,6 @@ function mudarCombo(){
 
 												<input type="hidden" name="idNomePai" id="idNomePaiId"
 													value="">
-
 												<div id="iDivSelectPicker" class="row">
 													<div class="col-sm-11">
 														<select class="form-control selectpicker"
@@ -389,7 +421,6 @@ function mudarCombo(){
 												</div>
 											</div>
 										</div>
-
 										<div class="form-group">
 											<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
 												da Mãe</label>
@@ -433,91 +464,86 @@ function mudarCombo(){
 												</select>
 											</div>
 										</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Tipos de Deficiência</label>
-									<div class="col-sm-10 controls">
-										<select class="form-control selectpicker" name="necessidadesEspeciais" multiple="multiple" >
-										
-										<g:each in='${necessidadesEspeciais?}'>
-											<option value="${it.id}"> ${it.descricao} </option>
-										</g:each>      
-										      
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
-									<div class="col-sm-10">
-										<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
-											<option value="null" selected disabled>Selecione...</option>
-											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-
-									   </div>
-									 </div>
-									    
-									    <div class="form-group">
-									     <label for="iEstadoCivil" class="col-sm-2 control-label"> Documentos </label>
-									         <div class="col-sm-10">
-									    <script type="text/javascript">  
-
-										function limparCampoFile1(){
-											document.getElementById("documentos[]").value = "";
-										}
-										
-										 $(document).ready(function(){  
-										 
-										    var input = ' <div class="form-group">  <label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label></div>';  
-										    $("input[name='addFile1']").click(function(e){  
-										        $('#inputs_adicionais').append( input );  
-										    });  
-										 
-										    $('#inputs_adicionais').delegate('a','click',function(e){  
-										        e.preventDefault();  
-										        $(this).parent('label').remove();  
-										    });  
-										 
-						                 }); 
-										 
-										</script>  
-										
-								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
-								        
-								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
-								        <fieldset id="inputs_adicionais" style="border: none">  
-								        </fieldset>
-								   </div>
-                                    <div class="form-group" style="margin-top: 3%;">
-											<hr style="border-top: 2px solid #DFDFDF;" />
-									<div class="col-md-1 col-md-offset-11">
-									<button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
-									</div>
-							  </div>
-							</div>
-							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
-
-										<h3>Endereço</h3>
 										<div class="form-group">
-											<label for="iCep" class="col-sm-2 control-label">CEP</label>
-											<div id="iDivInputCep" class="col-sm-10">
-												<g:textField type="number" class="form-control"
+											<label class="col-sm-2 control-label">Tipos de Deficiência</label>
+											<div class="col-sm-10 controls">
+												<select class="form-control selectpicker" name="necessidadesEspeciais" multiple="multiple" >
+												
+												<g:each in='${necessidadesEspeciais?}'>
+													<option value="${it.id}" <g:if test="${it.descricao == 'Nenhum'}"> selected </g:if> > ${it.descricao} </option>
+												</g:each>      
+												      
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
+											<div class="col-sm-10">
+												<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												</select>
+		
+											   </div>
+										 </div>
+									    <div class="form-group">
+									    	<label for="iDocumento" class="col-sm-2 control-label"> Documentos </label>
+									        <div class="col-sm-10">
+											    <script type="text/javascript">  
+													function limparCampoFile1(){
+														document.getElementById("documentos[]").value = "";
+													}
+													
+													 $(document).ready(function(){  
+													 
+													    var input = ' <div class="form-group">  <label style="display: block; font-weight: initial; padding-left: 15px;"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label></div>';  
+													    $("input[name='addFile1']").click(function(e){  
+													        $('#inputs_adicionais').append( input );  
+													    });  
+													 
+													    $('#inputs_adicionais').delegate('a','click',function(e){  
+													        e.preventDefault();  
+													        $(this).parent('label').remove();  
+													    });  
+													 
+									                 }); 
+												</script>								        
+										        <input type="file" name="documentos[]" id="documentos[]" enctype="multipart/form-data"/> 
+										        <br />
+										        <fieldset id="inputs_adicionais" style="border: none">  
+										        </fieldset>
+										        <input type="button" name="addFile1" class="btn btn-primary btn-flat" value="Novo Documento" />
+										        <input type="button" name="limpar" value="Limpar" class="btn btn btn-flat" onclick="limparCampoFile()">
+									   		</div>
+	                                    <div class="form-group" style="margin-top: 3%;">
+												<hr style="border-top: 2px solid #DFDFDF;" />
+										<div class="col-md-1 col-md-offset-11">
+											<button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
+										</div>
+							 		 </div>
+							 		 </div>
+								</div>
+								<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
+									<h3>Endereço</h3>
+									<div class="form-group">
+										<label for="iCep" class="col-sm-2 control-label">CEP</label>
+										<div id="iDivInputCep" class="col-sm-10">
+											<g:textField type="number" class="form-control"
 													data-mask="99999-999" name="cep" id="iCep"
 													onfocusout="javascript: requestAjax(this);"
 													placeholder="CEP" value="${reside?.cep}" />
-												<p id="iMensagemCEP" class="text-danger">Por favor
+											<p id="iMensagemCEP" class="text-danger">Por favor
 													digite um CEP válido.</p>
-											</div>
+										</div>
 										</div>
 
 										<div class="form-group">
@@ -709,25 +735,51 @@ function mudarCombo(){
 
 			<!-- Modal -->
 
-			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document" style="margin-top: 20%">
+			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
+			  <div class="modal-dialog" role="document" style="margin-top: 20%; width:800px">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
 			      </div>
 			      <div class="modal-body">
-			        <div class="form-group">
-						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
-						<div class="col-sm-11">
+			        <div class="form-horizontal" >
+						
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" />
+						    </div>
+						  </div>
+						  
+						  	 
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+						    <div class="col-sm-10">
+						      <select class="form-control" id="iEstadoCivilPai" name="estadoCivilPai" required="true">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												</select>
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
+						    </div>
+						  </div>
 
-							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
-						</div>
-						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" />
-
-						</div>
 					</div>
 			      </div>
 			      <hr/>
@@ -743,45 +795,65 @@ function mudarCombo(){
 
 
 			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarMae" tabindex="-1"
-				role="dialog" data-focus-on="input:first"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document" style="margin-top: 20%">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<label style="padding-top: 5px;" for="iNomeMae"
-									class="col-sm-1 control-label">Nome:</label>
-								<div class="col-sm-11">
-									<g:textField class="form-control" id="iNomeMae" name="nomeMae"
-										placeholder="Nome" required="false" />
-								</div>
-								<label for="iCpf" style="margin-top: 5px; padding-top: 5px;"
-									class="col-sm-1 control-label">CPF:</label>
-								<div class="col-sm-11">
-									<g:textField style="margin-top: 5px;" class="form-control"
-										id="iCPFMae" name="cpfMae" />
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success btn-flat"
-								data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
-							<button type="button" class="btn btn-default btn-flat"
-								data-dismiss="modal">Cancelar</button>
+			<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
+			  <div class="modal-dialog" role="document" style="margin-top: 20%; width:800px">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-horizontal" >
+						
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomeMae" name="nomePai" placeholder="Nome" required="false"/>
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" />
+						    </div>
+						  </div>
+						  
+						  	 
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+						    <div class="col-sm-10">
+						      <select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												</select>
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
+						    </div>
+						  </div>
 
-						</div>
 					</div>
-				</div>
+			      </div>
+			      <hr/>
+			      <div class="modal-footer">
+
+			        <button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
+			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" >Cancelar</button>
+
+			      </div>
+			    </div>
+			  </div>
 			</div>
+			
+			
 		</div>
 		<g:javascript src="script-buscar-cep.js" />
 		<!-- valida campos -->

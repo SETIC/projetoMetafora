@@ -2,6 +2,7 @@ package br.gov.rn.saogoncalo.pessoa
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 
+import java.sql.SQLException
 import java.text.SimpleDateFormat
 
 import br.gov.rn.saogoncalo.academico.Matricula
@@ -140,6 +141,9 @@ class AlunoController {
 				pessoaFisica.rcNomeDoCartorio = params.rcNomeDoCartorio
 				pessoaFisica.rcNomeDoLivro = params.rcNomeDoLivro
 				pessoaFisica.rcFolhaDoLivro = params.rcFolhaDoLivro
+				pessoaFisica.rcDataDoRegistro = params.rcDataDoRegistro
+				pessoaFisica.rcCidade = params.rcCidade
+				pessoaFisica.cor = params.corRaca
 				pessoaFisica.sexo = params.sexo
 				if(pessoaFisica.save(flush:true)){
 					println("salvou pessoa física");
@@ -357,6 +361,11 @@ class AlunoController {
 				def cidadao = Cidadao.get(params.id)
 				cidadao.nacionalidade = params.nacionalidade
 				cidadao.estadoCivil = params.estadoCivil
+				cidadao.rgNumero = params.rgNumero
+				cidadao.rgDataDeEmissao = params.rgDataDeEmissao
+				cidadao.rgOrgaoExpedidor = params.rgOrgaoExpedidor
+				cidadao.rgComplemento = params.rgComplemento
+				
 
 				def aluno = Aluno.get(params.id)
 				aluno.numeroDeInscricao = params.numeroDeInscricao
@@ -378,7 +387,7 @@ class AlunoController {
 				
 				if (necessidadesEspeciaisNovo.getClass() != java.lang.String) 
 				{
-
+                      println("necessidades especiais" +necessidadesEspeciaisNovo)
 					for (int i=0; i<necessidadesEspeciaisNovo.size(); i++){
 
 						idNe = necessidadesEspeciaisNovo[i]
@@ -754,69 +763,82 @@ class AlunoController {
 
 					pessoa.errors.each{println it}
 
+					def datet = new Date()
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
-					pessoaFisica.cor = params.corRaca
-					//pessoaFisica.necessidadesEspeciais = params.deficiencia
-
-					 /* PessoaFisica.withTransaction{ status ->
+					//pessoaFisica.sexo = params.sexo
+					//pessoaFisica.cor = params.corRaca
+					pessoaFisica.rcDataDoRegistro = params.rcDataDoRegistro
+					//pessoaFisica.rcDataDoRegistro = datet
+					//pessoaFisica.rcCidade = params.rcCidade
+					
+		
+/*
+					  PessoaFisica.withTransaction{ status ->
 					 try{
 					 pessoaFisica.save(flush:true)
 					 }catch(Exception exp){
 					 pessoa.errors.reject( 'Erro em pessoa' )
 					 status.setRollbackOnly()
 					 }
-					 }*/
+					 }
+*/					
+					try {
 
-
-					if(pessoaFisica.save(flush:true)){
-						println("params akiiii" +params)
-						if(params.deficiencia == "S"){
-							//adicionar necessidades Especiais
-	
-							for (var in params.necessidadesEspeciais) {
-	
-								def necessidadesEspeciais = NecessidadesEspeciais.get(var.toString().toInteger())
-							    PessoaFisicaNecessidadesEspeciais pessoaFisicaNecessidadesEspeciais = new PessoaFisicaNecessidadesEspeciais()
-								println("necessidaespecia " +var)
-								
-								pessoaFisicaNecessidadesEspeciais.pessoaFisica = pessoaFisica
-								pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais = necessidadesEspeciais
-								pessoaFisicaNecessidadesEspeciais.observacao = ""
-								println("pessoa fisica  akiiii " + pessoaFisica)
-								
-					            			
-								if(pessoaFisicaNecessidadesEspeciais.save(flush:true)){
+						if(pessoaFisica.save(flush:true)){
+							
+							pessoaFisica.errors.each{println it}
+							println("params akiiii" +params)
+							if(params.deficiencia == "S"){
+								//adicionar necessidades Especiais
+		
+								for (var in params.necessidadesEspeciais) {
+		
+									def necessidadesEspeciais = NecessidadesEspeciais.get(var.toString().toInteger())
+								    PessoaFisicaNecessidadesEspeciais pessoaFisicaNecessidadesEspeciais = new PessoaFisicaNecessidadesEspeciais()
+									println("necessidaespecia " +var)
 									
-									def date = new Date()
-									AdministracaoController adm = new AdministracaoController()
-									adm.salvaLog(session["usid"].toString().toInteger(), "PessoaFisicaNecessidadesEspeciais " + 
-										         pessoaFisicaNecessidadesEspeciais.id.toString(),"cadastrado", "PessoaFisicaNecessidadesEspeciais", date)
+									pessoaFisicaNecessidadesEspeciais.pessoaFisica = pessoaFisica
+									pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais = necessidadesEspeciais
+									pessoaFisicaNecessidadesEspeciais.observacao = ""
+									println("pessoa fisica  akiiii " + pessoaFisica)
 									
-								}else{
-									pessoaFisicaNecessidadesEspeciais.errors.each{println it}
-								
-								}
-	
-							}
-	
-						}
+						            			
+									if(pessoaFisicaNecessidadesEspeciais.save(flush:true)){
 										
-					}else{
-					pessoaFisica.errors.each{println it}
+										def date = new Date()
+										AdministracaoController adm = new AdministracaoController()
+										adm.salvaLog(session["usid"].toString().toInteger(), "PessoaFisicaNecessidadesEspeciais " + 
+											         pessoaFisicaNecessidadesEspeciais.id.toString(),"cadastrado", "PessoaFisicaNecessidadesEspeciais", date)
+										
+									}else{
+										pessoaFisicaNecessidadesEspeciais.errors.each{println it}
+									
+									}
+		
+								}
+		
+							}
+											
+						}else{
+						pessoaFisica.errors.each{println it}
+											
+						}
 					
-					
-					}
+				   } catch (SQLException e) {
+					  while(e.getNextException() != null) {
+						  println ("ERROOOOOOO --------  ");
+						 println (e.getNextException());
+					  }
+				   }
 
-					 
-
-					pessoaFisica.errors.each{println it}
 
 					Cidadao cidadao = new Cidadao(params)
 					cidadao.pessoaFisica = pessoaFisica
 					cidadao.rgNumero = params.rgNumero
-					cidadao.rgDataDeEmissao = params.dataDaExpedicaoDaIdentidade
-					cidadao.rgOrgaoExpeditor = params.orgaoEmissorDaIdentidade
+					cidadao.rgDataDeEmissao = params.rgDataDeEmissao
+					cidadao.rgOrgaoExpedidor = params.rgOrgaoExpedidor
+					cidadao.rgComplemento = params.rgComplemento
 
 					cidadao.save(flush:true)
 					cidadao.errors.each{println it}
@@ -1104,6 +1126,14 @@ class AlunoController {
 				//			" and pf.sexo = 'MASCULINO'")
 				//render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
 
+				Cidadao cidadao = new Cidadao()
+				cidadao.estadoCivil = params.estadoCivilPai
+				cidadao.profissao = params.profissaoPai
+				cidadao.pessoaFisica = PessoaFisica
+				
+				cidadao.save(flush:true)
+				
+				
 				def result = []
 
 				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
@@ -1143,6 +1173,14 @@ class AlunoController {
 			pf.sexo = "FEMININO"
 
 			if (pf.save(flush:true)){
+				
+				Cidadao cidadao = new Cidadao()
+				cidadao.estadoCivil = params.estadoCivilMae
+				cidadao.profissao = params.profissaoMae
+				cidadao.pessoaFisica = PessoaFisica
+				
+				cidadao.save(flush:true)
+				
 				/*	def vertorMae = []
 				 vertorMae = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 				 " where p.id not in (select e.id from Escola e) " +

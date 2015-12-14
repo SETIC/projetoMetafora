@@ -195,7 +195,7 @@
 						<br>
 						
 						<div class="controls">
-							<label>Nível Especial</label>
+							<label>Etapa</label>
 							<g:field class="form-control" 
 								name="nivelEspecial" value="${matriculas.nivelEspecial}" type="number"/>
 						</div>

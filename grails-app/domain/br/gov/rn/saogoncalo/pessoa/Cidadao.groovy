@@ -10,7 +10,8 @@ class Cidadao {
 	String profissao
 	
 	Date rgDataDeEmissao
-	String rgOrgaoExpeditor
+	String rgOrgaoExpedidor
+	String rgComplemento
 	
 	static constraints = {
 		nacionalidade blank:false, nullable:true
@@ -18,7 +19,8 @@ class Cidadao {
 		profissao blank:false, nullable:true
 		rgNumero blank:true, nullable:true
 		rgDataDeEmissao blank:true, nullable:true
-		rgOrgaoExpeditor blank:true, nullable:true
+		rgOrgaoExpedidor blank:true, nullable:true
+		rgComplemento blank:true, nullable:true
 		
 		
 	}

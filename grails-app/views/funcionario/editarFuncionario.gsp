@@ -102,6 +102,8 @@
 							</div>
 						</div>
 						<br>
+						
+						Vinculo --- ${funcionarios?.lotacao?.vinculo[0]}
 
 						<div class="form-group">
 							<label for="inputvinculo3" class="col-sm-2 control-label">Vinculo</label>

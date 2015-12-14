@@ -133,8 +133,7 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Nome
-								do Livro do Registro de Cartório</label>
+							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Número do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								${pessoaFisica.rcNomeDoLivro}
 							</div>
@@ -148,6 +147,23 @@
 							</div>
 						</div>
 						<br>
+						
+						<div class="form-group">
+							<label for="inputData3" class="col-sm-2 control-label">Data do Registro</label>
+							<div class="col-sm-10">
+								<g:formatDate format="dd/MM/yyyy" date="${pessoaFisica.rcDataDoRegistro}" />
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputrcFolhaDoLivro3" class="col-sm-2 control-label">Cidade do Registro</label>
+							<div class="col-sm-10">
+								${pessoaFisica.rcCidade}
+							</div>
+						</div>
+						<br>
+
+						
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
 							<div class="col-sm-10">
@@ -295,7 +311,7 @@
 						<br>
 						
 						<div class="form-group">
-							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Data de emissão </label>
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Data de Emissão </label>
 							<div class="col-sm-10">
 							
 								${cidadao.rgDataDeEmissao}
@@ -309,7 +325,17 @@
 							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Orgão expedidor </label>
 							<div class="col-sm-10">
 							
-								${cidadao.rgOrgaoExpeditor}
+								${cidadao.rgOrgaoExpedidor}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Complemento </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgComplemento}
  								
 							</div>
 						</div>

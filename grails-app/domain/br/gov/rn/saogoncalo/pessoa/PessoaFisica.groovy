@@ -7,7 +7,10 @@ class PessoaFisica {
 	String rcNomeDoLivro
 	String rcFolhaDoLivro
 	String sexo
+	
 	String cor
+	Date rcDataDoRegistro
+	String rcCidade
 
 
 	static hasMany = [parentesco:Parentesco, pessoaFisicaNecessidadesEspeciais:PessoaFisicaNecessidadesEspeciais]
@@ -18,10 +21,11 @@ class PessoaFisica {
 		rcNomeDoCartorio blank:true, nullable:true
 		rcNomeDoLivro blank:true, nullable:true
 		rcFolhaDoLivro blank:true, nullable:true
-		sexo blank:false, nullable:true
+		sexo blank:false, nullable:false
 		cor blank:true, nullable:true
+		rcDataDoRegistro blank:true, nullable:true
+		rcCidade blank:true, nullable:true
 
-		
 		}
 	
 	static mapping = {
