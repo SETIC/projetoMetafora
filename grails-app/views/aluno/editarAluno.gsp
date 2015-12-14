@@ -154,7 +154,7 @@
 							<div class="progress" id="progress1">
 								<div class="progress-bar" role="progressbar" aria-valuenow="20"
 									aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-								<span class="progress-type">Progresso Geral</span> <span
+								<span class="progress-type">Progresso Geral</span><span
 									class="progress-completed">0%</span>
 							</div>
 						</div>
@@ -277,8 +277,8 @@
 									<g:textField class="form-control" id="iNomePaiInput"
 										name="nomePaiInput" />
 									<div id="iDivSelectPicker" class="row">
-										<div class="col-sm-11">
-											<select class="form-control selectpicker"
+										<div class="col-sm-11" style="width:380px">
+											<select class="form-control selectpicker" 
 												data-live-search="true" name="pai" id="comboPai">
 												<option value="0">Nome do Pai</option>
 												<g:each in="${pHomens}">
@@ -311,12 +311,11 @@
 									<g:textField class="form-control" id="iNomeMaeInput"
 										name="nomeMaeInput" />
 									<div id="iDivSelectPicker1" class="row">
-										<div class="col-sm-11">
+										<div class="col-sm-11" style="width:380px">
 											<select class="form-control selectpicker"
 												data-live-search="true" name="mae" id="comboMae">
 												<option value="0">Nome da Mãe</option>
 												<g:each in="${pMulheres}">
-
 													<g:if test="${it.id == parentescoMae?.pessoa?.id }">
 														<option value="${it.id}" selected>
 															${it.nome}
@@ -389,9 +388,7 @@
 											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
-
 									</g:elseif>
-
 									<g:elseif test="${cidadao.estadoCivil == 'DIVORCIADO(A)' }">
 										<select class="form-control" name="estadoCivil"
 											style="width: 300px">
@@ -402,9 +399,7 @@
 											<option value="CASADO(A)">CASADO(A)</option>
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
-
 									</g:elseif>
-
 									<g:else>
 										<select class="form-control" name="estadoCivil"
 											style="width: 300px">
@@ -417,7 +412,6 @@
 										</select>
 									</g:else>
 								</div>
-
 							</div>
 							<br>
 							<br>
@@ -579,7 +573,7 @@
 										onclick="javascript: resetActive(div1, event, 0, 'step-1');">
 										<i class="fa fa-chevron-circle-left"></i> Anterior
 									</button>
-									<button type="submit" onclick="javascript: inputsHabilitado();"
+									<button type="submit" onclick="javascript:;"
 										class="btn btn-primary btn-flat">
 										<i class="fa fa-refresh"></i> Atualizar
 									</button>
@@ -595,7 +589,6 @@
 					<br>
 				</g:form>
 			</div>
-
 
 			<!-- Modal -->
 			<div class="modal fade" id="modalCadastrarPai" tabindex="-1"

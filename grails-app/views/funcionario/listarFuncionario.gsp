@@ -247,7 +247,7 @@ function printDiv(id)
 															name="disciplinaProf" multiple="multiple"
 															from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
 															value="${id}" optionKey="id" optionValue="disciplina" />
-													</div>
+												</div>
 											  <br>
 											  </div>
 											  
@@ -278,7 +278,7 @@ function printDiv(id)
 											<div class="form-heading">
 												<label>Estado Civil</label>
 												<div class="controls">
-													<select class="form-control" name="estadoCivil">
+													<select class="form-control" name="estadoCivil"  required="true">
 														<option value="null">Selecione...</option>
 														<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
 														<option value="CASADO(A)">CASADO(A)</option>

@@ -384,7 +384,6 @@ function mudarCombo(){
 										}
 										
 										 $(document).ready(function(){  
-										 
 										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
@@ -703,14 +702,14 @@ function mudarCombo(){
 		</script>
 		
 		<!-- Script buscar dados de acordo com CEP -->
-		<script type="text/javascript">
+		<script type= "text/javascript">
 
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
 				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 			}
-			
+		
 			function disableInput(type){
 
 				if(type=="hide"){
@@ -857,8 +856,7 @@ function mudarCombo(){
 		        });
 		    
 		       }
-			
 		</script>
 	</section>
-</body>
+ </body>
 </html>

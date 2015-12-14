@@ -106,27 +106,21 @@ class AulaController {
 
 	def salvarFrequencia() {
 
-
 		def aula = Aula.get(Long.parseLong(params.aulaId))
-
 		for (int i = 1; i < params.size() - 3; i++) {
-
-			def idMatricula = Long.parseLong(params.keySet()[i].toString().replaceAll("-faltas", ""))
-
-			def matricula = Matricula.get(idMatricula)
-
+			def idMatricula = params.keySet()[i].toString().replaceAll("-faltas", "")
+	    if(idMatricula != "aulaId"){
+			def mat = Long.parseLong(idMatricula.toString())
+			def matricula = Matricula.get(mat)
 			def frequencia = Frequencia.findByAulaAndMatricula(aula, matricula)
-
 			Frequencia frequenciaFinal = null
 
 			if(params.get(params.keySet()[i].toString()) != "0") {
 				if(frequencia == null) {
 					def newFrequencia = new Frequencia()
-
 					newFrequencia.aula = aula
 					newFrequencia.matricula = matricula
 					newFrequencia.quantFaltas = Integer.parseInt(params.get(idMatricula.toString() + "-faltas"))
-
 					frequenciaFinal = newFrequencia
 				}
 				else {
@@ -144,6 +138,7 @@ class AulaController {
 					frequencia.delete()
 					listarMensagem ("Frequencia atualizada com sucesso!" , "ok", aula.turmaDisciplina.id)
 				}
+			  }
 			}
 		}
 	}
