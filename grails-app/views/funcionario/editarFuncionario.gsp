@@ -103,69 +103,21 @@
 						</div>
 						<br>
 						
-						Vinculo --- ${funcionarios?.lotacao?.vinculo[0]}
-
 						<div class="form-group">
-							<label for="inputvinculo3" class="col-sm-2 control-label">Vinculo</label>
-							<div class="col-sm-10">
-
-								<g:if test="${funcionarios?.lotacao?.vinculo[0] == ''}">
-									<select class="form-control" name="vinculo"
-										style="width: 300px">
-										<option value="EFETIVO" selected>EFETIVO</option>
-										<option value="COMISSIONADO">COMISSIONADO</option>
-										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
-										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-									</select>
-								</g:if>
-
-								<g:elseif
-									test="${funcionarios?.lotacao?.vinculo[0] == 'EFETIVO'}">
-									<select class="form-control" name="vinculo"
-										style="width: 300px">
-										<option value="EFETIVO" selected>EFETIVO</option>
-										<option value="COMISSIONADO">COMISSIONADO</option>
-										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
-										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-									</select>
-								</g:elseif>
-
-
-								<g:elseif
-									test="${funcionarios?.lotacao?.vinculo[0] == 'COMISSIONADO'} ">
-									<select class="form-control" name="vinculo"
-										style="width: 300px">
-										<option value="EFETIVO">EFETIVO</option>
-										<option value="COMISSIONADO" selected>COMISSIONADO</option>
-										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
-										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-									</select>
-								</g:elseif>
-
-								<g:elseif
-									test="${funcionarios?.lotacao?.vinculo[0] == 'ESTAGIÁRIO'} ">
-									<select class="form-control" name="vinculo"
-										style="width: 300px">
-										<option value="EFETIVO">EFETIVO</option>
-										<option value="COMISSIONADO">COMISSIONADO</option>
-										<option value="ESTAGIÁRIO" selected>ESTAGIÁRIO</option>
-										<option value="TERCEIRIZADO">TERCEIRIZADO</option>
-									</select>
-								</g:elseif>
-
-								<g:elseif
-									test="${funcionarios?.lotacao?.vinculo[0] == 'TERCEIRIZADO'} ">
-									<select class="form-control" name="vinculo"
-										style="width: 300px">
-										<option value="EFETIVO">EFETIVO</option>
-										<option value="COMISSIONADO">COMISSIONADO</option>
-										<option value="ESTAGIÁRIO">ESTAGIÁRIO</option>
-										<option value="TERCEIRIZADO" selected>TERCEIRIZADO</option>
-									</select>
-								</g:elseif>
-
-
-
+							<label for="inputvinculo3" class="col-sm-2 control-label"
+								>Vinculo</label>
+							<div class="col-sm-4">
+								<select name="vinculo" id="iVinculo" required="true"
+									class="form-control selectpicker">
+									<option value="EFETIVO"
+										<g:if test="${funcionarios?.lotacao?.vinculo[0] == 'EFETIVO'}"> selected </g:if>>EFETIVO</option>
+									<option value="COMISSIONADO"
+										<g:if test="${funcionarios?.lotacao?.vinculo[0] == 'COMISSIONADO'}"> selected </g:if>>COMISSIONADO</option>
+									<option value="ESTAGIARIO"
+										<g:if test="${funcionarios?.lotacao?.vinculo[0] == 'ESTAGIARIO'}"> selected </g:if>>ESTAGIARIO</option>
+									<option value="TERCEIRIZADO"
+										<g:if test="${funcionarios?.lotacao?.vinculo[0] == 'TERCEIRIZADO'}"> selected </g:if>>TERCEIRIZADO</option>
+								</select>
 							</div>
 						</div>
 						<br>
@@ -182,19 +134,20 @@
 						<div class="form-group">
 							<label for="inputcargo3" class="col-sm-2 control-label">Cargo</label>
 							<div class="col-sm-4">
-								<select name="cargo" id="comboCargo" class="form-control" onChange="habilitarDisciplinas()">
-										<g:each in="${cargo}">
-											<g:if test="${it.id == funcionarios?.lotacao?.cargo.id[0] }">
-												<option value="${it.id}" selected>
-													${it.cargo}
-												</option>
-											</g:if>
-											<g:else>
-												<option value="${it.id}">
-													${it.cargo}
-												</option>
-											</g:else>
-										</g:each>
+								<select name="cargo" id="comboCargo" class="form-control"
+									onChange="habilitarDisciplinas()">
+									<g:each in="${cargo}">
+										<g:if test="${it.id == funcionarios?.lotacao?.cargo.id[0] }">
+											<option value="${it.id}" selected>
+												${it.cargo}
+											</option>
+										</g:if>
+										<g:else>
+											<option value="${it.id}">
+												${it.cargo}
+											</option>
+										</g:else>
+									</g:each>
 								</select>
 							</div>
 						</div>
@@ -202,7 +155,7 @@
 						<div id="divDisciplinas" class="form-group">
 							<label for="inputdlpp3" class="col-sm-2 control-label">Disciplinas
 								do Professor</label>
-							<div class="col-sm-10">
+							<div class="col-sm-8">
 								<select class="form-control selectpicker"
 									data-live-search="true" name="disciplinaLecionadaPorProfessor"
 									multiple="multiple">
@@ -228,9 +181,13 @@
 						</div>
 						<script>
 							function habilitarDisciplinas() {
-								var index = document.getElementById("comboCargo").selectedIndex;
-								var cargo = document.getElementById("comboCargo").options[index].innerHTML.trim();
-								if (cargo == "PROFESSOR" || cargo == "PROFESSOR PI G") {
+								var index = document
+										.getElementById("comboCargo").selectedIndex;
+								var cargo = document
+										.getElementById("comboCargo").options[index].innerHTML
+										.trim();
+								if (cargo == "PROFESSOR"
+										|| cargo == "PROFESSOR PI G") {
 									document.getElementById("divDisciplinas").style.display = "block";
 								} else {
 									document.getElementById("divDisciplinas").style.display = "none";
@@ -273,71 +230,20 @@
 						</div>
 						</br>
 						<div class="form-group">
-							<label for="inputestadoCivil3" class="col-sm-2 control-label">Estado
-								Civil</label>
-							<div class="col-sm-10">
-								<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
-										<option value="">
-											${cidadao.estadoCivil}
-										</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
-									</select>
-								</g:if>
-								<g:elseif test="${cidadao.estadoCivil == '' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
-										<option value="">
-											${cidadao.estadoCivil}
-										</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
-									</select>
-
-								</g:elseif>
-								<g:elseif test="${cidadao.estadoCivil == 'CASADO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
-										<option value="">
-											${cidadao.estadoCivil}
-										</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
-									</select>
-
-								</g:elseif>
-
-								<g:elseif test="${cidadao.estadoCivil == 'DIVORCIADO(A)' }">
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
-										<option value="">
-											${cidadao.estadoCivil}
-										</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
-									</select>
-
-								</g:elseif>
-
-								<g:else>
-									<select class="form-control" name="estadoCivil"
-										style="width: 300px">
-										<option value="">
-											${cidadao.estadoCivil}
-										</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-									</select>
-
-								</g:else>
+							<label for="inputestadoCivil3" class="col-sm-2 control-label"
+								required="true">Estado Civil</label>
+							<div class="col-sm-4">
+								<select name="estadoCivil" id="iestadoCivil"
+									class="form-control selectpicker">
+									<option value="SOLTEIRO(A)"
+										<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)'}"> selected </g:if>>SOLTEIRO(A)</option>
+									<option value="CASADO(A)"
+										<g:if test="${cidadao.estadoCivil == 'CASADO(A)'}"> selected </g:if>>CASADO(A)</option>
+									<option value="DIVORCIADO(A)"
+										<g:if test="${cidadao.estadoCivil == 'DIVORCIADO(A)'}"> selected </g:if>>DIVORCIADO(A)</option>
+									<option value="VIÚVO(A)"
+										<g:if test="${cidadao.estadoCivil == 'VIÚVO(A)'}"> selected </g:if>>VIÚVO(A)</option>
+								</select>
 							</div>
 						</div>
 
@@ -363,7 +269,8 @@
 						<div class="form-group">
 							<label for="inputmatricula3" class="col-sm-2 control-label">Observação</label>
 							<div class="col-sm-5">
-								<textarea rows="3" class="form-control" name="observacao"
+								<textarea rows="4" cols="5" class="form-control"
+									name="observacao"
 									placeholder="Insira uma observação relacionada ao Funcionário">
 									${funcionarios.observacao}
 								</textarea>
@@ -400,30 +307,28 @@
 							"Buscando cargo", 0);
 					var idFuncionario = document.getElementById("id").value;
 
-					$
-							.ajax({
-								type : "GET",
-								url : "http://"
-										+ endereco
-										+ ":8080/projetoMetafora/funcionario/editarFuncionario"
-										+ idFuncionario,
-								dataType : "json",
-								success : function(result) {
-									comboCargo.options.length = 0;
-									if (result.id.length == 0) {
-										comboCargo.options[comboCargo.options.length] = new Option(
-												"Não há turma cadastrada", 0);
-									} else {
-										for (i = 0; i < result.id.length; i++) {
-											comboCargo.options[comboCargo.options.length] = new Option(
-													result.cargo[i],
-													result.id[i]);
+					$.ajax({
+					type : "GET",
+					url : "http://"
+							+ endereco
+							+ ":8080/projetoMetafora/funcionario/editarFuncionario"
+							+ idFuncionario,
+					dataType : "json",
+					success : function(result) {
+						comboCargo.options.length = 0;
+						if (result.id.length == 0) {
+							comboCargo.options[comboCargo.options.length] = new Option(
+									"Não há turma cadastrada", 0);
+						} else {
+							for (i = 0; i < result.id.length; i++) {
+								comboCargo.options[comboCargo.options.length] = new Option(
+										result.cargo[i],
+										result.id[i]);
 										}
 									}
 								}
 							});
-
-				}
+				     }
 			</script>
 
 		</div>

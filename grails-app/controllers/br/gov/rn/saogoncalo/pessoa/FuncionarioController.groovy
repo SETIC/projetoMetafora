@@ -384,7 +384,7 @@ class FuncionarioController {
 				def funcionario = Funcionario.get(params.id)
 				funcionario.cargaHoraria = params.cargaHoraria
 				funcionario.matricula = params.matricula
-				funcionario.observacao = params.observacao
+				funcionario.observacao = params.observacao.toString().toUpperCase()
 
 
 				//def funcionarios = Funcionario.findAll()
@@ -428,7 +428,6 @@ class FuncionarioController {
 					def lotacao = Lotacao.findByFuncionario(funcionario)
 
 					if(lotacao == null){
-
 
 						Lotacao newLotacao = new Lotacao()
 						newLotacao.vinculo = params.vinculo
@@ -826,7 +825,7 @@ class FuncionarioController {
 					cidadao.errors.each{ println it }
 
 					Funcionario funcionario = new Funcionario(params)
-					funcionario.observacao = params.observacao
+					funcionario.observacao = params.observacao.toString().toUpperCase()
 					funcionario.cidadao = cidadao
 
 					if(funcionario.save(flush:true)){

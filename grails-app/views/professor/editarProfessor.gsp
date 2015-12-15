@@ -258,7 +258,7 @@
 						<div class="form-group" style="min-height: 50px;">
 							<label for="inputdlpp3" class="col-sm-2 control-label">Disciplinas
 								do Professor</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 								<select class="form-control selectpicker"
 									data-live-search="true" name="disciplinaLecionadaPorProfessor"
 									multiple="multiple">

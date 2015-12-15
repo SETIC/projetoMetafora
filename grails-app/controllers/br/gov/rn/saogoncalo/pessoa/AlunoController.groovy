@@ -96,9 +96,12 @@ class AlunoController {
 				def pfne = pessoaFisicaNecessidadesEspeciais.necessidadesEspeciais.id
 				
 				def necessidadesEspeciais = NecessidadesEspeciais.findAll()
+				
+				def pessoaFisicaNecessidadesEspeciaisAluno  = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
+				//institucional 8851 9740
 
 				render (view:"/aluno/editarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, reside:reside, parentescoPai:parentescoPai, parentescoMae:parentescoMae , 
-					    documentosAluno:documentosAluno, pfne:pfne, necessidadesEspeciais:necessidadesEspeciais])
+					    documentosAluno:documentosAluno, pfne:pfne, necessidadesEspeciais:necessidadesEspeciais, pessoaFisicaNecessidadesEspeciaisAluno:pessoaFisicaNecessidadesEspeciaisAluno])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -466,7 +469,6 @@ class AlunoController {
 					}
 				}
 				
-				//-----------------------
 				
 				//------------------------------------------------------
 				
@@ -843,7 +845,6 @@ class AlunoController {
 					cidadao.save(flush:true)
 					cidadao.errors.each{println it}
 
-
 					Aluno aluno = new Aluno()
 					//aluno.cidadao = cidadao
                    
@@ -996,7 +997,6 @@ class AlunoController {
 						println("salvou o aluno kkkkkkk")
 						println("Data --- " + params.datanascimento)
 
-
 						aluno.errors.each{println it}
 
 						println("params matricula ---- " + params)
@@ -1022,7 +1022,6 @@ class AlunoController {
 							}
 
 						}
-
 
 						//documento
 
@@ -1221,7 +1220,6 @@ class AlunoController {
 			if (perm2)
 			{
 
-
 				Calendar ca = Calendar.getInstance()
 				int ano = ca.get(Calendar.YEAR)
 
@@ -1261,8 +1259,7 @@ class AlunoController {
 							" e.id = p.id and p.status = 'Ativo' and e.id != ?", [session["escid"].toString().toLong()])
 
 				}
-
-
+                 
 				render (view:"/transferencia/transferir.gsp", model:[aluno:aluno, matricula:matricula, escolas:escolas])
 
 			}else{
@@ -1288,7 +1285,6 @@ class AlunoController {
 			//			" where p.id not in (select e.id from Escola e) " +
 			//			" and pf.id = p.id " +
 			//			" and pf.sexo = 'MASCULINO'")
-
 
 
 			def result = ["id":pais?.id, "pessoa":pais?.pessoa?.nome]
@@ -1353,7 +1349,6 @@ class AlunoController {
 
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
 
-
 			if (perm2)
 
 			{
@@ -1364,19 +1359,21 @@ class AlunoController {
 			  aluno = Aluno.get(documento.aluno.id)
 			  documento.deleteAll(documento)
 			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documento.arquivo).delete()
-			  
 			  def documentosAluno = Documento.findAllByAluno(aluno)
-			  
 			  
 			  redirect(action:"editarAluno", params:[id:aluno.id, aluno:aluno, documento:documento , perm2:perm2])
 			
 
 			}else{
 
-				render(view:"/error403.gsp")
-			}
+				  
+			  render(view:"/error403.gsp")
+				  }
+		    	}
 
-		}
+			
+
+		
 	}
 
 

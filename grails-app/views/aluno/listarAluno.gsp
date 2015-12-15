@@ -482,6 +482,63 @@ function mudarCombo(){
 												<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
 											</div>
 										</div>
+
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
+									<div class="col-sm-10">
+										<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
+											<option value="null" selected disabled>Selecione...</option>
+											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+											<option value="CASADO(A)">CASADO(A)</option>
+											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+											<option value="VIÚVO(A)">VIÚVO(A)</option>
+										</select>
+									   </div>
+									 </div>
+									    
+									    <div class="form-group">
+									     <label for="iEstadoCivil" class="col-sm-2 control-label"> Documentos </label>
+									         <div class="col-sm-10">
+									    <script type="text/javascript">  
+										function limparCampoFile1(){
+											document.getElementById("documentos[]").value = "";
+										}
+										
+										 $(document).ready(function(){  
+										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+										    $("input[name='addFile1']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+						                 }); 
+										 
+										</script>  
+								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+								        
+								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+								         
+								        <fieldset id="inputs_adicionais" style="border: none">  
+								        </fieldset>
+								   </div>
+                                    <div class="form-group" style="margin-top: 3%;">
+											<hr style="border-top: 2px solid #DFDFDF;" />
+									<div class="col-md-1 col-md-offset-11">
+									<button type="button" class="btn btn-primary btn-flat" onclick = "validaDados();">Próximo<i class="fa fa-chevron-circle-right"></i></button>
+									</div>
+							  </div>
+							</div>
+							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
+
+										<h3>Endereço</h3>
+
 										<div class="form-group">
 											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
 											<div class="col-sm-10">
@@ -824,12 +881,12 @@ function mudarCombo(){
     						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
 						    <div class="col-sm-10">
 						      <select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true">
-													<option value="null" selected disabled>Selecione...</option>
-													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-													<option value="CASADO(A)">CASADO(A)</option>
-													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-													<option value="VIÚVO(A)">VIÚVO(A)</option>
-												</select>
+									<option value="null" selected disabled>Selecione...</option>
+									<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+									<option value="CASADO(A)">CASADO(A)</option>
+									<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+									<option value="VIÚVO(A)">VIÚVO(A)</option>
+								</select>
 						    </div>
 						  </div>
 						  
@@ -903,12 +960,13 @@ function mudarCombo(){
 
 		<script type="text/javascript">
 
+
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
 				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 			}
-			
+		
 			function disableInput(type){
 
 				if(type=="hide"){
@@ -1059,8 +1117,7 @@ function mudarCombo(){
 		        });
 		    
 		       }
-			
 		</script>
 	</section>
-</body>
+ </body>
 </html>
