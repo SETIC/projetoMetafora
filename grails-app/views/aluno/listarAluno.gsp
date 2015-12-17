@@ -995,6 +995,10 @@ function mudarCombo(){
 			   //var endereco = "192.168.1.247";
 			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var nome = document.getElementById("iNomePai").value;
+
+			   var estadoCivil = document.getElementById("iEstadoCivilPai").value;
+			   var profissao = document.getElementById("iProfissaoPai").value;
+			   
 			   var cpf
 			   
 			   if(document.getElementById("iCPFPai").value == ''){
@@ -1007,7 +1011,7 @@ function mudarCombo(){
 			   console.log("CPF -- " + cpf);
 			   $.ajax({ 
 		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao,
 		            dataType: "json",
 		            success: function(result){
 		            	console.log(result[result.length-1].nome);
@@ -1031,6 +1035,10 @@ function mudarCombo(){
 				//var endereco = "192.168.1.247";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 				   var nome = document.getElementById("iNomeMae").value;
+
+				   var estadoCivil = document.getElementById("iEstadoCivilMae").value;
+				   var profissao = document.getElementById("iProfissaoMae").value;
+				   
 				   var cpf
 				if(document.getElementById("iCPFMae").value == ''){
 			   		cpf = "0";
@@ -1040,7 +1048,7 @@ function mudarCombo(){
 				   
 				   $.ajax({
 			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf,
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao,
 			            dataType: "json",
 			            success: function(result){
 			            	console.log(result[result.length-1].nome);

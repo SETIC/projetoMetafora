@@ -7,6 +7,8 @@
 <g:javascript src="jquery.maskedinput.js" />
 </head>
 <body>
+
+
 	<section class="content-header">
 		<h1>
 			Alunos <small>Editar dados</small>
@@ -18,69 +20,7 @@
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
-	<script type="text/javascript">
-		function hiddenInput() {
-			console.log('Hidden...');
-			document.getElementById("iNomePaiInput").className = 'form-control hidden';
-			document.getElementById("iNomeMaeInput").className = 'form-control hidden';
-		}
-		function salvarPai() {
-			var endereco = "192.168.1.247";
-			var nome = document.getElementById("iNome").value;
 
-			
-					$.ajax({
-						type : "GET",
-						url : "http://"
-								+ endereco
-								+ ":8080/projetoMetafora/aluno/cadastrarPai?nome="
-								+ nome,
-						dataType : "json",
-						success : function(result) {
-							console.log(result[result.length - 1].nome);
-
-							document.getElementById("iDivSelectPicker").className = 'form-control hidden';
-
-							document.getElementById("iNomePaiInput").className = 'form-control';
-							document.getElementById("iNomePaiInput").disabled = true;
-							document.getElementById("iNomePaiInput").value = result[result.length - 1].nome;
-
-							$(function() {
-								$('#twoModalsExample').modal('hide');
-							});
-						}
-					});
-		}
-
-		function salvarMae() {
-			var endereco = "192.168.1.247";
-			var nome = document.getElementById("iNomeMae").value;
-
-			
-					$.ajax({
-						type : "GET",
-						url : "http://"
-								+ endereco
-								+ ":8080/projetoMetafora/aluno/cadastrarMae?nomeMae="
-								+ nome,
-						dataType : "json",
-						success : function(result) {
-							console.log(result[result.length - 1].nome);
-
-							document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
-
-							document.getElementById("iNomeMaeInput").className = 'form-control';
-							document.getElementById("iNomeMaeInput").disabled = true;
-							document.getElementById("iNomeMaeInput").value = result[result.length - 1].nome;
-
-							$(function() {
-								$('#twoModalsExample1').modal('hide');
-							});
-						}
-					});
-		}
-	</script>
-	<style onload="hiddenInput();"></style>
 	<section class="content">
 
 		<div>
@@ -101,52 +41,7 @@
 			</g:each>
 			<div>
 				<br>
-				<!-- modais-->
-				<div class="modal fade" id="twoModalsExample"
-					style="background-color: white; height: 500px;"
-					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
-					aria-hidden="true">
-					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
-					<br>
-					<div class="modal-body">
-						<!--	<g:form class="form-horizontal"> -->
-						<div class="form-group">
-							<label for="iNome" class="col-sm-2 control-label">nome</label>
-							<g:textField class="form-control" id="iNome" name="nome"
-								placeholder="Nome" required="true" />
-							<br> <label for="iCpf" class="col-sm-2 control-label">CPF</label>
-							<g:textField class="form-control" id="iCpf" name="cpf"
-								placeholder="CPF" required="true" />
-						</div>
-						<button id="closemodal" type="button"
-							data-dismiss="twoModalsExample" class="btn btn-success btn-flat"
-							onclick="salvarPai();">Cadastrar</button>
-						<!--  	</g:form> -->
-					</div>
-				</div>
-				<br>
-				<div class="modal fade" id="twoModalsExample1"
-					style="background-color: white; height: 500px;"
-					aria-labelledby="myModalLabel" tabindex="-1" role="dialog"
-					aria-hidden="true">
-					<h4 class="modal-title" id="myModalLabel">Cadastro de filiação</h4>
-					<br>
-					<div class="modal-body">
-						<!--	<g:form class="form-horizontal"> -->
-						<div class="form-group">
-							<label for="iNomeMae" class="col-sm-2 control-label">nome</label>
-							<div class="col-sm-10">
-								<g:textField class="form-control" id="iNomeMae" name="nomeMae"
-									placeholder="Nome" required="true" />
-							</div>
-						</div>
-						<button id="closemodal" type="button"
-							data-dismiss="twoModalsExample1" class="btn btn-success btn-flat"
-							onclick="salvarMae()">Cadastrar</button>
-
-						<!--  	</g:form> -->
-					</div>
-				</div>
+				
 				<g:form controller="Aluno" action="atualizar" enctype="multipart/form-data" class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<fieldset>
@@ -265,7 +160,7 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Nome
+								<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Número
 									do Livro do Registro de Cartório</label>
 								<div class="col-sm-10">
 									<g:textField class="form-control" name="rcNomeDoLivro"
@@ -281,6 +176,29 @@
 										style="width: 300px" value="${pessoaFisica.rcFolhaDoLivro }" />
 								</div>
 							</div>
+							<br>
+							
+										<div class="form-group">
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">Data do Registro</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" id="iDataDoRegistro"
+													name="rcDataDoRegistro" value="${pessoaFisica.rcDataDoRegistro}" />
+											</div>
+										</div>
+										<br>
+										<div class="form-group">
+											<label for="iNomeDoCartorioDoRegistro"
+												class="col-sm-2 control-label">Cidade do Cartório do Registro</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iRcCidade" name="rcCidade" style="width: 300px"
+													placeholder="Cidade do registro " value="${pessoaFisica.rcCidade}"/>
+											</div>
+										</div>
+							
+							
 							<br>
 							<div class="form-group">
 								<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
@@ -311,10 +229,10 @@
 							<br>
 
 							<div class="form-group">
-								<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
+								<label for="iNomePaiInput" class="col-sm-2 control-label">Nome
 									do Pai</label>
 								<div class="col-sm-10">
-									<g:textField class="form-control" id="iNomePaiInput"
+									<g:textField class="form-control hidden" id="iNomePaiInput"
 										name="nomePaiInput" />
 									<div id="iDivSelectPicker" class="row">
 										<div class="col-sm-11" style="width:380px">
@@ -322,7 +240,6 @@
 												data-live-search="true" name="pai" id="comboPai">
 												<option value="0">Nome do Pai</option>
 												<g:each in="${pHomens}">
-
 													<g:if test="${it.id == parentescoPai?.pessoa?.id }">
 														<option value="${it.id}" selected>
 															${it.nome}
@@ -345,11 +262,10 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
+								<label for="iNomeMaeInput" class="col-sm-2 control-label">Nome
 									da Mãe</label>
-								<div class="col-md-10">
-									<g:textField class="form-control" id="iNomeMaeInput"
-										name="nomeMaeInput" />
+								<div class="col-md-10" >
+									<g:textField class="form-control hidden" id="iNomeMaeInput" name="nomeMaeInput" />
 									<div id="iDivSelectPicker1" class="row">
 										<div class="col-sm-11" style="width:380px">
 											<select class="form-control selectpicker"
@@ -367,9 +283,7 @@
 														<option value="${it.id}">
 															${it.nome}
 														</option>
-
 													</g:else>
-
 												</g:each>
 											</select>
 										</div>
@@ -378,17 +292,15 @@
 												data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
 										</div>
 										</div>
-										
-										
 									</div>
 								</div>
 							</div>
 							<br>
 							
 							<div class="form-group">
-							<label for="inputCorRaca3" class="col-sm-2 control-label"
+							<label for="inputCorRaca3" class="col-sm-2 control-label" 
 								required="true">Raça/Cor</label>
-							<div class="col-sm-4">
+							<div class="col-sm-10" style="width:380px">
 								<select name="corRaca" id="iCorRaca"
 									class="form-control selectpicker">
 										
@@ -437,70 +349,25 @@
 								</div>
 							</div>
 							<br>
+							
 							<div class="form-group">
-								<label for="inputestadoCivil3" class="col-sm-2 control-label" required="true">Estado
-									Civil *</label>
-								<div class="col-sm-10">
-									<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)' }">
-										<select class="form-control" name="estadoCivil"
-											style="width: 300px">
-											<option value="${cidadao.estadoCivil}" selected>
-												${cidadao.estadoCivil}
-											</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-									</g:if>
-									<g:elseif test="${cidadao.estadoCivil == '' }">
-										<select class="form-control" name="estadoCivil"
-											style="width: 300px">
-											<option value="${cidadao.estadoCivil}" selected>
-												${cidadao.estadoCivil}
-											</option>
-											<option value="SOLTEIRO(A)" selected>SOLTEIRO(A)</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-
-									</g:elseif>
-									<g:elseif test="${cidadao.estadoCivil == 'CASADO(A)' }">
-										<select class="form-control" name="estadoCivil"
-											style="width: 300px">
-											<option value="${cidadao.estadoCivil}" selected>
-												${cidadao.estadoCivil}
-											</option>
-											<option value="SOLTEIRO(A)" selected>SOLTEIRO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-									</g:elseif>
-									<g:elseif test="${cidadao.estadoCivil == 'DIVORCIADO(A)' }">
-										<select class="form-control" name="estadoCivil"
-											style="width: 300px">
-											<option value="${cidadao.estadoCivil}" selected>
-												${cidadao.estadoCivil}
-											</option>
-											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="VIÚVO(A)">VIÚVO(A)</option>
-										</select>
-									</g:elseif>
-									<g:else>
-										<select class="form-control" name="estadoCivil"
-											style="width: 300px">
-											<option value="${cidadao.estadoCivil}" selected>
-												${cidadao.estadoCivil}
-											</option>
-											<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-											<option value="CASADO(A)">CASADO(A)</option>
-											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										</select>
-									</g:else>
-								</div>
+							<label for="inputestadoCivil3" class="col-sm-2 control-label"
+								required="true">Estado Civil</label>
+							<div class="col-sm-4">
+								<select name="estadoCivil" id="iestadoCivil"
+									class="form-control selectpicker">
+									<option value="SOLTEIRO(A)"
+										<g:if test="${cidadao.estadoCivil == 'SOLTEIRO(A)'}"> selected </g:if>>SOLTEIRO(A)</option>
+									<option value="CASADO(A)"
+										<g:if test="${cidadao.estadoCivil == 'CASADO(A)'}"> selected </g:if>>CASADO(A)</option>
+									<option value="DIVORCIADO(A)"
+										<g:if test="${cidadao.estadoCivil == 'DIVORCIADO(A)'}"> selected </g:if>>DIVORCIADO(A)</option>
+									<option value="VIÚVO(A)"
+										<g:if test="${cidadao.estadoCivil == 'VIÚVO(A)'}"> selected </g:if>>VIÚVO(A)</option>
+								</select>
 							</div>
-							<br>
+						</div>
+						
 							<br>
 							 <fieldset>
 			       <table id="listarDocumentosAluno" class="table table-bordered">
@@ -751,7 +618,7 @@
 						 <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
 						    <div class="col-sm-10">
-						      <g:textField class="form-control" id="iNomeMae" name="nomePai" placeholder="Nome" required="false"/>
+						      <g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="false"/>
 						    </div>
 						  </div>
 						  
@@ -779,7 +646,7 @@
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
+						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaoMae" />
 						    </div>
 						  </div>
 
@@ -801,12 +668,69 @@
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
-			function hiddenInput(){
-				console.log('Hidden...');
-				document.getElementById("iNomePaiInput").className = 'form-control hidden';
-				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
-			}
 
+
+
+		
+
+			function salvarPai(){
+				 //var endereco = "192.168.1.247";
+			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+			   var nome = document.getElementById("iNomePai").value;
+			   var cpf = document.getElementById("iCPFPai").value;
+			   var estadoCivil = document.getElementById("iEstadoCivilPai").value;
+			   var profissao = document.getElementById("iProfissaoPai").value;
+			   
+			   $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao,
+		            dataType: "json",
+		            success: function(result){
+		            	console.log(result[result.length-1].nome);
+		            	
+		            	document.getElementById("iDivSelectPicker").className = 'form-control hidden';
+		            	
+		            	document.getElementById("iNomePaiInput").className = 'form-control';
+		            	document.getElementById("iNomePaiInput").disabled = true;
+		            	document.getElementById("iNomePaiInput").value = result[result.length-1].nome;
+
+		            	$(function() {
+							$('#twoModalsExample').modal('hide');
+						});						
+				    } 
+		        });
+			}
+			
+			function salvarMae(){
+				 //var endereco = "192.168.1.247";
+				   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+				   var nome = document.getElementById("iNomeMae").value;
+				   var cpf = document.getElementById("iCPFMae").value;
+				   var estadoCivil = document.getElementById("iEstadoCivilMae").value;
+				   var profissao = document.getElementById("iProfissaoMae").value;
+
+				   console.log("Teste de mae --- " + nome)
+				   
+				   $.ajax({
+			            type: "GET",
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao, 
+			            dataType: "json",
+			            success: function(result){
+			            	console.log(result[result.length-1].nome);
+			            	
+			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
+			            	
+			            	document.getElementById('iNomeMaeInput').className = 'form-control';
+			            	document.getElementById('iNomeMaeInput').disabled = true;
+			            	document.getElementById('iNomeMaeInput').value = result[result.length-1].nome;
+
+			            	$(function() {
+								$('#twoModalsExample1').modal('hide');
+							});						
+					    } 
+			        });
+				}
+		
 			function disableInput(type){
 
 				if(type=="hide"){
@@ -831,60 +755,11 @@
 				}
 			
 
-			function salvarPai(){
-			   var endereco = "192.168.1.247";
-			   var nome = document.getElementById("iNomePai").value;
-			   var cpf = document.getElementById("iCPFPai").value;
-			   
-			   $.ajax({
-		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
-		            dataType: "json",
-		            success: function(result){
-		            	console.log(result[result.length-1].nome);
-		            	
-		            	document.getElementById("iDivSelectPicker").className = 'form-control hidden';
-		            	
-		            	document.getElementById("iNomePaiInput").className = 'form-control';
-		            	document.getElementById("iNomePaiInput").disabled = true;
-		            	document.getElementById("iNomePaiInput").value = result[result.length-1].nome;
-
-		            	$(function() {
-							$('#twoModalsExample').modal('hide');
-						});						
-				    } 
-		        });
-			}
 			
-			function salvarMae(){
-				var endereco = "192.168.1.247";
-				   var nome = document.getElementById("iNomeMae").value;
-				   var cpf = document.getElementById("iCPFMae").value;
-				   
-				   $.ajax({
-			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf,
-			            dataType: "json",
-			            success: function(result){
-			            	console.log(result[result.length-1].nome);
-			            	
-			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
-			            	
-			            	document.getElementById("iNomeMaeInput").className = 'form-control';
-			            	document.getElementById("iNomeMaeInput").disabled = true;
-			            	document.getElementById("iNomeMaeInput").value = result[result.length-1].nome;
-
-			            	$(function() {
-								$('#twoModalsExample1').modal('hide');
-							});						
-					    } 
-			        });
-				}
-
-
 			function mudarEscola(){
 		    	  
-				var endereco = "192.168.1.247";
+				 //var endereco = "192.168.1.247";
+				   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
@@ -911,7 +786,8 @@
 		   }
 
 		  function mudarSerie(){
-			  var endereco = "192.168.1.247";
+			  //var endereco = "192.168.1.247";
+			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 

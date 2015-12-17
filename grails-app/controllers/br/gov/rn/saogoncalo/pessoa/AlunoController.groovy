@@ -1102,13 +1102,15 @@ class AlunoController {
 	def cadastrarPai(){
 
 		Pessoa pessoa = new Pessoa()
+		
+		println("Teste aqui --- " + params.cpf + " nome --- " + params.nome)
 
 		pessoa.nome = params.nome
 		if (params.cpf != "0"){
 			pessoa.cpfCnpj = params.cpf
 		}
 
-		println(" cpf " + params.cpf + " " + params.nome)
+		println(" cpf " + params.cpf + " " + params.nome + " Estado Civil -- " + params.estadoCivil + " Profissão -- " + params.profissao)
 
 		if(pessoa.save(flush:true)){
 
@@ -1126,11 +1128,15 @@ class AlunoController {
 				//render(view:"/aluno/listarAluno.gsp", model:[vetorpais:vetorPais])
 
 				Cidadao cidadao = new Cidadao()
-				cidadao.estadoCivil = params.estadoCivilPai
-				cidadao.profissao = params.profissaoPai
-				cidadao.pessoaFisica = PessoaFisica
+				cidadao.estadoCivil = params.estadoCivil
+				cidadao.profissao = params.profissao
+				cidadao.nacionalidade = 'BRASILEIRO'
+				cidadao.pessoaFisica = pf
 				
-				cidadao.save(flush:true)
+				
+				if (cidadao.save(flush:true)){
+					println("Salvou cidadão")
+				}
 				
 				
 				def result = []
@@ -1163,22 +1169,26 @@ class AlunoController {
 		if (params.cpf != "0"){
 			pessoa.cpfCnpj = params.cpf
 		}
+		println(" nome da mae :"+ params.estadoCivil +  params.profissao+ params.cpf+ " --- " + params.nome)
+		
 
 		if(pessoa.save(flush:true)){
 
 			PessoaFisica pf = new PessoaFisica()
-
 			pf.pessoa = pessoa
 			pf.sexo = "FEMININO"
 
 			if (pf.save(flush:true)){
 				
 				Cidadao cidadao = new Cidadao()
-				cidadao.estadoCivil = params.estadoCivilMae
-				cidadao.profissao = params.profissaoMae
-				cidadao.pessoaFisica = PessoaFisica
+				cidadao.estadoCivil = params.estadoCivil
+				cidadao.profissao = params.profissao
+				cidadao.nacionalidade = 'BRASILEIRO'
+				cidadao.pessoaFisica = pf
 				
-				cidadao.save(flush:true)
+				if (cidadao.save(flush:true)){
+					println("Salvou cidadão")
+				}
 				
 				/*	def vertorMae = []
 				 vertorMae = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
@@ -1190,7 +1200,10 @@ class AlunoController {
 				def result = [];
 
 				result[0] = ["id":pessoa.id, "nome":pessoa.nome]
-
+                
+				println("cidadao mae" +result)
+				
+				
 				/*for (int i=0; i<vertorMae.size();i++) {
 				 result[i] = ["id":vertorMae[i].id, "nome":vertorMae[i].nome]
 				 }
@@ -1375,6 +1388,8 @@ class AlunoController {
 
 		
 	}
+	
+	
 
 
 
