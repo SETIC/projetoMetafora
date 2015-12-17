@@ -911,7 +911,7 @@ function mudarCombo(){
 			</div>
 			
 			
-		</div>
+		
 		<g:javascript src="script-buscar-cep.js" />
 		<!-- valida campos -->
 

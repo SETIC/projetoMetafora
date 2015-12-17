@@ -294,7 +294,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+
 							<br>
 							
 							<div class="form-group">
@@ -368,59 +368,58 @@
 							</div>
 						</div>
 						
-							<br>
+							 <br>
 							 <fieldset>
-			       <table id="listarDocumentosAluno" class="table table-bordered">
-					<legend class="scheduler-border">Documentos</legend>
-				   <thead>
-					<tr>
-						<th>Nome do Documento</th>
-						<th style="width:395px">Data</th>
-						<th>Remover</th>
-					</tr>
-					<g:each in="${documentosAluno}">
-						<tr class="info">
-							<td>
-								${it.arquivo}
-							</td>
-							<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-									date="${it.dataDocumento}" /></td>
-							<td>
-                           <a href="/projetoMetafora/aluno/removerDocumento/${it.id}"><span 
-							class="glyphicon glyphicon-remove"></span></a>
-							</td>
-						</tr>
-					</g:each>
-				</thead>
-			</table>
-         </fieldset>
-         <br>
-			<script type="text/javascript">  
-			function limparCampoFile1(){
-				document.getElementById("documentos[]").value = "";
-			}
-			
-			 $(document).ready(function(){  
-			 
-			    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
-			    $("input[name='addFile1']").click(function(e){  
-			        $('#inputs_adicionais').append( input );  
-			    });  
-			 
-			    $('#inputs_adicionais').delegate('a','click',function(e){  
-			        e.preventDefault();  
-			        $(this).parent('label').remove();  
-			    });  
-			 
-                }); 
-			 
-			</script>  
-	        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
-	        
-	        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-	         
-	        <fieldset id="inputs_adicionais" style="border: none">  
-       </fieldset>
+								<table id="listarDocumentosAluno" class="table table-bordered">
+									<legend class="scheduler-border">Documentos</legend>
+									<thead>
+										<tr>
+											<th>Nome do Documento</th>
+											<th style="width:395px">Data</th>
+											<th>Remover</th>
+										</tr>
+										<g:each in="${documentosAluno}">
+											<tr class="info">
+												<td>
+													${it.arquivo}
+												</td>
+												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+														date="${it.dataDocumento}" /></td>
+												<td>
+					                           <a href="/projetoMetafora/aluno/removerDocumento/${it.id}"><span 
+												class="glyphicon glyphicon-remove"></span></a>
+												</td>
+											</tr>
+										</g:each>
+									</thead>
+								</table>
+					        </fieldset>
+					        <br>
+							<script type="text/javascript">  
+								function limparCampoFile1(){
+									document.getElementById("documentos[]").value = "";
+								}
+								
+								 $(document).ready(function(){  
+								 
+								    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+								    $("input[name='addFile1']").click(function(e){  
+								        $('#inputs_adicionais').append( input );  
+								    });  
+								 
+								    $('#inputs_adicionais').delegate('a','click',function(e){  
+								        e.preventDefault();  
+								        $(this).parent('label').remove();  
+								    });  
+								 
+					                }); 
+							</script>  
+					        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+					        
+					        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					         
+					        <fieldset id="inputs_adicionais" style="border: none">  
+				       		</fieldset>
 							<div class="form-group" style="margin-top: 3%;">
 								<div class="col-sm-offset-10 col-sm-2"
 									style="margin-left: 87.2%;">
@@ -430,6 +429,7 @@
 									</button>
 								</div>
 							</div>
+						</div>
 						</div>
 						<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">
 							<h3>Endereço</h3>
@@ -534,11 +534,13 @@
 									<button style="display: inline-block;" type="submit"
 										class="btn btn-default btn-flat">
 										<a href="/projetoMetafora/aluno/listar/">Cancelar</a>
+										</button>
 								</div>
 							</div>
 						</div>
+
 						<br>
-					</fieldset>
+		
 
 					<br>
 				</g:form>
@@ -668,10 +670,6 @@
 		<!-- Script buscar dados de acordo com CEP -->
 		<g:javascript src="script-buscar-cep.js" />
 		<script type="text/javascript">
-
-
-
-		
 
 			function salvarPai(){
 				 //var endereco = "192.168.1.247";
