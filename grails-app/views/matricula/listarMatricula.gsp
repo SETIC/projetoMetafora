@@ -103,12 +103,7 @@ function printDiv(id)
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
 			    divToPrint.innerHTML  += "<style=''>";   
-		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
-		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
-		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
-		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
-		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
-		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
+		       
 			    divToPrint.innerHTML  += "<table border='0'>";
 			    divToPrint.innerHTML  += "<tr>";
         		divToPrint.innerHTML  += " <td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>";
@@ -659,7 +654,7 @@ function printDiv(id)
 										
 										<div class="controls">
 											<label>Etapa</label>
-											<g:field class="form-control" name="nivelEspecial" value="" type="number" />
+											<g:field class="form-control" name="nivelEspecial" value="" type="number" min="0" max="10" />
 										</div>
 										<br>										
 										

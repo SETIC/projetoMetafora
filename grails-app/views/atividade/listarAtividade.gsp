@@ -62,73 +62,10 @@ function printDiv(id)
 				</div>
 			</g:if>
 			
-<<<<<<< HEAD
-
-
-			<%--
-			
-											<div class="form-heading">
-											<label>Escola</label>
-											<div class="controls">
-
-
-						<select id="esc" name="escolas"
-							class="form-control selectpicker" data-live-search="true">
-							<g:each in='${escola}'>
-
-
-=======
-					<div class="form-heading">
-					<label>Escola</label>
-					<div class="controls">
-
-						<select id="esc" name="escolas"
-							class="form-control selectpicker" data-live-search="true">
-							<g:each in='${escola}'>
-
->>>>>>> protocJadson
-								<option value="${it.id}">
-									${it.pessoaJuridica.pessoa.nome}
-								</option>
-							</g:each>
-						</select>
-					</div>
-				</div>
-				<br>
-				<div class="form-heading">
-					<label>Professor</label>
-					<div class="controls">
-<<<<<<< HEAD
-
-=======
->>>>>>> protocJadson
-
-						<select id="prof" name="professores"
-							class="form-control selectpicker" data-live-search="true">
-							<g:each in='${professor}'>
-
-								<option value="${it.id}">
-									${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
-								</option>
-
-							</g:each>
-						</select>
-<<<<<<< HEAD
-
-
-			--%>
-			
-
-				
-
 
 					</div>
 
-=======
 
-					</div>
-				</div>
->>>>>>> protocJadson
 				<br>
 				
 			<div class="box box-white" >

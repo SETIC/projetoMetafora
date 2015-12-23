@@ -9,7 +9,7 @@
 <body>
 	<script>
 			function changeIdFuncionarioParaRelatorio(idfuncionario){
-				alert(idfuncionario);
+				
 				document.getElementById("idFuncionarioParaRelatorio").value = idfuncionario;
 			
 			}
@@ -31,7 +31,8 @@
 			function printRelatorioDeclaracaoVinculo()
 			{
 
-				var endereco = "localhost";
+				//var endereco = "localhost";
+				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		        var idFuncionario = document.getElementById("idFuncionarioParaRelatorio").value;
 		        var divToPrint  = document.getElementById("reportPrint");
 		        divToPrint.style.visibility = "visible";
@@ -209,10 +210,7 @@
 					${erro}
 				</div>
 			</g:if>
-<<<<<<< HEAD
 
-=======
->>>>>>> protocJadson
 				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
 				<div class="form-heading">
 				<label style="margin-left:15px;">Escola</label>
