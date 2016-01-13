@@ -139,20 +139,5 @@ class LayoutController {
 		return hex;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 }

@@ -1,4 +1,6 @@
 package br.gov.rn.saogoncalo.pessoa
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 
 import br.gov.rn.saogoncalo.academico.Disciplina
 import br.gov.rn.saogoncalo.academico.DisciplinaLecionadaPorProfessor
@@ -6,6 +8,7 @@ import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.organizacao.Cargo
 import br.gov.rn.saogoncalo.organizacao.Lotacao
+import br.gov.rn.saogoncalo.protocolo.FileUploadServiceController
 
 
 
@@ -159,16 +162,18 @@ class ProfessorController {
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
 
 			if (perm1 || perm2) {
+				def pessoa = Pessoa.get(id)
+				
 				Professor professores = Professor.get(id)
-
-
+				
 				def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professores)
 
 				def dlppl =  dlpp.disciplina.id
 
 				def disc  = Disciplina.findAll()
+				def documentos = Documento.findAllByPessoa(pessoa)
 
-				render (view:"/professor/verInfoProfessor.gsp", model:[professores:professores, dlppl:dlppl, disc:disc])
+				render (view:"/professor/verInfoProfessor.gsp", model:[professores:professores, dlppl:dlppl, disc:disc , documentos:documentos])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -189,17 +194,19 @@ class ProfessorController {
 
 			if (perm2) {
 				Professor professores = Professor.get(id)
-
+				def pessoa = Pessoa.get(id)
+				
 
 				def dlpp = DisciplinaLecionadaPorProfessor.findAllByProfessor(professores)
 
 				def dlppl =  dlpp.disciplina.id
 
 				def disc  = Disciplina.findAll()
+				def documentos = Documento.findAllByPessoa(pessoa)
 				
 							
 
-				render (view:"/professor/editarProfessor.gsp", model:[professores:professores, dlppl:dlppl, disc:disc])
+				render (view:"/professor/editarProfessor.gsp", model:[professores:professores, dlppl:dlppl, disc:disc, documentos:documentos])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -231,6 +238,34 @@ class ProfessorController {
 					pessoa.cpfCnpj = params.cpfCnpj
 				else
 					pessoa.cpfCnpj = null
+					
+					
+					//documentos professor
+					println("arquivos---+++ " + params)
+					
+					request.getFiles("documentos[]").each{file ->
+					
+					Documento documento = new Documento()
+					FileUploadServiceController fc = new FileUploadServiceController()
+					documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+					documento.dataDocumento = new Date()
+					documento.pessoa = pessoa
+					
+					println("Documentos aqui ---+++ " + file.originalFilename)
+					
+					if(documento.save(flush:true)){
+						println("documento salvo")
+					 }
+					
+
+					else{
+
+						def erros
+						documento.errors.each {erros = it}
+						print("erros: "+erros)
+						listarMensagem("Erro ao salvar o documento", "erro")
+					  }
+					}
 
 				def pessoaFisica = PessoaFisica.get(params.id)
 				pessoaFisica.rcNumero = params.rcNumero
@@ -356,14 +391,15 @@ class ProfessorController {
 
 				}
 				
+				
+				
+				
 				 //log
 				 def date = new Date()
 				 professor = Professor.get(params.id)
 				 AdministracaoController adm = new AdministracaoController()
 				 adm.salvaLog(session["usid"].toString().toInteger(), "professor atualizado " + professor.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"atualizar", "Professor", date)
-				 
- 
-
+			
 			}
 		}
 	}
@@ -383,13 +419,39 @@ class ProfessorController {
 
 			if (perm2) {
 
-
 				Pessoa pessoa = new Pessoa(params)
 				pessoa.escid = session["escid"]
 				pessoa.nome = params.nome.toString().toUpperCase()
 
 				if (pessoa.save(flush:true)){
+					
+					//documento professor
+					println("arquivos---+++ " + params)
+					
+					request.getFiles("documentos[]").each{file ->
+					
+					Documento documento = new Documento()
+					FileUploadServiceController fc = new FileUploadServiceController()
+					documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+					documento.dataDocumento = new Date()
+					documento.pessoa = pessoa
+					
+					println("Documentos aqui ---+++ " + file.originalFilename)
+					
+					if(documento.save(flush:true)){
+						println("documento salvo")
+					 } 
+					
 
+					else{
+
+						def erros
+						documento.errors.each {erros = it}
+						print("erros: "+erros)
+						listarMensagem("Erro ao salvar o documento", "erro")
+					  }
+					}
+					
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
 					pessoaFisica.save(flush:true)
@@ -411,7 +473,6 @@ class ProfessorController {
 
 					if(professor.save(flush:true)){
 
-
 						DisciplinaLecionadaPorProfessor disciplinaProfessor = new DisciplinaLecionadaPorProfessor()
 						Disciplina disciplina
 
@@ -423,7 +484,6 @@ class ProfessorController {
 							//disciplina = Disciplina.get(Integer.parseInt(var))
 							disciplina = Disciplina.get(var)
 
-
 							disciplinaProfessor.professor = professor
 							disciplinaProfessor.disciplina = disciplina
 
@@ -433,12 +493,12 @@ class ProfessorController {
 							disciplinaProfessor.situacao = "ATIVA"
 							disciplinaProfessor.save(flush:true)
 							
-							
 							def date = new Date()
 							AdministracaoController adm = new AdministracaoController()
 							adm.salvaLog(session["usid"].toString().toInteger(), "professor cadastrado " + professor.funcionario.cidadao.pessoaFisica.pessoa.id.toString(),"cadastrado", "Professor", date)
 							
 						}
+						
 						
 						Cargo cargo= Cargo.findByCargo("PROFESSOR")
 						
@@ -452,7 +512,6 @@ class ProfessorController {
 						lotacao.dataInicio = new Date()
 						lotacao.dataTermino = new Date()
 						lotacao.save(flush:true)
-
 
 
 						/*				def professores = Professor.findAll()
@@ -473,11 +532,7 @@ class ProfessorController {
 						 erro : "Erro ao Salvar Professor!" ])*/
 					}
 
-
-
-
-
-				}else{
+				   }else{
 
 					def erros
 
@@ -499,4 +554,198 @@ class ProfessorController {
 			}
 		}
 	}
-}
+	
+	def adicionarDocumentoPessoa(request){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Professor", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
+
+			if (perm2)
+
+			{
+				
+			request.getFiles("arquivo[]").each { file ->
+			println("Arquivo da pessoa aki ---+++ " + file.originalFilename)
+			
+			Documento documento = new Documento()
+		    Pessoa pessoa = new Pessoa()
+			pessoa = Pessoa.get(documento.pessoa.id)
+			
+			FileUploadServiceController fil = new  FileUploadServiceController()
+			documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos/" + pessoa.id.toString())
+			documento.dataDocumento = new Date()
+			documento.pessoa = pessoa
+			if(documento.save(flush:true)){
+				println("documento salvo -----")
+			  }
+			
+		   redirect(action:"listarProfessor" , params:[id:documento.pessoa.id])
+			
+			   }
+	   
+		   }
+		 }
+	  }
+	
+	       // documentos referentes a view de editar
+	        def removerDocumentoProfessor(long id){
+
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Professor", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
+
+			if (perm2)
+
+			{
+
+			  Documento documento = new Documento()
+			  documento = Documento.get(id)
+			  Pessoa pessoa  = new Pessoa()
+			  pessoa = Pessoa.get(documento.pessoa.id)
+			  documento.deleteAll(documento)
+			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${pessoa.id}").file.toString() + "/" + documento.arquivo).delete()
+			  def documentosPessoa = Documento.findAllByPessoa(pessoa)
+			  
+			  redirect(action:"editarProfessor", params:[id:pessoa.id, pessoa:pessoa, documento:documento , perm2:perm2])
+			
+
+			}else{
+
+				  
+			  render(view:"/error403.gsp")
+				  }
+				}
+	        }
+	
+	      
+	      
+	     def downloadDocumentoProfessor(long id) {
+		
+					println("URL --- " + grailsApplication.parentContext.getResource("/documentos/").file.toString() + "\\" + "bla.txt")
+					
+					Documento documento = Documento.get(id)
+					println("documento"+documento)
+					def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.pessoa.id.toString()).file.toString() + "/" + documento.arquivo)
+					
+					/*def date = new Date()
+					AdministracaoController adm = new AdministracaoController()
+					adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo ,
+									"DOWNLOAD", "Anexo", date)*/
+					
+					if (file.exists())
+			
+					{
+			
+						response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
+						//response.setHeader("Content-disposition", "attachment;filename=\"${file.name}\"")
+						response.setHeader("Content-disposition", " attachment; filename=" + documento.arquivo )
+						response.outputStream << file.bytes
+						response.outputStream.flush()
+						response.outputStream.close()
+			
+					}
+			
+					else{
+						
+						def erros
+						documento.errors.each {erros = it}
+						print("erros: "+erros)
+						listarMensagem("Erro ao baixar o arquivo", "erro")
+					}
+				}
+		 
+		 
+		 def downloadDocumento(long id) {
+			 
+						 println("URL --- " + grailsApplication.parentContext.getResource("/documentos/").file.toString() + "\\" + "bla.txt")
+						 
+						 Documento documento = Documento.get(id)
+						 println("documento"+documento)
+						 def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.pessoa.id.toString()).file.toString() + "/" + documento.arquivo)
+						 
+						 /*def date = new Date()
+						 AdministracaoController adm = new AdministracaoController()
+						 adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo ,
+										 "DOWNLOAD", "Anexo", date)*/
+						 
+						 if (file.exists())
+				 
+						 {
+				 
+							 response.setContentType("application/octet-stream") // or or image/JPEG or text/xml or whatever type the file is
+							 //response.setHeader("Content-disposition", "attachment;filename=\"${file.name}\"")
+							 response.setHeader("Content-disposition", " attachment; filename=" + documento.arquivo )
+							 response.outputStream << file.bytes
+							 response.outputStream.flush()
+							 response.outputStream.close()
+				 
+						 }
+				 
+						 else{
+							 
+							 def erros
+							 documento.errors.each {erros = it}
+							 print("erros: "+erros)
+							 listarMensagem("Erro ao baixar o arquivo", "erro")
+						 }
+					 }
+			 
+		 
+
+            def removerDocumento(long id){
+	
+			if((session["user"] == null) || (session["pass"] == null) ){
+				render (view:"/usuario/login.gsp", model:[ctl:"Professor", act:"listar"])
+			}else{
+				def user = session["user"]
+				def pass = session["pass"]
+	
+				def usuario = new UsuarioController()
+	
+				def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "PROFESSOR", "2")
+	
+				if (perm2)
+	
+				{
+	
+				  Documento documento = new Documento()
+				  documento = Documento.get(id)
+				 Pessoa pessoa = new Pessoa()
+				  pessoa = Pessoa.get(documento.pessoa.id)
+				  documento.deleteAll(documento)
+				  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${pessoa.id}").file.toString() + "/" + documento.arquivo).delete()
+				  def documentosPessoa = Documento.findAllByPessoa(pessoa)
+				  
+				  redirect(action:"editarProfessor", params:[id:pessoa.id, pessoa:pessoa, documento:documento , perm2:perm2])
+				
+	
+				}else{
+	
+					  
+				  render(view:"/error403.gsp")
+					  }
+			
+		          }
+               }
+          }
+            
+            
+	
+	
+		 
+		 
+	
+      

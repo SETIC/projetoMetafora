@@ -63,7 +63,7 @@ function printDiv(id)
 			</g:if>
 			<div class="box box-white">
 			
-			<g:form controller ="Professor" action="pesquisarProfessores" class ="form">
+			<g:form controller ="Professor" action="pesquisarProfessores" class ="form" enctype="multipart/form-data">
 					<div class = "form-group">
 						<label  for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
 						<div class="col-sm-10">
@@ -118,8 +118,6 @@ function printDiv(id)
 												href="/projetoMetafora/professor/verInfoProfessor/${pessoa.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></div>
 										</div>
-	
-
 									</div>
 								</td>
 								<td>
@@ -169,8 +167,8 @@ function printDiv(id)
 								Professor</h4>
 						</div>
 						<div class="modal-body">
-							<g:form controller="Professor" action="salvar" class="form">
-								<fieldset>
+							<g:form controller="Professor" action="salvar" class="form" enctype="multipart/form-data">
+								
 									<div class="form-heading">
 										<label>Nome</label>
 										<div class="controls">
@@ -285,7 +283,7 @@ function printDiv(id)
 													name="matricula" value="" />
 											</div>
 										</div>
-									</div>
+									
 									<br>
 
 									<div class="form-heading">
@@ -299,13 +297,41 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-								</fieldset>
-								<div class="modal-footer">
+									
+                                    <script type="text/javascript">  
+								function limparCampoFile1(){
+									document.getElementById("documentos[]").value = "";
+								}
+								
+								 $(document).ready(function(){  
+								 
+								    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
+								    $("input[name='addFile1']").click(function(e){  
+								        $('#inputs_adicionais').append( input );  
+								    });  
+								 
+								    $('#inputs_adicionais').delegate('a','click',function(e){  
+								        e.preventDefault();  
+								        $(this).parent('label').remove();  
+								    });  
+								 
+					                }); 
+							</script>  
+							
+					        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
+					        
+					        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					         
+					        <fieldset id="inputs_adicionais" style="border: none">  
+				       		</fieldset>
+							
+                            								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
 										<i class="fa fa-save"></i> Cadastrar
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
+								
 							</g:form>
 						</div>
 					</div>

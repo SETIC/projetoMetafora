@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<%@page import="br.gov.rn.saogoncalo.academico.Transferencia %>
+<%@page import="java.lang.System"%>
+
+
 <html>
   <head>
     <meta charset="UTF-8">
     <title><g:layoutTitle default="SISEDUC . Painel"/></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    
     <!-- Bootstrap 3.3.2 -->
     <link href="${resource(dir: 'css', file: 'bootstrap.css')}" rel="stylesheet">
     
@@ -110,21 +115,16 @@
                   <li class="user-header">
                   	<g:img dir="img" file="photo-profile-default-gray.png" class="img-circle" alt="User Image"/>
                     <p>
-
-
                       ${session["pesnome"].split(" ")[0]} ${session["pesnome"].split(" ")[1]}<br>
-
                       <p style="font-size:12px;">
-                      
-                       ${session["user"].split(" ")[0]}
-                      
-                      </>
+                       ${session["user"].split(" ")[0]} 
+                       </p>
 
-                    </p>
                     <p style="font-size: 12px;">
                     	${session["user"].split(" ")[0]}
                     </p>
                   </li>
+                  
                   <!--Menu Body 
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
@@ -148,6 +148,34 @@
                   </li>
                 </ul>
               </li>
+                  <!--notificaçao de transferencia-->
+                  <script type="text/javascript">
+                   function transferencia(){
+   					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+   				     $.ajax({
+			            type: "GET",
+			            url: "http://"+endereco+":8080/projetoMetafora/transferencia/alunosAguardandoAprovacao/",
+			            dataType: "json",
+			            success: function(result){
+
+			            console.log('result ---- '+result);
+			            document.getElementById("notTransferenciaId").innerHTML = ''+result;    
+                         
+                       }
+   				 });
+               }
+
+                   transferencia();
+                  </script>
+                			  
+              <li class="dropdown notifications-menu" style="position:absolute; right:18%;">   
+            <a href="/projetoMetafora/transferencia/listar">
+              <i class="fa fa-bell-o" style="position:absolute; top:20px; right:11px; padding:4px 20px" title="Transferencias pendentes"></i>
+              <span class="label label-warning"  style="position:absolute; top:10px;  right:26px; font-size:9px; padding:2px 3px">
+              <label id="notTransferenciaId" style="width:7px; heigth:3px"></label></span>
+            </a>
+            <!-- class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" -->
+            </li>
             </ul>
           </div>
         </nav>
@@ -168,7 +196,7 @@
                       
                        ${session["user"].split(" ")[0]}
                       
-                      </>
+                      </p>
               
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
@@ -181,14 +209,9 @@
                 <i class="fa fa-dashboard"></i> <span>Painel</span>
               </g:link>
             </li>
-           
+                <g:include controller="buildLeftMenu" action="montarMenu" />
             
-            <g:include controller="buildLeftMenu" action="montarMenu" />
-            
-   
-
-			
-           <!--  <li class="treeview">
+           <!-- <li class="treeview">
               <a href="#">
                 <i class="fa fa-cubes"></i> <span>Programas</span>
                 <i class="fa fa-angle-left pull-right"></i>

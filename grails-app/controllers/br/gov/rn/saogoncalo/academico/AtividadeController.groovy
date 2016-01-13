@@ -46,7 +46,8 @@ class AtividadeController {
 					formatData = new SimpleDateFormat("yyyy-MM-dd")
 					formatAno = new SimpleDateFormat("yyyy")
 					dataAtual = formatData.format(date)
-					anoAtual = formatAno.format(date);
+					//anoAtual = formatAno.format(date);
+					anoAtual = "2015"
 					turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
 					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
@@ -64,7 +65,8 @@ class AtividadeController {
 					formatData = new SimpleDateFormat("yyyy-MM-dd")
 					formatAno = new SimpleDateFormat("yyyy")
 					dataAtual = formatData.format(date)
-					anoAtual = formatAno.format(date);
+					//anoAtual = formatAno.format(date);
+					anoAtual = "2015"
 					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
 					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
@@ -215,10 +217,7 @@ class AtividadeController {
 			
 			}
 
-
-						
 			def matricula = Matricula.get(idMat)
-			
 
 			def idAtividade = Long.parseLong(params.atividadeId)
 			def atividade = Atividade.get(idAtividade)
@@ -307,7 +306,6 @@ class AtividadeController {
 
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
-
 			if (perm2) {
 
 				Atividade.deleteAll(Atividade.get(id))
@@ -329,7 +327,6 @@ class AtividadeController {
 			def usuario = new UsuarioController()
 
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
-
 
 			if (perm2) {
 
@@ -367,10 +364,7 @@ class AtividadeController {
 
 			def usuario = new UsuarioController()
 
-
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
-
-
 			if (perm2) {
 
 
@@ -398,4 +392,31 @@ class AtividadeController {
 		}
 
 	}
+	 
+	def listarAtividadeSerie(long id){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Atividade", act:"listar"])
+		}else{
+
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
+			
+			if (perm2) {
+				
+				TurmaDisciplina turmaDisciplina = TurmaDisciplina.get(id)
+				def listarAtividadeSerie = Atividade.executeQuery("select a from Atividade a , TurmaDisciplina td, Turma t "+
+					" where a.turmaDisciplina.id = td.id"+
+					" and t.id = td.turma.id" +
+					" and t.id = "+id.toString())
+				render (view:"/atividade/listarAtividadeSerie.gsp", model:[turmaDisciplina:turmaDisciplina, listarAtividadeSerie:listarAtividadeSerie])				
+				
+			 }
+		
+		  }
+     }
 }

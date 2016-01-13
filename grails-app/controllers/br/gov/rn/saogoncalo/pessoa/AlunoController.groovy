@@ -65,6 +65,8 @@ class AlunoController {
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
 				Aluno alunos = Aluno.get(id)
+				def pessoa = Pessoa.get(id)
+				
 				println("objeto alunos aquiiiiiiiiiiiiiii------ "+alunos)
 				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
@@ -80,7 +82,7 @@ class AlunoController {
 				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
 
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				def documentosAluno = Documento.findAllByAluno(alunos)
+				def documentosAluno = Documento.findAllByPessoa(pessoa)
 
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
@@ -133,6 +135,22 @@ class AlunoController {
 				else
 					pessoa.cpfCnpj = null
 				if(pessoa.save(flush:true)){
+					
+					//salvar documento
+				println("documento akiiiiiiii" +pessoa)
+				request.getFiles("documentos[]").each { file ->
+				println("documento do atualizar akikkkkkk ---+++ " + file.originalFilename)
+
+				Documento documento = new Documento()
+				FileUploadServiceController fil = new  FileUploadServiceController()
+				documento.arquivo = fil.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+				documento.dataDocumento = new Date()
+				documento.pessoa = pessoa
+				 if(documento.save(flush:true)){
+					println("documento salvo -----")
+						}
+					}
+
 					println("salvou pessoa");
 				}else{
 					println(" não salvou pessoa");
@@ -197,11 +215,12 @@ class AlunoController {
 							newParentescoPai.pessoa = pessoa.get(params.pai)
 							newParentescoPai.pessoaFisica = PessoaFisica.get(pessoa.id)
 							newParentescoPai.save(flush:true)
-
+                    
 						}else{
 							parentescoPai.pessoa = idPai
 							parentescoPai.save(flush:true)
 						}
+						
 					}else{
 						idPai = Pessoa.get(params.nomePaiInput)
 						println("if do paiInput "+params.nomePaiInput)
@@ -226,6 +245,7 @@ class AlunoController {
 
 							parentescoMae.pessoa = idMae
 							parentescoMae.save(flush:true)
+						
 						}
 					}else{
 						idMae = Pessoa.get(params.nomeMaeInput)
@@ -239,7 +259,6 @@ class AlunoController {
 
 
 				//bloco de endereço
-
 
 				TipoLogradouro tipoLogradouro = new TipoLogradouro()
 				Logradouro logradouro = new Logradouro()
@@ -480,21 +499,6 @@ class AlunoController {
 
 				if(aluno.save(flush:true)){
 
-					//salvar documento
-					println("documento akiiiiiiii" +aluno)
-					request.getFiles("documentos[]").each { file ->
-						println("documento do atualizar akikkkkkk ---+++ " + file.originalFilename)
-
-						Documento documento = new Documento()
-						FileUploadServiceController fil = new  FileUploadServiceController()
-						documento.arquivo = fil.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
-						documento.dataDocumento = new Date()
-						documento.aluno = aluno
-						if(documento.save(flush:true)){
-							println("documento salvo -----")
-						}
-					}
-
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
@@ -715,13 +719,15 @@ class AlunoController {
 			{
 
 				Aluno alunos = Aluno.get(id)
+				def pessoa = Pessoa.get(id)
+				
 
 				Parentesco parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "PAI")
 				Parentesco parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "MÃE")
 
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
 
-				def documentosAluno  = Documento.findAllByAluno(alunos)
+				def documentosAluno  = Documento.findAllByPessoa(pessoa)
 
 				println("Reside -- " + reside)
 				
@@ -762,6 +768,32 @@ class AlunoController {
 				def year = Calendar.getInstance().get(Calendar.YEAR);
 
 				if (pessoa.save(flush:true)){
+					
+				//documento
+					
+				request.getFiles("documentos[]").each { file ->
+
+				println("Documentos aqui ---+++ " + file.originalFilename)
+
+				Documento documento = new Documento()
+				FileUploadServiceController fc = new FileUploadServiceController()
+				documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+				documento.dataDocumento = new Date()
+				documento.pessoa = pessoa
+
+				if(documento.save(flush:true)){
+					println("documento salvo")
+
+				}
+
+				else{
+
+					def erros
+					documento.errors.each {erros = it}
+					print("erros: "+erros)
+					listarMensagem("Erro ao salvar o documento", "erro")
+				}
+					}
 
 					pessoa.errors.each{println it}
 
@@ -1023,34 +1055,7 @@ class AlunoController {
 
 						}
 
-						//documento
-
-						request.getFiles("documentos[]").each { file ->
-
-							println("Documentos aqui ---+++ " + file.originalFilename)
-
-							Documento documento = new Documento()
-							FileUploadServiceController fc = new FileUploadServiceController()
-							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
-							documento.dataDocumento = new Date()
-							documento.aluno = aluno
-
-							if(documento.save(flush:true)){
-								println("documento salvo")
-
-							}
-
-							else{
-
-								def erros
-								documento.errors.each {erros = it}
-								print("erros: "+erros)
-								listarMensagem("Erro ao salvar o documento", "erro")
-							}
-						}
-
-
-						def date = new Date()
+												def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "aluno matriculado " + aluno.id.toString(),"cadastrar", "Aluno", date)
 
@@ -1067,7 +1072,8 @@ class AlunoController {
 						 erro : "Erro ao Salvar!" ])*/
 						listarMensagem("Erro ao salvar aluno", "erro")
 					}
-				}else{
+					
+				   }else{
 
 					def erros
 					pessoa.errors.each{erros = it}
@@ -1368,13 +1374,13 @@ class AlunoController {
 
 			  Documento documento = new Documento()	
 		      documento = Documento.get(id)	
-			  Aluno aluno  = new Aluno()
-			  aluno = Aluno.get(documento.aluno.id)
+			  Pessoa pessoa  = new Pessoa()
+			  pessoa = Pessoa.get(documento.pessoa.id)
 			  documento.deleteAll(documento)
-			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documento.arquivo).delete()
-			  def documentosAluno = Documento.findAllByAluno(aluno)
+			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${pessoa.id}").file.toString() + "/" + documento.arquivo).delete()
+			  def documentosAluno = Documento.findAllByPessoa(pessoa)
 			  
-			  redirect(action:"editarAluno", params:[id:aluno.id, aluno:aluno, documento:documento , perm2:perm2])
+			  redirect(action:"editarAluno", params:[id:pessoa.id, pessoa:pessoa, documento:documento , perm2:perm2])
 			
 
 			}else{
@@ -1389,9 +1395,6 @@ class AlunoController {
 		
 	}
 	
-	
-
-
 
 	
 	    def downloadDocumento(long id) {

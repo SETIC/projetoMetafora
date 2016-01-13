@@ -52,7 +52,8 @@ class FrequenciaController {
 
 					date = new Date()
 					formatAno = new SimpleDateFormat("yyyy")
-					anoAtual = formatAno.format(date)
+					//anoAtual = formatAno.format(date)
+					anoAtual = "2015"
 
 					turmas = Turma.findAllByAnoLetivoAndEscolaInList(anoAtual.toInteger(), escola)
 					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
@@ -64,7 +65,8 @@ class FrequenciaController {
 
 					date = new Date()
 					formatAno = new SimpleDateFormat("yyyy")
-					anoAtual = formatAno.format(date)
+					//anoAtual = formatAno.format(date)
+					anoAtual = "2015"
 
 					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
 					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)

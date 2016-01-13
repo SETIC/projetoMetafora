@@ -220,13 +220,13 @@
 										 
 										}); 
 										 
-									</script>  
-							        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
-							        
-							        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-							         
-							        <fieldset id="inputs_adicionais" style="border: none">  
-							        </fieldset> 
+							</script>  
+					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
+					        
+					        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					         
+					        <fieldset id="inputs_adicionais" style="border: none">  
+					        </fieldset> 
 					<div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar

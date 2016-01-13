@@ -659,7 +659,7 @@ function printDiv(id)
 										
 										<div class="controls">
 											<label>Etapa</label>
-											<g:field class="form-control" name="nivelEspecial" value="" type="number" />
+											<g:field class="form-control" name="nivelEspecial" value="" type="number" min="1" max="10" />
 										</div>
 										<br>										
 										

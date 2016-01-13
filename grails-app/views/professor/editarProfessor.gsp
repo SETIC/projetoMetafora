@@ -44,7 +44,7 @@
 				<g:set var="cidadao" value="${it.funcionario.cidadao}" />
 			</g:each>
 			<div style="margin-left: 120px">
-				<g:form controller="Professor" action="atualizar"
+				<g:form controller="Professor" action="atualizar" enctype="multipart/form-data"
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${pessoa?.id}" />
 					<fieldset>
@@ -279,6 +279,60 @@
 								</select>
 							</div>
 						</div>
+						<br>
+						<fielset>
+					<table id="EditarDocumentos" class="table table-bordered">
+						<legend class="scheduler-border">Documentos</legend>
+						<thead>
+						<tbody>
+							<tr>
+								<th>Nome do Documento</th>
+								<th style="width:395px">Data</th>
+								<th>Remover</th>
+							</tr>
+							<g:each in="${documentos}">
+								<tr class="info">
+									<td>
+										${it.arquivo}
+									</td>
+										<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
+												date="${it.dataDocumento}"/></td>
+										<td>  
+                                  <a href="/projetoMetafora/professor/removerDocumento/${it.id}"><span 
+													class="glyphicon glyphicon-remove"></span></a>										
+										</td>
+											</tr>
+										</g:each>
+									 </thead>
+									</tbody>
+								</table>
+										<script type="text/javascript">  
+
+										function limparCampoFile(){
+											document.getElementById("documentos[]").value = "";
+										}
+										
+										$(document).ready(function(){  
+	                                        									 
+										    var input = '<label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
+										    $("input[name='addFile']").click(function(e){  
+										        $('#inputs_adicionais').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										}); 
+										 
+							</script>  
+					        <label style="display: block"> <input type="button" name="addFile" value="Novo Documento" /></label>
+					        
+					        <label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					         
+					        <fieldset id="inputs_adicionais" style="border: none">  
+					        </fieldset> 
 					
 
 					</fieldset>

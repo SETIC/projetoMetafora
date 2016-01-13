@@ -718,8 +718,7 @@ class ProtocoloController {
 				
 				//Anexos
 				
-				request.getFiles("arquivo[]").each { file ->
-
+				    request.getFiles("arquivo[]").each { file ->
 					println("Arquivo aqui ---+++ " + file.originalFilename)
 
 					Anexo anexo = new Anexo()

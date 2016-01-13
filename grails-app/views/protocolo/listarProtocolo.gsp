@@ -19,7 +19,7 @@ function printDiv(id1, id2)
 
   newWin.document.write("<table border='0'>");
   newWin.document.write("<tr>");
-  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  //newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
   newWin.document.write("<td>");
   newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
   newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
@@ -75,7 +75,7 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
+							<th style="width: 75px;"></th>
 							<th style="text-align: left;">Número</th>
 							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
@@ -261,7 +261,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número</label>
 											<div class="controls">
-												<g:field type = "number" class="form-control" name="numero" value="" 
+												<g:field type = "number" class="form-control" name="numero" value="" min="0" 
 													required="true" />
 											</div>
 										</div>

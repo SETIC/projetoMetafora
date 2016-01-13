@@ -80,7 +80,7 @@ function printDiv(id)
 					<g:if test="${!funcionarios?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 65px;"></th>
+							<th style="width: 90px;"></th>
 							<th style="width: 280px;text-align: left;">Nome</th>
 							<th style="text-align: left;">Matricula</th>
 							<th style="text-align: left;">Cargo</th>						
