@@ -37,7 +37,6 @@ function printDiv(id)
   newWin.close();
 }
 </script>
-
 	<section class="content-header">
 		<h1>
 			Atividade <small>Visualização e Gerenciamento</small>
@@ -45,7 +44,7 @@ function printDiv(id)
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
-			<li><g:link controller="atividade" action="listar">Atividade</g:link></li>
+			<li><g:link controller="Atividade" action="listar">Atividade</g:link></li>
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
@@ -74,26 +73,21 @@ function printDiv(id)
 						</tr>
 					</thead>
 					<tbody>
-					<g:if test= "${turmaDisciplina.turma.serie.serie == 'F'}">
-					<li><a href="/projetoMetafora/atividade/listarRelatorioPolivalente/${turma.id}"></a></li>
-					 </g:if>
-					 <g:else>
 						<g:each in="${turmaDisciplina}" var="td">
 						   <g:hiddenField name="turmaDisciplinaId" value="${}" />
 								<tr class='linha_registro'>
 									<td>
-						      		  <div style="margin-left: -35px" class="opcoes">
+										<div style="margin-left: -35px" class="opcoes">
 											<ul style="display: inline">
 												<li title="Escolher" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/atividade/listarAtividadeSerie/${td.turma.id}"><span
-													class="glyphicon glyphicon-ok">Selecionar</span></a></li>
+														class="glyphicon glyphicon-ok">Selecionar</span></a></li>
 											</ul>
 										</div>
 									</td>
-	
 									<td>
-									${td.turma.turma} 
+										${td.turma.turma} 
 									</td>
 									<td>
 										${td.turma.serie.serie} 
@@ -102,12 +96,11 @@ function printDiv(id)
 										${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 									</td>
 								</tr>
-								</g:each>
-							</g:else>
+						</g:each>
 					</tbody>
 				</table>
 			</div>
 		  </div>
 	</section>
-</body>
+  </body>
 </html>

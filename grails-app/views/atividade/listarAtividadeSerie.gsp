@@ -32,8 +32,6 @@
 
 			<br>
 	
-	
-				
 			<div class="box box-white" >
 			<div id="print">
 				<table id="" class="table table-striped table-hover example">
@@ -220,6 +218,7 @@
 					                    </div>
 					                </div>
 					                <br>
+					                
 								</fieldset>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">

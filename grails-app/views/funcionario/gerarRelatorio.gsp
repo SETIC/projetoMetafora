@@ -36,10 +36,7 @@
 		        var divToPrint  = document.getElementById("reportPrint");
 		        divToPrint.style.visibility = "visible";
 		        
-		        
-		        
 		        divToPrint.innerHtml = "";
-		        
 		        $.ajax({
 		            type: "GET",
 		            url: "http://"+endereco+":8080/projetoMetafora/funcionario/getFuncionarioByIdParaRelatorio/"+idFuncionario,
@@ -92,7 +89,7 @@
 				        "</tbody>"+
 				      "</table>";
 				        }else{
-
+                           
 					        }
 		
 		          	  var now = new Date();
@@ -252,9 +249,6 @@
 
 
 		</div>
-
-		
-
 
 		<table id="listarFuncionarios"
 			class="table table-striped table-hover example">

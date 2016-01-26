@@ -23,7 +23,7 @@ class AtividadeController {
 
 
 			if (perm1 || perm2) {
-				
+
 				def p
 				def dlpp
 				def escola
@@ -73,7 +73,6 @@ class AtividadeController {
 				}
 
 				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade, escola:escola, professor:p])
-
 			}
 		}
 	}
@@ -208,13 +207,13 @@ class AtividadeController {
 		println(" Params aqui ---" + params)
 
 		for(int i = 0; i < params.size() -3; i++){
-		
+
 			def idMat
 			if (params.keySet()[i].toString() != "atividadeId") {
-			idMat = Integer.parseInt(params.keySet()[i].toString().replaceAll("mat-", ""))
-			//def idMatricula = Long.parseLong(params.atividadeId)
-			println(" IdMatricula --- " + idMat)
-			
+				idMat = Integer.parseInt(params.keySet()[i].toString().replaceAll("mat-", ""))
+				//def idMatricula = Long.parseLong(params.atividadeId)
+				println(" IdMatricula --- " + idMat)
+
 			}
 
 			def matricula = Matricula.get(idMat)
@@ -225,7 +224,7 @@ class AtividadeController {
 			def attNota = Nota.findByAtividadeAndMatricula(atividade, matricula)
 
 			def nota = Float.parseFloat(params.get(params.keySet()[i])[0])
-			
+
 			def descricao = params.get(params.keySet()[i])[1]
 
 			//println "tamanho de att nota ---- " (attNota.size().toString())
@@ -392,9 +391,9 @@ class AtividadeController {
 		}
 
 	}
-	 
+
 	def listarAtividadeSerie(long id){
-		
+
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Atividade", act:"listar"])
 		}else{
@@ -405,18 +404,37 @@ class AtividadeController {
 			def usuario = new UsuarioController()
 
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
-			
+
 			if (perm2) {
 				
-				TurmaDisciplina turmaDisciplina = TurmaDisciplina.get(id)
-				def listarAtividadeSerie = Atividade.executeQuery("select a from Atividade a , TurmaDisciplina td, Turma t "+
-					" where a.turmaDisciplina.id = td.id"+
-					" and t.id = td.turma.id" +
-					" and t.id = "+id.toString())
-				render (view:"/atividade/listarAtividadeSerie.gsp", model:[turmaDisciplina:turmaDisciplina, listarAtividadeSerie:listarAtividadeSerie])				
+                Turma turma = Turma.get(id)
 				
-			 }
-		
-		  }
-     }
+				if(turma.serie.serie == '1 serie'){
+					
+					
+					/*Atividade atividade = new Atividade()
+					atividade.descricaoAtividade =  params.descricaoAtividade
+                    atividade.bimestre =  params.bimestre
+					 */					
+					
+					
+				}else{
+				
+				def turmaDisciplina = TurmaDisciplina.findAllByTurma(turma)
+				def listarAtividadeSerie = Atividade.executeQuery("select a from Atividade a , TurmaDisciplina td, Turma t "+
+						" where a.turmaDisciplina.id = td.id"+
+						" and t.id = td.turma.id" +
+						" and t.id = "+id.toString())
+				render (view:"/atividade/listarAtividadeSerie.gsp", model:[turmaDisciplina:turmaDisciplina, listarAtividadeSerie:listarAtividadeSerie])
+
+			}
+
+		}
+	  }
+	}
 }
+	
+    
+
+
+

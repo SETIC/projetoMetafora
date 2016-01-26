@@ -62,8 +62,8 @@ class FuncionarioController {
 					"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
 					"   and td.turma_id = t.id " +
 					"   and s.id = t.serie_id " +
-					"   and t.ano_letivo = '2014' " +
-					"   and pe.id = 2100" + //+ id.toString() +
+					"   and t.ano_letivo = '2015' " +
+					"   and pe.id = 5177" + //+ id.toString() +
 					" group by d.disciplina, pe.nome, d.carga_horaria");
 				
 
@@ -239,7 +239,7 @@ class FuncionarioController {
 						"   and td.turma_id = t.id " +
 						"   and s.id = t.serie_id " +
 						"   and t.ano_letivo = '2014' " +
-						"   and pe.id = 2100" + //+ id.toString() +
+						//"   and pe.id = 2100" + //+ id.toString() +
 						" group by d.disciplina, pe.nome, d.carga_horaria");
 
 
@@ -727,7 +727,8 @@ class FuncionarioController {
 			}
 		}
 	}
-	def  getFuncionarioByIdParaRelatorio(long id){
+	
+	def getFuncionarioByIdParaRelatorio(long id){
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
 		props.setProperty("user", "admin_db_sr")
@@ -737,7 +738,8 @@ class FuncionarioController {
 		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 		//verificar com matriculas
-		def horario= sql.rows("select p.id, p.nome, td.turma_id, dis.disciplina, hr.horario, " +
+		
+		def horario = sql.rows("select p.id, p.nome, td.turma_id, dis.disciplina, hr.horario, " +
 				" hr.hora_aula, length(substring(hr.horario, 3, length(hr.horario))) as qtd " +
 				" from cadastro_unico_pessoal.pessoa as p, cadastro_unico_pessoal.professor as prof, " +
 				" educacao_academico.disciplina as dis, " +
@@ -749,16 +751,17 @@ class FuncionarioController {
 				" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
 				" and hr.turma_disciplina_id = td.id " +
 				" and p.id = "+id.toString());
-
+           
+			
 
 		//println("dados da lista"+horario)
 		def funcionario = Funcionario.get(id)
 		def escola = Escola.get(funcionario.cidadao.pessoaFisica.pessoa.escid)
 
-		def result = ["nomeFuncionario":funcionario.cidadao.pessoaFisica.pessoa.nome, "escola":escola.pessoaJuridica.pessoa.nome,
-			"cargaHoraria":funcionario.cargaHoraria, "cargo":funcionario.lotacao.cargo.cargo, "funcao":funcionario.lotacao.funcao,
+        def result = ["nomeFuncionario":funcionario.cidadao.pessoaFisica.pessoa.nome, "escola":escola.pessoaJuridica.pessoa.nome,
+ 			"cargaHoraria":funcionario.cargaHoraria, "cargo":funcionario.lotacao.cargo.cargo, "funcao":funcionario.lotacao.funcao,
 			"horario":horario]
-
+		
 		render( result as JSON)
 
 	}
@@ -864,7 +867,6 @@ class FuncionarioController {
 								}
 							}
 						}
-
 
 
 						Lotacao lotacao = new Lotacao()
