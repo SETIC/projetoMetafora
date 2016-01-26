@@ -64,6 +64,7 @@ function printDiv(id)
 			
 			<br>
 				<div class="box box-white">
+
 				<table id="" class="table table-striped table-hover example">
 					<thead>
 						<tr>

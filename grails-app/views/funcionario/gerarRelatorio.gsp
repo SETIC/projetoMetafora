@@ -9,7 +9,7 @@
 <body>
 	<script>
 			function changeIdFuncionarioParaRelatorio(idfuncionario){
-				alert(idfuncionario);
+				
 				document.getElementById("idFuncionarioParaRelatorio").value = idfuncionario;
 			
 			}
@@ -58,34 +58,52 @@
 				        var disciplina = null;
 				        var qtd = null;
 				        var horarioL = null;
-				        for (var i = 0; i <result.horario.length; i++) {
-				       		disciplina = disciplina+ result.horario[i].disciplina
-				        	qtd = qtd+ result.horario[i].qtd
-				        	horarioL = horarioL+ result.horario[i].horario
+
+						var i
+					    for (i = 0; i <result.horario.length; i++) {
+				       		disciplina = disciplina+ result.horario[i].disciplina;
+				        	qtd = qtd+ result.horario[i].qtd;
+				        	horarioL = horarioL+ result.horario[i].horario;
 				        }
-				      
+
+						var getListaDisciplina = JSON.parse(JSON.stringify(result.listaDisciplina));
+						var tabelaDisciplinas;
+						
+					for (var j = 0; j < getListaDisciplina.length; j++) {
+							 
+			            	
+		            		tabelaDisciplinas += "<td>" + getListaDisciplina[j].turma + "</td>" + 
+		            							 "<td>" + getListaDisciplina[j].disciplina + "</td>" +
+		            							 "<td>" + getListaDisciplina[j].quantidade_aulas + "</td>" +
+		            							 "<td>" + getListaDisciplina[j].quantidade_aula_semanal + "</td></tr>"
+
+						
+		            			         	
+		            			            	
+			       }
+				          
+						 
 				      		//divToPrint.innerHTML += disciplina[i]
 					   
 				        if(result.cargo=="PROFESSOR"){
+                       
 					        
 				        divToPrint.innerHTML  += "<table align=\"center\" border=1 cellspacing=0 cellpadding=2 bordercolor=\"666633\" class=\"table\">"+
 				        "<thead>"+
 				        "  <tr>"+
-				            "<th style=\"width: 200px;\">Matérias Lecionadas</th>"+
-				            "<th style=\"width: 200px;\">Carga horária</th>"+
-				            "<th style=\"width: 200px;\">Carga horária exercída</th>"+				            
-				            "<th style=\"width: 100px;\">Diferença</th>"+
+				            "<th style=\"width: 200px;\">Turma</th>"+
+				            "<th style=\"width: 200px;\">Disciplina</th>"+
+				            "<th style=\"width: 200px;\">Quantidade de aulas</th>"+				            
+				            "<th style=\"width: 100px;\">Aulas Semanais</th>"+
 				          "</tr>"+
 				        "</thead>"+
 				        "<tbody>"+
-				          "<tr>"+
-			            	"<g:each in='${horasDisciplinas}'> " +
-			            		"<td>" +" ${it.disciplina} " + "</td>"+
-			            		"<td>" +" ${it.carga_horaria} " + "</td>"+
-			            		"<td>" + " <g:formatNumber number="${it.soma}"  />" + "</td>"+
-			            		"<td>" +" ${it.carga_horaria.toString().toFloat() - it.soma.toString().toFloat()} " + "</td>"+
-							"</g:each>" +
-				          "</tr>"+
+
+				        "<tr>"+  
+											
+				        tabelaDisciplinas 
+				        "</tr>"+  
+				        		 				          
 				        "</tbody>"+
 				      "</table>";
 				        }else{
@@ -231,7 +249,7 @@
 			<g:if test="${funcionarios== null}">
 				<br>
 
-				<input hidden="true" style="margin-left: 25%;" disabled="disabled"
+				<input hidden="true" style="margin-left: 25%;" disabled="disablefd"
 					class="col-sm-6" value="Nenhuma escola selecionada! " type="text"
 					name="nomeDaEscola" />
 				<br>

@@ -251,7 +251,7 @@
           <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
           </div>
-          <strong>Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>EDUC</a>.</strong> Todos os direitos reservados.
+          <strong>Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>EDUC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
       </footer>
 
     </div><!-- ./wrapper -->

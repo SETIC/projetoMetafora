@@ -4,6 +4,9 @@ class Assunto {
 	
 	String assunto
 	
+
+	static hasMany = [protocolo:Protocolo]
+	
 	static constraints = {
 		assunto blank:false, nullable:false
 	}

@@ -40,6 +40,17 @@
 					<input type="hidden" value="${usuarios.id}" name="idUsuario">
 
 					<fieldset>
+					
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Escola</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="escoal" type="text"
+									disabled="disabled" style="width: 300px"
+									value="${escola.pessoaJuridica.pessoa.nome}">
+							</div>
+						</div>
+					
+					
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Nome</label>
 							<div class="col-sm-10">

@@ -93,19 +93,24 @@ function deletar(id) {
 										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
-													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></div>
-												<div title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
-													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></div>
+												<div title="Editar protocolo"
+													class="btn btn-primary btn-xs btn-flat">
+													<a style="color: #fff"
+														href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a>
+												</div>
+												<div title="Excluir protocolo"
+													onclick="deletar(${it.protocolo.id})"
+													class="btn btn-danger btn-xs btn-flat">
+													<span class="glyphicon glyphicon-remove"></span>
+												</div>
 											</g:if>
 											<div title="Ver detalhes do protocolo"
-												class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></div>
+												class="btn btn-success btn-xs btn-flat">
+												<a style="color: #fff"
+													href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a>
+											</div>
 										</div>
 
 									</div>
@@ -115,21 +120,21 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-										date="${it.protocolo.dataProtocolo}" /></td>
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-
-										date="${it.protocolo.dataEmissao}" /></td>
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
-									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorDestino.setor.nome}
+									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
+									- ${it.funcionarioSetorDestino.setor.nome}
 								</td>
 
 								<td>
-									${it.protocolo.assunto}
+									${it.protocolo.assunto.assunto}
 								</td>
-								
+
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
@@ -174,29 +179,34 @@ function deletar(id) {
 										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
-													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Editar protocolo"
+													class="btn btn-primary btn-xs btn-flat">
+													<a style="color: #fff"
+														href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a>
+												</div>
 											</g:if>
 
 
-											<div title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+											<div title="Ver detalhes do protocolo"
+												class="btn btn-success btn-xs btn-flat">
 
-											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
-											<span class="glyphicon glyphicon-eye-open">
-											</span>
-											</a>
+												<a style="color: #fff"
+													href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
+													<span class="glyphicon glyphicon-eye-open"> </span>
+												</a>
 											</div>
 
-											<div title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
-											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
-											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.protocolo.id})">
-											</span>
-											</a>
+											<div title="Tramitar Protocolo"
+												class="btn btn-warning btn-xs btn-flat">
+												<a style="color: #fff" data-target="#myModalTramite"
+													data-toggle="modal"> <span
+													class="glyphicon glyphicon-send"
+													onclick="preencheCampoHidden(${it.protocolo.id})"> </span>
+												</a>
 											</div>
-											
-											</div>
+
+										</div>
 
 									</div>
 								</td>
@@ -204,21 +214,21 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-										date="${it.protocolo.dataProtocolo}" /></td>
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
 
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-
-										date="${it.protocolo.dataEmissao}" /></td>
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
-									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorOrigem.setor.nome}
+									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
+									- ${it.funcionarioSetorOrigem.setor.nome}
 								</td>
 
 								<td>
-									${it.protocolo.assunto}
+									${it.protocolo.assunto.assunto}
 								</td>
-								
+
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
@@ -261,8 +271,9 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número</label>
 											<div class="controls">
-												<g:field type = "number" class="form-control" name="numero" value="" min="0" 
-													required="true" />
+
+												<g:field type="number" class="form-control" name="numero"
+													value="" required="true" />
 											</div>
 										</div>
 										<br>
@@ -292,19 +303,40 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
-												<g:field type="text"class="form-control" name="numeroDocumento"
-													value="" required="true" />
+												<g:field type="text" class="form-control"
+													name="numeroDocumento" value="" required="true" />
 											</div>
 										</div>
 										<br>
+										
+
+
 										<div class="form-heading">
 											<label>Assunto</label>
-											<div class="controls">
-												<g:textField class="form-control" name="assunto" value="" 
-													required="true" />
+											<div class="controls ">
+												<select class="form-control selectpicker"
+													data-live-search="true" name="assunto"
+													id="assuntoProtocolo" onchange="">
+													<g:each in="${assunto}">
+														<option value="${it.id}">
+															${it.assunto}
+														</option>
+													</g:each>
+												</select>
 											</div>
 										</div>
 										<br>
+										
+										
+										<div class="form-heading">
+											<label>Interessado</label>
+											<div class="controls">
+												<g:textField class="form-control" name="interessado" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
+										
 										
 
 										<div class="form-heading">
@@ -315,7 +347,8 @@ function deletar(id) {
 													id="idFuncionarioSetorDestino" onchange="">
 													<g:each in="${funcionarioSetorDestino}">
 														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
+															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} -
+															${it.setor.nome}
 														</option>
 													</g:each>
 												</select>
@@ -362,9 +395,7 @@ function deletar(id) {
 											</div>
 										</div>
 
-										<br> 
-										
-									<label>Anexo</label>
+										<br> <label>Anexo</label>
 										<script type="text/javascript">  
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
@@ -384,15 +415,16 @@ function deletar(id) {
 										 
 						                 }); 
 										 
-										</script> 
-								        <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-								        <br />
-								        <fieldset id="inputs_adicionais" style="border: none">  
-								        </fieldset> 
-								        <br />
-								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
-								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
-								        
+										</script>
+										<input type="file" name="arquivo[]" id="arquivo[]"
+											enctype="multipart/form-data" /> <br />
+										<fieldset id="inputs_adicionais" style="border: none">
+										</fieldset>
+										<br /> <input type="button" class="btn btn-primary btn-flat"
+											name="addFile1" value="Novo Anexo" /> <input type="button"
+											name="limpar" class="btn btn btn-flat" value="Limpar"
+											onclick="limparCampoFile()">
+
 									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
@@ -401,7 +433,7 @@ function deletar(id) {
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-			          </g:if>
+			</g:if>
 
 			<!-- ModalTramite -->
 			<div class="modal fade" id="myModalTramite" tabindex="-1"
@@ -420,8 +452,8 @@ function deletar(id) {
 								class="form" enctype="multipart/form-data">
 								<fieldset>
 									<div class="form-heading">
-										<input type="hidden" name="protocoloHidden" id="idProtocoloHidden"/>
-										<label>Destino</label>
+										<input type="hidden" name="protocoloHidden"
+											id="idProtocoloHidden" /> <label>Destino</label>
 										<div class="controls ">
 
 											<select class="form-control selectpicker"
@@ -430,7 +462,7 @@ function deletar(id) {
 												id="idFuncionarioSetorDestinoTramite" onchange="">
 												<g:each in="${funcionarioSetorDestino}">
 													<option value="${it.id}">
-														${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
+														${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
 													</option>
 												</g:each>
 											</select>
@@ -448,7 +480,7 @@ function deletar(id) {
 									<br>
 									<div class="form-heading">
 
-									<label>Anexo</label>
+										<label>Anexo</label>
 
 										<script type="text/javascript">  
 

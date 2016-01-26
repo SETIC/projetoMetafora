@@ -120,7 +120,7 @@ function printDiv(id)
 							<div class="form-group">
 								<label for="inputAssunto" class="col-sm-2">Assunto</label>
 								<div class="col-sm-10">
-									${protocolos.assunto}
+									${protocolos.assunto.assunto}
 								</div>
 							</div>
 							<br>
@@ -131,6 +131,7 @@ function printDiv(id)
 									${protocolos.situacao.nome}
 								</div>
 							</div>
+							<br>
 	
 							<div class="form-group">
 								<label for="inputTipoDocumento" class="col-sm-2">Tipo
@@ -174,7 +175,7 @@ function printDiv(id)
 											</g:each>
 										</thead>
 									</table>
-									</br> </br>
+									
 	
 									<table id="listarObservacoes" class="table table-bordered">
 										<legend class="scheduler-border">Observações</legend>
