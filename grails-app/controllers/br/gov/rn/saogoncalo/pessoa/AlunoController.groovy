@@ -32,7 +32,6 @@ class AlunoController {
 
 		String urlCompleta
 		String urlBase = "http://cep.correiocontrol.com.br/"
-		//String urlBase = "http://api.postmon.com.br/"
 
 		urlCompleta = urlBase + cep + ".json"
 
@@ -560,8 +559,10 @@ class AlunoController {
 						" where p.id not in (select e.id from Escola e) " +
 						" and pf.id = p.id " +
 						" and pf.sexo = 'FEMININO' ")
+				
+				def tiposContato = TipoContato.findAll()
 
-				render (view:"/aluno/listarAluno.gsp", model:[perm2:perm2, escolas:escolas, series:series, pHomens:pHomens, pMulheres:pMulheres, necessidadesEspeciais:necessidadesEspeciais])
+				render (view:"/aluno/listarAluno.gsp", model:[perm2:perm2, escolas:escolas, series:series, pHomens:pHomens, pMulheres:pMulheres, necessidadesEspeciais:necessidadesEspeciais, tiposContato:tiposContato])
 
 			}else{
 				render(view:"/error403.gsp")
@@ -723,7 +724,7 @@ class AlunoController {
 
 				def documentosAluno  = Documento.findAllByAluno(alunos)
 
-				println("Reside -- " + reside)
+				
 				
 				
 				PessoaFisica pessoaFisica = PessoaFisica.get(id)
@@ -1134,10 +1135,22 @@ class AlunoController {
 				cidadao.pessoaFisica = pf
 				
 				
-				if (cidadao.save(flush:true)){
-					println("Salvou cidadão")
-				}
 				
+				if (cidadao.save(flush:true)){
+					println("cidadao Salvo")
+										
+					def tipoContato = TipoContato.get(params.tipoContato)
+					Contato contato = new Contato()
+					contato.pessoa = pessoa
+					contato.tipoContato = tipoContato
+					contato.contato = params.contato
+					
+					if (contato.save(flush:true)){
+						println("Contato Salvo")
+					
+					}
+					
+				}
 				
 				def result = []
 
@@ -1188,6 +1201,18 @@ class AlunoController {
 				
 				if (cidadao.save(flush:true)){
 					println("Salvou cidadão")
+					
+					def tipoContato = TipoContato.get(params.tipoContato)
+					Contato contato = new Contato()
+					contato.pessoa = pessoa
+					contato.tipoContato = tipoContato
+					contato.contato = params.contato
+					
+					if (contato.save(flush:true)){
+						println("Contato Salvo")
+					
+					}
+					
 				}
 				
 				/*	def vertorMae = []
@@ -1383,10 +1408,7 @@ class AlunoController {
 			  render(view:"/error403.gsp")
 				  }
 		    	}
-
-			
-
-		
+	
 	}
 	
 	

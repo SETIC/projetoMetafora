@@ -533,15 +533,7 @@ function mudarCombo(){
 									</div>
 							  </div>
 							</div>
-									
-									
-										
-
-									</div>
-								
-								
-
-									    
+						</div>
 
 	
 								<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
@@ -791,6 +783,30 @@ function mudarCombo(){
 						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
 						    </div>
 						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoPai" id="iTipoContatoPai">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoPai" name="contatoPai" />
+						    </div>
+						  </div>
+						  
 
 					</div>
 			      </div>
@@ -851,6 +867,31 @@ function mudarCombo(){
 						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
 						    </div>
 						  </div>
+						  
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoMae" id="iTipoContatoMae">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoMae" name="contatoMae" />
+						    </div>
+						  </div>
+						  
 
 					</div>
 			      </div>
@@ -953,6 +994,9 @@ function mudarCombo(){
 
 			   var estadoCivil = document.getElementById("iEstadoCivilPai").value;
 			   var profissao = document.getElementById("iProfissaoPai").value;
+
+			   var tipoContato = document.getElementById("iTipoContatoPai").value;
+			   var contato = document.getElementById("iContatoPai").value;
 			   
 			   var cpf
 			   
@@ -966,7 +1010,7 @@ function mudarCombo(){
 			   console.log("CPF -- " + cpf);
 			   $.ajax({ 
 		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao,
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao+"&tipoContato="+tipoContato+"&contato="+contato,
 		            dataType: "json",
 		            success: function(result){
 		            	console.log(result[result.length-1].nome);
@@ -993,6 +1037,9 @@ function mudarCombo(){
 
 				   var estadoCivil = document.getElementById("iEstadoCivilMae").value;
 				   var profissao = document.getElementById("iProfissaoMae").value;
+
+				   var tipoContato = document.getElementById("iTipoContatoMae").value;
+				   var contato = document.getElementById("iContatoMae").value;
 				   
 				   var cpf
 				if(document.getElementById("iCPFMae").value == ''){
@@ -1003,7 +1050,7 @@ function mudarCombo(){
 				   
 				   $.ajax({
 			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao,
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao+"&tipoContato="+tipoContato+"&contato="+contato,
 			            dataType: "json",
 			            success: function(result){
 			            	console.log(result[result.length-1].nome);

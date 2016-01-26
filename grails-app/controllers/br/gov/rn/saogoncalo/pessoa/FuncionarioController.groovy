@@ -63,7 +63,7 @@ class FuncionarioController {
 					"   and td.turma_id = t.id " +
 					"   and s.id = t.serie_id " +
 					"   and t.ano_letivo = '2014' " +
-					"   and pe.id = 2100" + //+ id.toString() +
+					//"   and pe.id = 2100" + //+ id.toString() +
 					" group by d.disciplina, pe.nome, d.carga_horaria");
 				
 
@@ -173,6 +173,9 @@ class FuncionarioController {
 
 			if (perm1 || perm2){
 
+				
+				println("params aqui --- +++ " + params)
+				
 				def funcionarios
 				def cargos
 				def lotacao
@@ -238,7 +241,7 @@ class FuncionarioController {
 						"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
 						"   and td.turma_id = t.id " +
 						"   and s.id = t.serie_id " +
-						"   and t.ano_letivo = '2014' " +
+						"   and t.ano_letivo = '2015' " +
 						"   and pe.id = 2100" + //+ id.toString() +
 						" group by d.disciplina, pe.nome, d.carga_horaria");
 
@@ -748,7 +751,36 @@ class FuncionarioController {
 				" and dlpp.disciplina_id = dis.id " +
 				" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
 				" and hr.turma_disciplina_id = td.id " +
-				" and p.id = "+id.toString());
+				" and p.id = " + id.toString())
+			
+			
+		def listaDisciplina = sql.rows("select t.turma, d.disciplina,"+
+			"sum((length(substring(h.horario,3,length(h.horario))))) as quantidade_aulas,"+
+			"dds.quantidade_aula_semanal "+
+			 
+		  "from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp,"+
+		  	"cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h,"+
+			 "educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s,"+
+			 "educacao_academico.dados_disciplina_serie dds "+
+			  
+		  " where dlpp.disciplina_id = d.id"+
+		  " and dlpp.professor_id = p.id"+
+		  " and pe.id = p.id"+
+		  " and h.turma_disciplina_id = td.id"+
+		  " and dlpp.id = td.disciplina_lecionada_por_professor_id"+
+		  " and td.turma_id = t.id"+
+		  " and s.id = t.serie_id"+
+		  " and dds.disciplina_id = d.id"+
+		  " and dds.serie_id = s.id"+
+		
+		  " and t.ano_letivo = '2016' "+
+		  " and substring(dds.turno,1,1) = substring(h.horario,2,1)"+
+		  " and pe.id = "+ id.toString() +
+		
+		  " group by t.id, d.id, pe.id, dds.quantidade_aula_semanal"+
+		  " order by t.id")
+			
+          
 
 
 		//println("dados da lista"+horario)
@@ -757,7 +789,7 @@ class FuncionarioController {
 
 		def result = ["nomeFuncionario":funcionario.cidadao.pessoaFisica.pessoa.nome, "escola":escola.pessoaJuridica.pessoa.nome,
 			"cargaHoraria":funcionario.cargaHoraria, "cargo":funcionario.lotacao.cargo.cargo, "funcao":funcionario.lotacao.funcao,
-			"horario":horario]
+			"horario":horario, "listaDisciplina":listaDisciplina ]
 
 		render( result as JSON)
 

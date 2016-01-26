@@ -20,6 +20,9 @@
     <section class="content">
       <!-- Info boxes -->
       <div class="row">
+      	
+     <g:if test="${sessao!=5301}">
+      	      	
       	<g:link class="link-black" controller="Aluno" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">
@@ -31,6 +34,9 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
         </g:link>
+        </g:if>
+        
+        
         <g:if test="${sessao==0||sessao==29}">
         <g:link class="link-black" controller="Escola" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
@@ -44,6 +50,9 @@
 	        </div><!-- /.col -->
 		</g:link>
 		</g:if>
+		
+		
+		<g:if test="${sessao!=5301}">
 		<g:link class="link-black" controller="Professores" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">
@@ -55,6 +64,7 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
         </g:link>
+        </g:if>
         
         <g:link class="link-black" controller="Funcionario" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">

@@ -113,17 +113,18 @@
 									</div>
 									<br>
 									
-								
-									<div class="form-heading">
-										<div class="form-heading">
-											<label>Logradouro</label>
-											<div class="controls">
+									<div class="form-group">
+										
+											<label for="inputinepDaEscola3" class="col-sm-2 control-label">Logradouro</label>
+											<div class="col-sm-10">
 
-												<select id="logr" name="lg"
+												<select id="iLogradouro" name="logradouro"
 													class="form-control selectpicker" data-live-search="true">
 													<g:each in='${logradouro}'>
 
-														<option value="${it.id}">
+														<option value="${it.id}" <g:if test="${it.logradouro == escolas.pessoaJuridica.pessoa.reside.logradouro.logradouro[0]}"> selected 
+
+														</g:if> >
 															${it.tipoLogradouro.tipoLogradouro } ${it.logradouro}
 														</option>
 
@@ -131,20 +132,23 @@
 												</select>
 
 											</div>
-										</div>
+										
 									</div>
 									<br>
 									
-									<div class="form-heading">
-										<div class="form-heading">
-											<label>Bairro</label>
-											<div class="controls">
+									<div class="form-group">
 
-												<select id="bair" name="bairr"
+											<label for="inputinepDaEscola3" class="col-sm-2 control-label">Bairro</label>
+											<div class="col-sm-10">
+
+												<select id="iBairro" name="bairro"
 													class="form-control selectpicker" data-live-search="true">
 													<g:each in='${bairro}'>
 
-														<option value="${it.id}">
+														<option value="${it.id}" 
+														<g:if test="${it.bairro == escolas.pessoaJuridica.pessoa.reside.bairro.bairro[0]}"> selected 
+
+														</g:if>  >
 															${it.bairro}
 														</option>
 
@@ -152,7 +156,7 @@
 												</select>
 
 											</div>
-										</div>
+								
 									</div>
 									<br>		
 									
@@ -179,6 +183,22 @@
 										<div class="col-sm-10">
 											<g:textField class="form-control" name="cep"
 												style="width: 300px" value="${escolas.pessoaJuridica.pessoa.reside.cep[0]}"/>
+										</div>
+									</div>
+									<br>
+						
+					
+						<div class="form-group">
+										<label for="inputinepDaEscola3" class="col-sm-2 control-label">Ativo</label>
+										<div class="col-sm-10">
+										
+										<select id="iStatus" name="status" class="form-control selectpicker" data-live-search="false">
+													
+											<option value="Ativo" <g:if test="${escolas.pessoaJuridica.pessoa.status == 'Ativo'}"> selected </g:if> >Ativo</option>
+											<option value="Inativo" <g:if test="${escolas.pessoaJuridica.pessoa.status == 'Inativo'}"> selected </g:if> >Inativo</option>
+												
+										</select>
+											
 										</div>
 									</div>
 									<br>

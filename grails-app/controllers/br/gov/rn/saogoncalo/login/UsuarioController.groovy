@@ -105,16 +105,33 @@ class UsuarioController {
 			if (perm1 || perm2){
 
 
-				def usuarios = Usuario.findAll()
+				def usuarios
 				def pessoas = Pessoa.executeQuery("select p from Pessoa as p")
 				//def pessoas = Pessoa.findAll()
+				
+				Usuario u = Usuario.findById(session["usid"])
+				
+				def escolas
+				if(u.pessoa.escid == 0){
+					escolas = Escola.executeQuery(" select e from Escola e, Pessoa p " +
+												  "  where p.id = e.id and p.status = 'Ativo' ")
+					usuarios = Usuario.findAll()
+				}else{
+					escolas = Escola.findById(u.pessoa.escid)
+					usuarios = Usuario.executeQuery(" select u from Usuario u, Pessoa p " +
+													"  where p.id = u.pessoa.id " +
+													"    and p.escid = " + session["escid"] )
+				}  
+				
+				
 
-				render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, perm2:perm2])
+				render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, escolas:escolas, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
 		}
 	}
+	
 
 	def listarMensagem(String msg, String tipo){
 
@@ -186,9 +203,11 @@ class UsuarioController {
 
 				def grupoUsado = GrupoUsuario.findAllByUsuario(Usuario.get(id))
 				println(" Gruopo Usado - " + grupoUsado.grupoId + " grupos - " + grupos.id)
+				
+				def escola = Escola.get(pessoas.escid)
 
 
-				render (view:"/usuario/editarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, grupos:grupos, grupoUsado:grupoUsado])
+				render (view:"/usuario/editarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, grupos:grupos, grupoUsado:grupoUsado, escola:escola])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -369,43 +388,47 @@ class UsuarioController {
 				usuarioB.username = params.username
 				usuarioB.senha = params.senha.encodeAsMD5()
 
+				println("parametros aqui " + params)
 
 				def pessoa = Pessoa.get(params.pessoa)
+				pessoa.escid = params.escola.toString().toInteger()
+				
+				if (pessoa.save(flush:true)){
+				
+				
+						usuarioB.pessoa = pessoa
+						def usuarios = Usuario.findAll()
+		
+						if(usuarioB.save(flush:true))
+							//render(view:"/usuario/listarUsuario.gsp")
+							listarMensagem("Salvo com sucesso", "ok")
+						else
+							//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, erro:"Erro ao salvar usuário."])
+							listarMensagem("Erro ao salvar usuário.", "erro")
 
-				usuarioB.pessoa = pessoa
-				def usuarios = Usuario.findAll()
+		
+						GrupoUsuario gu
+						Grupo grupo
+		
+						for (var in params.grupo) {
+							gu = new GrupoUsuario()
+							grupo = new Grupo()
+							grupo = Grupo.get(var)
+							gu.usuario = usuarioB
+							gu.grupo = grupo
+							if(gu.save(flush:true))
+								println "salvou"
+							else
+								println " Erro no salvar grupo usuário"
+							gu.errors.println {it}
+						}
+		
+						//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios,ok:"Salvo com sucesso"])
+						listarMensagem("Salvo com sucesso", "ok")
 
-				if(usuarioB.save(flush:true))
-					//render(view:"/usuario/listarUsuario.gsp")
-					listarMensagem("Salvo com sucesso", "ok")
-				else
-					//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, erro:"Erro ao salvar usuário."])
-					listarMensagem("Erro ao salvar usuário.", "erro")
-
-
-
-
-				GrupoUsuario gu
-				Grupo grupo
-
-				for (var in params.grupo) {
-					gu = new GrupoUsuario()
-					grupo = new Grupo()
-					grupo = Grupo.get(var)
-					gu.usuario = usuarioB
-					gu.grupo = grupo
-					if(gu.save(flush:true))
-						println "salvou"
-					else
-						println " Erro no salvar grupo usuário"
-					gu.errors.println {it}
-				}
-
-
-
-				//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios,ok:"Salvo com sucesso"])
-				listarMensagem("Salvo com sucesso", "ok")
-
+				
+			}
+				
 
 			}else{
 				render(view:"/error403.gsp")

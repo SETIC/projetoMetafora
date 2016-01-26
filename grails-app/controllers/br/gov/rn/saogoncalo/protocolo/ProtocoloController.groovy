@@ -50,16 +50,16 @@ class ProtocoloController {
 						"                                                 cadastro_unico_protocolo.tramite tr, " +
 						"                                                 cadastro_unico_protocolo.situacao s, " +
 						"                                                 cadastro_unico_protocolo.setor se, " +
-						"                                                 cadastro_unico_protocolo.funcionario_setor fs " +
+						"                                                 cadastro_unico_protocolo.funcionario_setor fs, " +
+						"                                                 cadastro_unico_protocolo.assunto a " +
 						" where p.id = t1.protoc_id " +
 						"  and tr.id = t1.tramite " +
 						"  and s.id = p.situacao_id " +
 						"  and se.id = fs.setor_id " +
-						"  and fs.id = p.funcionario_setor_id "
+						"  and fs.id = p.funcionario_setor_id " +
+						"  and a.id = p.assunto_id " 
 
 				if(params.tipoBusca == "numero"){
-
-
 					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
 					protocolos = sql.rows(sqlString)
 				}
@@ -71,6 +71,11 @@ class ProtocoloController {
 					sqlString = sqlString + " and se.id = " + params.setor
 					protocolos = sql.rows(sqlString)
 				}
+				
+				if(params.tipoBusca == "interessado"){
+					sqlString = sqlString + " and p.interessado like '%" + params.interessado + "%' "
+					protocolos = sql.rows(sqlString)
+				}
 
 				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
 
@@ -80,7 +85,7 @@ class ProtocoloController {
 
 				def setor = Setor.findAll()
 
-				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
@@ -109,7 +114,7 @@ class ProtocoloController {
 
 			if (perm2) {
 
-				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
@@ -119,24 +124,18 @@ class ProtocoloController {
 				Protocolo protocolo = new Protocolo(params)
 				protocolo.numero = params.numero.toLong()
 				protocolo.numeroDocumento = params.numeroDocumento
-				protocolo.assunto = params.assunto
 				protocolo.dataProtocolo = params.dataProtocolo
 				protocolo.dataEmissao = params.dataEmissao
 
-				//def funcionarioSetor = FuncionarioSetor.get(params.funcionarioSetor)
-
 				def funcionarioSetor = FuncionarioSetor.get(funcionarioSetorLogado.id)
-
 				def tipoDocumento = TipoDocumento.get(params.tipoDocumento)
 				def situacao = Situacao.get(params.situacao)
+				def assunto = Assunto.get(params.assunto)	
 
 				protocolo.tipoDocumento  = tipoDocumento
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
-
-				//println("Funcionario Setor -- " + FuncionarioSetor.get(funcionarioSetorLogado.id))
-
-				//protocolo.funcionarioSetor = FuncionarioSetor.get(funcionarioSetorLogado.id)
+				protocolo.assunto = assunto
 
 				if (protocolo.save(flush:true)){
 					Observacao observacao = new Observacao(params)
@@ -164,21 +163,7 @@ class ProtocoloController {
 						println("Arquivo aqui ---+++ " + file.originalFilename)
 
 						Anexo anexo = new Anexo()
-						
-						/* criar a pasta com ano/mes/dia
-						Calendar calendar = Calendar.getInstance()
-				        int ano = calendar.get(Calendar.YEAR)
-						int mes = calendar.get(Calendar.MONTH)+1
-						int dia = calendar.get(Calendar.DAY_OF_MONTH)
-						
-						
-						println("ano aki+++"  +ano)
-						println("mes aki++++" +mes)
-						println("dia aki+++"  +dia) */
-					
-						
-						
-                        
+                       
 						FileUploadServiceController fil = new  FileUploadServiceController()
 						anexo.arquivo = fil.uploadFile(file,file.originalFilename, "/anexos/${protocolo.id}")
 						anexo.dataAnexo = new Date()
@@ -278,7 +263,7 @@ class ProtocoloController {
 
 			if (perm2) {
 
-				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
@@ -310,9 +295,11 @@ class ProtocoloController {
 					tipoEdicao = "CRIADO"
 				}
 
+				def assunto = Assunto.findAll()
+				
 				println("Tipo -- " + tipoEdicao)
 
-				render (view:"/protocolo/editar.gsp", model:[protocolo:protocolo , situacoes:situacoes , tipoDocumentos:tipoDocumentos, tipoEdicao:tipoEdicao , anexos:anexos ])
+				render (view:"/protocolo/editar.gsp", model:[protocolo:protocolo , situacoes:situacoes , tipoDocumentos:tipoDocumentos, tipoEdicao:tipoEdicao , anexos:anexos, assunto:assunto ])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -340,6 +327,7 @@ class ProtocoloController {
 				def situacoes
 
 				def protocolos = Protocolo.get(params.id)
+				def assunto = Assunto.get(params.assunto)
 
 				protocolos.numero = params.numero.toString().toInteger()
 				if(params.dataProtocolo != null){
@@ -350,7 +338,8 @@ class ProtocoloController {
 				}
 				println("Datas: " +  params+ " - " + protocolos.dataEmissao)
 				protocolos.numeroDocumento = params.numeroDocumento
-				protocolos.assunto = params.assunto
+								
+				protocolos.assunto = assunto
 				//tipoDocumentos = TipoDocumento.findAll()
 
 				def situacao = Situacao.get(params.situacao)
@@ -510,13 +499,15 @@ class ProtocoloController {
 
 				msg = params.msg
 				tipo=params.tipo
-				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
 						+ "and f.id = " + session["pesid"])
 
 				println(" Usuario - " + session["pesid"])
+				
+				println(" Funcionario setor logado ---- " + funcionarioSetorLogado)
 
 				if (session["escid"] == 0) {
 
@@ -576,8 +567,14 @@ class ProtocoloController {
 							"   and p.id = " + session["pesid"])
 
 					funcionarioSetorDestino = FuncionarioSetor.findAll()
+					
 				}
-				render(view:"/protocolo/listarProtocolo.gsp", model:[ok:msg, protocolosAceitos:protocolosAceitos, protocolosEnviados:protocolosEnviados, situacoes:situacoes, funcionariosSetor:funcionariosSetor, funcionarioSetorDestino:funcionarioSetorDestino , tipoDocumentos:tipoDocumentos, perm2:perm2])
+				
+				def assunto = Assunto.findAll()
+				
+				render(view:"/protocolo/listarProtocolo.gsp", model:[ok:msg, protocolosAceitos:protocolosAceitos, protocolosEnviados:protocolosEnviados, situacoes:situacoes, 
+					                                                 funcionariosSetor:funcionariosSetor, funcionarioSetorDestino:funcionarioSetorDestino , tipoDocumentos:tipoDocumentos, 
+																	 assunto:assunto, perm2:perm2])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -605,7 +602,7 @@ class ProtocoloController {
 
 				msg = params.msg
 
-				setorDestino = FuncionarioSetor.executeQuery("select fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
+				setorDestino = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "

@@ -114,18 +114,32 @@
 							</div>
 						</div>
 						<br>
+						
 						<div class="form-group">
-							<label for="input3" class="col-sm-2 control-label">Assunto</label>
-							<div class="col-sm-10">
-								<input class="form-control" required name="assunto" type="text"
-									style="width: 300px" value="${it.assunto}">
+							<label for="inputTipoDocumento" class="col-sm-2 control-label">Assunto</label>
+							<div class="col-sm-4">
+								<select class="selectpicker" " name="assunto"
+									id="assuntoProtocolo" class="form-control">
+									<div class="col-sm-10">
+										<g:each in="${assunto}">
+											<g:if test="${it.id == protocolo.assunto.id}">
+												<option value="${it.id}" selected>
+													${it.assunto}
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${it.id}">
+													${it.assunto}
+												</option>
+											</g:else>
+										</g:each>
+								</select>
 							</div>
 						</div>
 						<br>
 
 						<div class="form-group">
-							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção
-							</label>
+							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção </label>
 							<div class="col-sm-4">
 								<select class="selectpicker" " name="situacao"
 									id="comboSituacao" class="form-control">
@@ -146,6 +160,7 @@
 							</div>
 						</div>
 						<br>
+						
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
 								Documento</label>

@@ -64,7 +64,7 @@
 									${it.funcionarioSetorOrigem.setor.nome}
 								</td>
 								<td>
-									${it.protocolo.assunto}
+									${it.protocolo.assunto.assunto}
 								</td>
 								<td>
 									${it.protocolo.situacao.nome}

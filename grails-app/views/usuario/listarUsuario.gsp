@@ -105,6 +105,24 @@
 							<g:form controller="Usuario" action="salvar" class="form"
 								name="formHorario">
 								<fieldset>
+									
+									<div class="form-heading">
+										<label>Instituição</label>
+										<div class="controls">
+										<select class="form-control selectpicker"
+													data-live-search="true" name="escola" id="iEscola" >
+													<g:each in="${escolas?}">
+
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
+													</g:each>
+												</select>
+										</div>
+									</div>
+									<br>
+									
+									
 									<div class="form-heading">
 										<label>Usuário</label>
 										<div class="controls">

@@ -62,6 +62,13 @@
    			   "<button type='submit' class='btn btn-primary btn-flat'>" +
 			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
               break;
+
+           case 'interessado':
+ 			  newInput.innerHTML = "<label>Nome do Interessado: </label/></br>"+
+ 			  "<input type='text' required = 'true' name ='interessado' id ='interessadoId'/>" +
+ 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+ 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+               break;   
            }
 			
 		}
@@ -86,6 +93,8 @@
 						<option value="numero">NUMERO</option>
 						<option value="data">DATA</option>
 						<option value="setor">SETOR</option>
+						<option value="interessado">INTERESSADO</option>
+						
 					</select>
 				</div>
 			</div>
@@ -121,6 +130,8 @@
 							<th>Número do Documento</th>
 							<th>Assunto</th>
 							<th>Situação</th>
+							<th>Interessado</th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -166,6 +177,9 @@
 								
 								<td>
 									${it.nome}
+								</td>
+								<td>
+									${it.interessado}
 								</td>
 							</tr>
 						</g:each>
