@@ -64,6 +64,7 @@ class AlunoController {
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
 				Aluno alunos = Aluno.get(id)
+				Pessoa pessoas = Pessoa.get(id)
 				println("objeto alunos aquiiiiiiiiiiiiiii------ "+alunos)
 				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
@@ -79,7 +80,7 @@ class AlunoController {
 				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
 
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				def documentosAluno = Documento.findAllByAluno(alunos)
+				def documentosAluno = Documento.findAllByPessoa(pessoas)
 
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
@@ -488,7 +489,7 @@ class AlunoController {
 						FileUploadServiceController fil = new  FileUploadServiceController()
 						documento.arquivo = fil.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
 						documento.dataDocumento = new Date()
-						documento.aluno = aluno
+						documento.pessoa = pessoa 
 						if(documento.save(flush:true)){
 							println("documento salvo -----")
 						}
@@ -673,7 +674,8 @@ class AlunoController {
 
 			if (perm2){
 				Aluno aluno  = Aluno.get(id)
-                def documentos  = Documento.findAllByAluno(aluno)
+				Pessoa pessoa = Pessoa.get(id)
+                def documentos  = Documento.findAllByPessoa(pessoa)
 			   for(def i = 0; i < documentos.size();i++){
 				   def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documentos[i].arquivo).delete()
 				   
@@ -715,6 +717,7 @@ class AlunoController {
 			if (perm1 || perm2)
 			{
 
+				Pessoa pessoas = Pessoa.get(id)
 				Aluno alunos = Aluno.get(id)
 
 				Parentesco parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "PAI")
@@ -722,7 +725,7 @@ class AlunoController {
 
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
 
-				def documentosAluno  = Documento.findAllByAluno(alunos)
+				def documentosAluno  = Documento.findAllByPessoa(pessoas)
 
 				
 				
@@ -1034,7 +1037,7 @@ class AlunoController {
 							FileUploadServiceController fc = new FileUploadServiceController()
 							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${aluno.id}")
 							documento.dataDocumento = new Date()
-							documento.aluno = aluno
+							documento.pessoa = pessoa
 
 							if(documento.save(flush:true)){
 								println("documento salvo")
@@ -1355,18 +1358,18 @@ class AlunoController {
 			println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
 			
 			Documento documento = new Documento()
-			Aluno aluno = new Aluno()
-		    aluno = Aluno.get(documento.aluno.id)
+			Pessoa pessoa = new Pessoa()
+		    pessoa = Pessoa.get(documento.pessoa.id)
 			
 			FileUploadServiceController fil = new  FileUploadServiceController()
 		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos/" + aluno.id.toString())
 			documento.dataDocumento = new Date()
-			documento.aluno = aluno
+			documento.pessoa = pessoa
 			if(documento.save(flush:true)){
 				println("documento salvo -----")
 			  }
 			
-		   redirect(action:"editarAluno" , params:[id:documento.aluno.id])
+		   redirect(action:"editarAluno" , params:[id:documento.pessoa.id])
 			
       		 }	
 	   
@@ -1394,7 +1397,7 @@ class AlunoController {
 			  Documento documento = new Documento()	
 		      documento = Documento.get(id)	
 			  Aluno aluno  = new Aluno()
-			  aluno = Aluno.get(documento.aluno.id)
+			  aluno = Aluno.get(documento.pessoa.id)
 			  documento.deleteAll(documento)
 			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documento.arquivo).delete()
 			  def documentosAluno = Documento.findAllByAluno(aluno)
@@ -1422,7 +1425,7 @@ class AlunoController {
 				
 				Documento documento = Documento.get(id)
 				println("documento"+documento)
-				def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.aluno.id.toString()).file.toString() + "/" + documento.arquivo)
+				def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.pessoa.id.toString()).file.toString() + "/" + documento.arquivo)
 				
 				/*def date = new Date()
 				AdministracaoController adm = new AdministracaoController()

@@ -1,10 +1,13 @@
 package br.gov.rn.saogoncalo.protocolo
 
+import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
+
 class Setor {
 	String nome	
 	String sigla
 
 	static hasMany =[funcionarioSetor:FuncionarioSetor]
+	static belongsTo = [pessoaJuridica:PessoaJuridica]
 	
 	static constraints = {
 		nome blank:false, nullable:false

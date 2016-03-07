@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<title>Gerar Relatorio do Funcionario</title>
+<title>Gerar Relatorio do Professores</title>
 <meta name="layout" content="public" />
 <g:javascript src="jquery.js" />
 <g:javascript src="jquery.maskedinput.js" />
 </head>
 <body>
-	<script>
-			function changeIdFuncionarioParaRelatorio(idfuncionario){
-				
-				document.getElementById("idFuncionarioParaRelatorio").value = idfuncionario;
-			
-			}
-			function geraRelatorio(){
 
-			var cod = document.getElementById("tipoRelatorio").value;
-				
-			switch (cod){
-			case '1':
-				printRelatorioDeclaracaoVinculo()
-				break;
-			default:
-				break;
-				
-			}
-		
-				}
+
+	<script>
+
 			
 			function printRelatorioDeclaracaoVinculo()
 			{
@@ -196,61 +180,19 @@
 			  newWin.print();
 			  newWin.close();
 			}
-
-
-         
-
-                 <!-- listar carga horaria de  professores  -->
-
-			function gerarRelatorioListarProfessor()
-			{
-
-				var endereco = "localhost";
-		        var divToPrint  = document.getElementById("reportPrint");
-		        var comboEscola = document.getElementById("comboEscola");
-		        var escola = comboEscola.options[comboEscola.selectedIndex].value;
-		        divToPrint.style.visibility = "visible";
-		        
-		        divToPrint.innerHtml = "";
-		        $.ajax({
-		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/funcionario/gerarRelatorioListarProfessores/"+escola,
-		            dataType: "json",
-		            success: function(result){
-
-		            }
-		        });
-			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
              </script>
 
 
 
 	<section class="content-header">
 		<h1>
-			<center>Relação de Servidores</center>
+			<center>Relação de Professores</center>
 		</h1>
 		<br>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
-			<li><g:link controller="Funcionario" action="gerarRelatorio">Funcionários</g:link></li>
+			<li><g:link controller="Funcionario" action="gerarRelatorioListarProfessores">Professores</g:link></li>
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
@@ -268,28 +210,9 @@
 			</g:if>
 
 				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
-				
-				<input type="hidden" value="" id="escolaId" >
-				 
 				<div class="form-heading">
-				<label style="margin-left:15px;">Escola</label>
-					<select class="col-sm-6 selectpicker" data-live-search="true"
-
-						name="escola" id="comboEscola">
-						<option value="0" disabled="disabled" selected="selected">
-							Selecione uma escola</option>
-						<g:each in="${escolas}">
-							<option value="${it.id}">
-								${it.pessoaJuridica.razaoSocial}
-							</option>
-						</g:each>
-					</select>
-
-					<button style="margin-left: 55%; margin-top: -56px;" type="submit"
-						class="btn btn-primary btn-flat">
-						<i class="glyphicon glyphicon-search"></i> Buscar
-					</button>
-				</div>
+				
+						</div>
 			</g:form>
 			<g:if test="${funcionarios== null}">
 				<br>
@@ -309,7 +232,12 @@
 				<br>
 				<br>
 			</g:else>
+
+
 		</div>
+
+		
+
 
 		<table id="listarFuncionarios"
 			class="table table-striped table-hover example">
@@ -317,23 +245,19 @@
 			<g:if test="${!funcionarios?.isEmpty()})"></g:if>
 			<thead>
 				<tr class="table table-bordered">
-					<th style="width: 20px;">Relatórios</th>
 					<th style="width: 20px;">Nº</th>
 					<th style="width: 20px;">Nome</th>
-					<th style="width: 20px;">Matricula</th>
-					<th style="width: 20px;">Cargo</th>
-					<th style="width: 20px;">Turno</th>
-					<th style="width: 20px;">Funcão</th>
-					<th style="width: 20px;">Vinculo</th>
+					<th style="width: 20px;">Turma</th>
+					<th style="width: 20px;">Disciplina</th>
+					<th style="width: 20px;">Quantidade de aulas</th>
+					<th style="width: 20px;">Aulas Semanais</th>
 				</tr>
 			</thead>
 			<tbody>
 				<g:set var="i" value="${1}" />
-
-				<g:each in='${funcionarios?}'>
-					<g:set var="t" value="it.id == 8" />
+				<g:each in='${listaDisciplina?}'>
 					<tr class="success">
-						<td>
+						<%--<td>
 							<button data-toggle="modal" data-target="#relatorioModal"
 								style="margin-left: 30%;"
 								onclick="changeIdFuncionarioParaRelatorio(${it.id});"
@@ -341,7 +265,7 @@
 								<i class="glyphicon glyphicon-print"></i>
 							</button>
 
-						</td>
+						--%></td>
 						<td>
 							${i++}
 						</td>
@@ -349,19 +273,16 @@
 							${it.nome}
 						</td>
 						<td>
-							${it.matricula}
+							${it.turma}
 						</td>
 						<td>
-							${it.cargo}
+							${it.disciplina}
 						</td>
 						<td>
-							${it.turno}
+							${it.quantidade_aulas}
 						</td>
 						<td>
-							${it.funcao}
-						</td>
-						<td>
-							${it.vinculo}
+							${it.quantidade_aula_semanal}
 						</td>
 
 					</tr>
@@ -374,54 +295,10 @@
 		
 		<button class="btn btn-danger btn-flat"
 			onClick="printDiv('listarFuncionarios')">
-			<i class="glyphicon glyphicon-print"></i> Imprimir 
+			<i class="glyphicon glyphicon-print"></i> Inmprimir
 		</button>
 
-		<g:if test="${funcionarios != null}">
-        	<div title="Relatório de Turmas"
-				class="btn btn-danger btn-flat">
-				<a style="color: #fff"
-					href="/projetoMetafora/Funcionario/gerarRelatorioListarProfessores/${funcionarios.escid[0]}"><span
-					class="glyphicon glyphicon-print"> Turmas </span></a>
-			</div>
-		</g:if>
-
-
-		<div class="modal fade" id="relatorioModal" tabindex="-1"
-			role="dialog" aria-labelledby="relatorioModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="relatorioModalLabel">Relatórios</h4>
-					</div>
-					<div class="modal-body">
-						<form action="" method="POST">
-
-
-							<div class="form-heading">
-								<input type="hidden" id="idFuncionarioParaRelatorio" /> <label>Tipo
-									de Relatório</label>
-								<div class="controls">
-									<select class="form-control selectpicker" name="tipoRelatorio"
-										id="tipoRelatorio">
-										<option value="1">Cumprimento de carga horária</option>
-									</select> <br /> <br /> <br />
-									<button class="btn btn-danger btn-flat"
-										onclick="geraRelatorio(); return false;">
-										<i class="glyphicon glyphicon-print"></i> Gerar Relatório
-									</button>
-								</div>
-							</div>
-
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 	</section>
 		<div id="reportPrint" style="visibility: hidden;">
