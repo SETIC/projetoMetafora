@@ -148,9 +148,24 @@ class UsuarioController {
 
 			if (perm1 || perm2){
 
-				def usuarios = Usuario.findAll()
-				def pessoas = Pessoa.findAll()
-				//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas])
+								def usuarios
+				def pessoas = Pessoa.executeQuery("select p from Pessoa as p")
+				//def pessoas = Pessoa.findAll()
+				
+				Usuario u = Usuario.findById(session["usid"])
+				
+				def escolas
+				if(u.pessoa.escid == 0){
+					escolas = Escola.executeQuery(" select e from Escola e, Pessoa p " +
+												  "  where p.id = e.id and p.status = 'Ativo' ")
+					usuarios = Usuario.findAll()
+				}else{
+					escolas = Escola.findById(u.pessoa.escid)
+					usuarios = Usuario.executeQuery(" select u from Usuario u, Pessoa p " +
+													"  where p.id = u.pessoa.id " +
+													"    and p.escid = " + session["escid"] )
+				} 
+				
 				if (tipo == "ok")
 					render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, ok:msg, perm2:perm2])
 				else
@@ -409,8 +424,12 @@ class UsuarioController {
 		
 						GrupoUsuario gu
 						Grupo grupo
+						
+						//aqui
+						ArrayList gruposUsadosGSP = new ArrayList()
+						gruposUsadosGSP.addAll(params.grupo)
 		
-						for (var in params.grupo) {
+						for (var in gruposUsadosGSP) {
 							gu = new GrupoUsuario()
 							grupo = new Grupo()
 							grupo = Grupo.get(var)

@@ -93,7 +93,7 @@ function printDiv(id)
 									<g:formatDate format="yyyy-MM-dd" date="${date}" />
 									<g:datePicker noSelection="['':'']" precision="day"
 										class="form-control" id="iDataProtocolo" name="dataProtocolo"
-										required="true" />
+										required="true" value="${protocolos.dataProtocolo}" />
 								</div>
 
 							</div>
@@ -105,7 +105,7 @@ function printDiv(id)
 									<g:formatDate format="yyyy-MM-dd" date="${date}" />
 									<g:datePicker noSelection="['':'']" precision="day"
 										class="form-control" id="iDataEmissao" name="dataEmissao"
-										required="true" />
+										required="true" value="${protocolos.dataEmissao}"/>
 								</div>
 							</div>
 							<br>
@@ -140,6 +140,13 @@ function printDiv(id)
 									${protocolos.tipoDocumento.nome}
 								</div>
 							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Interessado</label>
+								<div class="col-sm-10">
+									${protocolos.interessado}
+								</div>
 							</div>
 							<br>
 	
@@ -169,7 +176,7 @@ function printDiv(id)
 													</td>
 													<td>
 														${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-														-${ it.funcionarioSetorOrigem.setor.nome}
+														-${ it.funcionarioSetorDestino.setor.nome}
 													</td>
 												</tr>
 											</g:each>

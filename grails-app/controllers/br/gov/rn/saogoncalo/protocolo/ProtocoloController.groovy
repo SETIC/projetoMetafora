@@ -116,7 +116,7 @@ class ProtocoloController {
 
 				println("parametros " + params.arquivos)
 				Protocolo protocolo = new Protocolo(params)
-				protocolo.numero = params.numero.toLong()
+				protocolo.numero = params.numero
 				protocolo.numeroDocumento = params.numeroDocumento
 				protocolo.dataProtocolo = params.dataProtocolo
 				protocolo.dataEmissao = params.dataEmissao
@@ -322,7 +322,7 @@ class ProtocoloController {
 				def protocolos = Protocolo.get(params.id)
 				def assunto = Assunto.get(params.assunto)
 
-				protocolos.numero = params.numero.toString().toInteger()
+				protocolos.numero = params.numero
 				if(params.dataProtocolo != null){
 					protocolos.dataProtocolo = params?.dataProtocolo
 				}

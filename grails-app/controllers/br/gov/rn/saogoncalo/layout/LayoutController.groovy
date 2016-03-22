@@ -121,9 +121,9 @@ class LayoutController {
 		result[0] = resultAluno
 		result[1] = resultProfessor
 		result[2] = resultFuncionario
-		println("result"+result[0] )
-		println("result"+result[1] )
-		println("result"+result[2] )
+		//println("result"+result[0] )
+		//println("result"+result[1] )
+		//println("result"+result[2] )
 
 		render( result as JSON)
 		conn.close();

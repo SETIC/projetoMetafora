@@ -70,17 +70,17 @@
 							<label for="iProtocolo" class="col-sm-2 control-label">Data
 								do Protocolo </label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+								<g:formatDate format="dd/MM/yyyy" date="${date}" />
 							<g:if test="${tipoEdicao == 'ACEITO'}">
 
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
-									required="true" disabled="true"/>
+									required="true" disabled="true" value="${it.dataProtocolo}" />
 								</g:if>
 								<g:else>
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
-									required="true"/>
+									required="true" value="${it.dataProtocolo}" />
 								</g:else>
 
 							</div>
@@ -90,17 +90,17 @@
 							<label for="iProtocolo" class="col-sm-2 control-label">Data
 								de Emissão </label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+								<g:formatDate format="dd/MM/yyyy" date="${date}" />
 
 								<g:if test="${tipoEdicao == 'ACEITO'}">
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				
-									required="true" disabled="true" />
+									required="true" disabled="true" value="${it.dataEmissao}" />
 								</g:if>
 								<g:else>
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				
-									required="true" />
+									required="true" value="${it.dataEmissao}" />
 								</g:else>
 							</div>
 						</div>

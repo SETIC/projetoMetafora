@@ -4,7 +4,7 @@ import br.gov.rn.saogoncalo.login.Usuario
 
 class Protocolo {
 
-	Long numero
+	String numero
 	Date dataProtocolo
 	Date dataEmissao
 	String numeroDocumento
