@@ -38,7 +38,7 @@ class ProtocoloController {
 
 				def sql = new Sql(conn)
 				def protocolos
-				def sqlString = " select * from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
+				def sqlString = " select *, s.nome as situacao from (select max(t.id) as tramite, t.protocolo_id as protoc_id " +
 						"                 from cadastro_unico_protocolo.tramite t " +
 						"                group by t.protocolo_id) as t1 , cadastro_unico_protocolo.protocolo p, " +
 						"                                                 cadastro_unico_protocolo.tramite tr, " +
@@ -55,7 +55,7 @@ class ProtocoloController {
 						"  and se.pessoa_juridica_id = " + session["escid"]
 
 				if(params.tipoBusca == "numero"){
-					sqlString = sqlString + " and p.numero = " + params.numeroProtocolo
+					sqlString = sqlString + " and to_ascii(p.numero,'LATIN1') ilike '%" + params.numeroProtocolo + "%' "
 					protocolos = sql.rows(sqlString)
 				}
 				if(params.tipoBusca == "data"){
@@ -68,7 +68,12 @@ class ProtocoloController {
 				}
 				
 				if(params.tipoBusca == "interessado"){
-					sqlString = sqlString + " and p.interessado like '%" + params.interessado + "%' "
+					sqlString = sqlString + " and to_ascii(p.interessado,'LATIN1') ilike '%" + params.interessado + "%' "  
+					protocolos = sql.rows(sqlString)
+				}
+				
+				if(params.tipoBusca == "numeroDocumento"){
+					sqlString = sqlString + " and to_ascii(p.numero_Documento,'LATIN1') ilike '%" + params.numeroDocumento + "%' "
 					protocolos = sql.rows(sqlString)
 				}
 
@@ -84,6 +89,7 @@ class ProtocoloController {
 						+ "and fs.funcionario.id = f.id "
 						+ "and s.id = fs.setor.id "
 						+ "and f.id = " + session["pesid"])
+				
 
 				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolos:protocolos ,setor:setor, funcionarioSetorLogado: funcionarioSetorLogado, perm1:perm1])
 			}else{
@@ -119,7 +125,7 @@ class ProtocoloController {
 				protocolo.numero = params.numero
 				protocolo.numeroDocumento = params.numeroDocumento
 				protocolo.dataProtocolo = params.dataProtocolo
-				protocolo.dataEmissao = params.dataEmissao
+				protocolo.dataEmissao = new Date()
 
 				def funcionarioSetor = FuncionarioSetor.get(funcionarioSetorLogado.id)
 				def tipoDocumento = TipoDocumento.get(params.tipoDocumento)
@@ -326,10 +332,11 @@ class ProtocoloController {
 				if(params.dataProtocolo != null){
 					protocolos.dataProtocolo = params?.dataProtocolo
 				}
+				/*
 				if(params.dataEmissao != null){
 					protocolos.dataEmissao = params?.dataEmissao
 				}
-				println("Datas: " +  params+ " - " + protocolos.dataEmissao)
+				println("Datas: " +  params+ " - " + protocolos.dataEmissao)*/
 				protocolos.numeroDocumento = params.numeroDocumento
 								
 				protocolos.assunto = assunto
@@ -380,9 +387,8 @@ class ProtocoloController {
 						println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
 						
 						Anexo anexo = new Anexo()
-												
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos/${protocolos.id}")
 						anexo.dataAnexo = new Date()
 						anexo.protocolo = protocolos
 						if(anexo.save(flush:true)){

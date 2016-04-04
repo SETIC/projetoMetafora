@@ -269,9 +269,9 @@ function deletar(id) {
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
-											<label>Número</label>
+											<label>Número do Protocolo</label>
 											<div class="controls">
-												<g:field type="number" class="form-control" name="numero"
+												<g:field type="text" class="form-control" name="numero"
 													value="" required="true" />
 											</div>
 										</div>
@@ -288,22 +288,12 @@ function deletar(id) {
 											</div>
 										</div>
 										<br>
-										<div class="form-group">
-											<label for="iDataEmissao" class="col-sm-4 control-label">Data
-												de Emissão </label>
-											<div class="col-sm-16">
-												<g:formatDate format="yyyy-MM-dd" date="${date}" />
-												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataEmissao" name="dataEmissao"
-													required="true" />
-											</div>
-										</div>
-										<br>
+
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
 												<g:field type="text" class="form-control"
-													name="numeroDocumento" value="" required="true" />
+													name="numeroDocumento" value=""/>
 											</div>
 										</div>
 										<br>
@@ -447,6 +437,31 @@ function deletar(id) {
 								protocolos</h4>
 						</div>
 						<div class="modal-body">
+							
+							
+							<script type="text/javascript">  
+
+										function limparCampoFile(){
+											document.getElementById("arquivo[]").value = "";
+										}
+
+										$(document).ready(function(){  
+										 
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    $("input[name='addFile']").click(function(e){  
+										        $('#inputs_adicionais_tramite').append( input );  
+										    });  
+										 
+										    $('#inputs_adicionais_tramite').delegate('a','click',function(e){  
+										        e.preventDefault();  
+										        $(this).parent('label').remove();  
+										    });  
+										 
+										}); 
+										 
+										</script>
+							
+							
 							<g:form controller="Protocolo" action="salvarTramite"
 								class="form" enctype="multipart/form-data">
 								<fieldset>
@@ -477,38 +492,19 @@ function deletar(id) {
 										</div>
 									</div>
 									<br>
+									
 									<div class="form-heading">
 
 										<label>Anexo</label>
-
-										<script type="text/javascript">  
-
-										function limparCampoFile(){
-											document.getElementById("arquivo[]").value = "";
-										}
-
-										$(document).ready(function(){  
-										 
-										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
-										    $("input[name='addFile']").click(function(e){  
-										        $('#inputs_adicionais_tramite').append( input );  
-										    });  
-										 
-										    $('#inputs_adicionais_tramite').delegate('a','click',function(e){  
-										        e.preventDefault();  
-										        $(this).parent('label').remove();  
-										    });  
-										 
-										}); 
-										 
-										</script>
+									
 										<input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-								        <br />
+								        <br>
 								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-								        <br />
+								        <br>
 								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
 								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
+								        
 									</div>
 									<br>
 								</fieldset>

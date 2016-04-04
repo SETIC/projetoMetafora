@@ -69,6 +69,16 @@
  			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
  			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
                break;   
+
+           case 'numeroDocumento':
+
+ 			  newInput.innerHTML = "<label>Número do documento: </label/></br>"+
+ 			  "<input type='text' required = 'true' name ='numeroDocumento' id ='numeroDocumento'/>" +
+ 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+ 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+               break;
+
+              
            }
 			
 		}
@@ -94,6 +104,7 @@
 						<option value="data">DATA</option>
 						<option value="setor">SETOR</option>
 						<option value="interessado">INTERESSADO</option>
+						<option value="numeroDocumento">NUMERO DO DOCUMENTO</option>
 						
 					</select>
 				</div>
@@ -131,7 +142,6 @@
 							<th>Assunto</th>
 							<th>Situação</th>
 							<th>Interessado</th>
-							
 						</tr>
 					</thead>
 					<tbody>
@@ -160,11 +170,11 @@
 								</td>
 
 								<td>
-								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_disponibilizacao}" />
+								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_protocolo}" />
 								</td>
 
 								<td> 
-									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_recebimento}" />
+									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_emissao}" />
 								</td>
 
 								<td>
@@ -176,7 +186,7 @@
 								</td>
 								
 								<td>
-									${it.nome}
+									${it.situacao}
 								</td>
 								<td>
 									${it.interessado}
