@@ -124,15 +124,7 @@ function printDiv(id)
 								</div>
 							</div>
 							<br>
-	
-							<div class="form-group">
-								<label for="inputSituacao" class="col-sm-2">Situação</label>
-								<div class="col-sm-10">
-									${protocolos.situacao.nome}
-								</div>
-							</div>
-							<br>
-	
+
 							<div class="form-group">
 								<label for="inputTipoDocumento" class="col-sm-2">Tipo
 									de Documento</label>
@@ -146,6 +138,22 @@ function printDiv(id)
 								<label for="inputInteressado" class="col-sm-2">Interessado</label>
 								<div class="col-sm-10">
 									${protocolos.interessado}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputSituacao" class="col-sm-2">Situação</label>
+								<div class="col-sm-10">
+									${protocolos.situacao.nome}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Descrição de Situação</label>
+								<div class="col-sm-10">
+									${protocolos.descricaoSituacao}
 								</div>
 							</div>
 							<br>

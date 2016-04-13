@@ -384,7 +384,8 @@ function deletar(id) {
 											</div>
 										</div>
 
-										<br> <label>Anexo</label>
+										<br> 
+										<label>Anexo</label>
 										<script type="text/javascript">  
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";

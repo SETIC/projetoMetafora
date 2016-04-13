@@ -97,8 +97,7 @@ class ProtocoloController {
 			}
 		}
 	}
-
-
+	
 	def salvar(){
 
 
@@ -327,8 +326,9 @@ class ProtocoloController {
 
 				def protocolos = Protocolo.get(params.id)
 				def assunto = Assunto.get(params.assunto)
+				
 
-				protocolos.numero = params.numero
+				//protocolos.numero = params.numero
 				if(params.dataProtocolo != null){
 					protocolos.dataProtocolo = params?.dataProtocolo
 				}
@@ -351,6 +351,8 @@ class ProtocoloController {
 
 				protocolos.situacao = situacao
 				println ("assunto" +params.situacao)
+				
+				protocolos.descricaoSituacao = params.descricaoSituacao
 
 				if(protocolos.save(flush:true)){
                    
@@ -384,8 +386,7 @@ class ProtocoloController {
 					//adicionara anexos --------------------
 					
 					request.getFiles("arquivo[]").each { file ->
-						println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
-						
+												
 						Anexo anexo = new Anexo()
 						FileUploadServiceController fil = new  FileUploadServiceController()
 						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos/${protocolos.id}")
@@ -401,7 +402,7 @@ class ProtocoloController {
 					//--------------------------------------
 					
 
-					redirect(controller:"Protocolo", action:"listarProtocolo",params:[msg:"Protocolo atualizado com sucesso.",tipo:"ok"])
+					redirect(controller:"Protocolo", action:"listarProtocolo", params:[msg:"Protocolo atualizado com sucesso.",tipo:"ok"])
 					//listarMensagem("Protocolo atualizado com sucesso", "ok")
 				}else{
 					
