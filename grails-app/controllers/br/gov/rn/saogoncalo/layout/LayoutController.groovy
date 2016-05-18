@@ -108,8 +108,7 @@ class LayoutController {
 		def resultFuncionario = []
 
 		result = [];
-
-
+       
 		for (aluno in alunoByEscola){
 			def cor = gerarCor()
 			resultAluno[i] = ["label":aluno.escola, "value":aluno.totalaluno, "color":cor, "highlight":cor]

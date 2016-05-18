@@ -73,8 +73,8 @@ function printDiv(id)
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<g:form controller="Protocolo" action="verInfoProtocolo"
-						class="form-horizontal">
+					<g:form controller="Protocolo" action="verInfoProtocolo" 
+					class="form-horizontal">
 						<g:hiddenField type="number" name="id" value="${protocolos.id}" />
 						<fieldset id="print">
 							<div class="row">
@@ -213,7 +213,7 @@ function printDiv(id)
 													<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
 															date="${it.dataAnexo}" /></td>
 													<td>
-														<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
+														<g:link action="downloadFile" params="[id:it.id]"> Baixar </g:link>																									
 													</td>
 												</tr>
 											</g:each>
@@ -229,10 +229,8 @@ function printDiv(id)
 								<li class="btn btn-primary btn-flat"><a
 									href="/projetoMetafora/Protocolo/listarProtocolo" style="color: #fff;">Voltar</a></li>
 							</ul>
-							</button>
 						</div>
-				</div>
-				</g:form>
+				  </g:form>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -243,7 +241,6 @@ function printDiv(id)
 					tabela.fnSort([ [ 1, 'asc' ] ]);
 				});
 			</script>
-
 		</div>
 	</section>
  </body>

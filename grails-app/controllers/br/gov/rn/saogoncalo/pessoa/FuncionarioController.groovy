@@ -772,7 +772,7 @@ class FuncionarioController {
 		  " and dlpp.professor_id = p.id"+
 		  " and pe.id = p.id"+
 		  " and h.turma_disciplina_id = td.id"+
-		  " and dlpp.id = td.disciplina_lecionada_por_professor_id"+
+		  " and dlpp.id = td.disciplina_lecionada_por_professor_id"+   
 		  " and td.turma_id = t.id"+
 		  " and s.id = t.serie_id"+
 		  " and dds.disciplina_id = d.id"+

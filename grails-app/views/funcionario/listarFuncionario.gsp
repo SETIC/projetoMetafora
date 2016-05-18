@@ -248,7 +248,6 @@ function printDiv(id)
 											</div>
 										</div>
                                         <br>
-                                              
                                               <div id="divDisciplinas" style="display: none;" class="form-heading">
 													<label>Disciplinas</label>
 													<div class="controls">

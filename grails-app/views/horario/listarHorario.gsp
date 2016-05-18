@@ -94,7 +94,6 @@ function printDiv(id)
 
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
-
 			        
 			        $.ajax({
 			            type: "GET",
@@ -112,10 +111,9 @@ function printDiv(id)
 								comboTurma.options[comboTurma.options.length] = new Option(result.turma[i], result.id[i]);
 			           		}
 							 mudarTurma();   
-				        }
+				         }
 			            }
-			        });
-
+			         });
 			    
 			       }
 
@@ -428,6 +426,25 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
+									
+									
+									<!-- teste de div -->
+						<div style="float:right;margin-left: 100%;">
+						
+						<table id="horarios">
+					<thead>
+						<tr>
+
+							<th style="width:60px;"></th>
+							<th style="text-align: left;">Número</th>
+							<th style="text-align: left;">Data do Protocolo</th>
+							<th style="text-align: left;">Data da Emissão</th>
+						</tr>
+					</thead>
+					</table>	
+						</div>	
+						
+						<!-- teste de div -->
 								</fieldset>
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary btn-flat">
@@ -435,11 +452,12 @@ function printDiv(id)
 									</button>
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
+								
 							</g:form>
 						</div>
 					</div>
-				</div>
-			</div>
+			     </div>
+			  </div>
 			</g:if>
 		</div>
 	</section>

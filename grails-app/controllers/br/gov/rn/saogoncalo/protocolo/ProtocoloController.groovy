@@ -389,7 +389,9 @@ class ProtocoloController {
 						Anexo anexo = new Anexo()
 												
 						FileUploadServiceController fil = new  FileUploadServiceController()
-						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						//anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos")
+						anexo.arquivo =  fil.uploadFile(file,file.originalFilename, "/anexos/${protocolos.id}")
+						
 						anexo.dataAnexo = new Date()
 						anexo.protocolo = protocolos
 						if(anexo.save(flush:true)){
@@ -767,7 +769,6 @@ class ProtocoloController {
 			response.outputStream << file.bytes
 			response.outputStream.flush()
 			response.outputStream.close()
-
 
 		}
 

@@ -75,19 +75,41 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 75px;"></th>
 							<th style="text-align: left;">Número</th>
 							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Destino</th>
 							<th style="text-align: left;">Assunto</th>
 							<th style="text-align: left;">Situação</th>
-
+							<th style="text-align: left;">Funções</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
+								
+								<td>
+									${it.protocolo.numero}
+								</td>
+
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
+
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
+
+								<td>
+									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
+									- ${it.funcionarioSetorDestino.setor.nome}
+								</td>
+
+								<td>
+									${it.protocolo.assunto.assunto}
+								</td>
+
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
+								</td>
 								<td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">
@@ -115,29 +137,6 @@ function deletar(id) {
 
 									</div>
 								</td>
-
-								<td>
-									${it.protocolo.numero}
-								</td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
-
-								<td>
-									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-									- ${it.funcionarioSetorDestino.setor.nome}
-								</td>
-
-								<td>
-									${it.protocolo.assunto.assunto}
-								</td>
-
-								<td>
-									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
-								</td>
 							</tr>
 						</g:each>
 					</tbody>
@@ -161,20 +160,45 @@ function deletar(id) {
 					<thead>
 						<tr>
 
-							<th style="width: 60px;"></th>
+							
 							<th style="text-align: left;">Número</th>
 							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Origem</th>
 							<th style="text-align: left;">Assunto</th>
 							<th style="text-align: left;">Situação</th>
+							<th style="text-align: left;">Funções</th>
+							
 
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
+								
 								<td>
+									${it.protocolo.numero}
+								</td>
+
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
+
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
+
+								<td>
+									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
+									- ${it.funcionarioSetorOrigem.setor.nome}
+								</td>
+
+								<td>
+									${it.protocolo.assunto.assunto}
+								</td>
+
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
+								</td>
+                                 <td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">
 
@@ -210,29 +234,6 @@ function deletar(id) {
 
 									</div>
 								</td>
-								<td>
-									${it.protocolo.numero}
-								</td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
-
-								<td>
-									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
-									- ${it.funcionarioSetorOrigem.setor.nome}
-								</td>
-
-								<td>
-									${it.protocolo.assunto.assunto}
-								</td>
-
-								<td>
-									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
-								</td>
-
 							</tr>
 						</g:each>
 					</tbody>

@@ -333,6 +333,14 @@
 			onClick="printDiv('listarFuncionarios')">
 			<i class="glyphicon glyphicon-print"></i> Relatório Geral
 		</button>
+		
+		
+		<div title="Editar Funcionario "
+			class="btn btn-danger btn-flat"><a
+			style="color: #fff; font-size:15px;font-family:arial"
+			href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
+				class="glyphicon glyphicon-print"> Relatório por Turma</span></a></div>
+		
 
 		<div class="modal fade" id="relatorioModal" tabindex="-1"
 			role="dialog" aria-labelledby="relatorioModalLabel"
