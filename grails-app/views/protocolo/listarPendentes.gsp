@@ -58,7 +58,7 @@
 									</div>
 								</td>
 								<td>
-									${it.protocolo.numeroDocumento}
+									${it.protocolo.numero}
 								</td>
 								<td>
 									${it.funcionarioSetorOrigem.setor.nome}

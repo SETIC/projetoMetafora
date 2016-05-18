@@ -186,10 +186,9 @@
 						<br>
 						
 						<div class="form-group">
-							<label for="inputNome3" class="col-sm-2 control-label">Descrição de Status</label>
-							<div class="col-sm-10">
-								<textarea rows="3" class="form-control" name="descricaoSituacao"
-													placeholder="Descrição da situação do protocolo.">${protocolo.descricaoSituacao}</textarea>
+							<label for="problema" class="col-sm-2 control-label">Descrição da Situação</label>
+							<div class="col-sm-4">
+								<textarea rows="4" cols="5" class="form-control" placeholder="Descrição da situação do protocolo" name="descricaoSituacao">${protocolo.descricaoSituacao}</textarea>
 							</div>
 						</div>
 						<br>

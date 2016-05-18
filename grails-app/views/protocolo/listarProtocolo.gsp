@@ -117,7 +117,7 @@ function deletar(id) {
 								</td>
 
 								<td>
-									${it.protocolo.numeroDocumento}
+									${it.protocolo.numero}
 								</td>
 
 								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
@@ -211,7 +211,7 @@ function deletar(id) {
 									</div>
 								</td>
 								<td>
-									${it.protocolo.numeroDocumento}
+									${it.protocolo.numero}
 								</td>
 
 								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
