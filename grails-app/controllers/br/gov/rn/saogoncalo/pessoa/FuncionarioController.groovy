@@ -35,46 +35,48 @@ class FuncionarioController {
 
 				def funcionario
 				def lotacao
-				def cargo
+				def cargo	
+				def year = Calendar.getInstance().get(Calendar.YEAR)
 				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
 						" where p.id = f.id "+
 						" and l.cargo.id = c.id "+
 						" and f.id = l.funcionario.id " +
 						" order by p.id ")
-				
-				
+
+
 				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 				def props = new Properties()
 				props.setProperty("user", "admin_db_sr")
 				props.setProperty("password", "bgt54rfvcde3")
-						
+
 				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 				def sql = new Sql(conn)
-				
-				def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
-					" from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp, " +
-					" cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h, " +
-					" educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s " +
-					" where dlpp.disciplina_id = d.id " +
-					"   and dlpp.professor_id = p.id " +
-					"   and pe.id = p.id " +
-					"   and h.turma_disciplina_id = td.id " +
-					"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
-					"   and td.turma_id = t.id " +
-					"   and s.id = t.serie_id " +
 
-					"   and t.ano_letivo = '2014' " +
-					//"   and pe.id = 2100" + //+ id.toString() +
-					" group by d.disciplina, pe.nome, d.carga_horaria");
-				
+				def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
+
+						" from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp, " +
+						" cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h, " +
+						" educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s " +
+						" where dlpp.disciplina_id = d.id " +
+						"   and dlpp.professor_id = p.id " +
+						"   and pe.id = p.id " +
+						"   and h.turma_disciplina_id = td.id " +
+						"   and dlpp.id = td.disciplina_lecionada_por_professor_id " +
+						"   and td.turma_id = t.id " +
+						"   and s.id = t.serie_id " +
+						//"   and t.ano_letivo = '2014' " +
+						"   and t.ano_letivo = " + year.toString() +
+						//"   and pe.id = 2100" + //+ id.toString() +
+						" group by d.disciplina, pe.nome, d.carga_horaria");
+
 
 				println("Aqui -- " + horasDisciplinas)
-				
+
 				def escolas = Escola.findAll()
 
 
 				render (view:"/funcionario/gerarRelatorio.gsp", model:[funcionario:funcionario, lotacao:lotacao, cargo:cargo, escolas:escolas, horasDisciplinas: horasDisciplinas])
-				
+
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -174,9 +176,9 @@ class FuncionarioController {
 
 			if (perm1 || perm2){
 
-				
+
 				println("params aqui --- +++ " + params)
-				
+
 				def funcionarios
 				def cargos
 				def lotacao
@@ -217,9 +219,11 @@ class FuncionarioController {
 
 
 				//verificar com matriculas
-				funcionarios = sql.rows(" select p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
+				funcionarios = sql.rows(" select p.escid, p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
 						" (select e.nome from cadastro_unico_pessoal.pessoa e " +
-						" where e.id = p.escid ) as escola " +
+						" where e.id = p.escid ) as escola ,  " +
+						" (select e.id from cadastro_unico_pessoal.pessoa e " +
+						" where e.id = p.escid ) as escolaId " +
 						" from cadastro_unico_pessoal.Pessoa p, cadastro_unico_pessoal.Funcionario f, " +
 						" administracao_organizacao.Lotacao l, administracao_organizacao.Cargo c "+
 						" where p.id = f.id "+
@@ -229,9 +233,10 @@ class FuncionarioController {
 						" order by p.nome");
 
 				// ------------------
-
 					
-					def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
+				def year = Calendar.getInstance().get(Calendar.YEAR)
+
+				def horasDisciplinas = sql.rows(" select d.disciplina, pe.nome, d.carga_horaria, (sum((length(substring(h.horario,3,length(h.horario))) * 45 )/60.0)* 4) as soma " +
 						" from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp, " +
 						" cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h, " +
 						" educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s " +
@@ -243,7 +248,8 @@ class FuncionarioController {
 						"   and td.turma_id = t.id " +
 						"   and s.id = t.serie_id " +
 
-						"   and t.ano_letivo = '2015' " +
+						//"   and t.ano_letivo = '2015' " +
+						"   and t.ano_letivo = " + year.toString() +
 						"   and pe.id = 2100" + //+ id.toString() +
 						" group by d.disciplina, pe.nome, d.carga_horaria");
 
@@ -736,10 +742,11 @@ class FuncionarioController {
 	def getFuncionarioByIdParaRelatorio(long id){
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
+		
 		props.setProperty("user", "admin_db_sr")
 		props.setProperty("password", "bgt54rfvcde3")
 		List <String> lista = new ArrayList();
-
+		def year = Calendar.getInstance().get(Calendar.YEAR)
 		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 		//verificar com matriculas
@@ -757,36 +764,36 @@ class FuncionarioController {
 				" and hr.turma_disciplina_id = td.id " +
 
 				" and p.id = " + id.toString())
-			
-			
-		def listaDisciplina = sql.rows("select t.turma, d.disciplina,"+
-			"sum((length(substring(h.horario,3,length(h.horario))))) as quantidade_aulas,"+
-			"dds.quantidade_aula_semanal "+
-			 
-		  "from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp,"+
-		  	"cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h,"+
-			 "educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s,"+
-			 "educacao_academico.dados_disciplina_serie dds "+
-			  
-		  " where dlpp.disciplina_id = d.id"+
-		  " and dlpp.professor_id = p.id"+
-		  " and pe.id = p.id"+
-		  " and h.turma_disciplina_id = td.id"+
-		  " and dlpp.id = td.disciplina_lecionada_por_professor_id"+   
-		  " and td.turma_id = t.id"+
-		  " and s.id = t.serie_id"+
-		  " and dds.disciplina_id = d.id"+
-		  " and dds.serie_id = s.id"+
-		
-		  " and t.ano_letivo = '2016' "+
-		  " and substring(dds.turno,1,1) = substring(h.horario,2,1)"+
-		  " and pe.id = "+ id.toString() +
-		
-		  " group by t.id, d.id, pe.id, dds.quantidade_aula_semanal"+
-		  " order by t.id")
-			
-          
 
+
+		def listaDisciplina = sql.rows("select t.turma, d.disciplina,"+
+
+				"sum((length(substring(h.horario,3,length(h.horario))))) as quantidade_aulas,"+
+				"dds.quantidade_aula_semanal "+
+
+				"from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp,"+
+				"cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h,"+
+				"educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s,"+
+				"educacao_academico.dados_disciplina_serie dds "+
+
+				" where dlpp.disciplina_id = d.id"+
+				" and dlpp.professor_id = p.id"+
+				" and pe.id = p.id"+
+				" and h.turma_disciplina_id = td.id"+
+				" and dlpp.id = td.disciplina_lecionada_por_professor_id"+
+				" and td.turma_id = t.id"+
+				" and s.id = t.serie_id"+
+				" and dds.disciplina_id = d.id"+
+				" and dds.serie_id = s.id"+
+
+				//" and t.ano_letivo = '2016' "+
+				" and t.ano_letivo = " + year.toString() +
+				
+				" and substring(dds.turno,1,1) = substring(h.horario,2,1)"+
+				" and pe.id = "+ id.toString() +
+
+				" group by t.id, d.id, pe.id, dds.quantidade_aula_semanal"+
+				" order by t.id")
 
 		//println("dados da lista"+horario)
 		def funcionario = Funcionario.get(id)
@@ -1051,5 +1058,65 @@ class FuncionarioController {
 			}
 		}
 	}
-}
 
+	def gerarRelatorioListarProfessores(long id){
+
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Funcionario", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
+			def usuario = new UsuarioController()
+
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "FUNCIONARIO", "2")
+			if (perm2) {
+
+
+				println("escola params --- " + params)
+
+				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+				def props = new Properties()
+				props.setProperty("user", "admin_db_sr")
+				props.setProperty("password", "bgt54rfvcde3")
+				List <String> lista = new ArrayList();
+				def year = Calendar.getInstance().get(Calendar.YEAR)
+
+				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				def sql = new Sql(conn)
+				//verificar com matriculas
+
+				def listaDisciplina = sql.rows("select pe.escid, pe.nome, t.turma, d.disciplina,"+
+						"sum((length(substring(h.horario,3,length(h.horario))))) as quantidade_aulas,"+
+						"dds.quantidade_aula_semanal "+
+
+						"from educacao_academico.disciplina d, educacao_academico.disciplina_lecionada_por_professor dlpp,"+
+						"cadastro_unico_pessoal.professor p, cadastro_unico_pessoal.pessoa pe, educacao_academico.horario h,"+
+						"educacao_academico.turma_disciplina td, educacao_academico.turma t, educacao_academico.serie s,"+
+						"educacao_academico.dados_disciplina_serie dds "+
+
+						" where dlpp.disciplina_id = d.id"+
+						" and dlpp.professor_id = p.id"+
+						" and pe.id = p.id"+
+						" and h.turma_disciplina_id = td.id"+
+						" and dlpp.id = td.disciplina_lecionada_por_professor_id"+
+						" and td.turma_id = t.id"+
+						" and s.id = t.serie_id"+
+						" and dds.disciplina_id = d.id"+
+						" and dds.serie_id = s.id"+
+
+						//" and t.ano_letivo = '2016' "+
+						" and t.ano_letivo = " + year.toString() + 
+						" and substring(dds.turno,1,1) = substring(h.horario,2,1)"+
+						" and pe.escid = " +id.toString() +
+
+						" group by t.id, d.id, pe.id, dds.quantidade_aula_semanal"+
+						" order by t.id")
+
+				render (view:"/funcionario/gerarRelatorioListarProfessores.gsp", model:[listaDisciplina:listaDisciplina])
+
+			}
+		}
+
+	}
+
+}

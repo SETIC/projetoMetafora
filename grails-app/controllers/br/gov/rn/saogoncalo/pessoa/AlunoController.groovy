@@ -64,8 +64,8 @@ class AlunoController {
 			if (usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")){
 
 				Aluno alunos = Aluno.get(id)
-				def pessoa = Pessoa.get(id)
-				
+
+				Pessoa pessoas = Pessoa.get(id)
 				println("objeto alunos aquiiiiiiiiiiiiiii------ "+alunos)
 				def pHomens = Pessoa.executeQuery(" select p from Pessoa p, PessoaFisica pf " +
 						" where p.id not in (select e.id from Escola e) " +
@@ -81,7 +81,8 @@ class AlunoController {
 				println("objeto pMulheres aquiiiiiiiiiiiiiii------ "+pMulheres)
 
 				def reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
-				def documentosAluno = Documento.findAllByPessoa(pessoa)
+
+				def documentosAluno = Documento.findAllByPessoa(pessoas)
 
 				def parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "PAI")
 				def parentescoMae = Parentesco.findByPessoaFisicaAndParentesco(alunos.cidadao.pessoaFisica, "MÃE")
@@ -498,6 +499,22 @@ class AlunoController {
 
 				if(aluno.save(flush:true)){
 
+
+					//salvar documento
+					println("documento akiiiiiiii" +aluno)
+					request.getFiles("documentos[]").each { file ->
+						println("documento do atualizar akikkkkkk ---+++ " + file.originalFilename)
+
+						Documento documento = new Documento()
+						FileUploadServiceController fil = new  FileUploadServiceController()
+						documento.arquivo = fil.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+						documento.dataDocumento = new Date()
+						documento.pessoa = pessoa 
+						if(documento.save(flush:true)){
+							println("documento salvo -----")
+						}
+					}
+
 					def date = new Date()
 					AdministracaoController adm = new AdministracaoController()
 					adm.salvaLog(session["usid"].toString().toInteger(), "aluno atualizado " + aluno.id.toString(), "atualizar" , "Aluno", date)
@@ -677,9 +694,10 @@ class AlunoController {
 
 			if (perm2){
 				Aluno aluno  = Aluno.get(id)
-                def documentos  = Documento.findAllByAluno(aluno)
+				Pessoa pessoa = Pessoa.get(id)
+                def documentos  = Documento.findAllByPessoa(pessoa)
 			   for(def i = 0; i < documentos.size();i++){
-				   def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${aluno.id}").file.toString() + "/" + documentos[i].arquivo).delete()
+				   def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${pessoa.id}").file.toString() + "/" + documentos[i].arquivo).delete()
 				   
 				   }
 					
@@ -719,6 +737,7 @@ class AlunoController {
 			if (perm1 || perm2)
 			{
 
+				Pessoa pessoas = Pessoa.get(id)
 				Aluno alunos = Aluno.get(id)
 				def pessoa = Pessoa.get(id)
 				
@@ -728,11 +747,9 @@ class AlunoController {
 
 				Reside reside = Reside.findByPessoa(alunos.cidadao.pessoaFisica.pessoa)
 
-				def documentosAluno  = Documento.findAllByPessoa(pessoa)
 
-				
-				
-				
+				def documentosAluno  = Documento.findAllByPessoa(pessoas)
+
 				PessoaFisica pessoaFisica = PessoaFisica.get(id)
 				def pessoaFisicaNecessidadesEspeciais = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
 
@@ -1056,7 +1073,35 @@ class AlunoController {
 
 						}
 
-												def date = new Date()
+
+						//documento
+
+						request.getFiles("documentos[]").each { file ->
+
+							println("Documentos aqui ---+++ " + file.originalFilename)
+
+							Documento documento = new Documento()
+							FileUploadServiceController fc = new FileUploadServiceController()
+							documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
+							documento.dataDocumento = new Date()
+							documento.pessoa = pessoa
+
+							if(documento.save(flush:true)){
+								println("documento salvo")
+
+							}
+
+							else{
+
+								def erros
+								documento.errors.each {erros = it}
+								print("erros: "+erros)
+								listarMensagem("Erro ao salvar o documento", "erro")
+							}
+						}
+
+
+						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "aluno matriculado " + aluno.id.toString(),"cadastrar", "Aluno", date)
 
@@ -1361,18 +1406,18 @@ class AlunoController {
 			println("Arquivo do editar akikkkkkk ---+++ " + file.originalFilename)
 			
 			Documento documento = new Documento()
-			Aluno aluno = new Aluno()
-		    aluno = Aluno.get(documento.aluno.id)
+			Pessoa pessoa = new Pessoa()
+		    pessoa = Pessoa.get(documento.pessoa.id)
 			
 			FileUploadServiceController fil = new  FileUploadServiceController()
-		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos/" + aluno.id.toString())
+		    documento.arquivo =  fil.uploadFile(file,file.originalFilename, "/documentos/" + pessoa.id.toString())
 			documento.dataDocumento = new Date()
-			documento.aluno = aluno
+			documento.pessoa = pessoa
 			if(documento.save(flush:true)){
 				println("documento salvo -----")
 			  }
 			
-		   redirect(action:"editarAluno" , params:[id:documento.aluno.id])
+		   redirect(action:"editarAluno" , params:[id:documento.pessoa.id])
 			
       		 }	
 	   
@@ -1401,6 +1446,7 @@ class AlunoController {
 		      documento = Documento.get(id)	
 			  Pessoa pessoa  = new Pessoa()
 			  pessoa = Pessoa.get(documento.pessoa.id)
+
 			  documento.deleteAll(documento)
 			  def deletaDocumento = new File(grailsApplication.parentContext.getResource("/documentos/${pessoa.id}").file.toString() + "/" + documento.arquivo).delete()
 			  def documentosAluno = Documento.findAllByPessoa(pessoa)
@@ -1425,7 +1471,7 @@ class AlunoController {
 				
 				Documento documento = Documento.get(id)
 				println("documento"+documento)
-				def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.aluno.id.toString()).file.toString() + "/" + documento.arquivo)
+				def file = new File(grailsApplication.parentContext.getResource("/documentos/" + documento.pessoa.id.toString()).file.toString() + "/" + documento.arquivo)
 				
 				/*def date = new Date()
 				AdministracaoController adm = new AdministracaoController()

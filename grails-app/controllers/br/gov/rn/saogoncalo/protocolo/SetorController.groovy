@@ -1,10 +1,9 @@
 package br.gov.rn.saogoncalo.protocolo
 
-import org.apache.jasper.compiler.Node.ParamsAction;
-
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Funcionario
+import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
 
 class SetorController {
 
@@ -38,7 +37,10 @@ class SetorController {
 					funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
 							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
 				}else{
-					setor = Setor.findAll()
+										
+					def pessoaJuridica = PessoaJuridica.get(session["escid"])
+					setor = Setor.findAllByPessoaJuridica(pessoaJuridica)
+					
 					funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
 							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
 
@@ -76,7 +78,9 @@ class SetorController {
 					funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
 							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
 				}else{
-					setor = Setor.findAll()
+									
+					def pessoaJuridica = PessoaJuridica.get(session["escid"])
+					setor = Setor.findAllByPessoaJuridica(pessoaJuridica)
 					funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
 							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
 				}
@@ -108,6 +112,10 @@ class SetorController {
 
 				println("Params - " + params)
 				Setor setor = new Setor(params)
+				
+				def pessoaJuridica = PessoaJuridica.get(session["escid"])
+				setor.pessoaJuridica = pessoaJuridica 
+				
 				Funcionario funcionario = new Funcionario()
 				if (setor.save(flush:true)){
 
@@ -217,6 +225,8 @@ class SetorController {
 
 				setor.nome = params.nome
 				setor.sigla = params.sigla
+				def pessoaJuridica = PessoaJuridica.get(session["escid"])
+				setor.pessoaJuridica = pessoaJuridica
 
 				if(setor.save(flush:true)){
 					

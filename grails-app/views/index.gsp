@@ -96,7 +96,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                    <canvas id="pieChart" style="margin-left: ; height: 186px; width: 530px;" width="355" height="265"></canvas>
+                    <canvas id="pieChart" style="margin-left: ; height: 186px; width: 530px;" width="355" height="265" ></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
               

@@ -6,11 +6,7 @@
 </head>
 <body>
 	<script>
-
-
-
-
-function printDiv(id1, id2)
+  function printDiv(id1, id2)
 
 {
   var divToPrint1=document.getElementById(id1);
@@ -142,9 +138,8 @@ function deletar(id) {
 					</tbody>
 				</table>
 			</div>
-			<br> <br>
-
-
+			<br>
+		 <br>
 			<script>
 			function preencheCampoHidden(id){
 				var campo = document.getElementById("idProtocoloHidden");
@@ -159,8 +154,6 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-
-							
 							<th style="text-align: left;">Número</th>
 							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
@@ -168,8 +161,6 @@ function deletar(id) {
 							<th style="text-align: left;">Assunto</th>
 							<th style="text-align: left;">Situação</th>
 							<th style="text-align: left;">Funções</th>
-							
-
 						</tr>
 					</thead>
 					<tbody>
@@ -270,10 +261,10 @@ function deletar(id) {
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
-											<label>Número</label>
+											<label>Número do Protocolo</label>
 											<div class="controls">
 
-												<g:field type="number" class="form-control" name="numero"
+												<g:field type="text" class="form-control" name="numero"
 													value="" required="true" />
 											</div>
 										</div>
@@ -290,22 +281,12 @@ function deletar(id) {
 											</div>
 										</div>
 										<br>
-										<div class="form-group">
-											<label for="iDataEmissao" class="col-sm-4 control-label">Data
-												de Emissão </label>
-											<div class="col-sm-16">
-												<g:formatDate format="yyyy-MM-dd" date="${date}" />
-												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataEmissao" name="dataEmissao"
-													required="true" />
-											</div>
-										</div>
-										<br>
+
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
 												<g:field type="text" class="form-control"
-													name="numeroDocumento" value="" required="true" />
+													name="numeroDocumento" value=""/>
 											</div>
 										</div>
 										<br>
@@ -396,7 +377,8 @@ function deletar(id) {
 											</div>
 										</div>
 
-										<br> <label>Anexo</label>
+										<br> 
+										<label>Anexo</label>
 										<script type="text/javascript">  
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
@@ -434,7 +416,7 @@ function deletar(id) {
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-			</g:if>
+			                 </g:if>
 
 			<!-- ModalTramite -->
 			<div class="modal fade" id="myModalTramite" tabindex="-1"
@@ -449,41 +431,9 @@ function deletar(id) {
 								protocolos</h4>
 						</div>
 						<div class="modal-body">
-							<g:form controller="Protocolo" action="salvarTramite"
-								class="form" enctype="multipart/form-data">
-								<fieldset>
-									<div class="form-heading">
-										<input type="hidden" name="protocoloHidden"
-											id="idProtocoloHidden" /> <label>Destino</label>
-										<div class="controls ">
-
-											<select class="form-control selectpicker"
-												data-live-search="true"
-												name="funcionarioSetorDestinoTramite"
-												id="idFuncionarioSetorDestinoTramite" onchange="">
-												<g:each in="${funcionarioSetorDestino}">
-													<option value="${it.id}">
-														${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
-													</option>
-												</g:each>
-											</select>
-
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Observação</label>
-										<div class="controls">
-											<g:textArea class="form-control" name="observacao" value=""
-												required="true" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-
-										<label>Anexo</label>
-
-										<script type="text/javascript">  
+							
+							
+							<script type="text/javascript">  
 
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";
@@ -504,13 +454,50 @@ function deletar(id) {
 										}); 
 										 
 										</script>
+							
+							
+							<g:form controller="Protocolo" action="salvarTramite"
+								class="form" enctype="multipart/form-data">
+								<fieldset>
+									<div class="form-heading">
+										<input type="hidden" name="protocoloHidden"
+											id="idProtocoloHidden" /> <label>Destino</label>
+										<div class="controls ">
+
+											<select class="form-control selectpicker"
+												data-live-search="true"
+												name="funcionarioSetorDestinoTramite"
+												id="idFuncionarioSetorDestinoTramite" onchange="">
+												<g:each in="${funcionarioSetorDestino}">
+													<option value="${it.id}">
+														${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
+													</option>
+												</g:each>
+											</select>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Observação</label>
+										<div class="controls">
+											<g:textArea class="form-control" name="observacao" value=""
+												required="true" />
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+
+										<label>Anexo</label>
+									
 										<input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-								        <br />
+								        <br>
 								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-								        <br />
+								        <br>
 								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
 								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
+								        
 									</div>
 									<br>
 								</fieldset>

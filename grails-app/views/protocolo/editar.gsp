@@ -70,17 +70,17 @@
 							<label for="iProtocolo" class="col-sm-2 control-label">Data
 								do Protocolo </label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+								<g:formatDate format="dd/MM/yyyy" date="${date}" />
 							<g:if test="${tipoEdicao == 'ACEITO'}">
 
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
-									required="true" disabled="true"/>
+									required="true" disabled="true" value="${it.dataProtocolo}" />
 								</g:if>
 								<g:else>
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataProtocolo" name="dataProtocolo"  
-									required="true"/>
+									required="true" value="${it.dataProtocolo}" />
 								</g:else>
 
 							</div>
@@ -90,17 +90,17 @@
 							<label for="iProtocolo" class="col-sm-2 control-label">Data
 								de Emissão </label>
 							<div class="col-sm-10">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
+								<g:formatDate format="dd/MM/yyyy" date="${date}" />
 
 								<g:if test="${tipoEdicao == 'ACEITO'}">
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				
-									required="true" disabled="true" />
+									required="true" disabled="true" value="${it.dataEmissao}" />
 								</g:if>
 								<g:else>
 									<g:datePicker noSelection="['':'']" precision="day"
 									class="form-control" id="iDataEmissao" name="dataEmissao"				
-									required="true" />
+									required="true" value="${it.dataEmissao}" />
 								</g:else>
 							</div>
 						</div>
@@ -137,29 +137,6 @@
 							</div>
 						</div>
 						<br>
-
-						<div class="form-group">
-							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção </label>
-							<div class="col-sm-4">
-								<select class="selectpicker" " name="situacao"
-									id="comboSituacao" class="form-control">
-									<div class="col-sm-10">
-										<g:each in="${situacoes}">
-											<g:if test="${it.id == protocolo.situacao.id}">
-												<option value="${it.id}" selected>
-													${it.nome}
-												</option>
-											</g:if>
-											<g:else>
-												<option value="${it.id}">
-													${it.nome}
-												</option>
-											</g:else>
-										</g:each>
-								</select>
-							</div>
-						</div>
-						<br>
 						
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Tipo
@@ -185,6 +162,36 @@
 						</div>
 						<br>
 
+						<div class="form-group">
+							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção </label>
+							<div class="col-sm-4">
+								<select class="selectpicker" " name="situacao"
+									id="comboSituacao" class="form-control">
+									<div class="col-sm-10">
+										<g:each in="${situacoes}">
+											<g:if test="${it.id == protocolo.situacao.id}">
+												<option value="${it.id}" selected>
+													${it.nome}
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${it.id}">
+													${it.nome}
+												</option>
+											</g:else>
+										</g:each>
+								</select>
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="problema" class="col-sm-2 control-label">Descrição da Situação</label>
+							<div class="col-sm-4">
+								<textarea rows="4" cols="5" class="form-control" placeholder="Descrição da situação do protocolo" name="descricaoSituacao">${protocolo.descricaoSituacao}</textarea>
+							</div>
+						</div>
+						<br>
 						<br>
 					
 					</fieldset>

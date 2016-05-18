@@ -193,7 +193,8 @@ function printDiv(id)
 				</div>
 			</g:if>
 			<div class="box box-white">
-				<table id="listarHorario" class="table table-striped table-hover example">
+				<table id="listarHorario"
+					class="table table-striped table-hover example">
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
@@ -212,17 +213,19 @@ function printDiv(id)
 								<td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">
-											
+
 											<g:if test="${perm2}">
-											<div class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/horario/editarHorario/${it.id}"><span
-													class="glyphicon glyphicon-pencil"></span></a></div>
-											<div onclick="deletar(${it.id})"
-												class="btn btn-danger btn-xs btn-flat"><span
-												class="glyphicon glyphicon-remove"></span></div>
+												<div class="btn btn-primary btn-xs btn-flat">
+													<a style="color: #fff"
+														href="/projetoMetafora/horario/editarHorario/${it.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a>
+												</div>
+												<div onclick="deletar(${it.id})"
+													class="btn btn-danger btn-xs btn-flat">
+													<span class="glyphicon glyphicon-remove"></span>
+												</div>
 											</g:if>
-												
+
 										</div>
 									</div>
 								</td>
@@ -241,223 +244,211 @@ function printDiv(id)
 								<td>
 									${turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 								</td>
-	
+
 							</tr>
 						</g:each>
 					</tbody>
 				</table>
 			</div>
 			<!-- Button trigger modal -->
-			
+
 			<g:if test="${perm2}">
-			<button class="btn btn-primary btn-flat" data-toggle="modal"
-				data-target="#myModal">
-				<i class="fa fa-plus"></i> Novo Horário
-			</button>
+				<button class="btn btn-primary btn-flat" data-toggle="modal"
+					data-target="#myModal">
+					<i class="fa fa-plus"></i> Novo Horário
+				</button>
 			</g:if>
-			
-			<button class="btn btn-danger btn-flat" onClick="printDiv('listarHorario')">
+
+			<button class="btn btn-danger btn-flat"
+				onClick="printDiv('listarHorario')">
 				<i class="glyphicon glyphicon-print"></i> Imprimir
 			</button>
-			
+
 			<!-- Modal -->
 			<g:if test="${perm2}">
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Cadastro de
-								Horário</h4>
-						</div>
-						<div class="modal-body">
-							<g:form controller="Horario" action="salvar" class="form"
-								name="formHorario">
-								<fieldset>
-								<div class="form-heading">
-										<label>Escola</label>
-										<div class="controls ">
-										
-										<select class="form-control selectpicker" data-live-search="true" name="escola"
-												id="comboEscola"  onchange="mudarEscola();">
-												<option value="0" disabled="disabled" selected="selected">
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Cadastro de
+									Horário</h4>
+							</div>
+							<div class="modal-body">
+								<g:form controller="Horario" action="salvar" class="form"
+									name="formHorario">
+									<fieldset>
+										<div class="form-heading">
+											<label>Escola</label>
+											<div class="controls ">
+
+												<select class="form-control selectpicker"
+													data-live-search="true" name="escola" id="comboEscola"
+													onchange="mudarEscola();">
+													<option value="0" disabled="disabled" selected="selected">
 														Selecione uma escola</option>
-													<g:each in="${escolas}" >
-														
-													
-													<option value="${it.id}">
-														${it.pessoaJuridica.razaoSocial}
-													</option>
+													<g:each in="${escolas}">
+
+
+														<option value="${it.id}">
+															${it.pessoaJuridica.razaoSocial}
+														</option>
 													</g:each>
 												</select>
-	
-										</div>
-									</div>
-									
-									
-									<br>
-									<div class="form-heading">
-										<label>Sala</label>
-										<div class="controls">
-											<div id="teste"></div>
-											<select id="comboSalas" name="sala" class="form-control">
-												<option value="0">Selecione uma Sala</option>
-											</select>
-										</div>
-									</div>
-									
-									<br>
-									<div class="form-heading">
-										<label>Série</label>
-										<div class="controls">
-											<select class="form-control" name="slSerie" id="comboSerie" onChange="mudarSerie()">
-												<g:each in="${series}">
-													<option value="${it.id}">
-														${it.serie}
-													</option>
-												</g:each>
-											</select>
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Turma</label>
-										<div class="controls">
-											<select class="form-control" name="slTurma" id="comboTurma" onchange="mudarTurma();">
-												<option value="">Turma</option>
-											</select>
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Disciplina - Professor</label>
-										<div class="controls">
-											<select name="comboProfessorDisciplina" id="comboProfessorDisciplina"
-												class="form-control">
-												
-													<option value="0">
-														Selecione uma Disciplina - Professor
-													</option>
-												
-											</select>
-										</div>
-									</div>
-									<br>
-									<div>
-										<label>Dia</label>
-										<div class="radio">
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia1" value="1" onchange="afixar()" /> Dom
-											</label> 
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia2" value="2" onchange="afixar()" checked="true" /> Seg
-											</label> 
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia3" value="3" onchange="afixar()" /> Ter
-											</label> 
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia4" value="4" onchange="afixar()" /> Qua
-											</label>
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia5" value="5" onchange="afixar()" /> Qui
-											</label>
-											<label>
-												<g:radio class="franklin" name="radioDia" id="radioDia6" value="6" onchange="afixar()"/> Sex
-											</label> 
-											<label> 
-												<g:radio class="franklin" name="radioDia" id="radioDia7" value="7" onchange="afixar()" /> Sáb
-											</label>
-										</div>
-									</div>
-									<br>
-									<div>
-										<label>Turno</label>
-										<div class="radio">
-											<label class="radio-inline"> <g:radio
-													name="radioTurno" value="M" onclick="afixar()"
-													checked="true" /> Manhã
-											</label> <label class="radio-inline"> <g:radio
-													name="radioTurno" value="T" onclick="afixar()" /> Tarde
-											</label> <label class="radio-inline"> <g:radio
-													name="radioTurno" value="N" onclick="afixar()" /> Noite
-											</label>
-										</div>
-									</div>
-									<br>
-									<div>
-										<label>Horário</label>
-										<div class="controls">
-											<label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario1" onclick="afixar()"
-												value="1" checked /> 1
-											</label> <label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario2" onclick="afixar()"
-												value="2" checked /> 2
-											</label> <label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario3" onclick="afixar()"
-												value="3" /> 3
-											</label> <label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario4" onclick="afixar()"
-												value="4" /> 4
-											</label> <label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario5" onclick="afixar()"
-												value="5" /> 5
-											</label> <label class="radio-inline"> <input type="checkbox"
-												name="cbHorario" id="cbHorario6" onclick="afixar()"
-												value="6" /> 6
-											</label>
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Hora/Aula</label>
-										<div class="controls">
-											<input class="form-control" name="horaDeAula" id="horaAula" placeholder="quantidade de minutos que equivalem a 1 hora aula" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Descrição do horario</label>
-										<div class="controls">
-											<g:textField readonly="readonly" name="descHorario" value="2M12" />
-										</div>
-									</div>
-									<br>
-									
-									
-									<!-- teste de div -->
-						<div style="float:right;margin-left: 100%;">
-						
-						<table id="horarios">
-					<thead>
-						<tr>
 
-							<th style="width:60px;"></th>
-							<th style="text-align: left;">Número</th>
-							<th style="text-align: left;">Data do Protocolo</th>
-							<th style="text-align: left;">Data da Emissão</th>
-						</tr>
-					</thead>
-					</table>	
-						</div>	
-						
-						<!-- teste de div -->
-								</fieldset>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary btn-flat">
-										<i class="fa fa-save"></i> Cadastrar
-									</button>
-									<input type="reset" class="btn btn btn-flat" value="Limpar">
-								</div>
-								
-							</g:form>
+											</div>
+										</div>
+
+
+										<br>
+										<div class="form-heading">
+											<label>Sala</label>
+											<div class="controls">
+												<div id="teste"></div>
+												<select id="comboSalas" name="sala" class="form-control">
+													<option value="0">Selecione uma Sala</option>
+												</select>
+											</div>
+										</div>
+
+										<br>
+										<div class="form-heading">
+											<label>Série</label>
+											<div class="controls">
+												<select class="form-control" name="slSerie" id="comboSerie"
+													onChange="mudarSerie()">
+													<g:each in="${series}">
+														<option value="${it.id}">
+															${it.serie}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Turma</label>
+											<div class="controls">
+												<select class="form-control" name="slTurma" id="comboTurma"
+													onchange="mudarTurma();">
+													<option value="">Turma</option>
+												</select>
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Disciplina - Professor</label>
+											<div class="controls">
+												<select name="comboProfessorDisciplina"
+													id="comboProfessorDisciplina" class="form-control">
+
+													<option value="0">Selecione uma Disciplina -
+														Professor</option>
+
+												</select>
+											</div>
+										</div>
+										<br>
+
+
+
+
+
+										<div>
+											<label>Dia</label>
+											<div class="radio">
+												<label> <g:radio class="franklin" name="radioDia"
+														id="radioDia1" value="1" onchange="afixar()" /> Dom
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia2" value="2" onchange="afixar()"
+														checked="true" /> Seg
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia3" value="3" onchange="afixar()" /> Ter
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia4" value="4" onchange="afixar()" /> Qua
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia5" value="5" onchange="afixar()" /> Qui
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia6" value="6" onchange="afixar()" /> Sex
+												</label> <label> <g:radio class="franklin" name="radioDia"
+														id="radioDia7" value="7" onchange="afixar()" /> Sáb
+												</label>
+											</div>
+										</div>
+										<br>
+										<div>
+											<label>Turno</label>
+											<div class="radio">
+												<label class="radio-inline"> <g:radio
+														name="radioTurno" value="M" onclick="afixar()"
+														checked="true" /> Manhã
+												</label> <label class="radio-inline"> <g:radio
+														name="radioTurno" value="T" onclick="afixar()" /> Tarde
+												</label> <label class="radio-inline"> <g:radio
+														name="radioTurno" value="N" onclick="afixar()" /> Noite
+												</label>
+											</div>
+										</div>
+										<br>
+										<div>
+											<label>Horário</label>
+											<div class="controls">
+												<label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario1" onclick="afixar()"
+													value="1" checked /> 1
+												</label> <label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario2" onclick="afixar()"
+													value="2" checked /> 2
+												</label> <label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario3" onclick="afixar()"
+													value="3" /> 3
+												</label> <label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario4" onclick="afixar()"
+													value="4" /> 4
+												</label> <label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario5" onclick="afixar()"
+													value="5" /> 5
+												</label> <label class="radio-inline"> <input type="checkbox"
+													name="cbHorario" id="cbHorario6" onclick="afixar()"
+													value="6" /> 6
+												</label>
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Hora/Aula</label>
+											<div class="controls">
+												<input class="form-control" name="horaDeAula" id="horaAula"
+													placeholder="quantidade de minutos que equivalem a 1 hora aula" />
+											</div>
+										</div>
+										<br>
+										<div class="form-heading">
+											<label>Descrição do horario</label>
+											<div class="controls">
+												<g:textField readonly="readonly" name="descHorario"
+													value="2M12" />
+											</div>
+										</div>
+										<br>
+									</fieldset>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary btn-flat">
+											<i class="fa fa-save"></i> Cadastrar
+										</button>
+										<input type="reset" class="btn btn btn-flat" value="Limpar">
+									</div>
+				              </g:form>
+							</div>
 						</div>
 					</div>
-			     </div>
-			  </div>
+
+					<div style="float: right">teste</div>
+
+				</div>
 			</g:if>
 		</div>
 	</section>

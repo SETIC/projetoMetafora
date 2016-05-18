@@ -1,7 +1,7 @@
 package br.gov.rn.saogoncalo.protocolo
 
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.protocolo.Situacao
+import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
 
 class SituacaoController {
 
@@ -25,6 +25,9 @@ class SituacaoController {
 				Situacao situacao = new Situacao(params)
 				situacao.nome = params.nome
 				situacao.tipo = params.tipo
+				
+				def pessoaJuridica = PessoaJuridica.get(session["escid"])
+				situacao.pessoaJuridica = pessoaJuridica
 				
                  println ("tiposituacao" + params.tipo)
 				if (situacao.save(flush:true)){
@@ -56,7 +59,10 @@ class SituacaoController {
 
 			if (perm1 || perm2) {
 
-				def situacao = Situacao.findAll()
+				def pessoaJuridica = PessoaJuridica.get(session["escid"])
+				def situacao = Situacao.findAllByPessoaJuridica(pessoaJuridica)
+				
+				
 				if (tipo == "ok")
 
 					render(view:"/situacao/listarSituacao.gsp", model:[situacao:situacao, ok:msg, perm2:perm2])
@@ -137,7 +143,10 @@ class SituacaoController {
 						def situacoes = Situacao.get(params.id)
 						situacoes.nome = params.nome
 						situacoes.tipo = params.tipo
-						  
+						def pessoaJuridica = PessoaJuridica.get(session["escid"])
+						situacoes.pessoaJuridica = pessoaJuridica
+						
+						
 						  println("toi" +params)
 						
 						  if(situacoes.save(flush:true)){
@@ -179,6 +188,9 @@ class SituacaoController {
 				}else{
 
 					situacao = Situacao.findAll()
+					def pessoaJuridica = PessoaJuridica.get(session["escid"])
+					situacao = Situacao.findAllByPessoaJuridica(pessoaJuridica)
+					
 				}
 				render(view:"/situacao/listarSituacao.gsp", model:[ok:msg, situacao:situacao, perm2:perm2])
 			}else{

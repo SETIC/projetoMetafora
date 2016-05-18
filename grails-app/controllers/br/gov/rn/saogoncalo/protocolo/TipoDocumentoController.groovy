@@ -1,7 +1,8 @@
 package br.gov.rn.saogoncalo.protocolo
 
 import br.gov.rn.saogoncalo.login.UsuarioController
-import br.gov.rn.saogoncalo.protocolo.TipoDocumento
+import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
+
 
 class TipoDocumentoController {
 
@@ -23,6 +24,8 @@ class TipoDocumentoController {
 		
 						TipoDocumento tipoDocumento = new TipoDocumento(params)
 						tipoDocumento.nome = params.nome
+						def pessoaJuridica = PessoaJuridica.get(session["escid"])
+						tipoDocumento.pessoaJuridica = pessoaJuridica
 						
 		
 						if (tipoDocumento.save(flush:true)){
@@ -80,6 +83,8 @@ class TipoDocumentoController {
 						
 						def tipoDocumento = TipoDocumento.get(params.id)
 						  tipoDocumento.nome = params.nome
+						  def pessoaJuridica = PessoaJuridica.get(session["escid"])
+						  tipoDocumento.pessoaJuridica = pessoaJuridica
 						
 						  if(tipoDocumento.save(flush:true)){
 							
@@ -132,9 +137,11 @@ class TipoDocumentoController {
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "TIPO_DOCUMENTO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "TIPO_DOCUMENTO", "2")
 
-			if (perm1 || perm2) {
-
-				def tipoDocumento = TipoDocumento.findAll()
+			if (perm1 || perm2) {	
+				
+				def pessoaJuridica = PessoaJuridica.get(session["escid"])
+				def tipoDocumento = TipoDocumento.findAllByPessoaJuridica(pessoaJuridica)
+				
 				if (tipo == "ok")
 
 					render(view:"/tipoDocumento/listarTipoDocumento.gsp", model:[tipoDocumento:tipoDocumento, ok:msg, perm2:perm2])
@@ -172,7 +179,8 @@ class TipoDocumentoController {
 						
 							}else{
 		
-							tipoDocumento = TipoDocumento.findAll()
+							def pessoaJuridica = PessoaJuridica.get(session["escid"])
+							tipoDocumento = TipoDocumento.findAllByPessoaJuridica(pessoaJuridica)
 
 						}
 						render(view:"/tipoDocumento/listarTipoDocumento.gsp", model:[ok:msg, tipoDocumento:tipoDocumento, perm2:perm2])

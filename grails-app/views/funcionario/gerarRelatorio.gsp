@@ -196,6 +196,48 @@
 			  newWin.print();
 			  newWin.close();
 			}
+
+
+         
+
+                 <!-- listar carga horaria de  professores  -->
+
+			function gerarRelatorioListarProfessor()
+			{
+
+				var endereco = "localhost";
+		        var divToPrint  = document.getElementById("reportPrint");
+		        var comboEscola = document.getElementById("comboEscola");
+		        var escola = comboEscola.options[comboEscola.selectedIndex].value;
+		        divToPrint.style.visibility = "visible";
+		        
+		        divToPrint.innerHtml = "";
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/funcionario/gerarRelatorioListarProfessores/"+escola,
+		            dataType: "json",
+		            success: function(result){
+
+		            }
+		        });
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
              </script>
 
 
@@ -226,6 +268,9 @@
 			</g:if>
 
 				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
+				
+				<input type="hidden" value="" id="escolaId" >
+				 
 				<div class="form-heading">
 				<label style="margin-left:15px;">Escola</label>
 					<select class="col-sm-6 selectpicker" data-live-search="true"
@@ -264,8 +309,6 @@
 				<br>
 				<br>
 			</g:else>
-
-
 		</div>
 
 		<table id="listarFuncionarios"
@@ -331,7 +374,7 @@
 		
 		<button class="btn btn-danger btn-flat"
 			onClick="printDiv('listarFuncionarios')">
-			<i class="glyphicon glyphicon-print"></i> Relatório Geral
+			<i class="glyphicon glyphicon-print"></i> Imprimir 
 		</button>
 		
 		
@@ -341,6 +384,16 @@
 			href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
 				class="glyphicon glyphicon-print"> Relatório por Turma</span></a></div>
 		
+
+		<g:if test="${funcionarios != null}">
+        	<div title="Relatório de Turmas"
+				class="btn btn-danger btn-flat">
+				<a style="color: #fff"
+					href="/projetoMetafora/Funcionario/gerarRelatorioListarProfessores/${funcionarios.escid[0]}"><span
+					class="glyphicon glyphicon-print"> Turmas </span></a>
+			</div>
+		</g:if>
+
 
 		<div class="modal fade" id="relatorioModal" tabindex="-1"
 			role="dialog" aria-labelledby="relatorioModalLabel"

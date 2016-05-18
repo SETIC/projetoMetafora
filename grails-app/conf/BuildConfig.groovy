@@ -71,6 +71,7 @@ grails.project.dependency.resolution = {
 		compile ":sequence-generator:1.0"
 		compile ":br-validation:0.3"
 		compile ":stella:1.4.1"
+		compile ":mail:1.0.7"
 		
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"

@@ -33,7 +33,7 @@
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Código</th>
+							<th>Número</th>
 							<th>Origem</th>
 							<th>Assunto</th>
 							<th>Situação</th>
@@ -58,7 +58,7 @@
 									</div>
 								</td>
 								<td>
-									${it.id}
+									${it.protocolo.numero}
 								</td>
 								<td>
 									${it.funcionarioSetorOrigem.setor.nome}
