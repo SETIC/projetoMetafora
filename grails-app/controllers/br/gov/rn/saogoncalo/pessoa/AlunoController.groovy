@@ -786,55 +786,14 @@ class AlunoController {
 				def year = Calendar.getInstance().get(Calendar.YEAR);
 
 				if (pessoa.save(flush:true)){
-					
-				//documento
-					
-				request.getFiles("documentos[]").each { file ->
-
-				println("Documentos aqui ---+++ " + file.originalFilename)
-
-				Documento documento = new Documento()
-				FileUploadServiceController fc = new FileUploadServiceController()
-				documento.arquivo = fc.uploadFile(file,file.originalFilename, "/documentos/${pessoa.id}")
-				documento.dataDocumento = new Date()
-				documento.pessoa = pessoa
-
-				if(documento.save(flush:true)){
-					println("documento salvo")
-
-				}
-
-				else{
-
-					def erros
-					documento.errors.each {erros = it}
-					print("erros: "+erros)
-					listarMensagem("Erro ao salvar o documento", "erro")
-				}
-					}
-
+				
 					pessoa.errors.each{println it}
 
 					def datet = new Date()
 					PessoaFisica pessoaFisica = new PessoaFisica(params)
 					pessoaFisica.pessoa = pessoa
-					//pessoaFisica.sexo = params.sexo
-					//pessoaFisica.cor = params.corRaca
 					pessoaFisica.rcDataDoRegistro = params.rcDataDoRegistro
-					//pessoaFisica.rcDataDoRegistro = datet
-					//pessoaFisica.rcCidade = params.rcCidade
 					
-		
-/*
-					  PessoaFisica.withTransaction{ status ->
-					 try{
-					 pessoaFisica.save(flush:true)
-					 }catch(Exception exp){
-					 pessoa.errors.reject( 'Erro em pessoa' )
-					 status.setRollbackOnly()
-					 }
-					 }
-*/					
 					try {
 
 						if(pessoaFisica.save(flush:true)){
@@ -1104,18 +1063,9 @@ class AlunoController {
 						def date = new Date()
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "aluno matriculado " + aluno.id.toString(),"cadastrar", "Aluno", date)
-
-
-						/*				def alunos = Aluno.findAll()
-						 render(view:"/aluno/listarAluno.gsp", model:[
-						 alunos:alunos,
-						 ok : "Aluno cadastrado com sucesso!" ])*/
+						
 						listarMensagem("Aluno salvo com sucesso", "ok")
-
 					}else{
-						/*				def alunos = Aluno.findAll()
-						 render(view:"cadastrar", model:[
-						 erro : "Erro ao Salvar!" ])*/
 						listarMensagem("Erro ao salvar aluno", "erro")
 					}
 					

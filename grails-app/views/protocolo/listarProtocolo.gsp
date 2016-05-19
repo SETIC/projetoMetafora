@@ -72,10 +72,10 @@ function deletar(id) {
 					<thead>
 						<tr>
 							<th style="text-align: left;">Número</th>
-							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Destino</th>
 							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Interessado</th>
 							<th style="text-align: left;">Situação</th>
 							<th style="text-align: left;">Funções</th>
 						</tr>
@@ -89,20 +89,18 @@ function deletar(id) {
 								</td>
 
 								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
 										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
 
 								<td>
-									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-									- ${it.funcionarioSetorDestino.setor.nome}
+									
+									${it.funcionarioSetorDestino.setor.nome}
 								</td>
 
 								<td>
 									${it.protocolo.assunto.assunto}
 								</td>
-
+                                <td>
+										${it.protocolo.interessado}</td>
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
@@ -155,10 +153,10 @@ function deletar(id) {
 					<thead>
 						<tr>
 							<th style="text-align: left;">Número</th>
-							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Origem</th>
 							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Interessado</th>
 							<th style="text-align: left;">Situação</th>
 							<th style="text-align: left;">Funções</th>
 						</tr>
@@ -166,26 +164,20 @@ function deletar(id) {
 					<tbody>
 						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
-								
 								<td>
 									${it.protocolo.numero}
 								</td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataProtocolo}" /></td>
-
 								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
 										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
-
 								<td>
-									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
-									- ${it.funcionarioSetorOrigem.setor.nome}
+									${it.funcionarioSetorOrigem.setor.nome}
 								</td>
 
 								<td>
 									${it.protocolo.assunto.assunto}
 								</td>
-
+								 <td>
+									${it.protocolo.interessado}</td>
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
