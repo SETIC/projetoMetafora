@@ -299,7 +299,7 @@
 
 				function mudarSelect() {
 					
-					//var endereco = "192.168.1.247";
+					//var endereco = "192.168.1.252";
 					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 					var comboCargo = document.getElementById("comboCargo");

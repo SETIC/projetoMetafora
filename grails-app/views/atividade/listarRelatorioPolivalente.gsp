@@ -74,7 +74,7 @@ function printDiv(id)
 					</thead>
 					<tbody>
 						<g:each in="${turmaDisciplina}" var="td">
-						   <g:hiddenField name="turmaDisciplinaId" value="${}" />
+						   <g:hiddenField name="turmaDisciplinaId" value="" />
 								<tr class='linha_registro'>
 									<td>
 										<div style="margin-left: -35px" class="opcoes">

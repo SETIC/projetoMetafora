@@ -7,6 +7,8 @@ import java.sql.Driver
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+import org.codehaus.groovy.grails.commons.GrailsApplication;
+
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
 
@@ -35,7 +37,8 @@ class ProtocoloController {
 				props.setProperty("user", "admin_db_sr")
 				props.setProperty("password", "bgt54rfvcde3")
 
-				def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+				//def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+				def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
 
 				def sql = new Sql(conn)
 				def protocolos
@@ -456,8 +459,10 @@ class ProtocoloController {
 			if (perm1 || perm2) {
 
 
+				println("ip servidor - " + grailsApplication.config.ip_servidor)
+				println("Banco - " + System.getProperty("username"))
+			
 				def funcionarioSetor
-
 
 				Protocolo protocolos = Protocolo.get(id)
 				def tramites = Tramite.findAllByProtocolo(protocolos)
@@ -537,7 +542,8 @@ class ProtocoloController {
 							"   and p.id = " + session["pesid"])
 
 
-					funcionarioSetorDestino = FuncionarioSetor.findAll()
+					//funcionarioSetorDestino = FuncionarioSetor.findAll()
+					funcionarioSetorDestino = FuncionarioSetor.findAllByResponsavel("True")
 				}else{
 
 
@@ -567,7 +573,8 @@ class ProtocoloController {
 							"   and u.pessoa.id = p.id " +
 							"   and p.id = " + session["pesid"])
 
-					funcionarioSetorDestino = FuncionarioSetor.findAll()
+					//funcionarioSetorDestino = FuncionarioSetor.findAll()
+					funcionarioSetorDestino = FuncionarioSetor.findAllByResponsavel("True")
 
 				}
 
@@ -873,43 +880,40 @@ class ProtocoloController {
 
 	def  getProtocoloByNumero(String numero){
 
-
-
 		def result
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
 		props.setProperty("user", "admin_db_sr")
 		props.setProperty("password", "bgt54rfvcde3")
 
-		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
 
 		def sql = new Sql(conn)
-		def sqlString = " select t.id, t.data_disponibilizacao, " +
+		def sqlString = " select t.id, to_char(t.data_disponibilizacao, 'dd/MM/YYYY HH:MI:ss') as data_disponibilizacao, " +
+				" to_char(t.data_recebimento, 'dd/MM/YYYY HH:MI:ss') as data_recebimento, " +
 				" (select s.nome from cadastro_unico_protocolo.setor s, " +
 				" cadastro_unico_protocolo.funcionario_setor fs " +
 				" where fs.setor_id = s.id " +
 				" and fs.id = t.funcionario_setor_origem_id) as Origem, " +
-				" t.data_recebimento, " +
 				" (select s.nome from cadastro_unico_protocolo.setor s, " +
 				" cadastro_unico_protocolo.funcionario_setor fs " +
 				" where fs.setor_id = s.id " +
 				" and fs.id = t.funcionario_setor_destino_id) as Destino, " +
-				" p.numero, p.interessado, t.status, p.descricao_situacao, s.nome " +
+				" p.numero, p.interessado, t.status, p.descricao_situacao, s.nome as status_protocolo " +
 				" from cadastro_unico_protocolo.tramite t, cadastro_unico_protocolo.protocolo p, cadastro_unico_protocolo.situacao s " +
 				" where p.id = t.protocolo_id " +
 				" and s.id = p.situacao_id " +
-				" and p.numero = '" + numero +"'" + 
+				" and p.numero = '" + numero +"'" +
 				" order by t.data_disponibilizacao "
 
-
 		result = sql.rows(sqlString)
-		println(result)
-
+		//println(result)
+		sql.close()
+		conn.close()
 
 		render( result as JSON)
 
 	}
-
 
 }
 

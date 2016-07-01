@@ -117,6 +117,8 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -125,9 +127,11 @@ environments {
     production {
 		
         grails.logging.jul.usebridge = false
-		grails.serverURL = "http://192.168.1.247:8080/projetoMetafora"
+		//grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
+		//grails.serverURL = "http://189.43.7.23:8080"
+		grails.serverURL = "http://189.43.7.23:8080/projetoMetafora"
 		
-		filepa
+		
 		
 	
         // TODO: grails.serverURL = "http://www.changeme.com"

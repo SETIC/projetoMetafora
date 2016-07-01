@@ -9,7 +9,7 @@ class Escola {
 	String latitude
 	String longitude
 	
-	static hasMany = [sala:Sala, turma:Turma]
+	static hasMany = [sala:Sala, turma:Turma, pessoaEscola:PessoaEscola]
 	//static belongsTo = [pessoa:Pessoa]
 	
 	static constraints = {

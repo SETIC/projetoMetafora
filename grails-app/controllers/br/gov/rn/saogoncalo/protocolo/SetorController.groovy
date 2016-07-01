@@ -1,5 +1,9 @@
 package br.gov.rn.saogoncalo.protocolo
 
+import groovy.sql.Sql
+import java.sql.Driver
+import javax.lang.model.type.UnionType;
+
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.Funcionario
@@ -41,11 +45,18 @@ class SetorController {
 					def pessoaJuridica = PessoaJuridica.get(session["escid"])
 					setor = Setor.findAllByPessoaJuridica(pessoaJuridica)
 					
-					funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
-							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
+					/*funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
+							" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")*/
+					
+					funcionarios = Funcionario.executeQuery("select f from Funcionario f, Pessoa as p " + 
+						" where f.id = p.id " +
+					    " and p.escid = "+ session["escid"] +
+						" and f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
+					
+					print ("FUNCIONÁRIOS NORMAL >>> " + funcionarios)
 
 				}
-
+			
 				render(view:"/setor/listarSetor.gsp", model:[ok:msg, setor:setor, perm2:perm2, funcionarios:funcionarios])
 			}else{
 				render(view:"/error403.gsp", model:[erro:msg])
@@ -189,15 +200,32 @@ class SetorController {
 
 			if (perm2) {
 
+				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+				def props = new Properties()
+				props.setProperty("user", "admin_db_sr")
+				props.setProperty("password", "bgt54rfvcde3")
 
+				def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+				def sql = new Sql(conn)
+				
 				Setor setor = Setor.get(id)
-				def funcionarios = Funcionario.findAll()
-				//def funcionarios = Funcionario.executeQuery("select f from Funcionario f " +
-				//			" where f.id not in (select fs.funcionario.id from FuncionarioSetor fs)")
+				
+				 def funcionarios = sql.rows(" select p.id, p.nome, fs.setor_id as setor from cadastro_unico_pessoal.Funcionario f, cadastro_unico_pessoal.Pessoa as p , cadastro_unico_protocolo.Funcionario_Setor as fs"+
+				" where f.id = p.id"+
+				" and fs.funcionario_id = f.id"+
+				" and fs.setor_id = " + id.toString() +
+				" union " +
+				" select pt.id, pt.nome, '0' as setor from cadastro_unico_pessoal.Funcionario as ft, cadastro_unico_pessoal.Pessoa as pt"+
+				" where ft.id not in (select fs.funcionario_id from cadastro_unico_protocolo.Funcionario_Setor fs)" +
+				" and pt.escid = " + session["escid"] +
+				" and pt.id = ft.id") 
+					
 				def funcionariosSetor = FuncionarioSetor.findAllBySetor(setor)
 				def funcionariosSetorResponsaveis = FuncionarioSetor.findAllBySetorAndResponsavel(setor,'true')
 				def funcionariosSetorNaoResponsaveis = FuncionarioSetor.findAllBySetorAndResponsavel(setor,'false')
-
+				sql.close()
+				conn.close()
+				
 				render (view:"/setor/editarSetor.gsp", model:[setor:setor, funcionarios:funcionarios, funcionariosSetor:funcionariosSetor, funcionariosSetorResponsaveis:funcionariosSetorResponsaveis, funcionariosSetorNaoResponsaveis:funcionariosSetorNaoResponsaveis])
 			}else{
 				render(view:"/error403.gsp")
