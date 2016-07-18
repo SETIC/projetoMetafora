@@ -139,6 +139,9 @@ class ProtocoloController {
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
 				protocolo.assunto = assunto
+				protocolo.cpfCnpj = params.cpfcnpj
+				protocolo.telefone = params.telefone
+				protocolo.email = params.email
 
 				if (protocolo.save(flush:true)){
 					Observacao observacao = new Observacao(params)
@@ -357,6 +360,11 @@ class ProtocoloController {
 				println ("assunto" +params.situacao)
 
 				protocolos.descricaoSituacao = params.descricaoSituacao
+				protocolos.interessado = params.interessado
+				protocolos.cpfCnpj = params.cpfCnpj
+				protocolos.telefone = params.telefone
+				protocolos.email = params.email
+
 
 				if(protocolos.save(flush:true)){
 
@@ -461,7 +469,7 @@ class ProtocoloController {
 
 				println("ip servidor - " + grailsApplication.config.ip_servidor)
 				println("Banco - " + System.getProperty("username"))
-			
+
 				def funcionarioSetor
 
 				Protocolo protocolos = Protocolo.get(id)
@@ -573,7 +581,12 @@ class ProtocoloController {
 							"   and u.pessoa.id = p.id " +
 							"   and p.id = " + session["pesid"])
 
-					//funcionarioSetorDestino = FuncionarioSetor.findAll()
+/*					funcionarioSetorDestino = FuncionarioSetor.executeQuery(" select fs from FuncionarioSetor fs, " +
+							" Funcionario f, Pessoa p " +
+							" where p.id = f.id " +
+							" and fs.funcionario.id = f.id " +
+							" and p.escid = " + session["escid"] )*/
+					
 					funcionarioSetorDestino = FuncionarioSetor.findAllByResponsavel("True")
 
 				}

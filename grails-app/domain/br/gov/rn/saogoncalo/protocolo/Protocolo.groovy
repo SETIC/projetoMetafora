@@ -9,9 +9,12 @@ class Protocolo {
 	Date dataEmissao
 	String numeroDocumento
 	FuncionarioSetor funcionarioSetor
-
 	String interessado
 	String descricaoSituacao
+	String cpfCnpj
+	String telefone
+	String email
+	
 
 			
 	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao, assunto:Assunto]
@@ -23,6 +26,9 @@ class Protocolo {
 		dataEmissao blank:false, nullable:false   
 		interessado blank:true, nullable:true
 		descricaoSituacao blank:true, nullable:true
+		cpfCnpj blank:true, nullable:true
+		telefone blank:true, nullable:true
+		email blank:true, nullable:true
 	}
 	
 	static mapping = {

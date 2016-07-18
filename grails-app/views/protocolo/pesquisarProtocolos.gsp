@@ -176,7 +176,7 @@
 								<td> 
 									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_emissao}" />
 								</td>
-
+								
 								<td>
 									${it.numero_Documento}
 								</td>

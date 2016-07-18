@@ -309,9 +309,11 @@ class SetorController {
 							f.funcionario = funcionarioT
 							f.setor = setor
 							f.responsavel = false
-							if(f.save(flush:true)){
-								
-							}							
+							if(f.save(flush:true)){}							
+						}else{
+						    def fra = FuncionarioSetor.get(funcT.id)
+							fra.responsavel = false
+							if(fra.save(flush:true)){}
 						}
 					}
 					
@@ -333,6 +335,11 @@ class SetorController {
 							if(fr.save(flush:true)){
 								
 							}
+						
+						}else{
+						    def frb = FuncionarioSetor.get(funcR.id)
+							frb.responsavel = true
+							if(frb.save(flush:true)){}
 						}
 					}
 					

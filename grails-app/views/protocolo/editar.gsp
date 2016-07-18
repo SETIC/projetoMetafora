@@ -184,6 +184,42 @@
 							</div>
 						</div>
 						<br>
+
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Interessado</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="interessado"
+									type="text" style="width: 300px" value="${protocolo.interessado}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">CPF/CNPJ</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="cpfCnpj"
+									type="text" style="width: 300px" value="${protocolo.cpfCnpj}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Telefone</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="telefone"
+									type="text" style="width: 300px" value="${protocolo.telefone}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="email"
+									type="text" style="width: 300px" value="${protocolo.email}">
+							</div>
+						</div>
+						<br>
 						
 						<div class="form-group">
 							<label for="problema" class="col-sm-2 control-label">Descrição da Situação</label>

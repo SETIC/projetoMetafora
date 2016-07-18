@@ -143,6 +143,30 @@ function printDiv(id)
 							<br>
 							
 							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">CPF/CNPJ</label>
+								<div class="col-sm-10">
+									${protocolos.cpfCnpj}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Telefone</label>
+								<div class="col-sm-10">
+									${protocolos.telefone}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Email</label>
+								<div class="col-sm-10">
+									${protocolos.email}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
 								<label for="inputSituacao" class="col-sm-2">Situação</label>
 								<div class="col-sm-10">
 									${protocolos.situacao.nome}
@@ -166,6 +190,7 @@ function printDiv(id)
 											<tr>
 												<th>Data de Disponibilização</th>
 												<th>Data de Recebimento</th>
+												<th>Dias</th>
 												<th>Funcionário Setor Origem</th>
 												<th>Funcionário Setor Destino</th>
 											</tr>
@@ -177,6 +202,15 @@ function printDiv(id)
 	
 													<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 															date="${it.dataRecebimento}" /></td>
+													
+													<td>
+													<g:if test="${(it.dataRecebimento != null) && (it.dataDisponibilizacao != null)}">
+														${it.dataRecebimento - it.dataDisponibilizacao}
+													</g:if>
+													<g:else>
+     													${new Date() - it.dataDisponibilizacao}
+													</g:else>
+													</td>
 	
 													<td>
 														${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
@@ -235,6 +269,8 @@ function printDiv(id)
 										</thead>
 									</table>
 						</fieldset>
+						
+												
 						<div style="margin: 0 -1% auto">
 							<button class="btn btn-danger btn-flat"
 								onClick="printDiv('print')">
@@ -244,6 +280,12 @@ function printDiv(id)
 								<li class="btn btn-primary btn-flat"><a
 									href="/projetoMetafora/Protocolo/listarProtocolo" style="color: #fff;">Voltar</a></li>
 							</ul>
+							
+							<button class="btn btn-danger btn-flat"
+								onClick="printDiv('testeImpressao')">
+								<i class="glyphicon glyphicon-print"></i> Imprimir Etiqueta
+							</button>
+							
 						</div>
 				  </g:form>
 			</div>

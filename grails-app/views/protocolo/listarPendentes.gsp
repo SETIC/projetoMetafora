@@ -36,6 +36,7 @@
 							<th>Número</th>
 							<th>Origem</th>
 							<th>Assunto</th>
+							<th>Interessado</th>
 							<th>Situação</th>
 							<th>Data do Protocolo</th>
 						</tr>
@@ -65,6 +66,9 @@
 								</td>
 								<td>
 									${it.protocolo.assunto.assunto}
+								</td>
+								<td>
+									${it.protocolo.interessado}
 								</td>
 								<td>
 									${it.protocolo.situacao.nome}

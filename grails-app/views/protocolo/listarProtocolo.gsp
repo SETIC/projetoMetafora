@@ -310,8 +310,33 @@ function deletar(id) {
 											</div>
 										</div>
 										<br>
+
+										<div class="form-heading">
+											<label>CPF/CNPJ</label>
+											<div class="controls">
+												<g:textField class="form-control" name="cpfCnpj" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
+
+										<div class="form-heading">
+											<label>Telefone</label>
+											<div class="controls">
+												<g:textField class="form-control" name="telefone" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
 										
-										
+										<div class="form-heading">
+											<label>Email</label>
+											<div class="controls">
+												<g:textField class="form-control" name="email" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>										
 
 										<div class="form-heading">
 											<label>Funcionario Setor de Destino</label>
