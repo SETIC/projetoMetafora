@@ -65,7 +65,7 @@
 					<div class="form-heading">
 						<label>Turma</label>
 						<div class="controls">
-							${turmaDisciplina[0].turma.turma}
+							${dadosAtividade.turma.turma}
 						</div>
 					</div>
 					<br>
@@ -75,7 +75,7 @@
 					<div class="form-heading">
 						<label>Série</label>
 						<div class="controls">
-							${turmaDisciplina[0].turma.serie.serie}
+							${dadosAtividade.disciplinaLecionadaPorProfessor.turmaDisciplina.turma.serie.serie}
 						</div>
 					</div>
 					<br>
@@ -86,7 +86,7 @@
 					<div class="form-heading">
 						<label>Disciplina</label>
 						<div class="controls">
-							${turmaDisciplina[0].disciplinaLecionadaPorProfessor.disciplina.disciplina}
+							${dadosAtividade.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 						</div>
 					</div>
 					<br>

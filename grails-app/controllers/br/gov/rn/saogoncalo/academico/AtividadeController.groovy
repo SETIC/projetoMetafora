@@ -1,5 +1,8 @@
 package br.gov.rn.saogoncalo.academico
 
+import groovy.sql.Sql
+
+import java.sql.Driver
 import java.text.SimpleDateFormat
 
 import br.gov.rn.saogoncalo.login.UsuarioController
@@ -68,11 +71,51 @@ class AtividadeController {
 					//anoAtual = formatAno.format(date);
 					anoAtual = "2015"
 					turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-					td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
-					atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+					//td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+					//atividade = Atividade.findAllByTurmaDisciplinaInList(td)
+
+					Calendar ca = Calendar.getInstance()
+					int ano = ca.get(Calendar.YEAR)
+					
+					//---conexao---
+
+					def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+					def props = new Properties()
+					props.setProperty("user", "admin_db_sr")
+					props.setProperty("password", "bgt54rfvcde3")
+
+					def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+
+					def sql = new Sql(conn)
+					def sqlString = " select distinct t.id, t.turma, t.turno, t.vagas, s.serie, " +
+							" (select e.nome from cadastro_unico_pessoal.pessoa e where e.id = t.escola_id) escola " +
+							" from educacao_academico.turma t, " +
+							" educacao_academico.turma_disciplina td, " +
+							" educacao_academico.disciplina d, " +
+							" educacao_academico.disciplina_lecionada_por_professor dlpp, " +
+							" cadastro_unico_pessoal.pessoa p, " +
+							" cadastro_unico_pessoal.pessoa_escola pe, " +
+							" educacao_academico.serie s " +
+							" where t.id = td.turma_id " +
+							" and d.id = dlpp.disciplina_id " +
+							" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+							" and p.id = dlpp.professor_id " +
+							" and pe.pessoa_id = p.id " +
+							" and s.id = t.serie_id " +
+							" and t.ano_letivo = " + ano.toString() + 
+							" and p.id = " + session["pesid"] 
+													
+					td = sql.rows(sqlString)
+					sql.close()
+					conn.close()
+
+					//---conexao---
+
+
 				}
 
-				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade, escola:escola, professor:p])
+				//render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual,atividade:atividade, escola:escola, professor:p])
+				render (view:"/atividade/listarAtividade.gsp", model:[turmaDisciplina:td, dataAtual:dataAtual, escola:escola, professor:p])
 			}
 		}
 	}
@@ -166,7 +209,10 @@ class AtividadeController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
 			if (perm2) {
+				
 				def novaAtividade = new Atividade(params)
+				//println("params aqui " + params)
+				
 				if (novaAtividade.save(flush:true)) {
 					listarMensagem("Atividade cadastrada com sucesso", "ok")
 				}else{
@@ -174,8 +220,7 @@ class AtividadeController {
 					listarMensagem("Erro ao cadastrar atividade", "erro")
 				}
 
-				//listarMensagem("Atividade cadastrada com sucesso", "ok")
-				//render(view:"Atividade/listarAtividade.gsp")
+
 			}
 		}
 	}
@@ -184,9 +229,10 @@ class AtividadeController {
 	def lancarNota(long id) {
 
 		def atividade = Atividade.get(id)
+		println("Atividade -- " + atividade)
 
 
-		if (atividade.turmaDisciplina.disciplinaLecionadaPorProfessor.professor.id == Long.parseLong(session['pesid'].toString())){
+		//if (atividade.turmaDisciplina.disciplinaLecionadaPorProfessor.professor.id == Long.parseLong(session['pesid'].toString())){
 
 			def alunos = atividade.turmaDisciplina.turma.matricula
 
@@ -197,8 +243,7 @@ class AtividadeController {
 
 
 			render (view:"/atividade/lancarNota.gsp", model:[alunos:alunos, atividade:atividade, notas:notas])
-		}else {
-		}
+		//}
 	}
 
 	def salvarNota(){
@@ -406,35 +451,68 @@ class AtividadeController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "ATIVIDADE", "2")
 
 			if (perm2) {
-				
-                Turma turma = Turma.get(id)
-				
+
+				Turma turma = Turma.get(id)
+
 				if(turma.serie.serie == '1 serie'){
-					
-					
+
+
 					/*Atividade atividade = new Atividade()
-					atividade.descricaoAtividade =  params.descricaoAtividade
-                    atividade.bimestre =  params.bimestre
+					 atividade.descricaoAtividade =  params.descricaoAtividade
+					 atividade.bimestre =  params.bimestre
 					 */					
-					
-					
+
+
 				}else{
-				
-				def turmaDisciplina = TurmaDisciplina.findAllByTurma(turma)
-				def listarAtividadeSerie = Atividade.executeQuery("select a from Atividade a , TurmaDisciplina td, Turma t "+
-						" where a.turmaDisciplina.id = td.id"+
-						" and t.id = td.turma.id" +
-						" and t.id = "+id.toString())
-				render (view:"/atividade/listarAtividadeSerie.gsp", model:[turmaDisciplina:turmaDisciplina, listarAtividadeSerie:listarAtividadeSerie])
+
+					//def turmaDisciplina = TurmaDisciplina.findAllByTurma(turma)
+
+
+					//---conexao---
+
+					def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+					def props = new Properties()
+					props.setProperty("user", "admin_db_sr")
+					props.setProperty("password", "bgt54rfvcde3")
+
+					def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+
+					def sql = new Sql(conn)
+					def sqlString = " select td.id, t.turma, d.disciplina, s.serie from educacao_academico.turma_disciplina td, "+
+							" educacao_academico.disciplina_lecionada_por_professor dlpp, "+
+							" educacao_academico.disciplina d, cadastro_unico_pessoal.pessoa p, "+
+							" educacao_academico.turma t, educacao_academico.serie s "+
+							" where dlpp.id = td.disciplina_lecionada_por_professor_id "+
+							" and d.id = dlpp.disciplina_id "+
+							" and p.id = dlpp.professor_id "+
+							" and t.id = td.turma_id "+
+							" and s.id = t.serie_id "+
+							" and p.id = " + session["pesid"] +
+							" and td.turma_id = " + id.toString() 
+
+
+					def turmaDisciplina = sql.rows(sqlString)
+					sql.close()
+					conn.close()
+
+					//---conexao---
+
+
+					def listarAtividadeSerie = Atividade.executeQuery("select a from Atividade a , TurmaDisciplina td, Turma t "+
+							" where a.turmaDisciplina.id = td.id"+
+							" and t.id = td.turma.id" +
+							" and t.id = "+id.toString())
+
+					render (view:"/atividade/listarAtividadeSerie.gsp", model:[turmaDisciplina:turmaDisciplina, listarAtividadeSerie:listarAtividadeSerie])
+
+				}
 
 			}
-
 		}
-	  }
 	}
 }
-	
-    
+
+
 
 
 

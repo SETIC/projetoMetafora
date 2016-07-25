@@ -70,6 +70,7 @@ function printDiv(id)
 							<th style="width: 350px;">Turma</th>
 							<th style="width: 350px;">Série</th>
 							<th style="width: 350px;">Disciplina</th>
+							<th style="width: 350px;">Escola</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,7 +91,7 @@ function printDiv(id)
 													
 													<li title="Boletins" class="btn btn-warning btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/nota/boletim?turma=${td.turma.id}&turmadisciplina=${td.id}"><span
+													href="/projetoMetafora/nota/boletim?turma=${td.turmaId}&turmadisciplina=${td.id}"><span
 														class="glyphicon glyphicon-th-list"></span></a></li>
 		
 											</ul>
@@ -99,13 +100,16 @@ function printDiv(id)
 									
 	
 									<td>
-										${td.turma.turma} 
+										${td.turma} 
 									</td>
 									<td>
-										${td.turma.serie.serie} 
+										${td.serie} 
 									</td>
 									<td>
-										${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
+										${td.disciplina}
+									</td>
+									<td>
+										${td.escola}
 									</td>
 								</tr>
 							

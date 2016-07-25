@@ -39,6 +39,7 @@
 							<th style="width: 350px;">Turma</th>
 							<th style="width: 350px;">Série</th>
 							<th style="width: 350px;">Disciplina</th>
+							<th style="width: 350px;">Escola</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -63,14 +64,18 @@
 									
 	
 									<td>
-										${td.turma.turma} 
+										${td.turma} 
 									</td>
 									<td>
-										${td.turma.serie.serie} 
+										${td.serie} 
 									</td>
 									<td>
-										${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
+										${td.disciplina}
 									</td>
+									<td>
+										${td.escola}
+									</td>
+									
 								</tr>
 							
 								</g:each>

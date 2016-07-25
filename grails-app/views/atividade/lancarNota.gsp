@@ -65,47 +65,47 @@
 			<div style="margin-left: 2px" class="col-sm-12">
 				<div class="box box-white" style="margin-bottom: 2%;">
 					<g:form controller="Atividade" action="salvarNota" class="form-horizontal">
-					<g:hiddenField type="number" name="atividadeId" value="${atividade.id}"/>
+					<g:hiddenField type="number" name="atividadeId" value="${atividade?.id}"/>
 						<fieldset id="print">
 							<div class="form-group">
 								<div class="col-sm-6">
-									<h4 style="font-weight: bold;">${atividade.nomeAtividade }</h4>
+									<h4 style="font-weight: bold;">${atividade?.nomeAtividade }</h4>
 								</div>
 							</div>
 							<br>
 							<div class="row">
 								<div class="col-sm-2" style="text-align: justify;">
 									<label>Tipo de Atividade </label>
-									<h5>${atividade.tipoAtividade.toUpperCase()}</h5>	
+									<h5>${atividade?.tipoAtividade}</h5>	
 								</div>
 								<div class="col-sm-1" style="text-align: justify;">
 									<label>Bimestre </label>
-									<h5>${atividade.bimestre}</h5>	
+									<h5>${atividade?.bimestre}</h5>	
 								</div>
 								<div class="col-sm-1" style="text-align: justify;">
 									<label>Nota Máxima </label>
-									<h5>${atividade.notaMaxima}</h5>	
+									<h5>${atividade?.notaMaxima}</h5>	
 								</div>
 								<div class="col-sm-2" style="text-align: justify;">
 									<label>Peso da Atividade </label>
-									<h5>${atividade.pesoAtividade}</h5>	
+									<h5>${atividade?.pesoAtividade}</h5>	
 								</div>
 								<div class="col-sm-2" style="text-align: justify;">
 									<label>Data de Início </label>
 									<h5><g:formatDate format="dd/MM/yyyy"
-											date="${atividade.dataInicio}" /></h5>	
+											date="${atividade?.dataInicio}" /></h5>	
 								</div>
 								<div class="col-sm-2" style="text-align: justify;">
 									<label>Data de Termino </label>
 									<h5><g:formatDate format="dd/MM/yyyy"
-											date="${atividade.dataFim}" /></h5>	
+											date="${atividade?.dataFim}" /></h5>	
 								</div>
 							</div>
 							<br/>
 							<div class="row">
 								<div class="col-sm-10" style="text-align: justify;">
 									<label>Descrição </label>
-									<h5>${atividade.descricaoAtividade}</h5>	
+									<h5>${atividade?.descricaoAtividade}</h5>	
 								</div>
 							</div>
 							<br>
