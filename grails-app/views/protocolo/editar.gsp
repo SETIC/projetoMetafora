@@ -165,9 +165,13 @@
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção </label>
 							<div class="col-sm-4">
+																							
+								<g:if test="${protocolo.tramite.dataRecebimento[0] != null}">
+								
 								<select class="selectpicker" " name="situacao"
 									id="comboSituacao" class="form-control">
 									<div class="col-sm-10">
+	
 										<g:each in="${situacoes}">
 											<g:if test="${it.id == protocolo.situacao.id}">
 												<option value="${it.id}" selected>
@@ -180,7 +184,31 @@
 												</option>
 											</g:else>
 										</g:each>
-								</select>
+									</select>
+									
+								</g:if>	
+								<g:else>
+								
+										<select class="selectpicker" " name="situacao"
+									id="comboSituacao" class="form-control" disabled="disabled">
+									<div class="col-sm-10">
+	
+										<g:each in="${situacoes}">
+											<g:if test="${it.id == protocolo.situacao.id}">
+												<option value="${it.id}" selected>
+													${it.nome}
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${it.id}">
+													${it.nome}
+												</option>
+											</g:else>
+										</g:each>
+									</select>
+									
+								</g:else>
+									
 							</div>
 						</div>
 						<br>
@@ -197,7 +225,7 @@
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">CPF/CNPJ</label>
 							<div class="col-sm-10">
-								<input class="form-control" required name="cpfCnpj"
+								<input class="form-control" name="cpfCnpj"
 									type="text" style="width: 300px" value="${protocolo.cpfCnpj}">
 							</div>
 						</div>
@@ -206,7 +234,7 @@
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Telefone</label>
 							<div class="col-sm-10">
-								<input class="form-control" required name="telefone"
+								<input class="form-control" name="telefone"
 									type="text" style="width: 300px" value="${protocolo.telefone}">
 							</div>
 						</div>
@@ -215,7 +243,7 @@
 						<div class="form-group">
 							<label for="inputNome3" class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-10">
-								<input class="form-control" required name="email"
+								<input class="form-control" name="email"
 									type="text" style="width: 300px" value="${protocolo.email}">
 							</div>
 						</div>

@@ -102,7 +102,7 @@
 						<option value="null">SELECIONE...</option>
 						<option value="numero">NUMERO</option>
 						<option value="data">DATA</option>
-						<option value="setor">SETOR</option>
+						<option value="setor">SETOR DE CRIAÇÃO</option>
 						<option value="interessado">INTERESSADO</option>
 						<option value="numeroDocumento">NUMERO DO DOCUMENTO</option>
 						

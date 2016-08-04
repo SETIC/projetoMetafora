@@ -390,7 +390,7 @@ class ProtocoloController {
 						println("status +++ " +tramite1)
 						tramite = Tramite.get(tramite1.id)
 						tramite.status = "ABERTO"
-						//tramite.save(flush:true)
+						tramite.save(flush:true)
 
 					}
 
@@ -916,10 +916,11 @@ class ProtocoloController {
 				" from cadastro_unico_protocolo.tramite t, cadastro_unico_protocolo.protocolo p, cadastro_unico_protocolo.situacao s " +
 				" where p.id = t.protocolo_id " +
 				" and s.id = p.situacao_id " +
-				" and p.numero = '" + numero +"'" +
+				//" and p.numero = '" + numero +"'" +
+				" and p.numero = :numero " + 
 				" order by t.data_disponibilizacao "
 
-		result = sql.rows(sqlString)
+		result = sql.rows(sqlString, [numero : numero])
 		//println(result)
 		sql.close()
 		conn.close()
