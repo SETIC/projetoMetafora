@@ -249,7 +249,7 @@ function deletar(id) {
 									Protocolo</h4>
 							</div>
 							<div class="modal-body">
-								<g:form controller="Protocolo" action="salvar" class="form"
+								<g:form controller="Protocolo" action="salvar" class="form-horizontal"
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
@@ -397,13 +397,26 @@ function deletar(id) {
 										<br> 
 										<label>Anexo</label>
 										<script type="text/javascript">  
+										 
+										$(function(){
+										    var fileInput = $('.upload-file');
+										    var maxSize = fileInput.data('max-size');
+										    $('.form-horizontal').submit(function(e){
+										      var fileSize = fileInput.get(0).files[0].size; //em bytes
+										            if(fileSize>maxSize){
+										                alert('o tamanho do arquivo e maior do que ' + maxSize + ' bytes');
+										                return false;
+										            }
+										    });
+										});
+
+										
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
 										}
 										
 										$(document).ready(function(){  
-										 
-										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" class="upload-file" data-max-size="300000000"  id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -416,11 +429,10 @@ function deletar(id) {
 						                 }); 
 										 
 										</script>
-										<input type="file" name="arquivo[]" id="arquivo[]"
-											enctype="multipart/form-data" /> <br />
+										<input type="file" name="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data" /> <br />
 										<fieldset id="inputs_adicionais" style="border: none">
 										</fieldset>
-										<br /> <input type="button" class="btn btn-primary btn-flat"
+										<br/> <input type="button" class="btn btn-primary btn-flat"
 											name="addFile1" value="Novo Anexo" /> <input type="button"
 											name="limpar" class="btn btn btn-flat" value="Limpar"
 											onclick="limparCampoFile()">

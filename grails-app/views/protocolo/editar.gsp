@@ -48,7 +48,7 @@
 			<g:each in='${protocolo?}'>
 			</g:each>
 			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="atualizar" enctype="multipart/form-data"
+				<g:form controller="Protocolo" action="atualizar" enctype="multipart/form-data" 
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
@@ -168,8 +168,7 @@
 																							
 								<g:if test="${protocolo.tramite.dataRecebimento[0] != null}">
 								
-								<select class="selectpicker" " name="situacao"
-									id="comboSituacao" class="form-control">
+								<select class="selectpicker" name="situacao" id="comboSituacao" class="form-control">
 									<div class="col-sm-10">
 	
 										<g:each in="${situacoes}">
@@ -189,8 +188,7 @@
 								</g:if>	
 								<g:else>
 								
-										<select class="selectpicker" " name="situacao"
-									id="comboSituacao" class="form-control" disabled="disabled">
+									<select class="selectpicker" name="situacao" id="comboSituacao" class="form-control" disabled >
 									<div class="col-sm-10">
 	
 										<g:each in="${situacoes}">
@@ -293,8 +291,7 @@
 										}
 										
 										$(document).ready(function(){  
-	                                        									 
-										    var input = '<label style="display: block"><input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
+										    var input = '<label style="display: block"><input type = "file" name ="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
 										    $("input[name='addFile']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -305,11 +302,27 @@
 										    });  
 										 
 										}); 
+
+										
 										 
+										$(function(){
+											
+										    var fileInput = $('.upload-file');
+										    var maxSize = fileInput.data('max-size');
+										    $('.form-horizontal').submit(function(e){
+										      var fileSize = fileInput.get(0).files[0].size; //em bytes
+										            if(fileSize>maxSize){
+										                alert('o tamanho do arquivo e maior do que ' + maxSize + ' bytes');
+										                return false;
+										            }
+										    });
+										});
+
 							</script>  
 					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
 					        
-					        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					        <label style="display: block"> <input type = "file" class="upload-file" data-max-size="300000000" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
+					        <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
 					         
 					        <fieldset id="inputs_adicionais" style="border: none">  
 					        </fieldset> 

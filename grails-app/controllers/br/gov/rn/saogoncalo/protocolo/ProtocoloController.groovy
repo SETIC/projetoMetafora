@@ -349,15 +349,23 @@ class ProtocoloController {
 				protocolos.assunto = assunto
 				//tipoDocumentos = TipoDocumento.findAll()
 
-				def situacao = Situacao.get(params.situacao)
+				def situacao
+				if (params.situacao != null) {
+					situacao = Situacao.get(params.situacao)
+				}else{
+					situacao = Situacao.get(protocolos.situacao.id)
+				}
+				
+				println ("assunto" +params.situacao)
+				protocolos.situacao = situacao
+				
 
 				if(params.tipoDocumento != null){
 					tipoDocumento = TipoDocumento.get(params?.tipoDocumento)
 					protocolos.tipoDocumento = tipoDocumento
 				}
 
-				protocolos.situacao = situacao
-				println ("assunto" +params.situacao)
+
 
 				protocolos.descricaoSituacao = params.descricaoSituacao
 				protocolos.interessado = params.interessado
