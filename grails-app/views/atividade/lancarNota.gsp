@@ -144,7 +144,8 @@
 																</td>
 																<td>
 																	<div class="col-xs-12">
-												                      	<input name="mat-${aluno.id}" type="text" value="${notas[index].observacao}" class="form-control">
+												                      	
+												                      	<textarea class="form-control" name="mat-${aluno.id}" rows="2" placeholder="Descrição de nota." cols="50">${notas[index].observacao}</textarea>
 												                    </div>
 																</td>
 												</g:if>
@@ -157,7 +158,9 @@
 														</td>
 														<td>
 															<div class="col-xs-12">
+															
 										                      	<input name="mat-${aluno.id}" type="text" class="form-control">
+										                      	
 										                    </div>
 														</td>
 												</g:else>

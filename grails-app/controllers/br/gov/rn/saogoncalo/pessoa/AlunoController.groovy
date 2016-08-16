@@ -611,18 +611,26 @@ class AlunoController {
 				def parametro = params.pesquisa
 
 				if (session["escid"] == 0 || session["escid"] == 29 ){
-					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
-							"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					//alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
+						//	"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					
+					alunos = Pessoa.findAllByNomeOrCpfCnpj(parametro.toUpperCase(), parametro.toUpperCase())
 
 					print("print alunossss "+ alunos )
+					
 					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, perm2:perm2])
 				}else{
 
-					alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
-
+					//alunos = Aluno.executeQuery("select a from Pessoa as p , Aluno as a "+
 							//"where p.id = a.id and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
-
-							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+						//	"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					
+					//alunos = Pessoa.findAllByEscidAndNomeOrCpfCnpj(session["escid"], parametro.toUpperCase(), parametro.toUpperCase())
+					
+				def pessoas = Pessoa.findAllByEscidAndNomeIlikeOrCpfCnpjIlike(session["escid"], "%"+parametro.toUpperCase()+"%", "%"+parametro.toUpperCase()+"%")
+				
+				alunos = Aluno.findAllByIdInList(pessoas.id)
+				
 					render(view:"/aluno/listarAluno.gsp", model:[alunos:alunos, escolas:escolas, perm2:perm2])
 				}
 			}else{

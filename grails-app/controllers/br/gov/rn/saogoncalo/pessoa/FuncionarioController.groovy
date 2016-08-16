@@ -680,7 +680,16 @@ class FuncionarioController {
 				}
 
 				//lotacao = Lotacao.findAll()
-				funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+				funcionarios = Funcionario.executeQuery(" select f from Pessoa p, Funcionario f "+
+														"  where f.id = p.id "+
+														"    and p.escid = "+ session["escid"] +
+														"    and p.id not in ( select p2.id from Pessoa p2, Escola e, PessoaEscola pe "+
+														"                       where pe.escola.id = e.id "+
+														"    and pe.pessoa.id = p2.id "+
+														"    and e.id = "+ session["escid"] +" )")
+				
+				
 				cargos = Cargo.findAll()
 				render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios,cargos:cargos, perm2:perm2])
 			}

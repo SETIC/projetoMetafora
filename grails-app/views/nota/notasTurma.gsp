@@ -84,7 +84,7 @@ function printDiv(id)
 											
 											<ul style="display: inline">
 													
-												<li title="Nova Atividade" class="btn btn-success btn-xs btn-flat"><a
+												<li title="Atividade" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/atividade/listar/${td.id}"><span
 														class="glyphicon glyphicon-plus"></span></a></li>

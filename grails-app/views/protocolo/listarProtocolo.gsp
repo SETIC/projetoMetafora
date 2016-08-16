@@ -44,7 +44,7 @@ function deletar(id) {
 </script>
 	<section class="content-header">
 		<h1>
-			Protocolo <small>Visualização e Gerenciamento</small>
+			Protocolo <small>Visualização e Gerenciamento</small> 
 		</h1>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
@@ -410,13 +410,12 @@ function deletar(id) {
 										    });
 										});
 
-										
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
 										}
-										
+										//criar os inputs
 										$(document).ready(function(){  
-										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" class="upload-file" data-max-size="300000000"  id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name="arquivo[]"  id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -432,8 +431,8 @@ function deletar(id) {
 										<input type="file" name="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data" /> <br />
 										<fieldset id="inputs_adicionais" style="border: none">
 										</fieldset>
-										<br/> <input type="button" class="btn btn-primary btn-flat"
-											name="addFile1" value="Novo Anexo" /> <input type="button"
+										<%--<br/> <input type="button" class="btn btn-primary btn-flat"
+											name="addFile1" value="Novo Anexo" /> --%><input type="button"
 											name="limpar" class="btn btn btn-flat" value="Limpar"
 											onclick="limparCampoFile()">
 
@@ -448,8 +447,7 @@ function deletar(id) {
 			                 </g:if>
 
 			<!-- ModalTramite -->
-			<div class="modal fade" id="myModalTramite" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="myModalTramite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -459,10 +457,8 @@ function deletar(id) {
 							<h4 class="modal-title" id="myModalLabel">Tramite de
 								protocolos</h4>
 						</div>
-						<div class="modal-body">
-							
-							
-							<script type="text/javascript">  
+						  <div class="modal-body">
+							<script type="text/javasript">  
 
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";
@@ -482,7 +478,7 @@ function deletar(id) {
 										 
 										}); 
 										 
-										</script>
+							</script> 
 							
 							
 							<g:form controller="Protocolo" action="salvarTramite"
@@ -523,8 +519,8 @@ function deletar(id) {
 								        <br>
 								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-								        <br>
-								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
+								        <!-- <br>
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" /> -->
 								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
 								        
 									</div>

@@ -283,7 +283,6 @@
 									 </thead>
 									</tbody>
 								</table>
-								<div class="form-heading">
 										<script type="text/javascript">  
 
 										function limparCampoFile(){
@@ -303,30 +302,33 @@
 										 
 										}); 
 
-										
-										 
 										$(function(){
 											
+											//var inputAnexo = document.getElementById("novoAnexo").disabled = true;
 										    var fileInput = $('.upload-file');
 										    var maxSize = fileInput.data('max-size');
 										    $('.form-horizontal').submit(function(e){
 										      var fileSize = fileInput.get(0).files[0].size; //em bytes
-										            if(fileSize>maxSize){
+										            if(fileSize>maxSize ){
 										                alert('o tamanho do arquivo e maior do que ' + maxSize + ' bytes');
 										                return false;
-										            }
+											         }
+										    
 										    });
 										});
+										 
 
-							</script>  
-					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
+							</script>
+							
+							<%--  
+					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" id="novoAnexo"/></label>
 					        
-					        <label style="display: block"> <input type = "file" class="upload-file" data-max-size="300000000" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-					        <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					        --%><label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/>
+					        <br><input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()"> </label>
 					         
 					        <fieldset id="inputs_adicionais" style="border: none">  
 					        </fieldset> 
-					<div style="margin: 0 17% auto">
+					   <div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar
 						</button>

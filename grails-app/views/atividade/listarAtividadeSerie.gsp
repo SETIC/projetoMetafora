@@ -166,7 +166,7 @@
 												<option value="APRESENTAÇÃO">APRESENTAÇÃO</option>
 												<option value="TRABALHO">TRABALHO</option>
 												<option value="TESTE">TESTE</option>
-
+												<option value="RELATORIO">RELATÓRIO</option>
 											</select>
 										</div>
 									</div>

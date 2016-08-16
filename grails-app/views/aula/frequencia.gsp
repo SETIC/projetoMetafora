@@ -56,7 +56,7 @@
 												<li title="Escolher" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/aula/listarAula/${td.id}"><span
-														class="glyphicon glyphicon-ok"> Selecionar</span></a></li>
+														class="glyphicon glyphicon-ok"></span></a></li>
 													
 											</ul>
 										</div>

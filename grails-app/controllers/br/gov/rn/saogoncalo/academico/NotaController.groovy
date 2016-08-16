@@ -188,7 +188,7 @@ class NotaController {
 
 		try {
 			
-			def sqlString = " select distinct td.id, t.id turmaId, t.turma, t.turno, t.vagas, s.serie, d.disciplina, "+
+			def sqlString = " select distinct td.id, t.id turmaId, t.turma, t.turno, t.vagas, s.serie, s.relatorio, d.disciplina, "+
 							" (select e.nome from cadastro_unico_pessoal.pessoa e where e.id = t.escola_id) escola "+
 							" from educacao_academico.turma t, "+
 							" educacao_academico.turma_disciplina td, "+ 
@@ -212,6 +212,7 @@ class NotaController {
 			dadosAtividade = TurmaDisciplina.get(params.turmadisciplina)
 			println("id aqui -- " + dadosAtividade)
 			
+			
 			notas = sql.rows(consultaMediaAritmetica())
 						
 			
@@ -231,7 +232,7 @@ class NotaController {
 
 
 	def consultaMediaAritmetica(){
-
+		
 		return 	" select m.id, p.nome, "+
 				"		( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
 				"		    where nn.atividade_id = aa.id "+
@@ -277,5 +278,6 @@ class NotaController {
 
 				" where m.turma_id = " + params.turma +
 				" group by m.id, p.nome "
+		
 	}
 }
