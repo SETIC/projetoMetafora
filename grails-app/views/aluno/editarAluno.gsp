@@ -236,22 +236,13 @@
 										name="nomePaiInput" />
 									<div id="iDivSelectPicker" class="row">
 										<div class="col-sm-11" style="width:380px">
-											<select class="form-control selectpicker" 
-												data-live-search="true" name="pai" id="comboPai">
-												<option value="0">Nome do Pai</option>
-												<g:each in="${pHomens}">
-													<g:if test="${it.id == parentescoPai?.pessoa?.id }">
-														<option value="${it.id}" selected>
-															${it.nome}
-														</option>
-													</g:if>
-													<g:else>
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:else>
-												</g:each>
-											</select>
+										
+											
+											<g:textField class="form-control" id="combopai" name="pai" style="width: 300px"
+													placeholder="" value="${parentescoPai?.pessoa?.nome}" disabled="disabled" />
+										
+											
+											
 										</div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary btn-flat"
@@ -268,24 +259,12 @@
 									<g:textField class="form-control hidden" id="iNomeMaeInput" name="nomeMaeInput" />
 									<div id="iDivSelectPicker1" class="row">
 										<div class="col-sm-11" style="width:380px">
-											<select class="form-control selectpicker"
-												data-live-search="true" name="mae" id="comboMae">
-												<option value="0">Nome da Mãe</option>
-												<g:each in="${pMulheres}">
-													<g:if test="${it.id == parentescoMae?.pessoa?.id }">
-														<option value="${it.id}" selected>
-															${it.nome}
-														</option>
+										
+									
+										<g:textField class="form-control" id="combopai" name="pai" style="width: 300px"
+													placeholder="" value="${parentescoMae?.pessoa?.nome}" disabled="disabled" />
+										
 
-													</g:if>
-													<g:else>
-
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:else>
-												</g:each>
-											</select>
 										</div>
 										<div class="col-sm-1">
 											<button type="button" class="btn btn-primary btn-flat"
@@ -557,30 +536,28 @@
 			      <div class="modal-body">
 			        <div class="form-horizontal" >
 						
-						 <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
-						    <div class="col-sm-10">
-						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
-						    </div>
-						  </div>
-						  
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" />
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" value="${parentescoPai?.pessoa?.cpfCnpj}" onBlur="validarCpfPai()" />
 						    </div>
 						  </div>
-						  
+
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false" value="${parentescoPai?.pessoa?.nome}" />
+						    </div>
+						  </div>
 						  	 
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
 						    <div class="col-sm-10">
-						      <select class="form-control" id="iEstadoCivilPai" name="estadoCivilPai" required="true">
-										<option value="null" selected disabled>Selecione...</option>
-										<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-										<option value="CASADO(A)">CASADO(A)</option>
-										<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-										<option value="VIÚVO(A)">VIÚVO(A)</option>
+						      <select class="form-control" id="iEstadoCivilPai" name="estadoCivilPai" required="true" >
+										<option value="SOLTEIRO(A)" <g:if test="${cidadaoPai?.estadoCivil} == 'SOLTEIRO(A)' "> selected </g:if> >SOLTEIRO(A)</option>
+										<option value="CASADO(A)" <g:if test="${cidadaoPai?.estadoCivil} == 'CASADO(A)' "> selected </g:if> >CASADO(A)</option>
+										<option value="DIVORCIADO(A)" <g:if test="${cidadaoPai?.estadoCivil} == 'DIVORCIADO(A)' "> selected </g:if> >DIVORCIADO(A)</option>
+										<option value="VIÚVO(A)" <g:if test="${cidadaoPai?.estadoCivil} == 'VIÚVO(A)' "> selected </g:if> >VIÚVO(A)</option>
 									</select>
 						    </div>
 						  </div>
@@ -588,9 +565,34 @@
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
+						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" value="${cidadaoPai?.profissao}" />
 						    </div>
 						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoPai" id="iTipoContatoPai" >
+									<g:each in="${tiposContato}" var="tipoContato">
+										<option value="${tipoContato?.id}" <g:if test="${tipoContato?.tipoContato} == ${contatoPai?.tipoContato?.tipoContato} "> selected </g:if> >
+											${tipoContato?.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoPai" name="contatoPai" value="${contatoPai?.contato}"/>
+						    </div>
+						  </div>
+						  
+						  
 
 					</div>
 			      </div>
@@ -617,41 +619,61 @@
 			      <div class="modal-body">
 			        <div class="form-horizontal" >
 						
-						 <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
-						    <div class="col-sm-10">
-						      <g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="false"/>
-						    </div>
-						  </div>
-						  
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" />
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" value="${parentescoMae?.pessoa?.cpfCnpj}" onBlur="validarCpfMae()"/>
 						    </div>
 						  </div>
-						  
-						  	 
+
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomeMae" name="nomeMae" placeholder="Nome" required="false" value="${parentescoMae?.pessoa?.nome}"/>
+						    </div>
+						  </div>
+					  	 
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
 						    <div class="col-sm-10">
-						      <select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true">
-													<option value="null" selected disabled>Selecione...</option>
-													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-													<option value="CASADO(A)">CASADO(A)</option>
-													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-													<option value="VIÚVO(A)">VIÚVO(A)</option>
-												</select>
+									<select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true" >
+										<option value="SOLTEIRO(A)" <g:if test="${cidadaoMae?.estadoCivil} == 'SOLTEIRO(A)' "> selected </g:if> >SOLTEIRO(A)</option>
+										<option value="CASADO(A)" <g:if test="${cidadaoMae?.estadoCivil} == 'CASADO(A)' "> selected </g:if> >CASADO(A)</option>
+										<option value="DIVORCIADO(A)" <g:if test="${cidadaoMae?.estadoCivil} == 'DIVORCIADO(A)' "> selected </g:if> >DIVORCIADO(A)</option>
+										<option value="VIÚVO(A)" <g:if test="${cidadaoMae?.estadoCivil} == 'VIÚVO(A)' "> selected </g:if> >VIÚVO(A)</option>
+									</select>
 						    </div>
 						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaoMae" />
+						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaoMae" value="${cidadaoMae?.profissao}" />
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoMae" id="iTipoContatoMae" >
+									<g:each in="${tiposContato}" var="tipoContato">
+										<option value="${tipoContato?.id}" <g:if test="${tipoContato?.tipoContato} == ${contatoMae?.tipoContato?.tipoContato} "> selected </g:if> >
+											${tipoContato?.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
 						    </div>
 						  </div>
 
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoMae" name="contatoMae" value="${contatoMae?.contato}"/>
+						    </div>
+						  </div>	
 					</div>
 			      </div>
 			     
@@ -811,6 +833,68 @@
 
 		    
 		       }
+		       
+		    function validarCpfMae() {
+				var cpf = document.getElementById("iCPFMae").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomeMae").value = verifCpf.nome;
+							document.getElementById("iProfissaoMae").value = verifCpf.profissao;
+							document.getElementById("iContatoMae").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoMae").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilMae").value = verifCpf.estadoCivil;
+	
+							//document.getElementById("idNomeMaeId").value = verifCpf.id;
+
+							
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfMae").focus();
+
+						}
+					}
+				});
+	      }
+
+		    function validarCpfPai() {
+				var cpf = document.getElementById("iCPFPai").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomePai").value = verifCpf.nome;
+							document.getElementById("iProfissaoPai").value = verifCpf.profissao;
+							document.getElementById("iContatoPai").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoPai").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilPai").value = verifCpf.estadoCivil;
+	
+							//document.getElementById("idNomePaiId").value = verifCpf.id;
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfPai").focus();
+
+						}
+					}
+				});
+	      }   
 	       
 			
 		</script>

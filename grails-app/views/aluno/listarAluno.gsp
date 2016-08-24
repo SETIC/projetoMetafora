@@ -395,23 +395,12 @@ function mudarCombo(){
 											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
 												do Pai</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNomePaiInput"
-													name="nomePaiInput" />
+												<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput" />
 
-												<input type="hidden" name="idNomePai" id="idNomePaiId"
-													value="">
+												<input type="hidden" name="idNomePai" id="idNomePaiId" value="">
 												<div id="iDivSelectPicker" class="row">
-													<div class="col-sm-11">
-														<select class="form-control selectpicker"
-															data-live-search="true" name="pai" id="comboPai">
-															<option value="0">Nome do Pai</option>
-															<g:each in="${pHomens}">
-																<option value="${it.id}">
-																	${it.nome}
-																</option>
-															</g:each>
-														</select>
-													</div>
+
+
 													<div class="col-sm-1">
 														<button type="button" class="btn btn-primary btn-flat"
 															data-toggle="modal" data-target="#modalCadastrarPai">Novo</button>
@@ -430,17 +419,7 @@ function mudarCombo(){
 												<g:textField class="form-control" id="iNomeMaeInput"
 													name="nomeMaeInput" />
 												<div id="iDivSelectPicker1" class="row">
-													<div class="col-sm-11">
-														<select class="form-control selectpicker"
-															data-live-search="true" name="mae" id="comboMae">
-															<option value="0">Nome da Mãe</option>
-															<g:each in="${pMulheres}">
-																<option value="${it.id}">
-																	${it.nome}
-																</option>
-															</g:each>
-														</select>
-													</div>
+													
 													<div class="col-sm-1">
 														<button type="button" class="btn btn-primary btn-flat"
 															data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
@@ -747,21 +726,20 @@ function mudarCombo(){
 			      <div class="modal-body">
 			        <div class="form-horizontal" >
 						
+						<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai()"/>
+						    </div>
+						  </div>
+						
 						 <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
 						    <div class="col-sm-10">
 						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
 						    </div>
 						  </div>
-						  
-						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
-						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" />
-						    </div>
-						  </div>
-						  
-						  	 
+												  	 
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
 						    <div class="col-sm-10">
@@ -831,6 +809,13 @@ function mudarCombo(){
 			      <div class="modal-body">
 			        <div class="form-horizontal" >
 						
+						<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae()" />
+						    </div>
+						  </div>
+						
 						 <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
 						    <div class="col-sm-10">
@@ -838,14 +823,6 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
-						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
-						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" />
-						    </div>
-						  </div>
-						  
-						  	 
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
 						    <div class="col-sm-10">
@@ -946,6 +923,11 @@ function mudarCombo(){
 				 }
 			
 			  }
+
+
+
+         
+		  
 		
 		</script>
 
@@ -995,9 +977,8 @@ function mudarCombo(){
 
 			   var tipoContato = document.getElementById("iTipoContatoPai").value;
 			   var contato = document.getElementById("iContatoPai").value;
-			   
 			   var cpf
-			   
+		   
 			   if(document.getElementById("iCPFPai").value == ''){
 			   		cpf = "0";
 			   }else{	
@@ -1032,7 +1013,6 @@ function mudarCombo(){
 				//var endereco = "192.168.1.252";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 				   var nome = document.getElementById("iNomeMae").value;
-
 				   var estadoCivil = document.getElementById("iEstadoCivilMae").value;
 				   var profissao = document.getElementById("iProfissaoMae").value;
 
@@ -1051,15 +1031,18 @@ function mudarCombo(){
 			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao+"&tipoContato="+tipoContato+"&contato="+contato,
 			            dataType: "json",
 			            success: function(result){
-			            	console.log(result[result.length-1].nome);
+			            	console.log('Teste de console  - ' + result[result.length-1].nome);
 	
 							document.getElementById("idNomeMaeId").value = result[result.length-1].id;
 			            				            	
 			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
+
 			            	
 			            	document.getElementById("iNomeMaeInput").className = 'form-control';
 			            	document.getElementById("iNomeMaeInput").disabled = true;
 			            	document.getElementById("iNomeMaeInput").value = result[result.length-1].nome;
+
+			            	
 
 			            	$(function() {
 								$('#twoModalsExample1').modal('hide');
@@ -1125,6 +1108,71 @@ function mudarCombo(){
 		        });
 		    
 		       }
+
+
+		    function validarCpfMae() {
+				var cpf = document.getElementById("iCPFMae").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomeMae").value = verifCpf.nome;
+							document.getElementById("iProfissaoMae").value = verifCpf.profissao;
+							document.getElementById("iContatoMae").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoMae").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilMae").value = verifCpf.estadoCivil;
+	
+							document.getElementById("idNomeMaeId").value = verifCpf.id;
+
+							
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfMae").focus();
+
+						}
+					}
+				});
+	      }
+
+		    function validarCpfPai() {
+				var cpf = document.getElementById("iCPFPai").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomePai").value = verifCpf.nome;
+							document.getElementById("iProfissaoPai").value = verifCpf.profissao;
+							document.getElementById("iContatoPai").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoPai").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilPai").value = verifCpf.estadoCivil;
+	
+							document.getElementById("idNomePaiId").value = verifCpf.id;
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfPai").focus();
+
+						}
+					}
+				});
+	      }
+
+	       
 		</script>
 	</section>
  </body>

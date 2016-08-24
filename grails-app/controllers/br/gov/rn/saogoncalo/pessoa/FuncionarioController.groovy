@@ -37,11 +37,18 @@ class FuncionarioController {
 				def lotacao
 				def cargo	
 				def year = Calendar.getInstance().get(Calendar.YEAR)
-				funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
+				/*funcionario = Funcionario.executeQuery("select f from Pessoa p, Funcionario f,Lotacao l,Cargo c " +
 						" where p.id = f.id "+
 						" and l.cargo.id = c.id "+
 						" and f.id = l.funcionario.id " +
-						" order by p.id ")
+						" order by p.id ")*/
+				funcionario = Funcionario.executeQuery(" select f from Pessoa p, Funcionario f "+
+					"  where f.id = p.id "+
+					"    and p.escid = "+ session["escid"] +
+					"    and p.id not in ( select p2.id from Pessoa p2, Escola e, PessoaEscola pe "+
+					"                       where pe.escola.id = e.id "+
+					"    and pe.pessoa.id = p2.id "+
+					"    and e.id = "+ session["escid"] +" )")
 
 
 				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
@@ -143,8 +150,15 @@ class FuncionarioController {
 					//print("printcargos "+ cargos )
 
 				}else{
-					funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
-							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+					/*funcionarios = Funcionario.executeQuery("select a from Pessoa as p , Funcionario as a "+
+							"where p.id = a.id and p.escid = "+session["escid"]+" and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")*/
+					funcionarios = Funcionario.executeQuery(" select f from Pessoa p, Funcionario f "+
+							"  where f.id = p.id "+
+							"    and p.escid = "+ session["escid"] +
+							"    and p.id not in ( select p2.id from Pessoa p2, Escola e, PessoaEscola pe "+
+							"                       where pe.escola.id = e.id "+
+							"    and pe.pessoa.id = p2.id "+
+							"    and e.id = "+ session["escid"] +" )")
 				}
 
 				//lotacao = Lotacao.findAll()
@@ -219,7 +233,7 @@ class FuncionarioController {
 
 
 				//verificar com matriculas
-				funcionarios = sql.rows(" select p.escid, p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
+				/*funcionarios = sql.rows(" select p.escid, p.nome, f.matricula, f.id, c.cargo, l.turno, l.funcao, l.vinculo, "+
 						" (select e.nome from cadastro_unico_pessoal.pessoa e " +
 						" where e.id = p.escid ) as escola ,  " +
 						" (select e.id from cadastro_unico_pessoal.pessoa e " +
@@ -230,7 +244,18 @@ class FuncionarioController {
 						" and l.cargo_id = c.id "+
 						" and f.id = l.funcionario_id "+
 						" and p.escid = " + params.escola +
-						" order by p.nome");
+						" order by p.nome");*/
+				
+				funcionarios = sql.rows(" select f from cadastro_unico_pessoal.Pessoa p, cadastro_unico_pessoal.Funcionario f "+
+					"  where f.id = p.id "+
+					"    and p.escid = "+ session["escid"] +
+					"    and p.id not in ( select p2.id from cadastro_unico_pessoal.Pessoa p2, cadastro_unico_pessoal.Escola e, cadastro_unico_pessoal.Pessoa_Escola pe "+
+					"                       where pe.escola_id = e.id "+
+					"    and pe.pessoa_id = p2.id "+
+					"    and e.id = "+ session["escid"] +" )")
+				
+				
+				
 
 				// ------------------
 					
@@ -722,21 +747,21 @@ class FuncionarioController {
 				}else{
 					//cargos = Cargo.findAll()
 					//lotacao = Lotacao.findAll()
-					funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+					//funcionarios = Funcionario.executeQuery(" select f from Pessoa as p, Funcionario as f where p.id = f.id and p.escid = ?",[session["escid"]])
+								funcionarios = Funcionario.executeQuery(" select f from Pessoa p, Funcionario f "+
+														"  where f.id = p.id "+
+														"    and p.escid = "+ session["escid"] +
+														"    and p.id not in ( select p2.id from Pessoa p2, Escola e, PessoaEscola pe "+
+														"                       where pe.escola.id = e.id "+
+														"    and pe.pessoa.id = p2.id "+
+														"    and e.id = "+ session["escid"] +" )")
 				}
 				tipo= params.tipo
 				msg = params.msg
 
 				cargos = Cargo.findAll()
 				print ">>>>>>>>>>>>>>>>>>>" + funcionarios.lotacao.cargo.cargo
-				/*for (fun in funcionarios.lotacao.cargo.cargo) {
-				 if (fun.isEmpty()) {
-				 print "CARGO NÃO VAZIO >>>" + fun
-				 }else {
-				 fun = " a"
-				 print "CARGO VAZIO >>>" + fun
-				 }	
-				 }*/
+
 				if (tipo == "ok"){
 					render(view:"/funcionario/listarFuncionario.gsp", model:[funcionarios:funcionarios, ok:msg,perm2:perm2, cargos:cargos])
 				}else{
