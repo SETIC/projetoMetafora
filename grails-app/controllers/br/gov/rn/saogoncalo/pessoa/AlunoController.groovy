@@ -674,9 +674,15 @@ class AlunoController {
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Aluno", act:"listarMensagem"])
 		}else{
+		
 			def user = session["user"]
 			def pass = session["pass"]
 
+			
+			def escolas = Escola.get(Long.parseLong(session["escid"].toString()))
+			def series = Serie.findAll()
+			def necessidadesEspeciais = NecessidadesEspeciais.findAll()
+			
 			def usuario = new UsuarioController()
 
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
@@ -707,10 +713,11 @@ class AlunoController {
 				}
 
 				//render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos])
+				def tiposContato = TipoContato.findAll()
 				if (tipo == "ok")
-					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, ok:msg, perm2:perm2])
+					render (view:"/aluno/listarAluno.gsp", model:[escolas:escolas, series:series, alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, ok:msg, perm2:perm2, tiposContato:tiposContato, necessidadesEspeciais:necessidadesEspeciais,  tiposContato:tiposContato])
 				else
-					render (view:"/aluno/listarAluno.gsp", model:[alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, erro:msg, perm2:perm2])
+					render (view:"/aluno/listarAluno.gsp", model:[escolas:escolas, series:series, alunos:alunos, pHomens:pHomens, pMulheres:pMulheres, erro:msg, perm2:perm2, tiposContato:tiposContato, necessidadesEspeciais:necessidadesEspeciais,  tiposContato:tiposContato])
 
 			}else{
 				render(view:"/error403.gsp")
@@ -1157,6 +1164,7 @@ class AlunoController {
 		def result = []
 		
 		def p = Pessoa.findByCpfCnpj(params.cpf)
+		println("Cpf pai -- " + params)
 		
 		if(p == null){
 			
@@ -1231,23 +1239,40 @@ class AlunoController {
 		
 		}else{
 				
-		//retorna o id da mãe escolhida
-				p.nome = params.nomePai
-				p.cpfCnpj = params.cpfMae
+		//retorna o id do pai escolhido
+				println("Pai aqui --- " + params)
+				p.nome = params.nome
+				p.cpfCnpj = params.cpf
 				if (p.save(flush:true)){
 					def cid = Cidadao.findById(p.id)
-					cid.profissao = params.profissaoPai
-					cid.estadoCivil = params.estadoCivilPai
+					cid.profissao = params.profissao
+					cid.estadoCivil = params.estadoCivil
 					if (cid.save(flush:true)){
 						
-						def cont = Contato.findByPessoa(p.id)
-						def tipocont = TipoContato.findById(params.tipoContatoPai)
-						
-						cont.tipoContato = tipocont
-						cont.contato = params.contatoPai
-						if (cont.save(flush:true)){
+						def cont = Contato.findByPessoa(p)
+						if (cont != null){
+							def tipocont = TipoContato.findById(params.tipoContato)
+							cont.tipoContato = tipocont
+							cont.contato = params.contato
+							if (cont.save(flush:true)){
 							
 						}
+							
+							
+						}else{
+							Contato contatoNovo = new Contato()
+							contatoNovo.pessoa = p
+							contatoNovo.tipoContato = TipoContato.findById(params.tipoContato)
+							contatoNovo.contato = params.contato					
+							if (contatoNovo.save(flush:true)){
+							
+						}
+						
+						}
+							
+							
+							
+
 					}
 				
 				}
@@ -1255,7 +1280,6 @@ class AlunoController {
 				result[0] = ["id":p.id, "nome":p.nome]
 	
 	}
-		
 		
 		render result as JSON
 	}
@@ -1297,14 +1321,24 @@ class AlunoController {
 				if (cidadao.save(flush:true)){
 					println("Salvou cidadão")
 					
-					def tipoContato = TipoContato.get(params.tipoContato)
-					Contato contato = new Contato()
-					contato.pessoa = pessoa
-					contato.tipoContato = tipoContato
-					contato.contato = params.contato
-					
-					if (contato.save(flush:true)){
-						println("Contato Salvo")
+					def cont = Contato.findByPessoa(p)
+					if (cont != null){
+						def tipocont = TipoContato.findById(params.tipoContato)
+						cont.tipoContato = tipocont
+						cont.contato = params.contato
+						if (cont.save(flush:true)){
+						
+					}
+						
+						
+					}else{
+						Contato contatoNovo = new Contato()
+						contatoNovo.pessoa = p
+						contatoNovo.tipoContato = TipoContato.findById(params.tipoContato)
+						contatoNovo.contato = params.contato
+						if (contatoNovo.save(flush:true)){
+						
+					}
 					
 					}
 					
@@ -1316,8 +1350,8 @@ class AlunoController {
                 
 				println("cidadao mae" +result)
 
-				
-			}
+			}	
+			
 
 		}else{
 			listarMensagem("Erro ao salvar", "erro")
@@ -1328,22 +1362,38 @@ class AlunoController {
 
 				
 				
-				p.nome = params.nomeMae
-				p.cpfCnpj = params.cpfMae
+				p.nome = params.nome
+				p.cpfCnpj = params.cpf
 				if (p.save(flush:true)){
 					def cid = Cidadao.findById(p.id)
-					cid.profissao = params.profissaoMae
-					cid.estadoCivil = params.estadoCivilMae
+					cid.profissao = params.profissao
+					cid.estadoCivil = params.estadoCivil
 					if (cid.save(flush:true)){
 						
-						def cont = Contato.findByPessoa(p.id)
-						def tipocont = TipoContato.findById(params.tipoContatoMae)
-						
-						cont.tipoContato = tipocont
-						cont.contato = params.contato
-						if (cont.save(flush:true)){
+						def cont = Contato.findByPessoa(p)
+						if (cont != null){
+							def tipocont = TipoContato.findById(params.tipoContato)
+							cont.tipoContato = tipocont
+							cont.contato = params.contato
+							if (cont.save(flush:true)){
 							
 						}
+							
+							
+						}else{
+							Contato contatoNovo = new Contato()
+							contatoNovo.pessoa = p
+							contatoNovo.tipoContato = TipoContato.findById(params.tipoContato)
+							contatoNovo.contato = params.contato					
+							if (contatoNovo.save(flush:true)){
+							
+						}
+						
+						}
+							
+							
+							
+
 					}
 				
 				}

@@ -264,6 +264,8 @@
 										<g:textField class="form-control" id="combopai" name="pai" style="width: 300px"
 													placeholder="" value="${parentescoMae?.pessoa?.nome}" disabled="disabled" />
 										
+										
+										
 
 										</div>
 										<div class="col-sm-1">
