@@ -717,7 +717,7 @@ function mudarCombo(){
 			<!-- Modal -->
 
 			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
-			  <div class="modal-dialog" role="document" style="margin-top: 20%; width:800px">
+			  <div class="modal-dialog" role="document" style="width:800px">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -753,19 +753,13 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
-						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
-						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
-						    </div>
-						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
 						    
 						    <div class="col-sm-10">
 					     
-						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoPai" id="iTipoContatoPai">
+						    	<select class="form-control selectpicker" name="tipoContatoPai" id="iTipoContatoPai">
 									<g:each in="${tiposContato}">
 										<option value="${it.id}">
 											${it.tipoContato}
@@ -783,6 +777,13 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
+						    </div>
+						  </div>
+					  
 
 					</div>
 			      </div>
@@ -800,7 +801,7 @@ function mudarCombo(){
 
 			<!-- Modal -->
 			<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
-			  <div class="modal-dialog" role="document" style="margin-top: 20%; width:800px">
+			  <div class="modal-dialog" role="document" style="width:800px">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -836,20 +837,12 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
-						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
-						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
-						    </div>
-						  </div>
-						  
-						  
-						  <div class="form-group" style="margin-bottom: 5px;">
+						   <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
 						    
 						    <div class="col-sm-10">
 					     
-						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoMae" id="iTipoContatoMae">
+						    	<select class="form-control selectpicker" name="tipoContatoMae" id="iTipoContatoMae">
 									<g:each in="${tiposContato}">
 										<option value="${it.id}">
 											${it.tipoContato}
@@ -860,6 +853,7 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
+						  
 						  <div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
 						    <div class="col-sm-10">
@@ -867,10 +861,17 @@ function mudarCombo(){
 						    </div>
 						  </div>
 						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
+						    </div>
+						  </div>
+						 
+						  
 
 					</div>
 			      </div>
-			      <hr/>
 			      <div class="modal-footer">
 
 			        <button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
