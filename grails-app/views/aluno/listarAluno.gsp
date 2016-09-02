@@ -787,7 +787,7 @@ function mudarCombo(){
 						    
 						    <div class="col-sm-10">
 					     
-						    	<select class="form-control selectpicker" data-live-search="true" name="tipoContatoPai" id="iTipoContatoPai">
+						    	<select class="form-control" name="tipoContatoPai" id="iTipoContatoPai">
 									<g:each in="${tiposContato}">
 										<option value="${it.id}">
 											${it.tipoContato}
@@ -986,7 +986,7 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   //var endereco = "192.168.1.247";
+			   //var endereco = "192.168.1.252";
 			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var nome = document.getElementById("iNomePai").value;
 
@@ -1029,7 +1029,7 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				//var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.252";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 				   var nome = document.getElementById("iNomeMae").value;
 
@@ -1071,7 +1071,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				//var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.252";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
@@ -1099,7 +1099,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  //var endereco = "192.168.1.247";
+			  //var endereco = "192.168.1.252";
 			  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
