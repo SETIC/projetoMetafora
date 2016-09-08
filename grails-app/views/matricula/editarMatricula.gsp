@@ -48,7 +48,7 @@
 			<script type="text/javascript">
 			
 				function mudarEscola() {
-					//var endereco = "192.168.1.247";
+					//var endereco = "192.168.1.252";
 					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 					var comboTurma = document.getElementById("comboTurma");
@@ -77,7 +77,7 @@
 				}
 
 				  function mudarSerie(){
-						//var endereco = "192.168.1.247";
+						//var endereco = "192.168.1.252";
 						var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 						
 					   var comboTurma = document.getElementById("comboTurma");
@@ -193,6 +193,15 @@
 								name="matricula" value="${matriculas.matricula}" />
 						</div>
 						<br>
+						
+						<div class="controls">
+							<label>Etapa</label>
+							<g:field class="form-control" 
+								name="nivelEspecial" value="${matriculas.nivelEspecial}" type="number"/>
+						</div>
+						<br>
+						
+						
 
 					</fieldset>
 					<div style="margin: 0 15% auto">

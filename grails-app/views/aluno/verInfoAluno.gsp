@@ -133,8 +133,7 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Nome
-								do Livro do Registro de Cartório</label>
+							<label for="inputrcNomeDoLivro3" class="col-sm-2 control-label">Número do Livro do Registro de Cartório</label>
 							<div class="col-sm-10">
 								${pessoaFisica.rcNomeDoLivro}
 							</div>
@@ -148,6 +147,23 @@
 							</div>
 						</div>
 						<br>
+						
+						<div class="form-group">
+							<label for="inputData3" class="col-sm-2 control-label">Data do Registro</label>
+							<div class="col-sm-10">
+								<g:formatDate format="dd/MM/yyyy" date="${pessoaFisica.rcDataDoRegistro}" />
+							</div>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="inputrcFolhaDoLivro3" class="col-sm-2 control-label">Cidade do Registro</label>
+							<div class="col-sm-10">
+								${pessoaFisica.rcCidade}
+							</div>
+						</div>
+						<br>
+
+						
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
 							<div class="col-sm-10">
@@ -282,6 +298,76 @@
 							</div>
 						</div>
 						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgNumero}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Data de Emissão </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgDataDeEmissao}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Orgão expedidor </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgOrgaoExpedidor}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label"> RG - Complemento </label>
+							<div class="col-sm-10">
+							
+								${cidadao.rgComplemento}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label">Cor/Raça </label>
+							<div class="col-sm-10">
+							
+								${pessoaFisica.cor}
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						<div class="form-group">
+							<label for="inputNomePai" class="col-sm-2 control-label">Necessidades Especiais</label>
+							<div class="col-sm-10">
+							
+								<g:each in="${pessoaFisicaNecessidadesEspeciais}">
+									${it.necessidadesEspeciais.descricao} <br>								
+																	
+								</g:each>
+ 								
+							</div>
+						</div>
+						<br>
+						
+						
+						
                       </fieldset>
                       
                       <table id="listarDocumentosAluno" class="table table-bordered">
@@ -300,15 +386,13 @@
 												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
 														date="${it.dataDocumento}" /></td>
 												<td>
-													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
+												<g:link action="downloadDocumento" enctype="multipart/form-data" params="[id: it.id]">Baixar</g:link>
 
 												</td>
 											</tr>
 										</g:each>
 									</thead>
 								</table>
-						
-                      
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat" onClick="printDiv('print')">
 							<i class="glyphicon glyphicon-print"></i> Imprimir

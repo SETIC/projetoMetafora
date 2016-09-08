@@ -9,7 +9,7 @@ class Pessoa {
 	int escid
 	int escIdDestino = 0
 
-	static hasMany = [reside:Reside, parentesco:Parentesco]
+	static hasMany = [reside:Reside, parentesco:Parentesco, documento:Documento, pessoaEscola:PessoaEscola]
 	
 	static constraints = {
 		

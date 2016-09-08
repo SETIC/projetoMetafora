@@ -62,6 +62,27 @@ grails {
         // escapes all not-encoded output at final stage of outputting
         // filteringCodecForContentType.'text/html' = 'html'
     }
+	
+	
+	 mail {
+		 
+		 host = "mail.saogoncalo.rn.gov.br"
+		 port = 25
+		 username = "setic.suporte@saogoncalo.rn.gov.br"
+		 password = "pmsga2015"
+		 props = ["mail.smtp.auth":"true",
+                       "mail.smtp.socketFactory.port":"465",
+                       "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                       "mail.smtp.socketFactory.fallback":"false"]
+		 
+        /*host = "smtp.gmail.com"
+        port = 587
+        username = "suporte.setic@gmail.com"
+        password = "suporte@setic"
+        props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"]*/
+    }
+	
+	
 }
 
 /*grails.plugin.reveng.packageName = "br.gov.rn.saogoncalo"
@@ -96,6 +117,8 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -104,9 +127,11 @@ environments {
     production {
 		
         grails.logging.jul.usebridge = false
-		grails.serverURL = "http://192.168.1.247:8080/projetoMetafora"
+		//grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
+		//grails.serverURL = "http://189.43.7.23:8080"
+		grails.serverURL = "http://189.43.7.23:8080/projetoMetafora"
 		
-		filepa
+		
 		
 	
         // TODO: grails.serverURL = "http://www.changeme.com"

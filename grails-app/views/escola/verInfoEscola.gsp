@@ -260,6 +260,14 @@ newWin.print();
 						</div>
 						<br>
 						
+						<div class="form-group">
+							<label for="inputinepDaEscola3" class="col-sm-2 control-label">Status</label>
+							<div class="col-sm-10">
+								${escolas.pessoaJuridica.pessoa.status}
+							</div>
+						</div>
+						<br>
+						
 						
 					</fieldset>
 					<div style="margin: 0 15% auto">

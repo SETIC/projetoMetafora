@@ -85,7 +85,7 @@ function printDiv(id)
 	{
 
 	
-		//var endereco = "192.168.1.247";
+		//var endereco = "192.168.1.252";
 		var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 		var idMatricula = document.getElementById("idMatriculaParaRelatorio").value;
@@ -103,12 +103,7 @@ function printDiv(id)
             	var dataFormatada = result.dataAluno.toString().substring(8,10) + " / " + result.dataAluno.toString().substring(5,7) + " / " + result.dataAluno.toString().substring(0,4);
         	    
 			    divToPrint.innerHTML  += "<style=''>";   
-		        divToPrint.innerHTML  += "<img src='http://localhost:8080/projetoMetafora/static/images/brasao.jpg';style='width:90px;float:left;margin-top:-9px;'>";
-		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:50px;'>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE</p>";
-		        divToPrint.innerHTML  += "<p style='text-align:center;margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>";
-		        divToPrint.innerHTML  += "<h4 style='text-align:center;margin-top:-8px;'>${session["escname"]}</h4>";
-		        divToPrint.innerHTML  += "<p style='margin-top:-18px;text-align:center'>Rua São Bento, S/N - Conj. Amarante -S.G.Amarante.</p>"; 	
-		        divToPrint.innerHTML  += "<p style='margin-top:-8px;text-align:center'>CNPJ N° 01.926.842/0001-31</p>"; 
+		       
 			    divToPrint.innerHTML  += "<table border='0'>";
 			    divToPrint.innerHTML  += "<tr>";
         		divToPrint.innerHTML  += " <td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>";
@@ -242,12 +237,13 @@ function printDiv(id)
 					<thead>
 						<tr>
 
-							<th style="width: 50px;text-align: left;"></th>
+							<th style="width: 80px;text-align: left;"></th>
 							<th style="width: 280px;text-align: left;">Nome do Aluno</th>
-							<th style="width: 60px;text-align: left;">Data da Matrícula</th>
-							<th style="width: 320px;text-align: left;">Nome da Escola</th>
-							<th style="width: 40px;text-align: left;">Série</th>
+							<th style="width: 90px;text-align: left;">Data da Matrícula</th>
+							<th style="width: 60px;text-align: left;">Série</th>
 							<th style="width: 60px;text-align: left;">Turma</th>
+							<th style="width: 20px;text-align: left;">Etapa</th>
+							<th style="width: 20px;text-align: left;"> </th>
 
 						</tr>
 					</thead>
@@ -286,22 +282,26 @@ function printDiv(id)
 									${it.aluno.cidadao.pessoaFisica.pessoa.nome}
 								</td>
 								<td><g:formatDate format="dd/MM/yyyy"
-										date="${it.dataDaMatricula}" /></td>
-								<td>
-									${it.turma.escola.pessoaJuridica.pessoa.nome}
+										date="${it.dataDaMatricula}" />
 								</td>
+
 								<td>
 									${it.turma.serie.serie}
 								</td>
 								<td>
 									${it.turma.turma}
 								</td>
-								<td style="text-align: center;"><g:if
+								<td>
+									${it.nivelEspecial}
+								</td>
+								<td style="text-align: center;">
+									<g:if
 										test="${it.dataDaMatricula.toString().contains(ano.toString())}">
 										<span class="label label-success">Ativo</span>
 									</g:if> <g:else>
 										<span class="label label-danger">Inativo</span>
-									</g:else></td>
+									</g:else>
+								</td>
 
 							</tr>
 						</g:each>
@@ -314,9 +314,8 @@ function printDiv(id)
 			<script type="text/javascript">
 			
 				function mudarEscola(){
-		    	  
 
-					//var endereco = "192.168.1.247";
+					//var endereco = "192.168.1.252";
 					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 					var comboTurma = document.getElementById("comboTurma");
@@ -340,17 +339,18 @@ function printDiv(id)
 				          }
 			            }
 			        });
+				}
 
 				   
 
 			  function mudarSerie(){
 
-				  //var endereco = "192.168.1.247";
+				  //var endereco = "192.168.1.252";
 				  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
 
 				   var comboTurma = document.getElementById("comboTurma");
-			        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
+			       comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
 
 			        var idEscola = document.getElementById("comboEscola").value;
 					var idSerie = document.getElementById("comboSerie").value;
@@ -372,6 +372,7 @@ function printDiv(id)
 			            }
 			        });
 			       }
+		       
 			  function mudarSerie1(){
 				  var endereco = "localhost";
 				   var comboTurma = document.getElementById("comboTurma1");
@@ -399,6 +400,7 @@ function printDiv(id)
 
 			    
 			       }
+				
 		       
 
 
@@ -647,6 +649,14 @@ function printDiv(id)
 											</div>
 										</div>
 										<br>
+										
+										<div class="controls">
+											<label>Etapa</label>
+											<g:field class="form-control" name="nivelEspecial" value="" type="number" min="1" max="10" />
+
+										</div>
+										<br>										
+										
 
 									</fieldset>
 									<div class="modal-footer">

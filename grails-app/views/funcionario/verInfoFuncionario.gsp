@@ -68,7 +68,7 @@ function printDiv(id)
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
-	<section class="content">
+	<section class="content" id="dadosprotocolo">
 		<div>
 			<g:if test="${ok}">
 				<div class="alert alert-success">

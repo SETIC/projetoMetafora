@@ -17,7 +17,7 @@ class Funcionario {
 	static constraints = {
 	
 			cargaHoraria blank:true, nullable:true
-			//matricula blank:true, nullable:true
+			matricula blank:true, nullable:true
 			observacao blank:true, nullable:true 
 		}
 			

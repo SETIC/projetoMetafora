@@ -108,7 +108,7 @@
 							<div class="col-sm-4">
 								<select name="disciplina" class="form-control selectpicker"
 									multiple data-live-search="true" required="required">
-									<g:each in='${dlpp}' var="dlppl">
+									 <g:each in='${dlpp}' var="dlppl">
 										<g:if test="${td.contains(dlppl.id)}">
 											<option value="${dlppl.id}" selected>
 												${dlppl.professor.funcionario.cidadao.pessoaFisica.pessoa.nome}

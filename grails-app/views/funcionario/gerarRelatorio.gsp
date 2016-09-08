@@ -9,7 +9,7 @@
 <body>
 	<script>
 			function changeIdFuncionarioParaRelatorio(idfuncionario){
-				alert(idfuncionario);
+				
 				document.getElementById("idFuncionarioParaRelatorio").value = idfuncionario;
 			
 			}
@@ -36,10 +36,7 @@
 		        var divToPrint  = document.getElementById("reportPrint");
 		        divToPrint.style.visibility = "visible";
 		        
-		        
-		        
 		        divToPrint.innerHtml = "";
-		        
 		        $.ajax({
 		            type: "GET",
 		            url: "http://"+endereco+":8080/projetoMetafora/funcionario/getFuncionarioByIdParaRelatorio/"+idFuncionario,
@@ -61,38 +58,56 @@
 				        var disciplina = null;
 				        var qtd = null;
 				        var horarioL = null;
-				        for (var i = 0; i <result.horario.length; i++) {
-				       		disciplina = disciplina+ result.horario[i].disciplina
-				        	qtd = qtd+ result.horario[i].qtd
-				        	horarioL = horarioL+ result.horario[i].horario
+
+						var i
+					    for (i = 0; i <result.horario.length; i++) {
+				       		disciplina = disciplina+ result.horario[i].disciplina;
+				        	qtd = qtd+ result.horario[i].qtd;
+				        	horarioL = horarioL+ result.horario[i].horario;
 				        }
-				      
+
+						var getListaDisciplina = JSON.parse(JSON.stringify(result.listaDisciplina));
+						var tabelaDisciplinas;
+						
+					for (var j = 0; j < getListaDisciplina.length; j++) {
+							 
+			            	
+		            		tabelaDisciplinas += "<td>" + getListaDisciplina[j].turma + "</td>" + 
+		            							 "<td>" + getListaDisciplina[j].disciplina + "</td>" +
+		            							 "<td>" + getListaDisciplina[j].quantidade_aulas + "</td>" +
+		            							 "<td>" + getListaDisciplina[j].quantidade_aula_semanal + "</td></tr>"
+
+						
+		            			         	
+		            			            	
+			       }
+				          
+						 
 				      		//divToPrint.innerHTML += disciplina[i]
 					   
 				        if(result.cargo=="PROFESSOR"){
+                       
 					        
 				        divToPrint.innerHTML  += "<table align=\"center\" border=1 cellspacing=0 cellpadding=2 bordercolor=\"666633\" class=\"table\">"+
 				        "<thead>"+
 				        "  <tr>"+
-				            "<th style=\"width: 200px;\">Matérias Lecionadas</th>"+
-				            "<th style=\"width: 200px;\">Carga horária</th>"+
-				            "<th style=\"width: 200px;\">Carga horária exercída</th>"+				            
-				            "<th style=\"width: 100px;\">Diferença</th>"+
+				            "<th style=\"width: 200px;\">Turma</th>"+
+				            "<th style=\"width: 200px;\">Disciplina</th>"+
+				            "<th style=\"width: 200px;\">Quantidade de aulas</th>"+				            
+				            "<th style=\"width: 100px;\">Aulas Semanais</th>"+
 				          "</tr>"+
 				        "</thead>"+
 				        "<tbody>"+
-				          "<tr>"+
-			            	"<g:each in='${horasDisciplinas}'> " +
-			            		"<td>" +" ${it.disciplina} " + "</td>"+
-			            		"<td>" +" ${it.carga_horaria} " + "</td>"+
-			            		"<td>" + " <g:formatNumber number="${it.soma}"  />" + "</td>"+
-			            		"<td>" +" ${it.carga_horaria.toString().toFloat() - it.soma.toString().toFloat()} " + "</td>"+
-							"</g:each>" +
-				          "</tr>"+
+
+				        "<tr>"+  
+											
+				        tabelaDisciplinas 
+				        "</tr>"+  
+				        		 				          
 				        "</tbody>"+
 				      "</table>";
 				        }else{
-
+                           
 					        }
 		
 		          	  var now = new Date();
@@ -181,6 +196,48 @@
 			  newWin.print();
 			  newWin.close();
 			}
+
+
+         
+
+                 <!-- listar carga horaria de  professores  -->
+
+			function gerarRelatorioListarProfessor()
+			{
+
+				var endereco = "localhost";
+		        var divToPrint  = document.getElementById("reportPrint");
+		        var comboEscola = document.getElementById("comboEscola");
+		        var escola = comboEscola.options[comboEscola.selectedIndex].value;
+		        divToPrint.style.visibility = "visible";
+		        
+		        divToPrint.innerHtml = "";
+		        $.ajax({
+		            type: "GET",
+		            url: "http://"+endereco+":8080/projetoMetafora/funcionario/gerarRelatorioListarProfessores/"+escola,
+		            dataType: "json",
+		            success: function(result){
+
+		            }
+		        });
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
              </script>
 
 
@@ -209,11 +266,11 @@
 					${erro}
 				</div>
 			</g:if>
-<<<<<<< HEAD
 
-=======
->>>>>>> protocJadson
 				<g:form controller="Funcionario" action="pesquisarFuncionariosByEscola" class="form">
+				
+				<input type="hidden" value="" id="escolaId" >
+				 
 				<div class="form-heading">
 				<label style="margin-left:15px;">Escola</label>
 					<select class="col-sm-6 selectpicker" data-live-search="true"
@@ -237,7 +294,7 @@
 			<g:if test="${funcionarios== null}">
 				<br>
 
-				<input hidden="true" style="margin-left: 25%;" disabled="disabled"
+				<input hidden="true" style="margin-left: 25%;" disabled="disablefd"
 					class="col-sm-6" value="Nenhuma escola selecionada! " type="text"
 					name="nomeDaEscola" />
 				<br>
@@ -252,12 +309,7 @@
 				<br>
 				<br>
 			</g:else>
-
-
 		</div>
-
-		
-
 
 		<table id="listarFuncionarios"
 			class="table table-striped table-hover example">
@@ -322,8 +374,26 @@
 		
 		<button class="btn btn-danger btn-flat"
 			onClick="printDiv('listarFuncionarios')">
-			<i class="glyphicon glyphicon-print"></i> Relatório Geral
+			<i class="glyphicon glyphicon-print"></i> Imprimir 
 		</button>
+		
+		
+		<div title="Editar Funcionario "
+			class="btn btn-danger btn-flat"><a
+			style="color: #fff; font-size:15px;font-family:arial"
+			href="/projetoMetafora/funcionario/editarFuncionario/${it.id}"><span
+				class="glyphicon glyphicon-print"> Relatório por Turma</span></a></div>
+		
+
+		<g:if test="${funcionarios != null}">
+        	<div title="Relatório de Turmas"
+				class="btn btn-danger btn-flat">
+				<a style="color: #fff"
+					href="/projetoMetafora/Funcionario/gerarRelatorioListarProfessores/${funcionarios.escid[0]}"><span
+					class="glyphicon glyphicon-print"> Turmas </span></a>
+			</div>
+		</g:if>
+
 
 		<div class="modal fade" id="relatorioModal" tabindex="-1"
 			role="dialog" aria-labelledby="relatorioModalLabel"

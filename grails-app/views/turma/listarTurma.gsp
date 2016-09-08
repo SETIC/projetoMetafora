@@ -64,7 +64,7 @@ function printDiv(id)
 				<table id="listarTurma" class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
+							<th style="width: 70px;"></th>
 							<th style="text-align: left;">Escola</th>
 							<th style="text-align: left;">Série</th>
 							<th style="text-align: left;">Turma</th>
@@ -82,10 +82,10 @@ function printDiv(id)
 											<g:if test="${perm2}">
 											
 											<div class="btn btn-primary btn-xs btn-flat"><a
-												style="color: #fff"
+												style="color: #fff" title="editar turma"
 												href="/projetoMetafora/turma/editarTurma/${it.id}"><span
 													class="glyphicon glyphicon-pencil"></span></a></div>
-											<div onclick="deletar(${it.id})"
+											<div onclick="deletar(${it.id})" title="remover turma"
 												class="btn btn-danger btn-xs btn-flat"><span
 												class="glyphicon glyphicon-remove"></span></div>
 											
@@ -94,7 +94,7 @@ function printDiv(id)
 											
 											
 											<div class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
+												style="color: #fff" title="ver informaçoes da turma"
 												href="/projetoMetafora/turma/verInfoTurma/${it.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></div>
 										</div>

@@ -79,10 +79,20 @@ function inputsHabilitado() {
 	var elementoNomePaiInput = document.getElementById("iNomePaiInput");
 	var elementoNomeMaeInput = document.getElementById("iNomeMaeInput");
 	
+	var elementoRgNumero = document.getElementById("iRgNumero");
+	var elementoRgOrgaoExpedidor = document.getElementById("iRgOrgaoExpedidor");
+	var elementoRgComplemento = document.getElementById("iRgComplemento");
+
+	
 	elementoLogradouro.disabled = false;
 	elementoBairro.disabled = false;
 	elementoMunicipio.disabled = false;
 	elementoUf.disabled = false;
+	
+	elementoRgNumero.disabled = true;
+	elementoRgOrgaoExpedidor.disabled = true;
+	elementoRgComplemento.disabled = true;
+	
 	
 	if(elementoNomePaiInput != ""){
 		elementoNomePaiInput.disabled = false;

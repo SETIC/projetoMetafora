@@ -38,6 +38,7 @@ class MatriculaController {
 				matricula.dataDaMatricula = params.dataDaMatricula1
 				matricula.matricula = params.matricula1
 				matricula.status = "Ativo"
+				matricula.nivelEspecial = params.nivelEspecial
 
 				def turma = Turma.findById(params.turma1)
 				def matriculados = Matricula.findAllByTurma(turma)
@@ -54,12 +55,10 @@ class MatriculaController {
 						AdministracaoController adm = new AdministracaoController()
 						adm.salvaLog(session["usid"].toString().toInteger(), "Criar Matrícula: " + matricula.id, "CREATE", "Matricula", date)
 
-
 						//listarMensagem("Matrícula realizada com sucesso", "ok")
 						redirect(controller: "Matricula", action: "listarMensagem", params:[msg:"Aluno Matriculado com Sucesso!", tipo:"ok"])
 
 					}else{
-
 
 						listarMensagem("Erro ao salvar Matrícula", "erro")
 					}
@@ -102,8 +101,10 @@ class MatriculaController {
 							"    and p.id = m.aluno.id" +
 
 							"    and m.status <>'finalizado' " +
-
-							"    and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')")
+							"  and p.escid = " + Long.parseLong(session["escid"].toString()) +
+							"  and t.escola.id = ? " + 
+                            "  and t.anoLetivo = ? " +
+							"  and (p.nome like '%"+parametro.toUpperCase()+"%' or p.cpfCnpj ='"+parametro+"')", [Long.parseLong(session["escid"].toString()), ano])
 
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
@@ -128,9 +129,10 @@ class MatriculaController {
 
 					print("print matriculas "+ matricula )
 				}else{
-					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t " +
+					matricula = Matricula.executeQuery(" select m from Matricula as m, Turma as t, Pessoa as p " +
 							"  where t.id = m.turma.id " +
 							"    and m.status = 'Ativo' " +
+							"    and p.id = m.aluno.id" +
 							"  and p.escid = "+Long.parseLong(session["escid"].toString())+" and t.escola.id = ? and t.anoLetivo = ?",[Long.parseLong(session["escid"].toString()), ano])
 
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
@@ -410,6 +412,7 @@ class MatriculaController {
 				matricula.turma = turma
 				matricula.dataDaMatricula = new Date()
 				matricula.matricula = params.matricula
+				matricula.nivelEspecial = params.nivelEspecial.toString().toInteger()
 
 				//def matriculas = Matricula.findAll()
 				Calendar ca = Calendar.getInstance()
@@ -459,6 +462,7 @@ class MatriculaController {
 
 				Matricula matriculaM = new Matricula(params)
 				matriculaM.status = 'Ativo'
+				matriculaM.nivelEspecial = params.nivelEspecial.toString().toInteger()
 
 				def turma = Turma.findById(params.turma)
 				def matriculados = Matricula.findAllByTurma(turma)

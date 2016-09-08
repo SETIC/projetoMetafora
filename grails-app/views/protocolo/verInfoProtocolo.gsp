@@ -70,12 +70,11 @@ function printDiv(id)
 					${erro}
 				</div>
 			</g:if>
-<<<<<<< HEAD
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<g:form controller="Protocolo" action="verInfoProtocolo"
-						class="form-horizontal">
+					<g:form controller="Protocolo" action="verInfoProtocolo" 
+					class="form-horizontal">
 						<g:hiddenField type="number" name="id" value="${protocolos.id}" />
 						<fieldset id="print">
 							<div class="row">
@@ -94,29 +93,9 @@ function printDiv(id)
 									<g:formatDate format="yyyy-MM-dd" date="${date}" />
 									<g:datePicker noSelection="['':'']" precision="day"
 										class="form-control" id="iDataProtocolo" name="dataProtocolo"
-										required="true" />
+										required="true" value="${protocolos.dataProtocolo}" />
 								</div>
-=======
-			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="verInfoProtocolo" class="form-horizontal">
-					<g:hiddenField type="number" name="id" value="${protocolos.id}" />
-					<fieldset id="print">
-						<div class="form-group">
-							<label for="inputNumero" class="col-sm-2 control-label">Número</label>
-							<div class="col-sm-10">
-								${protocolos?.numero}
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="iProtocolo" class="col-sm-2 control-label">Data
-								do Protocolo </label>
-							<div class="col-sm-14">
-								<g:formatDate format="yyyy-MM-dd" date="${date}" />
-								<g:datePicker noSelection="['':'']" precision="day"
-									class="form-control" id="iDataProtocolo" name="dataProtocolo"
-									required="true" />
->>>>>>> protocJadson
+
 							</div>
 							<br>
 							<div class="form-group">
@@ -126,10 +105,9 @@ function printDiv(id)
 									<g:formatDate format="yyyy-MM-dd" date="${date}" />
 									<g:datePicker noSelection="['':'']" precision="day"
 										class="form-control" id="iDataEmissao" name="dataEmissao"
-										required="true" />
+										required="true" value="${protocolos.dataEmissao}"/>
 								</div>
 							</div>
-<<<<<<< HEAD
 							<br>
 							<div class="form-group">
 								<label for="inputNumeroDocumento" class="col-sm-2">Numero
@@ -137,32 +115,16 @@ function printDiv(id)
 								<div class="col-sm-10">
 									${protocolos.numeroDocumento}
 								</div>
-=======
-						</div>
-						<br>
-						<div class="form-group">
-							<label for="inputNumeroDocumento" class="col-sm-2 control-label">Número
-								do Documento</label>
-							<div class="col-sm-10">
-								${protocolos.numeroDocumento}
->>>>>>> protocJadson
-							</div>
+				             </div>
 							<br>
 							<div class="form-group">
 								<label for="inputAssunto" class="col-sm-2">Assunto</label>
 								<div class="col-sm-10">
-									${protocolos.assunto}
+									${protocolos.assunto.assunto}
 								</div>
 							</div>
 							<br>
-	
-							<div class="form-group">
-								<label for="inputSituacao" class="col-sm-2">Situação</label>
-								<div class="col-sm-10">
-									${protocolos.situacao.nome}
-								</div>
-							</div>
-	
+
 							<div class="form-group">
 								<label for="inputTipoDocumento" class="col-sm-2">Tipo
 									de Documento</label>
@@ -170,7 +132,53 @@ function printDiv(id)
 									${protocolos.tipoDocumento.nome}
 								</div>
 							</div>
-<<<<<<< HEAD
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Interessado</label>
+								<div class="col-sm-10">
+									${protocolos.interessado}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">CPF/CNPJ</label>
+								<div class="col-sm-10">
+									${protocolos.cpfCnpj}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Telefone</label>
+								<div class="col-sm-10">
+									${protocolos.telefone}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Email</label>
+								<div class="col-sm-10">
+									${protocolos.email}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputSituacao" class="col-sm-2">Situação</label>
+								<div class="col-sm-10">
+									${protocolos.situacao.nome}
+								</div>
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<label for="inputInteressado" class="col-sm-2">Descrição de Situação</label>
+								<div class="col-sm-10">
+									${protocolos.descricaoSituacao}
+								</div>
 							</div>
 							<br>
 	
@@ -182,6 +190,7 @@ function printDiv(id)
 											<tr>
 												<th>Data de Disponibilização</th>
 												<th>Data de Recebimento</th>
+												<th>Dias</th>
 												<th>Funcionário Setor Origem</th>
 												<th>Funcionário Setor Destino</th>
 											</tr>
@@ -193,6 +202,15 @@ function printDiv(id)
 	
 													<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
 															date="${it.dataRecebimento}" /></td>
+													
+													<td>
+													<g:if test="${(it.dataRecebimento != null) && (it.dataDisponibilizacao != null)}">
+														${it.dataRecebimento - it.dataDisponibilizacao}
+													</g:if>
+													<g:else>
+     													${new Date() - it.dataDisponibilizacao}
+													</g:else>
+													</td>
 	
 													<td>
 														${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
@@ -200,13 +218,13 @@ function printDiv(id)
 													</td>
 													<td>
 														${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-														-${ it.funcionarioSetorOrigem.setor.nome}
+														-${ it.funcionarioSetorDestino.setor.nome}
 													</td>
 												</tr>
 											</g:each>
 										</thead>
 									</table>
-									</br> </br>
+									
 	
 									<table id="listarObservacoes" class="table table-bordered">
 										<legend class="scheduler-border">Observações</legend>
@@ -244,13 +262,15 @@ function printDiv(id)
 													<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
 															date="${it.dataAnexo}" /></td>
 													<td>
-														<g:link action="downloadFile" params="[id: it.id]"> Baixar </g:link>																									
+														<g:link action="downloadFile" params="[id:it.id]"> Baixar </g:link>																									
 													</td>
 												</tr>
 											</g:each>
 										</thead>
 									</table>
 						</fieldset>
+						
+												
 						<div style="margin: 0 -1% auto">
 							<button class="btn btn-danger btn-flat"
 								onClick="printDiv('print')">
@@ -260,10 +280,14 @@ function printDiv(id)
 								<li class="btn btn-primary btn-flat"><a
 									href="/projetoMetafora/Protocolo/listarProtocolo" style="color: #fff;">Voltar</a></li>
 							</ul>
+							
+							<button class="btn btn-danger btn-flat"
+								onClick="printDiv('testeImpressao')">
+								<i class="glyphicon glyphicon-print"></i> Imprimir Etiqueta
 							</button>
+							
 						</div>
-				</div>
-				</g:form>
+				  </g:form>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -274,99 +298,6 @@ function printDiv(id)
 					tabela.fnSort([ [ 1, 'asc' ] ]);
 				});
 			</script>
-=======
-						</div>
-						<br>
-
-						<div class="form-group">
-							<div class="box box-white">
-								<table id="listarTramites" class="table table-bordered ">
-									<legend class="scheduler-border">Tramitação</legend>
-									<thead>
-										<tr>
-											<th>Data de Disponibilização</th>
-											<th>Data de Recebimento</th>
-											<th>Funcionário Setor Origem</th>
-											<th>Funcionário Setor Destino</th>
-										</tr>
-										<g:each in='${tramites?}'>
-											<tr class="info">
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-														date="${it.dataDisponibilizacao}" /></td>
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-														date="${it.dataRecebimento}" /></td>
-												<td>
-													${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													-${it.funcionarioSetorOrigem.setor.nome}
-												</td>
-												<td>
-													${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													-${ it.funcionarioSetorOrigem.setor.nome}
-												</td>
-											</tr>
-										</g:each>
-									</thead>
-								</table>
-								</br> </br>
-
-								<table id="listarObservacoes" class="table table-bordered">
-									<legend class="scheduler-border">Observações</legend>
-									<thead>
-										<tr>
-											<th>Observação</th>
-											<th style="width:570px">Data</th>
-										</tr>
-										<g:each in='${observacoes?}'>
-											<tr class="info">
-												<td>
-													${it.texto}
-												</td>
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-														date="${it.dataObservacao}" /></td>
-											</tr>
-										</g:each>
-									</thead>
-								</table>
-
-								<table id="listarAnexos" class="table table-bordered">
-									<legend class="scheduler-border">Anexos</legend>
-									<thead>
-										<tr>
-											<th>Nome do Arquivo</th>
-											<th style="width:395px">Data</th>
-											<th> </th>
-										</tr>
-										<g:each in="${anexos}">
-											<tr class="info">
-												<td>
-													${it.arquivo}
-												</td>
-												<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-														date="${it.dataAnexo}" /></td>
-												<td>
-													<g:link action="downloadFile" enctype="multipart/form-data" params="[id: it.id]"> Baixar </g:link>
-
-												</td>
-											</tr>
-										</g:each>
-									</thead>
-								</table>
-					 </fieldset>
-					<div style="margin: 0 -1% auto">
-						<button class="btn btn-danger btn-flat"
-							onClick="printDiv('print')">
-							<i class="glyphicon glyphicon-print"></i> Imprimir
-						</button>
-						<ul style="display: inline-block; margin-left: -30px">
-							<li class="btn btn-info btn-flat"><a
-								href="/projetoMetafora/protocolo/listarProtocolo/">Voltar</a></li>
-						</ul>
-						</button>
-					</div>
-			   </div>
-			</g:form>
-		  </div>
->>>>>>> protocJadson
 		</div>
 	</section>
  </body>

@@ -80,7 +80,7 @@ function printDiv(id)
 					<g:if test="${!funcionarios?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
-							<th style="width: 65px;"></th>
+							<th style="width: 90px;"></th>
 							<th style="width: 280px;text-align: left;">Nome</th>
 							<th style="text-align: left;">Matricula</th>
 							<th style="text-align: left;">Cargo</th>						
@@ -248,7 +248,6 @@ function printDiv(id)
 											</div>
 										</div>
                                         <br>
-                                              
                                               <div id="divDisciplinas" style="display: none;" class="form-heading">
 													<label>Disciplinas</label>
 													<div class="controls">
@@ -257,7 +256,7 @@ function printDiv(id)
 															name="disciplinaProf" multiple="multiple"
 															from="${br.gov.rn.saogoncalo.academico.Disciplina.list() }"
 															value="${id}" optionKey="id" optionValue="disciplina" />
-													</div>
+												</div>
 											  <br>
 											  </div>
 											  
@@ -288,7 +287,7 @@ function printDiv(id)
 											<div class="form-heading">
 												<label>Estado Civil</label>
 												<div class="controls">
-													<select class="form-control" name="estadoCivil">
+													<select class="form-control" name="estadoCivil"  required="true">
 														<option value="null">Selecione...</option>
 														<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
 														<option value="CASADO(A)">CASADO(A)</option>

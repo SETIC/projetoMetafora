@@ -20,6 +20,9 @@
     <section class="content">
       <!-- Info boxes -->
       <div class="row">
+      	
+     <g:if test="${sessao!=5301}">
+      	      	
       	<g:link class="link-black" controller="Aluno" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">
@@ -31,6 +34,9 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
         </g:link>
+        </g:if>
+        
+        
         <g:if test="${sessao==0||sessao==29}">
         <g:link class="link-black" controller="Escola" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
@@ -44,6 +50,9 @@
 	        </div><!-- /.col -->
 		</g:link>
 		</g:if>
+		
+		
+		<g:if test="${sessao!=5301}">
 		<g:link class="link-black" controller="Professores" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
 	          <div class="info-box">
@@ -55,6 +64,7 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
         </g:link>
+        </g:if>
         
         <g:link class="link-black" controller="Funcionario" action="listar">
 	        <div class="col-md-3 col-sm-6 col-xs-12">
@@ -86,7 +96,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                    <canvas id="pieChart" style="margin-left: ; height: 186px; width: 530px;" width="355" height="265"></canvas>
+                    <canvas id="pieChart" style="margin-left: ; height: 186px; width: 530px;" width="355" height="265" ></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
               
@@ -165,13 +175,10 @@
      
     <script src="/projetoMetafora/js/jQuery/jQuery-2.1.3.min.js" type="text/javascript"></script>
 
-    
     <script>
       $(function () {
-
-    	  //var endereco = "192.168.1.247";
+    	  //var endereco = "192.168.1.252";
     	  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-   			
           $.ajax({
               type: "GET",
               url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
@@ -182,7 +189,7 @@
                     var pieChart = new Chart(pieChartCanvas);
              
             var PieData = result[0]
-
+                
             var pieOptions = {
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke: false,
@@ -205,20 +212,22 @@
                     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                     maintainAspectRatio: true,
                     //String - A legend template
-                    legendTemplate: ""
+                    legendTemplate: "" ,
+            
                   };
                   //Create pie or douhnut chart
                   // You can switch between pie and douhnut using the method below.
-                  pieChart.Doughnut(PieData, pieOptions);
-            
-              }});
-     
-      });
-      $(function () {
+                 
+					pieChart.Doughnut(PieData, pieOptions);
 
+									}
+								});
 
-    	  //var endereco = "192.168.1.247";
-    	  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+					});
+					$(function() {
+
+						//var endereco = "192.168.1.252";
+						var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
    			
           $.ajax({
               type: "GET",
@@ -264,9 +273,7 @@
       });
       $(function () {
 
-
-
-    	  //var endereco = "192.168.1.247";
+    	  //var endereco = "192.168.1.252";
 		  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
    			
           $.ajax({
@@ -279,7 +286,6 @@
                     var pieChart3 = new Chart(pieChartCanvas3);
              
             var PieData3 = result[2]
-
             var pieOptions3 = {
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke: false,

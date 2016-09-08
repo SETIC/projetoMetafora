@@ -6,11 +6,7 @@
 </head>
 <body>
 	<script>
-
-
-
-
-function printDiv(id1, id2)
+  function printDiv(id1, id2)
 
 {
   var divToPrint1=document.getElementById(id1);
@@ -19,7 +15,7 @@ function printDiv(id1, id2)
 
   newWin.document.write("<table border='0'>");
   newWin.document.write("<tr>");
-  newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+  //newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
   newWin.document.write("<td>");
   newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
   newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
@@ -48,7 +44,7 @@ function deletar(id) {
 </script>
 	<section class="content-header">
 		<h1>
-			Protocolo <small>Visualização e Gerenciamento</small>
+			Protocolo <small>Visualização e Gerenciamento</small> 
 		</h1>
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
@@ -75,72 +71,73 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-							<th style="width: 60px;"></th>
 							<th style="text-align: left;">Número</th>
-							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Destino</th>
 							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Interessado</th>
 							<th style="text-align: left;">Situação</th>
-
+							<th style="text-align: left;">Funções</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosEnviados?}'>
 							<tr class='linha_registro'>
+								
+								<td>
+									${it.protocolo.numero}
+								</td>
+
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
+
+								<td>
+									
+									${it.funcionarioSetorDestino.setor.nome}
+								</td>
+
+								<td>
+									${it.protocolo.assunto.assunto}
+								</td>
+                                <td>
+										${it.protocolo.interessado}</td>
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
+								</td>
 								<td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
-													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></div>
-												<div title="Excluir protocolo" onclick="deletar(${it.protocolo.id})"
-													class="btn btn-danger btn-xs btn-flat"><span
-													class="glyphicon glyphicon-remove"></span></div>
+												<div title="Editar protocolo"
+													class="btn btn-primary btn-xs btn-flat">
+													<a style="color: #fff"
+														href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a>
+												</div>
+												<div title="Excluir protocolo"
+													onclick="deletar(${it.protocolo.id})"
+													class="btn btn-danger btn-xs btn-flat">
+													<span class="glyphicon glyphicon-remove"></span>
+												</div>
 											</g:if>
 											<div title="Ver detalhes do protocolo"
-												class="btn btn-success btn-xs btn-flat"><a
-												style="color: #fff"
-												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
-													class="glyphicon glyphicon-eye-open"></span></a></div>
+												class="btn btn-success btn-xs btn-flat">
+												<a style="color: #fff"
+													href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}"><span
+													class="glyphicon glyphicon-eye-open"></span></a>
+											</div>
 										</div>
 
 									</div>
-								</td>
-
-								<td>
-									${it.protocolo.numero}
-								</td>
-
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM"
-										date="${it.protocolo.dataProtocolo}" /></td>
-
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-
-										date="${it.protocolo.dataEmissao}" /></td>
-
-								<td>
-									${it.funcionarioSetorDestino.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorDestino.setor.nome}
-								</td>
-
-								<td>
-									${it.protocolo.assunto}
-								</td>
-								
-								<td>
-									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
 							</tr>
 						</g:each>
 					</tbody>
 				</table>
 			</div>
-			<br> <br>
-
-
+			<br>
+		 <br>
 			<script>
 			function preencheCampoHidden(id){
 				var campo = document.getElementById("idProtocoloHidden");
@@ -155,74 +152,71 @@ function deletar(id) {
 					class="table table-striped table-hover example">
 					<thead>
 						<tr>
-
-							<th style="width: 60px;"></th>
 							<th style="text-align: left;">Número</th>
-							<th style="text-align: left;">Data do Protocolo</th>
 							<th style="text-align: left;">Data da Emissão</th>
 							<th style="text-align: left;">Origem</th>
 							<th style="text-align: left;">Assunto</th>
+							<th style="text-align: left;">Interessado</th>
 							<th style="text-align: left;">Situação</th>
-
+							<th style="text-align: left;">Funções</th>
 						</tr>
 					</thead>
 					<tbody>
 						<g:each in='${protocolosAceitos?}'>
 							<tr class='linha_registro'>
 								<td>
+									${it.protocolo.numero}
+								</td>
+								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
+								<td>
+									${it.funcionarioSetorOrigem.setor.nome}
+								</td>
+
+								<td>
+									${it.protocolo.assunto.assunto}
+								</td>
+								 <td>
+									${it.protocolo.interessado}</td>
+								<td>
+									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
+								</td>
+                                 <td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">
 
 											<g:if test="${perm2}">
-												<div title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
-													style="color: #fff"
-													href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
-														class="glyphicon glyphicon-pencil"></span></a></div>
+												<div title="Editar protocolo"
+													class="btn btn-primary btn-xs btn-flat">
+													<a style="color: #fff"
+														href="/projetoMetafora/Protocolo/editar/${it.protocolo.id}"><span
+														class="glyphicon glyphicon-pencil"></span></a>
+												</div>
 											</g:if>
 
 
-											<div title="Ver detalhes do protocolo" class="btn btn-success btn-xs btn-flat">
+											<div title="Ver detalhes do protocolo"
+												class="btn btn-success btn-xs btn-flat">
 
-											<a style="color: #fff" href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
-											<span class="glyphicon glyphicon-eye-open">
-											</span>
-											</a>
+												<a style="color: #fff"
+													href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo.id}">
+													<span class="glyphicon glyphicon-eye-open"> </span>
+												</a>
 											</div>
 
-											<div title="Tramitar Protocolo" class="btn btn-warning btn-xs btn-flat">
-											<a style="color: #fff" data-target="#myModalTramite" data-toggle="modal">
-											<span class="glyphicon glyphicon-send" onclick="preencheCampoHidden(${it.protocolo.id})">
-											</span>
-											</a>
+											<div title="Tramitar Protocolo"
+												class="btn btn-warning btn-xs btn-flat">
+												<a style="color: #fff" data-target="#myModalTramite"
+													data-toggle="modal"> <span
+													class="glyphicon glyphicon-send"
+													onclick="preencheCampoHidden(${it.protocolo.id})"> </span>
+												</a>
 											</div>
-											
-											</div>
+
+										</div>
 
 									</div>
 								</td>
-								<td>
-									${it.protocolo.numero}
-								</td>
-
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-										date="${it.protocolo.dataProtocolo}" /></td>
-
-								<td><g:formatDate format="dd/MM/yyyy"  type="datetime" style="MEDIUM"
-
-										date="${it.protocolo.dataEmissao}" /></td>
-
-								<td>
-									${it.funcionarioSetorOrigem.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.funcionarioSetorOrigem.setor.nome}
-								</td>
-
-								<td>
-									${it.protocolo.assunto}
-								</td>
-								
-								<td>
-									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
-								</td>
-
 							</tr>
 						</g:each>
 					</tbody>
@@ -255,14 +249,15 @@ function deletar(id) {
 									Protocolo</h4>
 							</div>
 							<div class="modal-body">
-								<g:form controller="Protocolo" action="salvar" class="form"
+								<g:form controller="Protocolo" action="salvar" class="form-horizontal"
 									enctype="multipart/form-data">
 									<fieldset>
 										<div class="form-heading">
-											<label>Número</label>
+											<label>Número do Protocolo</label>
 											<div class="controls">
-												<g:field type = "number" class="form-control" name="numero" value=""
-													required="true" />
+
+												<g:field type="text" class="form-control" name="numero"
+													value="" required="true" />
 											</div>
 										</div>
 										<br>
@@ -278,34 +273,70 @@ function deletar(id) {
 											</div>
 										</div>
 										<br>
-										<div class="form-group">
-											<label for="iDataEmissao" class="col-sm-4 control-label">Data
-												de Emissão </label>
-											<div class="col-sm-16">
-												<g:formatDate format="yyyy-MM-dd" date="${date}" />
-												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataEmissao" name="dataEmissao"
-													required="true" />
-											</div>
-										</div>
-										<br>
+
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
-												<g:field type="text"class="form-control" name="numeroDocumento"
-													value="" required="true" />
-											</div>
-										</div>
-										<br>
-										<div class="form-heading">
-											<label>Assunto</label>
-											<div class="controls">
-												<g:textField class="form-control" name="assunto" value="" 
-													required="true" />
+												<g:field type="text" class="form-control"
+													name="numeroDocumento" value=""/>
 											</div>
 										</div>
 										<br>
 										
+
+
+										<div class="form-heading">
+											<label>Assunto</label>
+											<div class="controls ">
+												<select class="form-control selectpicker"
+													data-live-search="true" name="assunto"
+													id="assuntoProtocolo" onchange="">
+													<g:each in="${assunto}">
+														<option value="${it.id}">
+															${it.assunto}
+														</option>
+													</g:each>
+												</select>
+											</div>
+										</div>
+										<br>
+										
+										
+										<div class="form-heading">
+											<label>Interessado</label>
+											<div class="controls">
+												<g:textField class="form-control" name="interessado" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
+
+										<div class="form-heading">
+											<label>CPF/CNPJ</label>
+											<div class="controls">
+												<g:textField class="form-control" name="cpfCnpj" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
+
+										<div class="form-heading">
+											<label>Telefone</label>
+											<div class="controls">
+												<g:textField class="form-control" name="telefone" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>
+										
+										<div class="form-heading">
+											<label>Email</label>
+											<div class="controls">
+												<g:textField class="form-control" name="email" value=""
+													required="false" />
+											</div>
+										</div>
+										<br>										
 
 										<div class="form-heading">
 											<label>Funcionario Setor de Destino</label>
@@ -315,7 +346,8 @@ function deletar(id) {
 													id="idFuncionarioSetorDestino" onchange="">
 													<g:each in="${funcionarioSetorDestino}">
 														<option value="${it.id}">
-															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
+															${it.funcionario.cidadao.pessoaFisica.pessoa.nome} -
+															${it.setor.nome}
 														</option>
 													</g:each>
 												</select>
@@ -363,16 +395,27 @@ function deletar(id) {
 										</div>
 
 										<br> 
-										
-									<label>Anexo</label>
+										<label>Anexo</label>
 										<script type="text/javascript">  
+										 
+										$(function(){
+										    var fileInput = $('.upload-file');
+										    var maxSize = fileInput.data('max-size');
+										    $('.form-horizontal').submit(function(e){
+										      var fileSize = fileInput.get(0).files[0].size; //em bytes
+										            if(fileSize>maxSize){
+										                alert('o tamanho do arquivo e maior do que ' + maxSize + ' bytes');
+										                return false;
+										            }
+										    });
+										});
+
 										function limparCampoFile1(){
 											document.getElementById("arquivo[]").value = "";
 										}
-										
+										//criar os inputs
 										$(document).ready(function(){  
-										 
-										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
+										    var input = '<label style="display: block; font-weight: initial;"> <input type = "file" name="arquivo[]"  id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/> <a href="#" class="remove"> Excluir </a> </label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -384,15 +427,15 @@ function deletar(id) {
 										 
 						                 }); 
 										 
-										</script> 
-								        <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-								        <br />
-								        <fieldset id="inputs_adicionais" style="border: none">  
-								        </fieldset> 
-								        <br />
-								        <input type="button" class="btn btn-primary btn-flat" name="addFile1" value="Novo Anexo" />
-								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
-								        
+										</script>
+										<input type="file" name="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data" /> <br />
+										<fieldset id="inputs_adicionais" style="border: none">
+										</fieldset>
+										<%--<br/> <input type="button" class="btn btn-primary btn-flat"
+											name="addFile1" value="Novo Anexo" /> --%><input type="button"
+											name="limpar" class="btn btn btn-flat" value="Limpar"
+											onclick="limparCampoFile()">
+
 									</fieldset>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-primary btn-flat">
@@ -401,11 +444,10 @@ function deletar(id) {
 										<input type="reset" class="btn btn btn-flat" value="Limpar">
 									</div>
 								</g:form>
-			          </g:if>
+			                 </g:if>
 
 			<!-- ModalTramite -->
-			<div class="modal fade" id="myModalTramite" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="myModalTramite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -415,42 +457,8 @@ function deletar(id) {
 							<h4 class="modal-title" id="myModalLabel">Tramite de
 								protocolos</h4>
 						</div>
-						<div class="modal-body">
-							<g:form controller="Protocolo" action="salvarTramite"
-								class="form" enctype="multipart/form-data">
-								<fieldset>
-									<div class="form-heading">
-										<input type="hidden" name="protocoloHidden" id="idProtocoloHidden"/>
-										<label>Destino</label>
-										<div class="controls ">
-
-											<select class="form-control selectpicker"
-												data-live-search="true"
-												name="funcionarioSetorDestinoTramite"
-												id="idFuncionarioSetorDestinoTramite" onchange="">
-												<g:each in="${funcionarioSetorDestino}">
-													<option value="${it.id}">
-														${it.funcionario.cidadao.pessoaFisica.pessoa.nome}
-													</option>
-												</g:each>
-											</select>
-
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-										<label>Observação</label>
-										<div class="controls">
-											<g:textArea class="form-control" name="observacao" value=""
-												required="true" />
-										</div>
-									</div>
-									<br>
-									<div class="form-heading">
-
-									<label>Anexo</label>
-
-										<script type="text/javascript">  
+						  <div class="modal-body">
+							<script type="text/javasript">  
 
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";
@@ -470,14 +478,51 @@ function deletar(id) {
 										 
 										}); 
 										 
-										</script>
+							</script> 
+							
+							
+							<g:form controller="Protocolo" action="salvarTramite"
+								class="form" enctype="multipart/form-data">
+								<fieldset>
+									<div class="form-heading">
+										<input type="hidden" name="protocoloHidden"
+											id="idProtocoloHidden" /> <label>Destino</label>
+										<div class="controls ">
+
+											<select class="form-control selectpicker"
+												data-live-search="true"
+												name="funcionarioSetorDestinoTramite"
+												id="idFuncionarioSetorDestinoTramite" onchange="">
+												<g:each in="${funcionarioSetorDestino}">
+													<option value="${it.id}">
+														${it.funcionario.cidadao.pessoaFisica.pessoa.nome} - ${it.setor.nome}
+													</option>
+												</g:each>
+											</select>
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Observação</label>
+										<div class="controls">
+											<g:textArea class="form-control" name="observacao" value=""
+												required="true" />
+										</div>
+									</div>
+									<br>
+									
+									<div class="form-heading">
+
+										<label>Anexo</label>
+									
 										<input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/>
-								        <br />
+								        <br>
 								        <fieldset id="inputs_adicionais_tramite" style="border: none">  
 								        </fieldset> 
-								        <br />
-								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" />
+								        <!-- <br>
+								        <input type="button" class="btn btn-primary btn-flat" name="addFile" value="Novo Anexo" /> -->
 								        <input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()">
+								        
 									</div>
 									<br>
 								</fieldset>
