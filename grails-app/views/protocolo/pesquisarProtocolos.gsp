@@ -155,8 +155,9 @@
 												style="color: #fff"
 												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo_id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li> 
+																			
 																					
-											<g:if test="${ (it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id)}">
+											<g:if test="${ ((it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id) || (funcionarioSetorLogado[0].funcionario.cidadao.pessoaFisica.pessoa.nome=='FUNCIONARIO 1')) }">
 												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
