@@ -69,14 +69,15 @@ function printDiv(id)
 					<thead>
 						<tr>
 							<th style="width: 10px;">Funcões</th>
+							<th style="width: 350px;">Codigo</th>
 							<th style="width: 350px;">Turma</th>
 							<th style="width: 350px;">Série</th>
-							<th style="width: 350px;">Disciplina</th>
+							<th style="width: 350px;">Escola</th>
 						</tr>
 					</thead>
 					<tbody>
-					<g:if test= "${turmaDisciplina.turma.serie.serie == 'F'}">
-					<li><a href="/projetoMetafora/atividade/listarRelatorioPolivalente/${turma.id}"></a></li>
+					<g:if test= "${turmaDisciplina.serie == 'F'}">
+					<li><a href="/projetoMetafora/atividade/listarRelatorioPolivalente/${turmaDisciplina.id}"></a></li>
 					 </g:if>
 					 <g:else>
 						<g:each in="${turmaDisciplina}" var="td">
@@ -87,20 +88,22 @@ function printDiv(id)
 											<ul style="display: inline">
 												<li title="Escolher" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/atividade/listarAtividadeSerie/${td.turma.id}"><span
-													class="glyphicon glyphicon-ok">Selecionar</span></a></li>
+													href="/projetoMetafora/atividade/listarAtividadeSerie/${td.id}"><span
+													class="glyphicon glyphicon-ok"></span></a></li>
 											</ul>
 										</div>
 									</td>
-	
 									<td>
-									${td.turma.turma} 
+										${td.id} 
 									</td>
 									<td>
-										${td.turma.serie.serie} 
+										${td.turma} 
 									</td>
 									<td>
-										${td.disciplinaLecionadaPorProfessor.disciplina.disciplina}
+										${td.serie} 
+									</td>
+									<td>
+										${td.escola} 
 									</td>
 								</tr>
 								</g:each>

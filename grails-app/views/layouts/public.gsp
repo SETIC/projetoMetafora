@@ -154,7 +154,8 @@
    					var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
    				     $.ajax({
 			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/transferencia/alunosAguardandoAprovacao/",
+			            //url: "http://"+endereco+":8080/projetoMetafora/transferencia/alunosAguardandoAprovacao/",
+			            url: "http://"+endereco+":8080/transferencia/alunosAguardandoAprovacao/",
 			            dataType: "json",
 			            success: function(result){
 

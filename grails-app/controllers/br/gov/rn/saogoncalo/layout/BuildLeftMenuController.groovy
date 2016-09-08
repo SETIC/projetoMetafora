@@ -163,7 +163,7 @@ class BuildLeftMenuController {
 				'</a> '+
 				'<ul class="treeview-menu"> '
 
-		if (verificaPerm('EDUCACAO_ACADEMICO', 'NOTA', perm)){
+		if (verificaPerm('EDUCACAO_ACADEMICO', 'LOG', perm)){
 			menu+= '<li><a href="/projetoMetafora/Funcionario/GerarRelatorio"><i class="fa fa-clipboard"></i>Situação</a></li>'
 			verificador = true
 		}

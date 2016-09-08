@@ -48,7 +48,7 @@
 			<g:each in='${protocolo?}'>
 			</g:each>
 			<div style="margin-left: 120px">
-				<g:form controller="Protocolo" action="atualizar" enctype="multipart/form-data"
+				<g:form controller="Protocolo" action="atualizar" enctype="multipart/form-data" 
 					class="form-horizontal">
 					<g:hiddenField type="number" name="id" value="${it.id}" />
 					<fieldset>
@@ -165,9 +165,12 @@
 						<div class="form-group">
 							<label for="inputTipoDocumento" class="col-sm-2 control-label">Situção </label>
 							<div class="col-sm-4">
-								<select class="selectpicker" " name="situacao"
-									id="comboSituacao" class="form-control">
+																							
+								<g:if test="${protocolo.tramite.dataRecebimento[0] != null}">
+								
+								<select class="selectpicker" name="situacao" id="comboSituacao" class="form-control">
 									<div class="col-sm-10">
+	
 										<g:each in="${situacoes}">
 											<g:if test="${it.id == protocolo.situacao.id}">
 												<option value="${it.id}" selected>
@@ -180,7 +183,66 @@
 												</option>
 											</g:else>
 										</g:each>
-								</select>
+									</select>
+									
+								</g:if>	
+								<g:else>
+								
+									<select class="selectpicker" name="situacao" id="comboSituacao" class="form-control" disabled >
+									<div class="col-sm-10">
+	
+										<g:each in="${situacoes}">
+											<g:if test="${it.id == protocolo.situacao.id}">
+												<option value="${it.id}" selected>
+													${it.nome}
+												</option>
+											</g:if>
+											<g:else>
+												<option value="${it.id}">
+													${it.nome}
+												</option>
+											</g:else>
+										</g:each>
+									</select>
+									
+								</g:else>
+									
+							</div>
+						</div>
+						<br>
+
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Interessado</label>
+							<div class="col-sm-10">
+								<input class="form-control" required name="interessado"
+									type="text" style="width: 300px" value="${protocolo.interessado}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">CPF/CNPJ</label>
+							<div class="col-sm-10">
+								<input class="form-control" name="cpfCnpj"
+									type="text" style="width: 300px" value="${protocolo.cpfCnpj}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Telefone</label>
+							<div class="col-sm-10">
+								<input class="form-control" name="telefone"
+									type="text" style="width: 300px" value="${protocolo.telefone}">
+							</div>
+						</div>
+						<br>
+						
+						<div class="form-group">
+							<label for="inputNome3" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input class="form-control" name="email"
+									type="text" style="width: 300px" value="${protocolo.email}">
 							</div>
 						</div>
 						<br>
@@ -221,7 +283,6 @@
 									 </thead>
 									</tbody>
 								</table>
-								<div class="form-heading">
 										<script type="text/javascript">  
 
 										function limparCampoFile(){
@@ -229,8 +290,7 @@
 										}
 										
 										$(document).ready(function(){  
-	                                        									 
-										    var input = '<label style="display: block"><input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
+										    var input = '<label style="display: block"><input type = "file" name ="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/><a href="#" class="remove">Excluir</a></label>';  
 										    $("input[name='addFile']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
 										    });  
@@ -241,15 +301,34 @@
 										    });  
 										 
 										}); 
+
+										$(function(){
+											
+											//var inputAnexo = document.getElementById("novoAnexo").disabled = true;
+										    var fileInput = $('.upload-file');
+										    var maxSize = fileInput.data('max-size');
+										    $('.form-horizontal').submit(function(e){
+										      var fileSize = fileInput.get(0).files[0].size; //em bytes
+										            if(fileSize>maxSize ){
+										                alert('o tamanho do arquivo e maior do que ' + maxSize + ' bytes');
+										                return false;
+											         }
+										    
+										    });
+										});
 										 
-							</script>  
-					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" /></label>
+
+							</script>
+							
+							<%--  
+					        <label style="display: block"> <input type="button" name="addFile" value="Novo Anexo" id="novoAnexo"/></label>
 					        
-					        <label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" enctype="multipart/form-data"/><input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
+					        --%><label style="display: block"> <input type = "file" name ="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data"/>
+					        <br><input type="button" name="limpar" class="btn btn btn-flat" value="Limpar" onclick="limparCampoFile()"> </label>
 					         
 					        <fieldset id="inputs_adicionais" style="border: none">  
 					        </fieldset> 
-					<div style="margin: 0 17% auto">
+					   <div style="margin: 0 17% auto">
 						<button type="submit" class="btn btn-primary btn-flat">
 							<i class="fa fa-refresh"></i> Atualizar
 						</button>

@@ -34,7 +34,7 @@
 	
 			<div class="box box-white" >
 			<div id="print">
-				<table id="" class="table table-striped table-hover example">
+				<table id="tableGrid" class="table table-striped table-hover example">
 					<g:if test="${!alunos?.isEmpty()})"></g:if>
 					<thead>
 						<tr>
@@ -48,8 +48,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<g:each in='${listarAtividadeSerie?}'>
-						 <g:hiddenField name="atividadeDisciplinaId" value="${it.id}" />
+						<g:each in='${listarAtividadeSerie?}' var="listAtividadeSerie">
+						 <g:hiddenField name="atividadeDisciplinaId" value="${listAtividadeSerie?.id}" />
 						
 								<tr class='linha_registro'>
 									<td>
@@ -57,45 +57,45 @@
 											<ul style="display: inline">
 											<li title="Editar Atividade" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/atividade/editarAtividade/${it.id}"><span
+													href="/projetoMetafora/atividade/editarAtividade/${listAtividadeSerie.id}"><span
 														class="glyphicon glyphicon-pencil"></span></a></li>
 												
-												<li title="Remover Atividade" onclick="deletar(${it.id})"
+												<li title="Remover Atividade" onclick="deletar(${listAtividadeSerie.id})"
 													class="btn btn-danger btn-xs btn-flat"><span
 													class="glyphicon glyphicon-remove"></span></li>
 	
 												<li title="Ver detalhes da Atividade" class="btn btn-success btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/atividade/verInfoAtividade/${it.id}"><span
+													href="/projetoMetafora/atividade/verInfoAtividade/${listAtividadeSerie.id}"><span
 														class="glyphicon glyphicon-eye-open"></span></a></li>
 													
 													<li title="Lançar Notas" class="btn btn-warning btn-xs btn-flat"><a
 													style="color: #fff"
-													href="/projetoMetafora/atividade/lancarNota/${it.id}"><span
+													href="/projetoMetafora/atividade/lancarNota/${listAtividadeSerie.id}"><span
 														class="glyphicon glyphicon-th-list"></span></a></li>
 											</ul>
 										</div>
 									</td>
 									<td>
-										${it.nomeAtividade}
+										${listAtividadeSerie.nomeAtividade}
 									</td>
 									<td>
-										${it.notaMaxima}
+										${listAtividadeSerie.notaMaxima}
 									</td>
 									<td>
-										${it.turmaDisciplina.turma.turma} - 
-										${it.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina }
+										${listAtividadeSerie.turmaDisciplina.turma.turma} - 
+										${listAtividadeSerie.turmaDisciplina.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 									</td>
 									<td>
-									<g:formatDate format="dd-MM-yyyy" date="${it.dataInicio}"/>
+									<g:formatDate format="dd-MM-yyyy" date="${listAtividadeSerie.dataInicio}"/>
 										
 									</td>
 									<td>
-									<g:formatDate format="dd-MM-yyyy" date="${it.dataFim}"/>
+									<g:formatDate format="dd-MM-yyyy" date="${listAtividadeSerie.dataFim}"/>
 										
 									</td>
 									<td>
-										${it.bimestre}
+										${listAtividadeSerie.bimestre}
 									</td>
 								</tr>
 						</g:each>
@@ -140,16 +140,17 @@
 									</div>
 									<br>
 									<div class="form-heading">
-										<label for="diciplina">Disciplinas | Turma</label> <select
+										<label for="diciplina">Disciplinas | Turma</label> 
+										<select
 											style="height: 130px;" name="turmaDisciplina"
 											class="form-control selectpicker"
 											style="border-radius: 0 !important;" data-live-search="true"
 											required="required">
-											<g:each in="${turmaDisciplina}">
-												<option value="${it.id}">
-													${it.disciplinaLecionadaPorProfessor.disciplina.disciplina}
+											<g:each in="${turmaDisciplina?}" var="turmaDisc">
+												<option value="${turmaDisc?.id}">
+													${turmaDisc?.disciplina}
 												|
-													${it.turma.serie.serie} - ${it.turma.turma}
+													${turmaDisc?.serie} - ${turmaDisc?.turma}
 													
 												</option>
 											</g:each>
@@ -165,7 +166,7 @@
 												<option value="APRESENTAÇÃO">APRESENTAÇÃO</option>
 												<option value="TRABALHO">TRABALHO</option>
 												<option value="TESTE">TESTE</option>
-
+												<option value="RELATORIO">RELATÓRIO</option>
 											</select>
 										</div>
 									</div>

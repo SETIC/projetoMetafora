@@ -490,7 +490,8 @@
 				<div class="form-group">
 					<label for="iBairro" class="col-sm-2 control-label"
 						style="text-align: right">Bairro</label>
-					<div class="col-sm-10" style="width: 300px">
+					<div class="col-sm-10" style="width: 330px">
+
 						<input type="text" class="form-control" name="bairro" id="iBairro"
 							placeholder="Bairro" value="${reside?.bairro?.bairro}">
 					</div>
@@ -502,7 +503,8 @@
 						style="text-align: right">UF</label>
 					<div class="col-sm-10">
 
-						<select name="uf" id="iUf" class="form-control">
+						<select name="uf" id="iUf" class="form-control" style="width: 300px">
+
 							<option value="AC"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'AC'}"> selected </g:if>>Acre</option>
 							<option value="AL"
@@ -516,24 +518,22 @@
 							<option value="CE"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'CE'}"> selected </g:if>>Ceará</option>
 							<option value="DF"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if>>Distrito
-								Federal</option>
+
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'DF'}"> selected </g:if>>Distrito Federal</option>
 							<option value="ES"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if>>Espírito
-								Santo</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'ES'}"> selected </g:if>>Espírito Santo</option>
+
 							<option value="GO"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'GO'}"> selected </g:if>>Goiás</option>
 							<option value="MA"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MA'}"> selected </g:if>>Maranhão</option>
 							<option value="MT"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if>>Mato
-								Grosso</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MT'}"> selected </g:if>>Mato Grosso</option>
 							<option value="MS"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if>>Mato
-								Grosso do Sul</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MS'}"> selected </g:if>>Mato Grosso do Sul</option>
 							<option value="MG"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if>>Minas
-								Gerais</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'MG'}"> selected </g:if>>Minas Gerais</option>
+
 							<option value="PA"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PA'}"> selected </g:if>>Pará</option>
 							<option value="PB"
@@ -545,26 +545,23 @@
 							<option value="PI"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'PI'}"> selected </g:if>>Piauí</option>
 							<option value="RJ"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if>>Rio
-								de Janeiro</option>
+
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RJ'}"> selected </g:if>>Rio de Janeiro</option>
 							<option value="RN"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if>>Rio
-								Grande do Norte</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RN'}"> selected </g:if>>Rio Grande do Norte</option>
 							<option value="RO"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RO'}"> selected </g:if>>Rondônia</option>
 							<option value="RS"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if>>Rio
-								Grande do Sul</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RS'}"> selected </g:if>>Rio Grande do Sul</option>
 							<option value="RR"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'RR'}"> selected </g:if>>Roraima</option>
 							<option value="SC"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if>>Santa
-								Catarina</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SC'}"> selected </g:if>>Santa Catarina</option>
 							<option value="SE"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SE'}"> selected </g:if>>Sergipe</option>
 							<option value="SP"
-								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if>>São
-								Paulo</option>
+								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'SP'}"> selected </g:if>>São Paulo</option>
+
 							<option value="TO"
 								<g:if test="${reside?.bairro?.municipio?.estado?.abreviacao == 'TO'}"> selected </g:if>>Tocantins</option>
 						</select>

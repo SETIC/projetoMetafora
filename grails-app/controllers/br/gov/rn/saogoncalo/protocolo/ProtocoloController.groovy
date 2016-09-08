@@ -139,6 +139,9 @@ class ProtocoloController {
 				protocolo.situacao = situacao
 				protocolo.funcionarioSetor = funcionarioSetor
 				protocolo.assunto = assunto
+				protocolo.cpfCnpj = params.cpfcnpj
+				protocolo.telefone = params.telefone
+				protocolo.email = params.email
 
 				if (protocolo.save(flush:true)){
 					Observacao observacao = new Observacao(params)
@@ -346,17 +349,30 @@ class ProtocoloController {
 				protocolos.assunto = assunto
 				//tipoDocumentos = TipoDocumento.findAll()
 
-				def situacao = Situacao.get(params.situacao)
+				def situacao
+				if (params.situacao != null) {
+					situacao = Situacao.get(params.situacao)
+				}else{
+					situacao = Situacao.get(protocolos.situacao.id)
+				}
+				
+				println ("assunto" +params.situacao)
+				protocolos.situacao = situacao
+				
 
 				if(params.tipoDocumento != null){
 					tipoDocumento = TipoDocumento.get(params?.tipoDocumento)
 					protocolos.tipoDocumento = tipoDocumento
 				}
 
-				protocolos.situacao = situacao
-				println ("assunto" +params.situacao)
+
 
 				protocolos.descricaoSituacao = params.descricaoSituacao
+				protocolos.interessado = params.interessado
+				protocolos.cpfCnpj = params.cpfCnpj
+				protocolos.telefone = params.telefone
+				protocolos.email = params.email
+
 
 				if(protocolos.save(flush:true)){
 
@@ -382,7 +398,7 @@ class ProtocoloController {
 						println("status +++ " +tramite1)
 						tramite = Tramite.get(tramite1.id)
 						tramite.status = "ABERTO"
-						//tramite.save(flush:true)
+						tramite.save(flush:true)
 
 					}
 
@@ -461,7 +477,7 @@ class ProtocoloController {
 
 				println("ip servidor - " + grailsApplication.config.ip_servidor)
 				println("Banco - " + System.getProperty("username"))
-			
+
 				def funcionarioSetor
 
 				Protocolo protocolos = Protocolo.get(id)
@@ -542,7 +558,8 @@ class ProtocoloController {
 							"   and p.id = " + session["pesid"])
 
 
-					funcionarioSetorDestino = FuncionarioSetor.findAll()
+					//funcionarioSetorDestino = FuncionarioSetor.findAll()
+					funcionarioSetorDestino = FuncionarioSetor.findAllByResponsavel("True")
 				}else{
 
 
@@ -572,7 +589,13 @@ class ProtocoloController {
 							"   and u.pessoa.id = p.id " +
 							"   and p.id = " + session["pesid"])
 
-					funcionarioSetorDestino = FuncionarioSetor.findAll()
+/*					funcionarioSetorDestino = FuncionarioSetor.executeQuery(" select fs from FuncionarioSetor fs, " +
+							" Funcionario f, Pessoa p " +
+							" where p.id = f.id " +
+							" and fs.funcionario.id = f.id " +
+							" and p.escid = " + session["escid"] )*/
+					
+					funcionarioSetorDestino = FuncionarioSetor.findAllByResponsavel("True")
 
 				}
 
@@ -901,10 +924,13 @@ class ProtocoloController {
 				" from cadastro_unico_protocolo.tramite t, cadastro_unico_protocolo.protocolo p, cadastro_unico_protocolo.situacao s " +
 				" where p.id = t.protocolo_id " +
 				" and s.id = p.situacao_id " +
-				" and p.numero = '" + numero +"'" +
+
+				//" and p.numero = '" + numero +"'" +
+				" and p.numero = :numero " + 
 				" order by t.data_disponibilizacao "
 
-		result = sql.rows(sqlString)
+		result = sql.rows(sqlString, [numero : numero])
+
 		//println(result)
 		sql.close()
 		conn.close()

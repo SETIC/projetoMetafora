@@ -28,6 +28,8 @@ class NotaController {
 			def perm2 = usuario.getPermissoes(user, pass, "EDUCACAO_ACADEMICO", "NOTA", "2")
 
 			if (perm1 || perm2) {
+				
+				
 
 				def notas = Nota.findAll()
 				render (view:"/nota/listarNota.gsp", model:[notas:notas])
@@ -36,7 +38,6 @@ class NotaController {
 	}
 
 	def notasTurma(){
-
 
 		def p
 		def dlpp
@@ -76,8 +77,46 @@ class NotaController {
 			formatAno = new SimpleDateFormat("yyyy")
 			anoAtual = formatAno.format(date)
 
-			turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-			td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+			//turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
+			//td = TurmaDisciplina.findAllByDisciplinaLecionadaPorProfessorInListAndTurmaInList(dlpp, turmas)
+			
+			Calendar ca = Calendar.getInstance()
+			int ano = ca.get(Calendar.YEAR)
+			
+			//---conexao---
+			
+								def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+								def props = new Properties()
+								props.setProperty("user", "admin_db_sr")
+								props.setProperty("password", "bgt54rfvcde3")
+			
+								def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+			
+								def sql = new Sql(conn)
+								def sqlString = " select distinct td.id, t.id turmaId, t.turma, t.turno, t.vagas, s.serie, d.disciplina, " +
+										" (select e.nome from cadastro_unico_pessoal.pessoa e where e.id = t.escola_id) escola " +
+										" from educacao_academico.turma t, " +
+										" educacao_academico.turma_disciplina td, " +
+										" educacao_academico.disciplina d, " +
+										" educacao_academico.disciplina_lecionada_por_professor dlpp, " +
+										" cadastro_unico_pessoal.pessoa p, " +
+										" cadastro_unico_pessoal.pessoa_escola pe, " +
+										" educacao_academico.serie s " +
+										" where t.id = td.turma_id " +
+										" and d.id = dlpp.disciplina_id " +
+										" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+										" and p.id = dlpp.professor_id " +
+										" and pe.pessoa_id = p.id " +
+										" and s.id = t.serie_id " +
+										" and t.ano_letivo = " + ano.toString() +
+										" and p.id = " + session["pesid"]
+																
+								td = sql.rows(sqlString)
+								sql.close()
+								conn.close()
+			
+					//---conexao---
+			
 		}
 
 		//render (view:"/nota/notasTurma.gsp", model:[turmaDisciplina:td)
@@ -95,6 +134,7 @@ class NotaController {
 		def anoAtual
 		def turmas
 		def td
+		def dadosAtividade
 
 		if ((session["escid"] == 0) ) {
 
@@ -126,10 +166,13 @@ class NotaController {
 			anoAtual = formatAno.format(date)
 
 			turmas = Turma.findAllByAnoLetivoAndEscola(anoAtual.toInteger(), escola)
-			td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
+			//td = TurmaDisciplina.findAllByIdAndDisciplinaLecionadaPorProfessorInListAndTurmaInList(params.turmadisciplina, dlpp, turmas)
 		}
 
 
+		
+		Calendar ca = Calendar.getInstance()
+		int ano = ca.get(Calendar.YEAR)
 
 		def notas
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
@@ -144,9 +187,37 @@ class NotaController {
 
 
 		try {
+			
+			def sqlString = " select distinct td.id, t.id turmaId, t.turma, t.turno, t.vagas, s.serie, s.relatorio, d.disciplina, "+
+							" (select e.nome from cadastro_unico_pessoal.pessoa e where e.id = t.escola_id) escola "+
+							" from educacao_academico.turma t, "+
+							" educacao_academico.turma_disciplina td, "+ 
+							" educacao_academico.disciplina d, "+
+							" educacao_academico.disciplina_lecionada_por_professor dlpp, "+ 
+							" cadastro_unico_pessoal.pessoa p, "+
+							" cadastro_unico_pessoal.pessoa_escola pe, "+ 
+							" educacao_academico.serie s "+
+							" where t.id = td.turma_id "+
+							" and d.id = dlpp.disciplina_id "+ 
+							" and td.disciplina_lecionada_por_professor_id = dlpp.id "+ 
+							" and p.id = dlpp.professor_id "+
+							" and pe.pessoa_id = p.id "+
+							" and s.id = t.serie_id "+
+							" and t.ano_letivo = " + ano.toString() +  
+							" and p.id = " + session["pesid"]
+									
+			td = sql.rows(sqlString)
+			
+			
+			dadosAtividade = TurmaDisciplina.get(params.turmadisciplina)
+			println("id aqui -- " + dadosAtividade)
+			
+			
 			notas = sql.rows(consultaMediaAritmetica())
+						
+			
 
-			render (view:"/nota/listarNota.gsp", model:[notas:notas, turmaDisciplina:td])
+			render (view:"/nota/listarNota.gsp", model:[notas:notas, turmaDisciplina:td, dadosAtividade:dadosAtividade])
 		}catch(SQLException ex){
 			println ex.getMessage()
 		}
@@ -161,7 +232,7 @@ class NotaController {
 
 
 	def consultaMediaAritmetica(){
-
+		
 		return 	" select m.id, p.nome, "+
 				"		( select sum(nn.pontuacao) from educacao_academico.atividade aa, educacao_academico.nota nn "+
 				"		    where nn.atividade_id = aa.id "+
@@ -207,5 +278,6 @@ class NotaController {
 
 				" where m.turma_id = " + params.turma +
 				" group by m.id, p.nome "
+		
 	}
 }

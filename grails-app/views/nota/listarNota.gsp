@@ -65,7 +65,7 @@
 					<div class="form-heading">
 						<label>Turma</label>
 						<div class="controls">
-							${turmaDisciplina[0].turma.turma}
+							${dadosAtividade.turma.turma}
 						</div>
 					</div>
 					<br>
@@ -75,7 +75,7 @@
 					<div class="form-heading">
 						<label>Série</label>
 						<div class="controls">
-							${turmaDisciplina[0].turma.serie.serie}
+							${dadosAtividade.disciplinaLecionadaPorProfessor.turmaDisciplina.turma.serie.serie}
 						</div>
 					</div>
 					<br>
@@ -86,11 +86,23 @@
 					<div class="form-heading">
 						<label>Disciplina</label>
 						<div class="controls">
-							${turmaDisciplina[0].disciplinaLecionadaPorProfessor.disciplina.disciplina}
+							${dadosAtividade.disciplinaLecionadaPorProfessor.disciplina.disciplina}
 						</div>
 					</div>
 					<br>
 				</div>
+				
+				<div class="col-sm-2">
+					<div class="form-heading">
+						<label>Relatório</label>
+						<div class="controls">
+							${dadosAtividade.turma.serie.relatorio}
+						</div>
+					</div>
+					<br>
+				</div>				
+				
+				
 			</div>
 			<br />
 			<g:if test="${ok}">
@@ -104,6 +116,7 @@
 				</div>
 			</g:if>
 			<div class="box box-white">
+			
 				<table id="table" class="table table-striped table-hover example">
 					<thead>
 						<tr>
@@ -122,7 +135,7 @@
 					<tbody>
 						<g:each in="${notas}" var="nota">
 	
-							<%
+				<%
 					def nota1 = 0
 					def nota2 = 0
 					def nota3 = 0
@@ -200,24 +213,52 @@
 									${nota.nome}
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${nota1}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${nota2}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${nota3}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${nota4}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								<td>
 									<g:formatNumber
@@ -230,14 +271,28 @@
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${mediaParcial}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								<td>
+								<g:if test="${dadosAtividade.turma.serie.relatorio} == 'SIM'">
+									<g:formatNumber
+										number="${notaProvaFinal}" maxFractionDigits="1"
+										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:if>
+								<g:else>
 									<g:formatNumber
 										number="${mediaFinal}" maxFractionDigits="1"
 										minIntegerDigits="1" minFractionDigits="1" format="0.0" />
+								</g:else>
 								</td>
 								
 								<td><span class="label ${label}">${situacao}</span></td>
