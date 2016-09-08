@@ -62,6 +62,23 @@
    			   "<button type='submit' class='btn btn-primary btn-flat'>" +
 			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
               break;
+
+           case 'interessado':
+ 			  newInput.innerHTML = "<label>Nome do Interessado: </label/></br>"+
+ 			  "<input type='text' required = 'true' name ='interessado' id ='interessadoId'/>" +
+ 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+ 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+               break;   
+
+           case 'numeroDocumento':
+
+ 			  newInput.innerHTML = "<label>Número do documento: </label/></br>"+
+ 			  "<input type='text' required = 'true' name ='numeroDocumento' id ='numeroDocumento'/>" +
+ 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
+ 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+               break;
+
+              
            }
 			
 		}
@@ -85,7 +102,10 @@
 						<option value="null">SELECIONE...</option>
 						<option value="numero">NUMERO</option>
 						<option value="data">DATA</option>
-						<option value="setor">SETOR</option>
+						<option value="setor">SETOR DE CRIAÇÃO</option>
+						<option value="interessado">INTERESSADO</option>
+						<option value="numeroDocumento">NUMERO DO DOCUMENTO</option>
+						
 					</select>
 				</div>
 			</div>
@@ -121,6 +141,7 @@
 							<th>Número do Documento</th>
 							<th>Assunto</th>
 							<th>Situação</th>
+							<th>Interessado</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -134,8 +155,9 @@
 												style="color: #fff"
 												href="/projetoMetafora/protocolo/verInfoProtocolo/${it.protocolo_id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></li> 
+																			
 																					
-											<g:if test="${ (it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id)}">
+											<g:if test="${ ((it.funcionario_setor_destino_id == funcionarioSetorLogado[0].id) || (funcionarioSetorLogado[0].funcionario.cidadao.pessoaFisica.pessoa.nome=='FUNCIONARIO 1')) }">
 												<li title="Editar protocolo" class="btn btn-primary btn-xs btn-flat"><a
 													style="color: #fff"
 													href="/projetoMetafora/Protocolo/editar/${it.protocolo_id}"><span
@@ -149,13 +171,13 @@
 								</td>
 
 								<td>
-								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_disponibilizacao}" />
+								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_protocolo}" />
 								</td>
 
 								<td> 
-									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_recebimento}" />
+									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_emissao}" />
 								</td>
-
+								
 								<td>
 									${it.numero_Documento}
 								</td>
@@ -165,7 +187,10 @@
 								</td>
 								
 								<td>
-									${it.nome}
+									${it.situacao}
+								</td>
+								<td>
+									${it.interessado}
 								</td>
 							</tr>
 						</g:each>

@@ -33,9 +33,10 @@
 					<thead>
 						<tr>
 							<th style="width: 60px;"></th>
-							<th>Código</th>
+							<th>Número</th>
 							<th>Origem</th>
 							<th>Assunto</th>
+							<th>Interessado</th>
 							<th>Situação</th>
 							<th>Data do Protocolo</th>
 						</tr>
@@ -58,13 +59,16 @@
 									</div>
 								</td>
 								<td>
-									${it.id}
+									${it.protocolo.numero}
 								</td>
 								<td>
 									${it.funcionarioSetorOrigem.setor.nome}
 								</td>
 								<td>
-									${it.protocolo.assunto}
+									${it.protocolo.assunto.assunto}
+								</td>
+								<td>
+									${it.protocolo.interessado}
 								</td>
 								<td>
 									${it.protocolo.situacao.nome}

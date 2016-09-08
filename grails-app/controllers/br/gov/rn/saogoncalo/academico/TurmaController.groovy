@@ -42,11 +42,8 @@ class TurmaController {
 				def disciplinas
 				def escolas
 
-
-
 				if ((session["escid"] == 0) )
 				{
-
 					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where  t.anoLetivo >= ? ", [ano])
 
@@ -58,14 +55,20 @@ class TurmaController {
 
 					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
-
+					
 					escolas = Escola.get(Long.parseLong(session["escid"].toString()))
-
-					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp where "+
-							"dlpp.professor.id in (select p.id from Pessoa p where escid = ?) ", [Integer.parseInt(session["escid"].toString())])
-
+					
+                    disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select distinct dlpp from Pessoa p,"+ 
+				     " Professor pr,"+
+					 " DisciplinaLecionadaPorProfessor dlpp, "+
+					 " Disciplina d, "+
+					 " PessoaEscola pe "+
+					 " where p.id = pr.id "+
+					 " and dlpp.professor.id = pr.id "+
+					 " and d.id = dlpp.disciplina.id "+
+					 " and pe.pessoa.id = p.id " +
+					 " and pe.escola.id = " + session["escid"])
 				}
-
 
 				render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, perm2:perm2])
 			}else{
@@ -240,10 +243,22 @@ class TurmaController {
 				def turmaDisc = TurmaDisciplina.findAllByTurma(turmas)
 				def td = turmaDisc.disciplinaLecionadaPorProfessor.id
 
-				def dlpp = DisciplinaLecionadaPorProfessor.findAll()
+				//def dlpp = DisciplinaLecionadaPorProfessor.findAll()
 
 				def disciplinas = DisciplinaLecionadaPorProfessor.findAll()
-				render (view:"/turma/editarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, td:td, dlpp:dlpp])
+				def dlpp = DisciplinaLecionadaPorProfessor.executeQuery(" select distinct dlpp from Pessoa p,"+
+					" Professor pr,"+
+					" DisciplinaLecionadaPorProfessor dlpp, "+
+					" Disciplina d, "+
+					" PessoaEscola pe "+
+					" where p.id = pr.id "+
+					" and dlpp.professor.id = pr.id "+
+					" and d.id = dlpp.disciplina.id "+
+					" and pe.pessoa.id = p.id " +
+					" and pe.escola.id = " + session["escid"])
+				    
+				
+				render (view:"/turma/editarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, td:td,dlpp:dlpp])
 
 			}else{
 				render(view:"/error403.gsp")

@@ -5,6 +5,7 @@ class Serie {
 	Long numeroDeVagas
 	Date dataDeInicio
 	Date dataDeTermino
+	String relatorio
 
 	static hasMany = [turma:Turma]
 
@@ -13,7 +14,8 @@ class Serie {
 		numeroDeVagas blank:false, nullable:false
 		dataDeInicio nullable:false, blank:false
 		dataDeTermino nullable:false, blank: false
-	}
+		relatorio nullable:true, blank: true
+			}
 	
 	static mapping = {
 		table name: "serie", schema:"educacao_academico"

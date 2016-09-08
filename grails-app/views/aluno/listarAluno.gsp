@@ -76,7 +76,7 @@ function mudarCombo(){
 						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
-								style="width: 300px" value="" />
+								style="width: 300px" value="" minlenght="3"  />
 							<button style="margin-left: 310px; margin-top: -56px;"
 								type="submit" class="btn btn-primary btn-flat">
 								<i class="glyphicon glyphicon-search"></i>Buscar
@@ -109,9 +109,7 @@ function mudarCombo(){
 							<g:set var="pessoa" value="${it.cidadao.pessoaFisica.pessoa}" />
 							<g:set var="cidadao" value="${it.cidadao}" />
 							<g:set var="pessoaFisica" value="${it.cidadao.pessoaFisica}" />
-
 							<g:if test="${escolaid == escid}">
-
 								<tr class='linha_registro'>
 									<td>
 										<div class="opcoes">
@@ -160,21 +158,29 @@ function mudarCombo(){
 										${pessoa.cpfCnpj}
 									</td>
 									<td><g:formatDate format="dd/MM/yyyy"
-											date="${pessoa.dataDeNascimento}" /></td>
+											date="${pessoa.dataDeNascimento}" />
+									</td>
 									<td>
 										${pessoaFisica.sexo}
 									</td>
 									<td>
 										${cidadao.estadoCivil}
 									</td>
+													
+										<td style="text-align: center;"><g:if
+											test="${pessoa.status == 'Ativo'}">
+											<span class="label label-success">Ativo</span>
+										</g:if> <g:else>
+											<span class="label label-danger">Inativo</span>
+										</g:else></td>
+								
+									
 								</tr>
 							</g:if>
 						</g:each>
-
 					</tbody>
 				</table>
 			</div>
-
 
 			<g:if test="${perm2}">
 				<!-- Button trigger modal -->
@@ -213,9 +219,9 @@ function mudarCombo(){
 											<div class="progress-bar" role="progressbar"
 												aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
 												style="width: 0%;"></div>
-											<span class="progress-type">Progresso Geral</span> <span
-												class="progress-completed">0%</span>
-
+												<span class="progress-type">Progresso Geral</span> <span
+													class="progress-completed">0%</span>
+											</div>
 										</div>
 									</div>
 									<div class="row"
@@ -276,68 +282,42 @@ function mudarCombo(){
 										<div class="form-group">
 											<label for="iRG" class="col-sm-2 control-label">RG</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iRG"
-													name="rG" placeholder="RG" />
+												<g:textField class="form-control" id="iRgNumero"
+													name="rgNumero" placeholder="RG" />
 											</div>
 										</div>
+									
 										<div class="form-group">
-											<label for="iComplementoDaIdentidade" class="col-sm-2 control-label">Complemento da Identidade</label>
+											<label for="iOrgaoEmissorDaIdentidade" class="col-sm-2 control-label">RG - Orgão Expedidor</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iComplementoDaIdentidade"
-													name="complementoDaIdentidade" placeholder="Complemento da Identidade" />
+												<g:textField class="form-control" id="iOrgaoExpedidor"
+													name="rgOrgaoExpedidor" placeholder="Órgão Emissor da Identidade" />
 											</div>
 										</div>
+									
 										<div class="form-group">
-											<label for="iOrgaoEmissorDaIdentidade" class="col-sm-2 control-label">Órgão Emissor da Identidade</label>
-											<div class="col-sm-10">
-												<g:textField class="form-control" id="iOrgaoEmissorDaIdentidade"
-													name="orgaoEmissorDaIdentidade" placeholder="Órgão Emissor da Identidade" />
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="iUfDaIdentidade" class="col-sm-2 control-label">UF da Identidade</label>
-											<div class="col-sm-10">
-												<select name="estado" name="ufDaIdentidade" id="iUfDaIdentidade" class="form-control"> 
-													<option value="AC">Acre</option> 
-													<option value="AL">Alagoas</option> 
-													<option value="AM">Amazonas</option> 
-													<option value="AP">Amapá</option> 
-													<option value="BA">Bahia</option> 
-													<option value="CE">Ceará</option> 
-													<option value="DF">Distrito Federal</option> 
-													<option value="ES">Espírito Santo</option> 
-													<option value="GO">Goiás</option> 
-													<option value="MA">Maranhão</option> 
-													<option value="MT">Mato Grosso</option> 
-													<option value="MS">Mato Grosso do Sul</option> 
-													<option value="MG">Minas Gerais</option> 
-													<option value="PA">Pará</option> 
-													<option value="PB">Paraíba</option> 
-													<option value="PR">Paraná</option> 
-													<option value="PE">Pernambuco</option> 
-													<option value="PI">Piauí</option> 
-													<option value="RJ">Rio de Janeiro</option> 
-													<option value="RN" selected>Rio Grande do Norte</option> 
-													<option value="RO">Rondônia</option> 
-													<option value="RS">Rio Grande do Sul</option> 
-													<option value="RR">Roraima</option> 
-													<option value="SC">Santa Catarina</option> 
-													<option value="SE">Sergipe</option> 
-													<option value="SP">São Paulo</option> 
-													<option value="TO">Tocantins</option> 
-												</select>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="iDataDaExpedicaoDaIdentidade" class="col-sm-2 control-label">Data
-												de Expedição da Identidade </label>
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">RG - Data de Emissão</label>
 											<div class="col-sm-10">
 												<g:formatDate format="yyyy-MM-dd" date="${date}" />
 												<g:datePicker noSelection="['':'']" precision="day"
-													class="form-control" id="iDataDaExpedicaoDaIdentidade"
-													name="dataDaExpedicaoDaIdentidade" required="true" />
+													class="form-control" id="iDataDeEmissao"
+													name="rgDataDeEmissao" required="true" />
 											</div>
 										</div>
+										
+										
+										<div class="form-group">
+											<label for="irgComplemento"
+												class="col-sm-2 control-label">RG - Complemento</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iRgComplemento" name="rgComplemento"
+													placeholder="Complemento de RG" />
+											</div>
+										</div>
+										
+										
+										
 										<div class="form-group">
 											<label for="iNumeroDoRegistroDeCartorio"
 												class="col-sm-2 control-label">Número do Registro de
@@ -379,6 +359,26 @@ function mudarCombo(){
 													placeholder="Folha do Livro do Registro de Cartório" />
 											</div>
 										</div>
+										
+										
+										<div class="form-group">
+											<label for="iDataDeNascimento" class="col-sm-2 control-label">Data do Registro</label>
+											<div class="col-sm-10">
+												<g:formatDate format="yyyy-MM-dd" date="${date}" />
+												<g:datePicker noSelection="['':'']" precision="day"
+													class="form-control" id="iDataDoRegistro"
+													name="rcDataDoRegistro"  />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNomeDoCartorioDoRegistro"
+												class="col-sm-2 control-label">Cidade do Cartório do Registro</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control"
+													id="iRcCidade" name="rcCidade"
+													placeholder="Cidade do registro " />
+											</div>
+										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label">Sexo</label>
 											<div class="col-sm-10 radio" style="padding-top: 0px;">
@@ -395,24 +395,12 @@ function mudarCombo(){
 											<label for="iNomeDoPai" class="col-sm-2 control-label">Nome
 												do Pai</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNomePaiInput"
-													name="nomePaiInput" />
+												<g:textField class="form-control" id="iNomePaiInput" name="nomePaiInput" />
 
-												<input type="hidden" name="idNomePai" id="idNomePaiId"
-													value="">
-
+												<input type="hidden" name="idNomePai" id="idNomePaiId" value="">
 												<div id="iDivSelectPicker" class="row">
-													<div class="col-sm-11">
-														<select class="form-control selectpicker"
-															data-live-search="true" name="pai" id="comboPai">
-															<option value="0">Nome do Pai</option>
-															<g:each in="${pHomens}">
-																<option value="${it.id}">
-																	${it.nome}
-																</option>
-															</g:each>
-														</select>
-													</div>
+
+
 													<div class="col-sm-1">
 														<button type="button" class="btn btn-primary btn-flat"
 															data-toggle="modal" data-target="#modalCadastrarPai">Novo</button>
@@ -431,109 +419,48 @@ function mudarCombo(){
 												<g:textField class="form-control" id="iNomeMaeInput"
 													name="nomeMaeInput" />
 												<div id="iDivSelectPicker1" class="row">
-													<div class="col-sm-11">
-														<select class="form-control selectpicker"
-															data-live-search="true" name="mae" id="comboMae">
-															<option value="0">Nome da Mãe</option>
-															<g:each in="${pMulheres}">
-																<option value="${it.id}">
-																	${it.nome}
-																</option>
-															</g:each>
-														</select>
-													</div>
+													
 													<div class="col-sm-1">
 														<button type="button" class="btn btn-primary btn-flat"
 															data-toggle="modal" data-target="#modalCadastrarMae">Novo</button>
 													</div>
 												</div>
+
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade
-												*</label>
+											<label for="iCorRaca" class="col-sm-2 control-label">Cor/Raça</label>
 											<div class="col-sm-10">
-												<g:textField class="form-control" id="iNacionalidade"
-													name="nacionalidade" placeholder="Nacionalidade"
-													required="true" />
-											</div>
-										</div>
-
-
-										<div class="form-group">
-											<label for="iEstadoCivil" class="col-sm-2 control-label">Estado
-												Civil *</label>
-											<div class="col-sm-10">
-												<select class="form-control" id="iEstadoCivil"
-													name="estadoCivil" required="true">
-													<option value="null" selected disabled>Selecione...</option>
-													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
-													<option value="CASADO(A)">CASADO(A)</option>
-													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												<select name="corRaca" id="iCorRaca" class="form-control"> 
+													<option value="Branca">Branca</option> 
+													<option value="Amarela">Amarela</option> 
+													<option value="Preta">Preta</option> 
+													<option value="Parda">Parda</option> 
+													<option value="Indigena">Indigena</option> 
+													<option value="Não Declarada" selected>Não Declarada</option>
 												</select>
 											</div>
 										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Tipos de Deficiência</label>
+											<div class="col-sm-10 controls">
+												<select class="form-control selectpicker" name="necessidadesEspeciais" multiple="multiple" >
+												
+												<g:each in='${necessidadesEspeciais?}'>
+													<option value="${it.id}" <g:if test="${it.descricao == 'Nenhum'}"> selected </g:if> > ${it.descricao} </option>
+												</g:each>      
+												      
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
+											<div class="col-sm-10">
+												<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
+											</div>
+										</div>
 										
-
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iCorRaca" class="col-sm-2 control-label">Cor/Raça</label>
-									<div class="col-sm-10">
-										<select name="estado" name="corRaca" id="iCorRaca" class="form-control"> 
-											<option value="Branca">Branca</option> 
-											<option value="Amarela">Amarela</option> 
-											<option value="Preta">Preta</option> 
-											<option value="Parda">Parda</option> 
-											<option value="Indigena">Indigena</option> 
-											<option value="Não Declarada" selected>Não Declarada</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Deficiência?**</label>
-									<div class="col-sm-10 radio" style="padding-top: 0px;">
-										<label for="iDeficienciaNao" class="radio-inline"> <input
-											type="radio" name="deficiencia" id="iDeficienciaNao"
-											value="N" checked> Não
-										</label>
-										<label for="iDeficienciaSim" class="radio-inline"> <input
-											type="radio" name="deficiencia" id="iDeficienciaSim"
-											value="S"> Sim
-										</label> 
-									</div>
-									<label class="col-sm-offset-2 col-sm-10 control-label" style="font-weight: initial; text-align: left;">** Aluno com deficiência, transtorno global do desenvolvimento ou altas habilidades/superdotação.</label>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Tipos de Deficiência</label>
-									<div class="col-sm-10 controls">
-										<select class="form-control selectpicker" multiple>
-											  <option>Baixa visão</option>
-										      <option>Cegueira</option>
-										      <option>Deficiência auditiva</option>
-										      <option>Deficiência física</option>
-										      <option>Deficiência intelectual</option>
-										      <option>Surdez</option>
-										      <option>Surdocegueira</option>
-										      <option>Deficiências multiplas</option>
-										      <option data-divider="true"></option>
-										      <option>Autismo infantil</option>
-										      <option>Síndrome de Asperger</option>
-										      <option>Síndrome de Rett</option>
-										      <option>Transtorno desintegrativo da infância</option>
-										      <option data-divider="true"></option>
-										      <option>Altas habilidades/Superdotação</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="iNacionalidade" class="col-sm-2 control-label">Nacionalidade *</label>
-									<div class="col-sm-10">
-										<g:textField class="form-control" id="iNacionalidade" name="nacionalidade" placeholder="Nacionalidade" required="true"/>
-									</div>
-								</div>
-								<div class="form-group">
+									<div class="form-group">
 									<label for="iEstadoCivil" class="col-sm-2 control-label">Estado Civil *</label>
 									<div class="col-sm-10">
 										<select class="form-control" id="iEstadoCivil" name="estadoCivil" required="true">
@@ -543,17 +470,19 @@ function mudarCombo(){
 											<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
 											<option value="VIÚVO(A)">VIÚVO(A)</option>
 										</select>
-									</div>
-									 
+									   </div>
+									 </div>
 
-									    <label>Documentos</label>
-										<script type="text/javascript">  
+									
+										<div class="form-group">
+									     <label for="iEstadoCivil" class="col-sm-2 control-label"> Documentos </label>
+									         <div class="col-sm-10">
+									    <script type="text/javascript">  
 										function limparCampoFile1(){
 											document.getElementById("documentos[]").value = "";
 										}
 										
 										 $(document).ready(function(){  
-										 
 										    var input = '<label style="display: block"> <input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <a href="#" class="remove">Excluir</a></label>';  
 										    $("input[name='addFile1']").click(function(e){  
 										        $('#inputs_adicionais').append( input );  
@@ -568,9 +497,8 @@ function mudarCombo(){
 										 
 										</script>  
 								        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
-								        
-								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-								         
+								        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> 
+								        <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
 								        <fieldset id="inputs_adicionais" style="border: none">  
 								        </fieldset>
 								   </div>
@@ -581,19 +509,22 @@ function mudarCombo(){
 									</div>
 							  </div>
 							</div>
-							<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
 
-										<h3>Endereço</h3>
-										<div class="form-group">
-											<label for="iCep" class="col-sm-2 control-label">CEP</label>
-											<div id="iDivInputCep" class="col-sm-10">
-												<g:textField type="number" class="form-control"
+						</div>
+
+	
+								<div class="hiddenStepInfo" id="step-2" style="margin-top: 2%;">								
+									<h3>Endereço</h3>
+									<div class="form-group">
+										<label for="iCep" class="col-sm-2 control-label">CEP</label>
+										<div id="iDivInputCep" class="col-sm-10">
+											<g:textField type="number" class="form-control"
 													data-mask="99999-999" name="cep" id="iCep"
 													onfocusout="javascript: requestAjax(this);"
 													placeholder="CEP" value="${reside?.cep}" />
-												<p id="iMensagemCEP" class="text-danger">Por favor
+											<p id="iMensagemCEP" class="text-danger">Por favor
 													digite um CEP válido.</p>
-											</div>
+										</div>
 										</div>
 
 										<div class="form-group">
@@ -773,35 +704,87 @@ function mudarCombo(){
 										</div>
 									</div>
 
+
 								</div>
 							</g:form>
 
 						</div>
 					</div>
+
 				</div>
 			</div>
 
 			<!-- Modal -->
 
-			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document" style="margin-top: 20%">
+			<div class="modal fade" id="modalCadastrarPai" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
+			  <div class="modal-dialog" role="document" style="width:800px">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">Cadastrar Pai</h4>
 			      </div>
 			      <div class="modal-body">
-			        <div class="form-group">
-						<label style="padding-top: 5px;" for="iNomePai" class="col-sm-1 control-label">Nome:</label>
-						<div class="col-sm-11">
+			        <div class="form-horizontal" >
+						
+						<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai()"/>
+						    </div>
+						  </div>
+						
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
+						    </div>
+						  </div>
+												  	 
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+						    <div class="col-sm-10">
+						      <select class="form-control" id="iEstadoCivilPai" name="estadoCivilPai" required="true">
+													<option value="null" selected disabled>Selecione...</option>
+													<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+													<option value="CASADO(A)">CASADO(A)</option>
+													<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+													<option value="VIÚVO(A)">VIÚVO(A)</option>
+												</select>
+						    </div>
+						  </div>
+						  
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" name="tipoContatoPai" id="iTipoContatoPai">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoPai" name="contatoPai" />
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
+						    </div>
+						  </div>
+					  
 
-							<g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
-						</div>
-						<label for="iCpf" style="margin-top: 5px; padding-top: 5px;" class="col-sm-1 control-label">CPF:</label>
-						<div class="col-sm-11">
-							<g:textField style="margin-top: 5px;" class="form-control" id="iCPFPai" name="cpfPai" />
-
-						</div>
 					</div>
 			      </div>
 			      <hr/>
@@ -817,50 +800,93 @@ function mudarCombo(){
 
 
 			<!-- Modal -->
-			<div class="modal fade" id="modalCadastrarMae" tabindex="-1"
-				role="dialog" data-focus-on="input:first"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document" style="margin-top: 20%">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<label style="padding-top: 5px;" for="iNomeMae"
-									class="col-sm-1 control-label">Nome:</label>
-								<div class="col-sm-11">
-									<g:textField class="form-control" id="iNomeMae" name="nomeMae"
-										placeholder="Nome" required="false" />
-								</div>
-								<label for="iCpf" style="margin-top: 5px; padding-top: 5px;"
-									class="col-sm-1 control-label">CPF:</label>
-								<div class="col-sm-11">
-									<g:textField style="margin-top: 5px;" class="form-control"
-										id="iCPFMae" name="cpfMae" />
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success btn-flat"
-								data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
-							<button type="button" class="btn btn-default btn-flat"
-								data-dismiss="modal">Cancelar</button>
+			<div class="modal fade" id="modalCadastrarMae" tabindex="-1" role="dialog" data-focus-on="input:first" aria-labelledby="myModalLabel"  >
+			  <div class="modal-dialog" role="document" style="width:800px">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Cadastrar Mãe</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-horizontal" >
+						
+						<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae()" />
+						    </div>
+						  </div>
+						
+						 <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+						    <div class="col-sm-10">
+						      <g:textField class="form-control" id="iNomeMae" name="nomePai" placeholder="Nome" required="false"/>
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+						    <div class="col-sm-10">
+						      <select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true">
+									<option value="null" selected disabled>Selecione...</option>
+									<option value="SOLTEIRO(A)">SOLTEIRO(A)</option>
+									<option value="CASADO(A)">CASADO(A)</option>
+									<option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+									<option value="VIÚVO(A)">VIÚVO(A)</option>
+								</select>
+						    </div>
+						  </div>
+						  
+						   <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" name="tipoContatoMae" id="iTipoContatoMae">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoMae" name="contatoMae" />
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
+						    </div>
+						  </div>
+						 
+						  
 
-						</div>
 					</div>
-				</div>
+			      </div>
+			      <div class="modal-footer">
+
+			        <button type="button" class="btn btn-success btn-flat" data-dismiss="modal" onclick="salvarMae()">Cadastrar</button>
+			        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" >Cancelar</button>
+
+			      </div>
+			    </div>
+			  </div>
 			</div>
-		</div>
-
-
+			
+			
+		
 		<g:javascript src="script-buscar-cep.js" />
 		<!-- valida campos -->
+
 		<script type="text/javascript"> 
          //validaçao dos campos de aluno
 		
@@ -898,6 +924,11 @@ function mudarCombo(){
 				 }
 			
 			  }
+
+
+
+         
+		  
 		
 		</script>
 
@@ -906,12 +937,13 @@ function mudarCombo(){
 
 		<script type="text/javascript">
 
+
 			function hiddenInput(){
 				console.log('Hidden...');
 				document.getElementById("iNomePaiInput").className = 'form-control hidden';
 				document.getElementById("iNomeMaeInput").className = 'form-control hidden';
 			}
-			
+		
 			function disableInput(type){
 
 				if(type=="hide"){
@@ -937,11 +969,17 @@ function mudarCombo(){
 			
 
 			function salvarPai(){
-			   //var endereco = "192.168.1.247";
+			   //var endereco = "192.168.1.252";
 			   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var nome = document.getElementById("iNomePai").value;
+
+			   var estadoCivil = document.getElementById("iEstadoCivilPai").value;
+			   var profissao = document.getElementById("iProfissaoPai").value;
+
+			   var tipoContato = document.getElementById("iTipoContatoPai").value;
+			   var contato = document.getElementById("iContatoPai").value;
 			   var cpf
-			   
+		   
 			   if(document.getElementById("iCPFPai").value == ''){
 			   		cpf = "0";
 			   }else{	
@@ -952,7 +990,7 @@ function mudarCombo(){
 			   console.log("CPF -- " + cpf);
 			   $.ajax({ 
 		            type: "GET",
-		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf,
+		            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarPai?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao+"&tipoContato="+tipoContato+"&contato="+contato,
 		            dataType: "json",
 		            success: function(result){
 		            	console.log(result[result.length-1].nome);
@@ -973,9 +1011,15 @@ function mudarCombo(){
 			}
 			
 			function salvarMae(){
-				//var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.252";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 				   var nome = document.getElementById("iNomeMae").value;
+				   var estadoCivil = document.getElementById("iEstadoCivilMae").value;
+				   var profissao = document.getElementById("iProfissaoMae").value;
+
+				   var tipoContato = document.getElementById("iTipoContatoMae").value;
+				   var contato = document.getElementById("iContatoMae").value;
+				   
 				   var cpf
 				if(document.getElementById("iCPFMae").value == ''){
 			   		cpf = "0";
@@ -985,18 +1029,21 @@ function mudarCombo(){
 				   
 				   $.ajax({
 			            type: "GET",
-			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf,
+			            url: "http://"+endereco+":8080/projetoMetafora/aluno/cadastrarMae?nome="+nome+"&cpf="+cpf+"&estadoCivil="+estadoCivil+"&profissao="+profissao+"&tipoContato="+tipoContato+"&contato="+contato,
 			            dataType: "json",
 			            success: function(result){
-			            	console.log(result[result.length-1].nome);
+			            	console.log('Teste de console  - ' + result[result.length-1].nome);
 	
 							document.getElementById("idNomeMaeId").value = result[result.length-1].id;
 			            				            	
 			            	document.getElementById("iDivSelectPicker1").className = 'form-control hidden';
+
 			            	
 			            	document.getElementById("iNomeMaeInput").className = 'form-control';
 			            	document.getElementById("iNomeMaeInput").disabled = true;
 			            	document.getElementById("iNomeMaeInput").value = result[result.length-1].nome;
+
+			            	
 
 			            	$(function() {
 								$('#twoModalsExample1').modal('hide');
@@ -1008,7 +1055,7 @@ function mudarCombo(){
 
 			function mudarEscola(){
 		    	  
-				//var endereco = "192.168.1.247";
+				//var endereco = "192.168.1.252";
 				var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 		        var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
@@ -1036,7 +1083,7 @@ function mudarCombo(){
 		   }
 
 		  function mudarSerie(){
-			  //var endereco = "192.168.1.247";
+			  //var endereco = "192.168.1.252";
 			  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 			   var comboTurma = document.getElementById("comboTurma");
 		        comboTurma.options[comboTurma.options.length] = new Option("Buscando Turmas", 0);
@@ -1062,8 +1109,72 @@ function mudarCombo(){
 		        });
 		    
 		       }
-			
+
+
+		    function validarCpfMae() {
+				var cpf = document.getElementById("iCPFMae").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomeMae").value = verifCpf.nome;
+							document.getElementById("iProfissaoMae").value = verifCpf.profissao;
+							document.getElementById("iContatoMae").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoMae").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilMae").value = verifCpf.estadoCivil;
+	
+							document.getElementById("idNomeMaeId").value = verifCpf.id;
+
+							
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfMae").focus();
+
+						}
+					}
+				});
+	      }
+
+		    function validarCpfPai() {
+				var cpf = document.getElementById("iCPFPai").value;
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/projetoMetafora/Aluno/getPessoaByCPF?cpf=" + cpf,
+					//url : "http://192.168.1.252:8080/sisOs/ordemDeServico/validarMatriculaFuncOs?matriculasOS="+matriculasOS,
+					dataType : "json",
+					success : function(verifCpf) {
+						if(verifCpf != null){
+							document.getElementById("iNomePai").value = verifCpf.nome;
+							document.getElementById("iProfissaoPai").value = verifCpf.profissao;
+							document.getElementById("iContatoPai").value = verifCpf.contato;
+	
+							document.getElementById("iTipoContatoPai").value = verifCpf.tipoContato;
+							document.getElementById("iEstadoCivilPai").value = verifCpf.estadoCivil;
+	
+							document.getElementById("idNomePaiId").value = verifCpf.id;
+											
+						}
+
+						
+					if (verifCpf == "") {
+						alert("matricula invalida ou inexistente");
+						document.getElementById("iCpfPai").focus();
+
+						}
+					}
+				});
+	      }
+
+	       
 		</script>
 	</section>
-</body>
+ </body>
 </html>

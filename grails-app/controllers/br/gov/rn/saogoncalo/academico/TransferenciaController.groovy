@@ -32,7 +32,7 @@ class TransferenciaController {
 				def alunos = Pessoa.findAll("from Pessoa as p where status='Em Transferência' and" +
 						"(p.escid = :sessaoEscId or p.escIdDestino = :sessaoEscId)",
 						[sessaoEscId:sessaoEscId])
-
+                
 
 				def escolas = Escola.executeQuery("select e from Escola as e, Pessoa as p where "+
 						"p.id = e.id and p.status = 'Ativo'")
@@ -175,7 +175,6 @@ class TransferenciaController {
 			def usuario = new UsuarioController()
 			if (usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")) {
 
-
 				def aluno = Pessoa.get(Integer.parseInt(params.id))
 
 				Calendar ca = Calendar.getInstance()
@@ -225,5 +224,38 @@ class TransferenciaController {
 		render( result as JSON)
 		
 		}
+	
+	//verificar alunos transferidos
+	def alunosAguardandoAprovacao(){
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Matricula", act:"listar"])
+		}else{
+		
+			def user = session["user"]
+			def pass = session["pass"]
+
+			def usuario = new UsuarioController()
+
+			def perm1 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "1")
+			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PESSOAL", "ALUNO", "2")
+
+			if (perm1 || perm2) {
+				
+				def sessaoEscId = session["escid"]
+				def alunosEmTransferencia = Pessoa.executeQuery("select count(p) from Pessoa as p where status='Em Transferência' and (p.escid <> " + sessaoEscId.toString() + " )" )
+			    render (view:"/transferencia/public.gsp", 
+				model:[alunosEmTransferencia:alunosEmTransferencia, sessaoEscId:sessaoEscId, perm2:perm2])
+			
+				def result = alunosEmTransferencia
+				render (result as JSON)
+				
+			}else{
+				render(view:"/error403.gsp")
+		
+			}
+		}
+		
+	}
 	
 }

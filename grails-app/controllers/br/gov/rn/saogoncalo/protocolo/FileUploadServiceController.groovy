@@ -16,23 +16,22 @@ class FileUploadServiceController {
 		 if(!storagePathDirectory.exists())
 		  println ("criando diretorio")
 		    if(storagePathDirectory.mkdirs()){
-				println ("success")
+				println ("diretorio criado com sucesso")
 		   
-		 }else{
-		
-			   println ("failed")
-			}
-
-		if(!file.isEmpty()){
+			 }else{
 			
-			file.transferTo(new File(storagePath +"/" + nome))
-			println("arquivo salvo")
-			return(nome)
-			
-		}else{
+				   println ("erro ao criar o diretorio")
+				}
 		
-		    println("arquivo vazio")
-		    return null
-		  }
+			if(!file.isEmpty()){
+				file.transferTo(new File(storagePath +"/" + nome))
+				println("arquivo salvo")
+				return(nome)
+				
+			}else{
+			
+			    println("arquivo vazio")
+			    return null
+			  }
 		}
 }

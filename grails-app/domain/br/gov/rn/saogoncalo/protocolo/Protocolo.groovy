@@ -4,22 +4,31 @@ import br.gov.rn.saogoncalo.login.Usuario
 
 class Protocolo {
 
-	Long numero
+	String numero
 	Date dataProtocolo
 	Date dataEmissao
 	String numeroDocumento
-	String assunto
 	FuncionarioSetor funcionarioSetor
+	String interessado
+	String descricaoSituacao
+	String cpfCnpj
+	String telefone
+	String email
+	
 
 			
-	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao]
+	static belongsTo = [tipoDocumento:TipoDocumento , situacao:Situacao, assunto:Assunto]
 	static hasMany = [anexo:Anexo, observacao: Observacao , tramite:Tramite]
 	
 	static constraints = {
 		numero blank:false, nullable:false
 		dataProtocolo blank:false, nullable:false
 		dataEmissao blank:false, nullable:false   
-		assunto blank:false, nullable:false
+		interessado blank:true, nullable:true
+		descricaoSituacao blank:true, nullable:true
+		cpfCnpj blank:true, nullable:true
+		telefone blank:true, nullable:true
+		email blank:true, nullable:true
 	}
 	
 	static mapping = {

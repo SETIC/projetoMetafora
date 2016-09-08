@@ -73,7 +73,7 @@ class LayoutController {
 		props.setProperty("password", "bgt54rfvcde3")
 
 
-		def conn = driver.connect("jdbc:postgresql://192.168.1.247:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 		//dadosDoGrafico2();
 		List<String> alunoByEscola = new ArrayList();
@@ -108,8 +108,7 @@ class LayoutController {
 		def resultFuncionario = []
 
 		result = [];
-
-
+       
 		for (aluno in alunoByEscola){
 			def cor = gerarCor()
 			resultAluno[i] = ["label":aluno.escola, "value":aluno.totalaluno, "color":cor, "highlight":cor]
@@ -121,9 +120,9 @@ class LayoutController {
 		result[0] = resultAluno
 		result[1] = resultProfessor
 		result[2] = resultFuncionario
-		println("result"+result[0] )
-		println("result"+result[1] )
-		println("result"+result[2] )
+		//println("result"+result[0] )
+		//println("result"+result[1] )
+		//println("result"+result[2] )
 
 		render( result as JSON)
 		conn.close();
@@ -139,20 +138,5 @@ class LayoutController {
 		return hex;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 }

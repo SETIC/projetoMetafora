@@ -218,25 +218,37 @@
 							<label for="inputdlpp3" class="col-sm-2 control-label">Disciplinas
 								do Professor</label>
 							<div class="col-sm-10">
-								
-
 									<g:each in="${disc}" var="allDisc">
-										
 											<g:if test="${dlppl.contains(allDisc.id)}">
-											
-												
 													${allDisc.disciplina} <br>
-												
 											</g:if>
-											
-										
 									</g:each>					
-
-								
 							</div>
 						</div>
-						<br>
-
+						
+						<table id="listarDocumentos" class="table table-bordered">
+										<legend class="scheduler-border">Documentos</legend>
+										<thead>
+											<tr>
+												<th class="col-md-8">Nome do Documento</th>
+												<th class="col-md-4">Data</th>
+												<th> </th>
+											</tr>
+											<g:each in="${documentos}">
+												<tr class="info">
+													<td>
+														${it.arquivo}
+													</td>
+	
+													<td><g:formatDate format="dd/MM/yyyy" type="datetime" style="MEDIUM" 
+															date="${it.dataDocumento}" /></td>
+													<td>
+														<g:link action="downloadDocumento" params="[id: it.id]"> Baixar </g:link>																									
+													</td>
+												</tr>
+											</g:each>
+										</thead>
+									</table>
 					</fieldset>
 					<div style="margin: 0 15% auto">
 						<button class="btn btn-danger btn-flat" onClick="printDiv('print')">

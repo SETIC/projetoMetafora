@@ -341,8 +341,8 @@ function printDiv(id)
 					}
 				    console.log(txt);
 				    var hiddenResponsaveis =  document.getElementById("funcionariosResponsaveisHiddenId");
-				    texto = txt1.trim();
-				    hiddenResponsaveis.value = texto.replaceAll(' ',',');
+				    texto = txt.trim();
+				    hiddenResponsaveis.value = texto.replace(' ',',');
 			    }
 			    
 			}
