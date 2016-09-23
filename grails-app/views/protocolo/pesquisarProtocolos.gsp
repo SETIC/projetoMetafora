@@ -171,11 +171,11 @@
 								</td>
 
 								<td>
-								    <g:formatDate type="datatime" style="MEDIUM" date="${it.data_protocolo}" />
+								    <g:formatDate type="datatime"  date="${it.data_protocolo}" />
 								</td>
 
 								<td> 
-									<g:formatDate type="datatime" style="MEDIUM" date="${it.data_emissao}" />
+									<g:formatDate type="datatime"  date="${it.data_emissao}" />
 								</td>
 								
 								<td>

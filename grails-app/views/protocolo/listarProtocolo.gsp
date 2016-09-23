@@ -88,22 +88,27 @@ function deletar(id) {
 									${it.protocolo.numero}
 								</td>
 
-								<td><g:formatDate format="dd/MM/yyyy" type="datetime"
-										style="MEDIUM" date="${it.protocolo.dataEmissao}" /></td>
-
 								<td>
-									
+									<g:formatDate format="dd/MM/yyyy" type="datetime"
+										style="MEDIUM" date="${it.protocolo.dataEmissao}" />
+								</td>
+								
+								<td>
 									${it.funcionarioSetorDestino.setor.nome}
 								</td>
 
 								<td>
 									${it.protocolo.assunto.assunto}
 								</td>
+                                
                                 <td>
-										${it.protocolo.interessado}</td>
+									${it.protocolo.interessado}
+								</td>
+								
 								<td>
 									${it.protocolo.situacao.nome} - ${it.protocolo.situacao.tipo}
 								</td>
+								
 								<td>
 									<div class="opcoes">
 										<div style="display: inline" width="400">

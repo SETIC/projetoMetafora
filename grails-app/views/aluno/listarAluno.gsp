@@ -4,6 +4,7 @@
 <head>
 <title>Aluno . Módulo Pessoal</title>
 <meta name="layout" content="public" />
+<meta charset="UTF-8">
 </head>
 <body>
 	<script>
@@ -252,11 +253,12 @@ function mudarCombo(){
 											</div>
 										</div>
 									</div>
+									<br>
+									<b>Campos assinalados com * são de preenchimento obrigatório.</b>
 									<div class="activeStepInfo" id="step-1" style="margin-top: 2%;">
 										<h3>Identificação</h3>
 										<div class="form-group">
-											<label for="iNome" class="col-sm-2 control-label">Nome
-												*</label>
+											<label for="iNome" class="col-sm-2 control-label">Nome *</label>
 											<div class="col-sm-10">
 												<g:textField class="form-control" id="iNome" name="nome"
 													placeholder="Nome" required="true" />
@@ -410,7 +412,7 @@ function mudarCombo(){
 										</div>
 										<div class="form-group">
 											<label for="iNomeDaMae" class="col-sm-2 control-label">Nome
-												da Mãe</label>
+												da Mãe *</label>
 											<div class="col-md-10">
 
 												<input type="hidden" name="idNomeMae" id="idNomeMaeId"
@@ -727,21 +729,21 @@ function mudarCombo(){
 			        <div class="form-horizontal" >
 						
 						<div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF *</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai()"/>
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai()" required="true"/>
 						    </div>
 						  </div>
 						
 						 <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
 						    <div class="col-sm-10">
 						      <g:textField class="form-control" id="iNomePai" name="nomePai" placeholder="Nome" required="false"/>
 						    </div>
 						  </div>
 												  	 
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil *</label>
 						    <div class="col-sm-10">
 						      <select class="form-control" id="iEstadoCivilPai" name="estadoCivilPai" required="true">
 													<option value="null" selected disabled>Selecione...</option>
@@ -755,7 +757,7 @@ function mudarCombo(){
 						  
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato</label>
 						    
 						    <div class="col-sm-10">
 					     
@@ -771,14 +773,14 @@ function mudarCombo(){
 						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato</label>
 						    <div class="col-sm-10">
 						      <g:textField  class="form-control" id="iContatoPai" name="contatoPai" />
 						    </div>
 						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão</label>
 						    <div class="col-sm-10">
 						      <g:textField  class="form-control" id="iProfissaoPai" name="profissaoPai" />
 						    </div>
@@ -811,21 +813,21 @@ function mudarCombo(){
 			        <div class="form-horizontal" >
 						
 						<div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">CPF:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">CPF *</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae()" />
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae()" required="true" />
 						    </div>
 						  </div>
 						
 						 <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Nome:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
 						    <div class="col-sm-10">
 						      <g:textField class="form-control" id="iNomeMae" name="nomePai" placeholder="Nome" required="false"/>
 						    </div>
 						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Estado Civil *</label>
 						    <div class="col-sm-10">
 						      <select class="form-control" id="iEstadoCivilMae" name="estadoCivilMae" required="true">
 									<option value="null" selected disabled>Selecione...</option>
@@ -838,7 +840,7 @@ function mudarCombo(){
 						  </div>
 						  
 						   <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato</label>
 						    
 						    <div class="col-sm-10">
 					     
@@ -855,14 +857,14 @@ function mudarCombo(){
 						  
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Contato:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato</label>
 						    <div class="col-sm-10">
 						      <g:textField  class="form-control" id="iContatoMae" name="contatoMae" />
 						    </div>
 						  </div>
 						  
 						  <div class="form-group" style="margin-bottom: 5px;">
-    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
+    						<label for="inputEmail3" class="col-sm-2 control-label">Profissão</label>
 						    <div class="col-sm-10">
 						      <g:textField  class="form-control" id="iProfissaoMae" name="profissaomae" />
 						    </div>
