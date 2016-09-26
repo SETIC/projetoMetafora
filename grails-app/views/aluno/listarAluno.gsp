@@ -731,7 +731,7 @@ function mudarCombo(){
 						<div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">CPF *</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai()" required="true"/>
+						      <g:textField  class="form-control" id="iCPFPai" name="cpfPai" onBlur="validarCpfPai(); validaTamanhoCpf('pai')" required="true"/>
 						    </div>
 						  </div>
 						
@@ -815,7 +815,7 @@ function mudarCombo(){
 						<div class="form-group" style="margin-bottom: 5px;">
     						<label for="inputEmail3" class="col-sm-2 control-label">CPF *</label>
 						    <div class="col-sm-10">
-						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae()" required="true" />
+						      <g:textField  class="form-control" id="iCPFMae" name="cpfMae" onBlur="validarCpfMae(); validaTamanhoCpf('mae')" required="true" />
 						    </div>
 						  </div>
 						
@@ -1175,6 +1175,31 @@ function mudarCombo(){
 				});
 	      }
 
+
+		    function  validaTamanhoCpf(tipo){
+			      
+			      if(tipo == "mae"){
+					var cpf = document.getElementById("iCPFMae").value;
+			      }else{
+			    	  var cpf = document.getElementById("iCPFPai").value;
+
+				      }
+
+		    	  var filtro = cpf.length;
+		    		
+		    		if(filtro!=11)
+		    		{
+		    			window.alert("CPF inválido. Tente novamente.");
+		    			 if(tipo == "mae"){
+		    			document.getElementById("iCPFMae").focus();
+		    			 }else{
+			    			 
+		    			document.getElementById("iCPFPai").focus();
+		    			 }
+		    			return false;
+		    		}
+
+			      }
 	       
 		</script>
 	</section>
