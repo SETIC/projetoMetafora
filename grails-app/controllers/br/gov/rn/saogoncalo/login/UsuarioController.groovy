@@ -26,7 +26,9 @@ class UsuarioController {
 
 
 		if (verificarAutenticacao(user, pass)) {
-			redirect(controller:params.ctl, action:params.act)
+			//redirect(controller:params.ctl, action:params.act)
+			//println("ctl - " + params.ctl + " act " + params.act )
+			render(view:"/index.gsp")
 		}else{
 			render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}
@@ -466,7 +468,8 @@ class UsuarioController {
 		session["escname"] = null
 
 
-		redirect(controller:"Usuario", action:"login")
+		//redirect(controller:"Usuario", action:"login")
+		render(view:"/usuario/login.gsp")
 	}
 
 

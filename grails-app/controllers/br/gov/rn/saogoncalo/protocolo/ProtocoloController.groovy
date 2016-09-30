@@ -9,6 +9,7 @@ import java.util.zip.ZipOutputStream
 
 import org.codehaus.groovy.grails.commons.GrailsApplication;
 
+import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController;
 import br.gov.rn.saogoncalo.login.UsuarioController
 import br.gov.rn.saogoncalo.pessoa.PessoaJuridica
 
@@ -787,8 +788,7 @@ class ProtocoloController {
 
 		/*def date = new Date()
 		 AdministracaoController adm = new AdministracaoController()
-		 adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo , 
-		 "DOWNLOAD", "Anexo", date)*/
+		 adm.salvaLog(session["usid"].toString().toInteger(), "Download de arquivo: " + grailsApplication.parentContext.getResource("/anexos/").file.toString() + "/" + anexo.arquivo , "DOWNLOAD", "Anexo", date)*/
 
 		if (file.exists())
 
@@ -901,6 +901,7 @@ class ProtocoloController {
 
 	def  getProtocoloByNumero(String numero){
 
+		AdministracaoController adm = new AdministracaoController()
 		def result
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
@@ -932,6 +933,11 @@ class ProtocoloController {
 		//println(result)
 		sql.close()
 		conn.close()
+		
+		if (result != null){
+			def date = new Date()
+			adm.salvaLog(13, "Registro de busca de protocolo: " + numero, "Consulta protocolo", "Protocolo", date)
+		}
 
 		render( result as JSON)
 
