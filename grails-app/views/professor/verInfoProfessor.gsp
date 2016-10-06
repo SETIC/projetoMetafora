@@ -13,6 +13,7 @@
 </head>
 <body>
 	<script>
+
 	function printDiv(id)
 	{
 	  var divToPrint=document.getElementById(id);
@@ -75,7 +76,7 @@
 	</section>
 	<!-- CORPO DA PÁGINA -->
 
-	
+	<!-- teste -->
 	<section class="content">
 		<div>
 			<g:if test="${ok}">
