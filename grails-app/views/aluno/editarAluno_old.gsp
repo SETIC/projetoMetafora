@@ -350,6 +350,7 @@
 						</div>
 						
 							 <br>
+						
 							 <fieldset>
 								<table id="listarDocumentosAluno" class="table table-bordered">
 									<legend class="scheduler-border">Documentos</legend>
@@ -398,7 +399,7 @@
 					        <label style="display: block"><input type="button" name="addFile1" value="Novo Documento" /></label>
 					        
 					        <label style="display: block"><input type = "file" name ="documentos[]" id="documentos[]" enctype="multipart/form-data"/> <input type="button" name="limpar" value="Limpar" onclick="limparCampoFile()"> </label>
-					         
+					         </div>
 					        <fieldset id="inputs_adicionais" style="border: none">  
 				       		</fieldset>
 							<div class="form-group" style="margin-top: 3%;">
