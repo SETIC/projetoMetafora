@@ -184,10 +184,9 @@
               url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
               dataType: "json",
               success: function(result){
-                  
-            	    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-                    var pieChart = new Chart(pieChartCanvas);
-             
+       	      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+              var pieChart = new Chart(pieChartCanvas);
+            
             var PieData = result[0]
                 
             var pieOptions = {
@@ -224,12 +223,12 @@
 								});
 
 					});
-					$(function() {
-
-						//var endereco = "192.168.1.252";
-						var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-   			
-          $.ajax({
+		
+		
+		  $(function() {
+		   //var endereco = "192.168.1.252";
+		   var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
+              $.ajax({
               type: "GET",
               url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
               dataType: "json",
@@ -271,11 +270,10 @@
               }});
      
       });
-      $(function () {
-
+	      
+          $(function () {
     	  //var endereco = "192.168.1.252";
 		  var endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
-   			
           $.ajax({
               type: "GET",
               url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
@@ -315,7 +313,6 @@
                   pieChart3.Doughnut(PieData3, pieOptions3);
             
               }});
-     
       });
     </script>
 </body>

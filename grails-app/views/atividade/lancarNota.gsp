@@ -36,6 +36,34 @@
 			newWin.print();
 			newWin.close();
 		}
+
+		function printDivs(id1, id2) {
+			var divToPrint1 = document.getElementById(id1);
+			var divToPrint2 = document.getElementById("aId"+id2);
+			newWin = window.open("");
+
+			newWin.document.write("<table border='0'>");
+			newWin.document.write("<tr>");
+			newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
+			newWin.document.write("<td>");
+			newWin.document.write("<p style='text-align:center; '>PREFEITURA MUNICIPAL DE SÃO GONÇALO DO AMARANTE - RN</p>");
+			newWin.document.write("<p style='text-align:center; margin-top:-8px;'>SECRETARIA DE EDUCAÇÃO E CULTURA - SEMEC</p>");
+			newWin.document.write("</td>");
+			newWin.document.write("</tr>");
+			newWin.document.write("</table><br>");
+			
+			newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
+			newWin.document.write(" ");
+			newWin.document.write(divToPrint1.outerHTML);
+			newWin.document.write(divToPrint2.outerHTML);
+			var area = document.getElementById("areaId-"+id2);
+			newWin.document.write("Observação: <br>");
+			newWin.document.write(area.value);
+			
+			newWin.print();
+			newWin.close();
+		}	
+		
 	</script>
 
 	<section class="content-header">
@@ -73,6 +101,7 @@
 								</div>
 							</div>
 							<br>
+							<div id="detalhesTurma">
 							<div class="row">
 								<div class="col-sm-2" style="text-align: justify;">
 									<label>Tipo de Atividade </label>
@@ -100,6 +129,7 @@
 									<h5><g:formatDate format="dd/MM/yyyy"
 											date="${atividade?.dataFim}" /></h5>	
 								</div>
+							</div>
 							</div>
 							<br/>
 							<div class="row">
@@ -137,17 +167,23 @@
 														def index = notasMatId.indexOf(aluno.id)
 														 %>
 														
-															<td>
-																<div class="col-xs-5">
+																<td>
+																<div class="col-xs-5" id="aId${aluno.id}">
 												                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
 												                    </div>
 																</td>
 																<td>
 																	<div class="col-xs-12">
 												                      	
-												                      	<textarea class="form-control" name="mat-${aluno.id}" rows="2" placeholder="Descrição de nota." cols="50">${notas[index].observacao}</textarea>
+												                      	<textarea rows="3" col="3" class="form-control"  style="overflow:auto" id="areaId-${aluno.id}" name="mat-${aluno.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
 												                    </div>
 																</td>
+																<td>
+																	<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDivs('detalhesTurma','${aluno.id}')" type="button">
+																		<i class="glyphicon glyphicon-print"></i> Imprimir
+																	</button>
+																</td>
+														
 												</g:if>
 												<g:else>
 												
@@ -163,6 +199,11 @@
 										                      	
 										                    </div>
 														</td>
+														<td>
+																	<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDivs('detalhesTurma','${aluno.id}')" type="button">
+																		<i class="glyphicon glyphicon-print"></i> Imprimir
+																	</button>
+																</td>
 												</g:else>
 	
 											</tr>
