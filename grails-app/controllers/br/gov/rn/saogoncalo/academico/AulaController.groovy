@@ -142,4 +142,25 @@ class AulaController {
 			}
 		}
 	}
+	
+	def clonarAula(long id){
+		
+		def aulaBase = Aula.get(id)
+		def aulaClone = new Aula()
+	
+		aulaClone.conteudo = aulaBase.conteudo
+		aulaClone.dataAula = aulaBase.dataAula + 1
+		aulaClone.quantHorarios = aulaBase.quantHorarios
+		aulaClone.tipoAula = aulaBase.tipoAula
+		aulaClone.titulo = aulaBase.titulo
+		aulaClone.turmaDisciplina = aulaBase.turmaDisciplina
+		
+		if (aulaClone.save(flush:true)){
+			listarAula(id)
+		}
+		
+		
+	}
+
+	
 }

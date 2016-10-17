@@ -46,6 +46,7 @@
 							<th style="width: 65px;"></th>
 							<th style="width: 280px;">Nome</th>
 							<th style="width: 60px;">Username</th>
+							<th style="width: 60px;">Grupo</th>
 							
 						</tr>
 					</thead>
@@ -72,6 +73,9 @@
 								</td>
 								<td>
 									${it.username}
+								</td>
+								<td>
+									${it.grupoUsuario.grupo.descricao}
 								</td>
 								
 							</tr>

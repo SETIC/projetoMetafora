@@ -140,7 +140,11 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat no-active">Meus Dados</a>
+                      <!--  <a href="#" class="btn btn-default btn-flat no-active">Meus Dados</a>  -->
+                      <button class="btn btn-primary btn-flat" data-toggle="modal"
+						data-target="#modalSenha">
+						<i class="fa"></i> Alterar senha
+					  </button>
                     </div>
                     <div class="pull-right">
                       <g:link controller="Usuario" action="deslogar" class="btn btn-default btn-flat">Sair</g:link>
@@ -254,6 +258,59 @@
           </div>
           <strong> Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>EDUC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
       </footer>
+
+			<!-- Modal Senha -->
+			<div class="modal fade" id="modalSenha" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Redefinição de senha</h4>
+						</div>
+						<div class="modal-body">
+							<g:form controller="Usuario" action="redefinirSenha" class="form">
+								<fieldset>
+									
+									<div class="form-heading">
+										<label>Senha antiga</label>
+										<div class="controls">
+											<g:textField class="form-control" name="senhaAntiga" value=""
+												required="true" />
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Senha nova</label>
+										<div class="controls">
+											<g:textField class="form-control" name="senhaNova1" value=""
+												required="true" />
+										</div>
+									</div>
+									<br>
+									<div class="form-heading">
+										<label>Confirmar senha nova</label>
+										<div class="controls">
+											<g:textField class="form-control" name="senhaNova2" value=""
+												required="true" />
+										</div>
+									</div>
+									
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary btn-flat">
+										<i class="fa fa-save"></i> Cadastrar
+									</button>
+									<input type="reset" class="btn btn btn-flat" value="Limpar">
+								</div>
+							</g:form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 
     </div><!-- ./wrapper -->
     

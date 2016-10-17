@@ -51,6 +51,7 @@
 							<th style="width: 350px;">Data</th>
 							<th style="width: 350px;">Tipo de Aula</th>
 							<th style="width: 150px;">Status da Aula</th>
+							<th style="width: 150px;">Funções</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -115,8 +116,19 @@
 										<span class="label label-primary">Agendada</span>
 									</g:if> <g:if test="${dataAtual > dataBanco}">
 										<span class="label label-danger">Finalizada</span>
-									</g:if></td>
+									</g:if>
+								</td>
+								<td>
+									<li title="Frequencia"
+													class="btn btn-success btn-xs btn-flat"><a
+													style="color: #fff; disabled: true"
+													href="/projetoMetafora/aula/clonarAula/${it.id}"><span
+														class="glyphicon glyphicon-collapse-down"></span></a></li>
+								</td>
+								
+								
 							</tr>
+							
 
 						</g:each>
 

@@ -74,7 +74,7 @@
 									style="width: 300px" value="${pessoa.cpfCnpj }" />
 							</div>
 						</div>
-						<!-- 
+						
 						<br>
 						<div class="form-group">
 							<label for="inputrcNumero3" class="col-sm-2 control-label">Número
@@ -111,7 +111,7 @@
 								<g:textField class="form-control" name="rcFolhaDoLivro"
 									style="width: 300px" value="${pessoaFisica.rcFolhaDoLivro }" />
 							</div>
-						</div> -->
+						</div> 
 						<br>
 						<div class="form-group">
 							<label for="inputsexo3" class="col-sm-2 control-label">Sexo</label>
@@ -280,7 +280,8 @@
 							</div>
 						</div>
 						<br>
-						<fielset>
+						<div class="box box-white">
+						<fieldset>
 					<table id="EditarDocumentos" class="table table-bordered">
 						<legend class="scheduler-border">Documentos</legend>
 						<thead>
@@ -344,6 +345,7 @@
 							<li class="btn btn-default btn-flat"><a
 								href="/projetoMetafora/professor/listar/">Cancelar</a></li>
 						</ul>
+					</div>
 					</div>
 				</g:form>
 			</div>

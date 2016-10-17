@@ -19,13 +19,6 @@ class LayoutController {
 			render (view:"/usuario/login.gsp", model:[ctl:"Layout", act:"index"])
 		}else{
 
-			// Define cURL process with correct arguments.
-			//def proc = "http://cep.correiocontrol.com.br/59106130.json"
-			//		   .execute()
-			// cURL uses error output stream for progress output.
-			//Thread.start { System.err << proc.err }
-			// Wait until cURL process finished and continue with the loop.
-			//proc.waitFor()
 
 			def user = session["user"]
 			def pass = session["pass"]

@@ -1,7 +1,10 @@
 package br.gov.rn.saogoncalo.login
 
+import br.gov.rn.saogoncalo.pessoa.Aluno
 import br.gov.rn.saogoncalo.pessoa.Escola
+import br.gov.rn.saogoncalo.pessoa.Funcionario
 import br.gov.rn.saogoncalo.pessoa.Pessoa
+import br.gov.rn.saogoncalo.pessoa.Professor
 
 
 
@@ -26,9 +29,40 @@ class UsuarioController {
 
 
 		if (verificarAutenticacao(user, pass)) {
+			println("ctl - " + params.ctl + " act " + params.act )
 			//redirect(controller:params.ctl, action:params.act)
-			//println("ctl - " + params.ctl + " act " + params.act )
-			render(view:"/index.gsp")
+			//render(view:"/index.gsp")
+			
+			
+			def quantAlunos
+			def quantEscolas
+			def quantProfessores
+			def quantFuncionarios
+			
+			def sessao = session["escid"]
+			if(sessao == 0 ||sessao == 29){
+			
+
+				quantAlunos = Aluno.count()
+				quantEscolas = Escola.count()
+				quantProfessores = Professor.count()
+				quantFuncionarios = Funcionario.count()
+				
+				
+			}else{
+			
+				def pessoaIdList = Pessoa.findAllByEscid(session["escid"]).id
+
+				quantAlunos = Aluno.countByIdInList(pessoaIdList)
+				quantProfessores =  Professor.countByIdInList(pessoaIdList)
+				quantFuncionarios =  Funcionario.countByIdInList(pessoaIdList)
+			}
+
+			render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios, sessao:sessao ])
+			
+			
+			
+			
 		}else{
 			render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}
@@ -547,5 +581,41 @@ class UsuarioController {
 		return permissoes
 
 	}
+	
+	def redefinirSenha(){
+	
+		
+		if((session["user"] == null) || (session["pass"] == null) ){
+			render (view:"/usuario/login.gsp", model:[ctl:"Usuario", act:"listar"])
+		}else{
+			def user = session["user"]
+			def pass = session["pass"]
 
+			def userPerm = new UsuarioController()
+
+			def perm2 = userPerm.getPermissoes(user, pass, "LOGIN", "USUARIO", "2")
+
+			//if (perm2){
+
+				println("Params - " + params)
+				def usuarios = Usuario.findAll()
+
+				def usuario = Usuario.get(session["usid"])
+
+				if ((params.senhaNova1.encodeAsMD5()) == params.senhaNova2.encodeAsMD5() ) {
+					if ((params.senhaNova1 != "") && (params.senhaAntiga != "")){
+						usuario.senha = params.senhaNova1.encodeAsMD5()
+					}
+				}
+
+
+				if(!usuario.save(flush:true)){
+					render(view:"/login.gsp")
+				}
+		
+			}
+		//}	
+	
+	}
+	
 }

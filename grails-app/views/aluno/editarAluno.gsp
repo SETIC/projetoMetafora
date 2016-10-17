@@ -383,7 +383,7 @@
 								</div>
 							</div>
 
-
+							<div class="box box-white">
 							<fieldset>
 								<table id="listarDocumentosAluno" class="table table-bordered">
 									<legend class="scheduler-border">Documentos</legend>
