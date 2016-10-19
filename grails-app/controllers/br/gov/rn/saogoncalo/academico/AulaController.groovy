@@ -156,7 +156,7 @@ class AulaController {
 		aulaClone.turmaDisciplina = aulaBase.turmaDisciplina
 		
 		if (aulaClone.save(flush:true)){
-			listarAula(id)
+			listarAula(aulaBase.turmaDisciplina.id)
 		}
 		
 		
