@@ -29,19 +29,18 @@
 			newWin.document.write("</td>");
 			newWin.document.write("</tr>");
 			newWin.document.write("</table><br>");
-			
 			newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
 			newWin.document.write(" ");
 			newWin.document.write(divToPrint.outerHTML);
 			newWin.print();
 			newWin.close();
+			
 		}
 
 		function printDivs(id1, id2) {
 			var divToPrint1 = document.getElementById(id1);
 			var divToPrint2 = document.getElementById("aId"+id2);
 			newWin = window.open("");
-
 			newWin.document.write("<table border='0'>");
 			newWin.document.write("<tr>");
 			newWin.document.write("<td> <img src='${ request.getRequestURL().substring(0, request.getRequestURL().indexOf('projetoMetafora/'))}projetoMetafora/static/images/brasao.jpg'; style='width:100px; float:left; margin-top:-9px;'> </td>");
@@ -51,21 +50,26 @@
 			newWin.document.write("</td>");
 			newWin.document.write("</tr>");
 			newWin.document.write("</table><br>");
-			
 			newWin.document.write("RELATÓRIO GERENCIAL <br><br>");
 			newWin.document.write(" ");
 			newWin.document.write(divToPrint1.outerHTML);
-			newWin.document.write(divToPrint2.outerHTML);
+			//newWin.document.write(divToPrint2.outerHTML);
 			var area = document.getElementById("areaId-"+id2);
-			newWin.document.write("Observação: <br>");
-			newWin.document.write(area.value);
-			
+			newWin.document.write("<p style='margin-top:-300px;'> "+ area.value +"</p>");
+			//newWin.document.write(area.value);
 			newWin.print();
 			newWin.close();
-		}	
+			
+		}
 		
 	</script>
+	<script type="text/javascript" src="/projetoMetafora/js/tinymce/js/tinymce/tinymce.min.js"></script>
+ <script> 			
+     tinymce.init({ selector:'textarea',
+     language : "pt"
 
+     });
+  </script>
 	<section class="content-header">
 		<h1>
 			Atividade <small>Lançar Notas</small>
@@ -141,76 +145,64 @@
 							<br>
 							<div class="form-group">
 								<div class="col-sm-10">
-									<table id="example" class="table table-striped table-hover">
-										<thead>
-											<tr>
-												<th>Aluno</th>
-												<th>Nota</th>
-												<th>Observação</th>
-											</tr>
-										</thead>
-										<tbody>	
-											
+								<table id="example" class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>Aluno</th>
+											<th>Nota</th>
+										</tr>
+							    </thead>
+							    <tbody>	
+							
+								<%
+								def sizeMatriculas =  alunos.id
+								def notasMatId = notas.matricula.id
+								 %>
+								 
+								<g:each in="${alunos}" var="aluno">
+								
+								<tr class='linha_registro'>
+									<td>
+										${aluno.aluno.cidadao.pessoaFisica.pessoa.nome}
+									</td>
+									<g:if test="${notasMatId.contains(aluno.id)}">		
 											<%
-											def sizeMatriculas =  alunos.id
-											def notasMatId = notas.matricula.id
+											def index = notasMatId.indexOf(aluno.id)
 											 %>
-											 
-											<g:each in="${alunos}" var="aluno">
-											
-											<tr class='linha_registro'>
-												<td>
-													${aluno.aluno.cidadao.pessoaFisica.pessoa.nome}
-												</td>
-												<g:if test="${notasMatId.contains(aluno.id)}">		
-														<%
-														def index = notasMatId.indexOf(aluno.id)
-														 %>
-														
-																<td>
-																<div class="col-xs-5" id="aId${aluno.id}">
-												                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
-												                    </div>
-																</td>
-																<td>
-																	<div class="col-xs-12">
-												                      	
-												                      	<textarea rows="3" col="3" class="form-control"  style="overflow:auto" id="areaId-${aluno.id}" name="mat-${aluno.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
-												                    </div>
-																</td>
-																<td>
-																	<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDivs('detalhesTurma','${aluno.id}')" type="button">
-																		<i class="glyphicon glyphicon-print"></i> Imprimir
-																	</button>
-																</td>
-														
-												</g:if>
-												<g:else>
-												
-														<td>
-														<div class="col-xs-5">
-										                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="0" step="0.1" class="form-control">
-										                    </div>
-														</td>
-														<td>
-															<div class="col-xs-12">
-															
-										                      	<input name="mat-${aluno.id}" type="text" class="form-control">
-										                      	
-										                    </div>
-														</td>
-														<td>
-																	<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDivs('detalhesTurma','${aluno.id}')" type="button">
-																		<i class="glyphicon glyphicon-print"></i> Imprimir
-																	</button>
-																</td>
-												</g:else>
-	
-											</tr>
-											
-											</g:each>
-	
-											
+								
+										<td>
+										<div class="col-xs-5" id="aId${aluno.id}">
+						                      	<input style="min-width: 70px;margin-left:-15px;" name="mat-${aluno?.id}" type="number" max="${atividade?.notaMaxima}" min="0" value="${notas[index]?.pontuacao}" step="0.1" class="form-control">
+						                    </div>
+										</td>
+							         <tr>
+							             <th>Observação</th>
+							         </tr>   
+								  <td>
+								     <textarea  id="areaId-${aluno?.id}" name="mat-${aluno?.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
+								</td>
+								  <button style="margin-bottom:-800px; margin-left: 8px;" class="btn btn-default btn-flat" onClick="printDivs('example','${aluno.id}')" type="button">
+										<i class="glyphicon glyphicon-print"></i> Imprimir
+									</button>
+								</g:if>
+										<g:else>
+										<td>
+										<div class="col-xs-5">
+						                      	<input style="min-width: 70px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="0" step="0.1" class="form-control">
+						                    </div>
+										</td>
+										<td>
+											<div class="col-xs-12">
+						                      <input name="mat-${aluno.id}" type="text" class="form-control">
+						                    </div>
+										</td>
+										
+								    <td>
+								     <textarea  style="overflow:auto" id="areaId-${aluno?.id}" name="mat-${aluno?.id}"  placeholder="Descrição de nota." >${notas[index]?.observacao}</textarea>
+								    </td>
+								</g:else>
+							</tr>
+							</g:each>
 										</tbody>
 									</table>
 								</div>
@@ -218,7 +210,7 @@
 							<br>
 						</fieldset>
 						<div style="margin: 0 28% auto">
-							<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDiv('example')" type="button">
+							<button style="margin-right: 10px;" class="btn btn-default btn-flat" onClick="printDiv('detalhesTurma')" type="button">
 								<i class="glyphicon glyphicon-print"></i> Imprimir
 							</button>
 							<button class="btn btn-success btn-flat">

@@ -136,6 +136,7 @@ function printDiv(id)
 																class="glyphicon glyphicon-pencil" alt="Editar Matricula"></span></a></li>
 
 													</ul>
+												
 												</div>
 											</td>
 											<td>
@@ -173,6 +174,11 @@ function printDiv(id)
 					tabela.fnSort([ [ 1, 'asc' ] ]);
 				});
 			</script>
+			
+			
+
+			
+			
 		</div>
 	</section>
 </body>

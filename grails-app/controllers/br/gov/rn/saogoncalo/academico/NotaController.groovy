@@ -293,6 +293,7 @@ class NotaController {
 		def sql = new Sql(conn)
 
 
+		
 		try {
 
 			def sqlString = " select d.disciplina, " +

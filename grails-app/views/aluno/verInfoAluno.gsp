@@ -366,6 +366,50 @@
 						</div>
 						<br>
 						
+					
+				
+				<table id="notas" class="table table-striped">
+					<thead>
+						<tr>
+							<th style="text-align: left;">Disciplina</th>
+							<th style="text-align: left;">1º Bimestre</th>
+							<th style="text-align: left;">2º Bimestre</th>
+							<th style="text-align: left;">3º Bimestre</th>
+							<th style="text-align: left;">4º Bimestre</th>
+							<th style="text-align: left;">Recuperação</th>
+							<th style="text-align: left;">Prova Final</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in='${notas?}' var="notasAluno">
+							<tr class='linha_registro'>
+								<td>
+									${notasAluno.disciplina}
+								</td>
+								<td>
+									${notasAluno.nota1}
+								</td>
+								<td>
+									${notasAluno.nota2}
+								</td>
+								<td>
+									${notasAluno.nota3}
+								</td>
+								<td>
+									${notasAluno.nota4}
+								</td>
+								<td>
+									${notasAluno.nota5}
+								</td>
+								<td>
+									${notasAluno.nota6}
+								</td>
+	
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+						
 						
 						
                       </fieldset>

@@ -1,7 +1,9 @@
 package br.gov.rn.saogoncalo.pessoa
 import grails.converters.JSON
 import groovy.json.JsonSlurper
+import groovy.sql.Sql
 
+import java.sql.Driver
 import java.sql.SQLException
 import java.text.SimpleDateFormat
 
@@ -785,6 +787,12 @@ class AlunoController {
 				Pessoa pessoas = Pessoa.get(id)
 				Aluno alunos = Aluno.get(id)
 				def pessoa = Pessoa.get(id)
+				def matricula = Matricula.findByAluno(alunos) 
+				def matriculaId
+				if(matricula == null)
+					matriculaId = "0"
+				else
+					matriculaId = matricula.id
 				
 
 				Parentesco parentescoPai = Parentesco.findByPessoaFisicaAndParentesco(PessoaFisica.get(alunos.id), "PAI")
@@ -798,9 +806,53 @@ class AlunoController {
 				PessoaFisica pessoaFisica = PessoaFisica.get(id)
 				def pessoaFisicaNecessidadesEspeciais = PessoaFisicaNecessidadesEspeciais.findAllByPessoaFisica(pessoaFisica)
 
+				
+				//consulta de notas do aluno
 
+				def notas
+				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
+		
+				def props = new Properties()
+				props.setProperty("user", "admin_db_sr")
+				props.setProperty("password", "bgt54rfvcde3")
+		
+		
+				def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+				def sql = new Sql(conn)
+
+		
+				try {
+		
+					def sqlString = " select d.disciplina, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = '1º BIMESTRE') nota1, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = '2º BIMESTRE') nota2, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = '3º BIMESTRE') nota3, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = '4º BIMESTRE') nota4, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = 'RECUPERACAO') nota5, " +
+							" (select sum(nn.pontuacao) where aa.bimestre = 'PROVA FINAL') nota6 " +
+							"  from educacao_academico.atividade aa, educacao_academico.nota nn, educacao_academico.turma_disciplina td, " +
+							"         educacao_academico.disciplina_lecionada_por_professor dlpp, educacao_academico.disciplina d   " +
+							" where nn.atividade_id = aa.id  " +
+							"   and td.id = aa.turma_disciplina_id " +
+							"   and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+							"   and dlpp.disciplina_id = d.id " +
+							"   and nn.matricula_id = " + matricula +
+							" group by d.id, d.disciplina, aa.bimestre "
+		
+					notas = sql.rows(sqlString)
+				}catch(SQLException ex){
+					println ex.getMessage()
+				}
+				finally {
+					sql.close()
+					conn.close()
+				}
+								
+				//--------
+				
+					
 				render (view:"/aluno/verInfoAluno.gsp", model:[alunos:alunos,  parentescoPai:parentescoPai, parentescoMae:parentescoMae, reside:reside , 
-					    documentosAluno:documentosAluno, pessoaFisicaNecessidadesEspeciais:pessoaFisicaNecessidadesEspeciais])
+					    documentosAluno:documentosAluno, pessoaFisicaNecessidadesEspeciais:pessoaFisicaNecessidadesEspeciais, notas:notas])
 			}else{
 				render(view:"/error403.gsp")
 			}
