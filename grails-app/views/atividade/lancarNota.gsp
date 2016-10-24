@@ -66,7 +66,7 @@
 	<script type="text/javascript" src="/projetoMetafora/js/tinymce/js/tinymce/tinymce.min.js"></script>
  <script> 			
      tinymce.init({ selector:'textarea',
-     language : "pt"
+     language : "pt_BR"
 
      });
   </script>
@@ -155,11 +155,11 @@
 							    <tbody>	
 							
 								<%
-								def sizeMatriculas =  alunos.id
-								def notasMatId = notas.matricula.id
+									def sizeMatriculas =  alunos.id
+									def notasMatId = notas.matricula.id
 								 %>
 								 
-								<g:each in="${alunos}" var="aluno">
+								<g:each in="${alunos?}" var="aluno">
 								
 								<tr class='linha_registro'>
 									<td>
@@ -172,14 +172,14 @@
 								
 										<td>
 										<div class="col-xs-5" id="aId${aluno.id}">
-						                      	<input style="min-width: 70px;margin-left:-15px;" name="mat-${aluno?.id}" type="number" max="${atividade?.notaMaxima}" min="0" value="${notas[index]?.pontuacao}" step="0.1" class="form-control">
+						                      	<input style="min-width: 70px;margin-left:-15px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
 						                    </div>
 										</td>
 							         <tr>
 							             <th>Observação</th>
 							         </tr>   
 								  <td>
-								     <textarea  id="areaId-${aluno?.id}" name="mat-${aluno?.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
+								     <textarea  id="areaId-${aluno.id}" name="mat-${aluno.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
 								</td>
 								  <button style="margin-bottom:-800px; margin-left: 8px;" class="btn btn-default btn-flat" onClick="printDivs('example','${aluno.id}')" type="button">
 										<i class="glyphicon glyphicon-print"></i> Imprimir
@@ -198,7 +198,12 @@
 										</td>
 										
 								    <td>
-								     <textarea  style="overflow:auto" id="areaId-${aluno?.id}" name="mat-${aluno?.id}"  placeholder="Descrição de nota." >${notas[index]?.observacao}</textarea>
+								     <textarea  style="overflow:auto" id="areaId-${aluno?.id}" name="mat-${aluno?.id}"  placeholder="Descrição de nota." >
+								     	<g:if test="${notas == null}">
+											${notas[index].observacao}
+										</g:if>
+										
+								     </textarea>
 								    </td>
 								</g:else>
 							</tr>

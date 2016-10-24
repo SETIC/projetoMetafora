@@ -328,8 +328,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Telefone</label>
 											<div class="controls">
-												<g:textField class="form-control" name="telefone" value=""
-													required="false" />
+												<g:textField class="form-control" name="telefone" value="" />
 											</div>
 										</div>
 										<br>
@@ -337,8 +336,7 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Email</label>
 											<div class="controls">
-												<g:textField class="form-control" name="email" value=""
-													required="false" />
+												<g:textField class="form-control" name="email" value="" />
 											</div>
 										</div>
 										<br>										
