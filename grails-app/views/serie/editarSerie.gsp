@@ -45,7 +45,7 @@
 							</div>
 						</div>
 						<br>
-						<div class="form-group">
+						<%--<div class="form-group">
 							<label for="inputnumeroDeInscricao3"
 								class="col-sm-2 control-label">Número de Vagas</label>
 							<div class="col-sm-10">
@@ -54,6 +54,7 @@
 							</div>
 						</div>
 						<br>
+						--%>
 						<div class="form-group">
 							<label for="inputData3" class="col-sm-2 control-label">Data
 								de Inicio</label>

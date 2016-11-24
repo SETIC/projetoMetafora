@@ -84,6 +84,8 @@ class DisciplinaController {
 			}
 		}
 	}
+	
+	
 	def editarDisciplina(long id){
 
 		if((session["user"] == null) || (session["pass"] == null) ){

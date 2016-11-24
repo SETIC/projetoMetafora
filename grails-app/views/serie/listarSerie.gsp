@@ -68,7 +68,6 @@ function printDiv(id)
 						<tr>
 							<th style="width: 60px;"></th>
 							<th style="text-align: left;">Série</th>
-							<th style="text-align: left;">Vagas</th>
 							<th style="text-align: left;">Data de Inicio</th>
 							<th style="text-align: left;">Data do Termino</th>
 
@@ -98,9 +97,7 @@ function printDiv(id)
 								<td>
 									${it.serie}
 								</td>
-								<td>
-									${it.numeroDeVagas}
-								</td>
+
 								<td><g:formatDate format="dd-MM-yyyy"
 										date="${it.dataDeInicio}" /></td>
 								<td><g:formatDate format="dd-MM-yyyy"
@@ -143,7 +140,7 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
+									<%--<div class="form-heading">
 										<label>Número de Vagas</label>
 										<div class="controls">
 											<g:textField class="form-control" name="numeroDeVagas"
@@ -151,7 +148,7 @@ function printDiv(id)
 										</div>
 									</div>
 									<br>
-									<div class="form-heading">
+									--%><div class="form-heading">
 										<label>Data de Inicio</label>
 										<div class="controls">
 											<g:formatDate format="yyyy-MM-dd" date="${date}" />

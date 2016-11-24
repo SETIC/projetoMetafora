@@ -41,9 +41,11 @@ class TurmaController {
 				def turmas
 				def disciplinas
 				def escolas
+				def vagasTurmas
 
 				if ((session["escid"] == 0) )
 				{
+					
 					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where  t.anoLetivo >= ? ", [ano])
 
@@ -52,6 +54,20 @@ class TurmaController {
 					disciplinas = DisciplinaLecionadaPorProfessor.executeQuery(" select dlpp from DisciplinaLecionadaPorProfessor dlpp ")
 
 				}else{
+				
+					
+					 //continuar aqui
+					 vagasTurmas = Turma.executeQuery("   select t.id, t.turma, t.serie, t.vagas, t.escola, " + 
+						 " t.anoLetivo, t.turno, COALESCE( ( select count(*) from Matricula m, Turma tt " +
+						 "		  where tt.id = m.turma.id " +
+						 "		    and tt.id = t.id " +
+						 "		    and tt.escola.id = 8 " +
+						 "		  group by tt.id ) ,0) as matriculados " +  
+						 "  from Turma t " +
+						 " where t.anoLetivo = 2016 " +
+						 "   and t.escola.id = 8" ) 
+				
+					println("Vagas Turma: " + vagasTurmas)
 
 					turmas = Horario.executeQuery(" select t from Turma as t " +
 							"  where t.escola.id = ? and t.anoLetivo >= ? ", [Long.parseLong(session["escid"].toString()), ano])
@@ -70,7 +86,7 @@ class TurmaController {
 					 " and pe.escola.id = " + session["escid"])
 				}
 
-				render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, perm2:perm2])
+				render (view:"/turma/listarTurma.gsp", model:[turmas:turmas, disciplinas:disciplinas, escolas:escolas, perm2:perm2, vagasTurmas:vagasTurmas])
 			}else{
 				render(view:"/error403.gsp")
 			}

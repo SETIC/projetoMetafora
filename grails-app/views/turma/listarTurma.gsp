@@ -70,10 +70,12 @@ function printDiv(id)
 							<th style="text-align: left;">Turma</th>
 							<th style="text-align: left;">Turno</th>
 							<th style="text-align: left;">Vagas</th>
+							<th style="text-align: left;">Vagas Disponíveis</th>
 						</tr>
 					</thead>
 					<tbody>
-						<g:each in='${turmas?}'>
+					
+						<g:each status="i" in='${turmas?}' var="turma">
 							<tr class='linha_registro'>
 								<td>
 									<div class="opcoes">
@@ -83,9 +85,9 @@ function printDiv(id)
 											
 											<div class="btn btn-primary btn-xs btn-flat"><a
 												style="color: #fff" title="editar turma"
-												href="/projetoMetafora/turma/editarTurma/${it.id}"><span
+												href="/projetoMetafora/turma/editarTurma/${turma.id}"><span
 													class="glyphicon glyphicon-pencil"></span></a></div>
-											<div onclick="deletar(${it.id})" title="remover turma"
+											<div onclick="deletar(${turma.id})" title="remover turma"
 												class="btn btn-danger btn-xs btn-flat"><span
 												class="glyphicon glyphicon-remove"></span></div>
 											
@@ -95,26 +97,29 @@ function printDiv(id)
 											
 											<div class="btn btn-success btn-xs btn-flat"><a
 												style="color: #fff" title="ver informaçoes da turma"
-												href="/projetoMetafora/turma/verInfoTurma/${it.id}"><span
+												href="/projetoMetafora/turma/verInfoTurma/${turma.id}"><span
 													class="glyphicon glyphicon-eye-open"></span></a></div>
 										</div>
 									</div>
 								</td>
 								<td>
-									${it.escola.pessoaJuridica.pessoa.nome}
+									${turma.escola.pessoaJuridica.pessoa.nome}
 								</td>
 								<td>
-									${it.serie.serie}
+									${turma.serie.serie}
 								</td>
 								<td>
-									${it.turma}
+									${turma.turma}
 								</td>
 								<td>
-									${it.turno}	
+									${turma.turno}	
 								</td>
 								<td>
-									${it.vagas}
+									${turma.vagas}
 								</td>
+								<td>
+									${turma.vagas - vagasTurmas[i][7]}
+								</td>								
 							</tr>
 						</g:each>
 					</tbody>

@@ -150,6 +150,8 @@
 										<tr>
 											<th>Aluno</th>
 											<th>Nota</th>
+											<th>Descrição</th>
+											
 										</tr>
 							    </thead>
 							    <tbody>	
@@ -162,7 +164,7 @@
 								<g:each in="${alunos?}" var="aluno">
 								
 								<tr class='linha_registro'>
-									<td>
+									<td  style="min-width: 200px;" >
 										${aluno.aluno.cidadao.pessoaFisica.pessoa.nome}
 									</td>
 									<g:if test="${notasMatId.contains(aluno.id)}">		
@@ -171,19 +173,28 @@
 											 %>
 								
 										<td>
-										<div class="col-xs-5" id="aId${aluno.id}">
+										<div class="col-xs-3" id="aId${aluno.id}">
 						                      	<input style="min-width: 70px;margin-left:-15px;" name="mat-${aluno.id}" type="number" max="${atividade.notaMaxima}" min="0" value="${notas[index].pontuacao}" step="0.1" class="form-control">
 						                    </div>
 										</td>
-							         <tr>
-							             <th>Observação</th>
-							         </tr>   
+							         
 								  <td>
-								     <textarea  id="areaId-${aluno.id}" name="mat-${aluno.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
+					     
+								  <textarea  id="areaId-${aluno.id}" name="mat-${aluno.id}"  placeholder="Descrição de nota." >${notas[index].observacao}</textarea>
+								     	
 								</td>
-								  <button style="margin-bottom:-800px; margin-left: 8px;" class="btn btn-default btn-flat" onClick="printDivs('example','${aluno.id}')" type="button">
+								<td>
+
+								  <button  class="btn btn-default btn-flat" onClick="printDivs('example','${aluno.id}')" type="button">
 										<i class="glyphicon glyphicon-print"></i> Imprimir
 									</button>
+								
+								
+								
+								</td>
+								
+								
+
 								</g:if>
 										<g:else>
 										<td>
@@ -207,6 +218,7 @@
 								    </td>
 								</g:else>
 							</tr>
+
 							</g:each>
 										</tbody>
 									</table>

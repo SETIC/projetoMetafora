@@ -245,17 +245,12 @@
 											<select class="form-control selectpicker"
 												data-live-search="true" name="pai" id="comboPai">
 												<option value="0">Nome do Pai</option>
-												<g:each in="${pHomens}">
-													<g:if test="${it.id == parentescoPai?.pessoa?.id }">
-														<option value="${it.id}" selected>
-															${it.nome}
+												<g:each in="${parentescoPai?}">
+													
+														<option value="${it.pessoa?.id}" selected>
+															${it.pessoa?.nome}
 														</option>
-													</g:if>
-													<g:else>
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:else>
+													
 												</g:each>
 											</select>
 										</div>
@@ -266,6 +261,8 @@
 									</div>
 								</div>
 							</div>
+
+
 
 							<div class="form-group">
 								<label for="iNomeMaeInput" class="col-sm-2 control-label">Nome
@@ -278,19 +275,12 @@
 											<select class="form-control selectpicker"
 												data-live-search="true" name="mae" id="comboMae">
 												<option value="0">Nome da Mãe</option>
-												<g:each in="${pMulheres}">
-													<g:if test="${it.id == parentescoMae?.pessoa?.id }">
-														<option value="${it.id}" selected>
-															${it.nome}
+												<g:each in="${parentescoMae}">
+		
+														<option value="${it.pessoa.id}" selected>
+															${it.pessoa.nome}
 														</option>
 
-													</g:if>
-													<g:else>
-
-														<option value="${it.id}">
-															${it.nome}
-														</option>
-													</g:else>
 												</g:each>
 											</select>
 										</div>
@@ -367,7 +357,7 @@
 
 							<div class="form-group">
 								<label for="inputestadoCivil3" class="col-sm-2 control-label"
-									required="true">Estado Civil</label>
+									required="true">Estado Civil *</label>
 								<div class="col-sm-4">
 									<select name="estadoCivil" id="iestadoCivil"
 										class="form-control selectpicker">
@@ -579,7 +569,7 @@
 			</div>
 
 			<br> <br>
-			</g:form>
+
 		</div>
 		<div class="form-group" style="margin-top: 3%;">
 			
@@ -595,11 +585,12 @@
 				</button>
 				<button type="button" class="btn btn-primary btn-flat"
 					onclick="javascript: resetActive(div2, event, 35, 'step-2');">
-					 <i class="fa fa-chevron-circle-right"></i>Próximo
+					 <i class="fa fa-chevron-circle-right"></i> Próximo
 				</button>
 				<button type="submit" onclick="javascript:;"
-					class="btn btn-primary btn-flat">
+						class="btn btn-primary btn-flat">
 					<i class="fa fa-refresh"></i> Atualizar
+				</button>
 
 					<button style="display: inline-block;" type="submit"
 						class="btn btn-default btn-flat">
@@ -607,6 +598,8 @@
 					</button>
 			</div>
 		</div>
+		
+					</g:form>
 
 		<!-- Modal -->
 		<div class="modal fade" id="modalCadastrarPai" tabindex="-1"
@@ -655,6 +648,29 @@
 									</select>
 								</div>
 							</div>
+							
+							<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" name="tipoContatoPai" id="iTipoContatoPai">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoPai" name="contatoPai" />
+						    </div>
+						  </div>
 
 							<div class="form-group" style="margin-bottom: 5px;">
 								<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>
@@ -727,6 +743,30 @@
 									</select>
 								</div>
 							</div>
+							
+							<div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Tipo Contato</label>
+						    
+						    <div class="col-sm-10">
+					     
+						    	<select class="form-control selectpicker" name="tipoContatoMae" id="iTipoContatoMae">
+									<g:each in="${tiposContato}">
+										<option value="${it.id}">
+											${it.tipoContato}
+										</option>
+									</g:each>
+								</select> 
+						     
+						    </div>
+						  </div>
+						  
+						  
+						  <div class="form-group" style="margin-bottom: 5px;">
+    						<label for="inputEmail3" class="col-sm-2 control-label">Contato</label>
+						    <div class="col-sm-10">
+						      <g:textField  class="form-control" id="iContatoMae" name="contatoMae" />
+						    </div>
+						  </div>
 
 							<div class="form-group" style="margin-bottom: 5px;">
 								<label for="inputEmail3" class="col-sm-2 control-label">Profissão:</label>

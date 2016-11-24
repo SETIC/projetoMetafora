@@ -279,7 +279,7 @@ class NotaController {
 				" group by m.id, p.nome "
 	}
 
-	def consultaNotasAluno(long id){
+	def consultaNotasAluno(String cpf){
 
 		def notas
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
@@ -293,7 +293,7 @@ class NotaController {
 		def sql = new Sql(conn)
 
 
-		
+
 		try {
 
 			def sqlString = " select d.disciplina, " +
@@ -303,14 +303,18 @@ class NotaController {
 					" (select sum(nn.pontuacao) where aa.bimestre = '4º BIMESTRE') nota4, " +
 					" (select sum(nn.pontuacao) where aa.bimestre = 'RECUPERACAO') nota5, " +
 					" (select sum(nn.pontuacao) where aa.bimestre = 'PROVA FINAL') nota6 " +
-					"  from educacao_academico.atividade aa, educacao_academico.nota nn, educacao_academico.turma_disciplina td, " +
-					"         educacao_academico.disciplina_lecionada_por_professor dlpp, educacao_academico.disciplina d   " +
-					" where nn.atividade_id = aa.id  " +
-					"   and td.id = aa.turma_disciplina_id " +
-					"   and td.disciplina_lecionada_por_professor_id = dlpp.id " +
-					"   and dlpp.disciplina_id = d.id " +
-					"   and nn.matricula_id = " + id.toString() +
+					" from educacao_academico.atividade aa, educacao_academico.nota nn, educacao_academico.turma_disciplina td, " +
+					" educacao_academico.disciplina_lecionada_por_professor dlpp, educacao_academico.disciplina d, " +
+					" educacao_academico.matricula m, cadastro_unico_pessoal.pessoa p " +
+					" where nn.atividade_id = aa.id " +
+					"    and td.id = aa.turma_disciplina_id " +
+					" and td.disciplina_lecionada_por_professor_id = dlpp.id " +
+					" and dlpp.disciplina_id = d.id " +
+					" and nn.matricula_id = m.id " +
+					" and m.aluno_id = p.id " +
+					" and p.cpf_cnpj = '" + cpf.toString() + "' " +
 					" group by d.id, d.disciplina, aa.bimestre "
+
 
 			notas = sql.rows(sqlString)
 		}catch(SQLException ex){
@@ -321,6 +325,7 @@ class NotaController {
 			conn.close()
 		}
 
-		render( notas as JSON)
+		println("notas aqui " + notas)
+		render(notas as JSON)
 	}
 }

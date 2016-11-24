@@ -74,7 +74,7 @@ function mudarCombo(){
 
 				<g:form controller="Aluno" action="pesquisarAlunos" class="form" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="inputPesquisa" class="col-sm-2 control-label">Nome/CPF:</label>
+						<label for="inputPesquisa" class="col-sm-2 control-label">Nome:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="" minlenght="3"  />

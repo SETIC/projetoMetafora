@@ -278,6 +278,40 @@ class AlunoController {
 						parentescoMae.save(flush:true)
 					}
 				}
+				
+				
+				if (params.contatoPai != ""){
+					def tipoContato = TipoContato.get(params.tipoContatoPai)
+					Contato contato = new Contato()
+					contato.pessoa = pessoa
+					contato.tipoContato = tipoContato
+					contato.contato = params.contatoPai
+				
+					if (contato.save(flush:true)){
+						println("Contato Pai Salvo")
+				
+					}
+
+				}
+				
+				if (params.contatoMae != ""){
+					def tipoContato = TipoContato.get(params.tipoContatoMae)
+					Contato contato = new Contato()
+					contato.pessoa = pessoa
+					contato.tipoContato = tipoContato
+					contato.contato = params.contatoMae
+				
+					if (contato.save(flush:true)){
+						println("Contato Mae Salvo")
+				
+					}
+
+				}
+
+				
+				
+				
+				
 				//println("parentencoPai.parentesco "+parentescoPai.parentesco)
 				//println("idPai "+idPai.nome)
 

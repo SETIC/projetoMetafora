@@ -98,7 +98,7 @@ class SerieController {
 				def series = Serie.get(params.id)
 
 				series.serie = params.serie
-				series.numeroDeVagas = Integer.parseInt(params.numeroDeVagas)
+				//series.numeroDeVagas = Integer.parseInt(params.numeroDeVagas)
 				series.dataDeInicio = params.dataDeInicio
 				series.dataDeTermino = params.dataDeTermino
 
@@ -180,7 +180,7 @@ class SerieController {
 
 
 				seriel.serie = params.serie
-				seriel.numeroDeVagas = Integer.parseInt(params.numeroDeVagas)
+				//seriel.numeroDeVagas = Integer.parseInt(params.numeroDeVagas)
 				seriel.dataDeInicio = params.dataDeInicio
 				seriel.dataDeTermino = params.dataDeTermino
 

@@ -66,7 +66,7 @@ function printDiv(id)
 				<g:form controller="Professor" action="pesquisarProfessores"
 					class="form" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="inputPesquisa" class="col-sm-2 control-label">NOME/CPF:</label>
+						<label for="inputPesquisa" class="col-sm-2 control-label">NOME:</label>
 						<div class="col-sm-10">
 							<g:textField class="form-control" id="" name="pesquisa"
 								style="width: 300px" value="" />
