@@ -38,14 +38,14 @@
 			  newInput.innerHTML = "<label>Número do protocolo: </label/></br>"+
 			  "<input type='text' required = 'true' name ='numeroProtocolo' id ='numeroProtocolo'/>" +
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
-			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+			  "<i class='glyphicon glyphicon-search'></i> Buscar </button>"
               break;
 
            case 'data':
  			  newInput.innerHTML = "<label>Data Inicial: </label/><input type='date' name ='dataInicial' id='dataInicial' " +
  	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>" +
  	 		 "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
-			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+			  "<i class='glyphicon glyphicon-search'></i> Buscar </button>"
                // newInput.innerHTML = "<input data-provide='datepicker' value='09-10-2015' language='pt-br'/>"
               break;
            
@@ -60,24 +60,36 @@
    			   "<option value='${it.id}'>" +
    			   "${it.nome}</option></g:each></select></div>" +
    			   "<button type='submit' class='btn btn-primary btn-flat'>" +
-			   "<i class='glyphicon glyphicon-search'></i>Buscar</button>" 
+			   "<i class='glyphicon glyphicon-search'></i> Buscar </button>" 
               break;
 
            case 'interessado':
  			  newInput.innerHTML = "<label>Nome do Interessado: </label/></br>"+
  			  "<input type='text' required = 'true' name ='interessado' id ='interessadoId'/>" +
  			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
- 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+ 			  "<i class='glyphicon glyphicon-search'></i> Buscar </button>"
                break;   
 
            case 'numeroDocumento':
-
  			  newInput.innerHTML = "<label>Número do documento: </label/></br>"+
  			  "<input type='text' required = 'true' name ='numeroDocumento' id ='numeroDocumento'/>" +
  			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
- 			  "<i class='glyphicon glyphicon-search'></i>Buscar</button>"
+ 			  "<i class='glyphicon glyphicon-search'></i> Buscar </button>"
                break;
-
+           
+           case 'funcionarioSetor':
+        	   newInput.innerHTML = "<label>Funcionario Setor:</label/>" +
+        	   "<div id='iDivSelectPicker' class='row'>"+
+			   "<div class='col-sm-2'>"+
+        	   "<select class='form-control selectpicker' " +
+   			   "data-live-search='true' name='funcionarioSetor' id='funcionarioSetor'"+
+   			   "<option value='0'>FuncionarioSetor</option>" +
+   			   "<g:each in="${funcionarioSetor}">"+
+   			   "<option value='${it.id}'>" +
+   			   "${it.funcionario.cidadao.pessoaFisica.pessoa.nome + " - " + it.setor.nome}</option></g:each></select></div>" +
+   			   "<button type='submit' class='btn btn-primary btn-flat'>" +
+			   "<i class='glyphicon glyphicon-search'></i> Buscar </button>" 
+              break;
               
            }
 			
@@ -105,6 +117,7 @@
 						<option value="setor">SETOR DE CRIAÇÃO</option>
 						<option value="interessado">INTERESSADO</option>
 						<option value="numeroDocumento">NUMERO DO DOCUMENTO</option>
+						<option value="funcionarioSetor">FUNCIONARIO SETOR</option>
 						
 					</select>
 				</div>
@@ -183,14 +196,15 @@
 								</td>
 
 								<td>
-									${it.assunto}
+									${it.assunto} 
 								</td>
 								
 								<td>
-									${it.situacao}
+									${it.situacao} 
 								</td>
+								
 								<td>
-									${it.interessado}
+									${it.interessado} 
 								</td>
 							</tr>
 						</g:each>

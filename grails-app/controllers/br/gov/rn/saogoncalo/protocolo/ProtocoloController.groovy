@@ -85,6 +85,36 @@ class ProtocoloController {
 				//sqlString = " select * from cadastro_unico_protocolo.protocolo "
 				// ------------------
 
+				if(params.tipoBusca == "funcionarioSetor"){
+				
+				def sqlFunc = " select *, s.nome as situacao from cadastro_unico_protocolo.Protocolo p, cadastro_unico_protocolo.Tramite t, cadastro_unico_protocolo.Situacao s, cadastro_unico_protocolo.assunto a " + 
+								" where p.id = t.protocolo_id "+ 
+								" and p.situacao_id = s.id "+ 
+								" and a.id = p.assunto_id "+
+								" and t.data_Recebimento is null "+ 
+								" and s.tipo = 'I' "+
+								" and t.status = 'ABERTO' "+ 
+								" and t.funcionario_Setor_Origem_id = 129 "+
+ 
+								" union "+
+
+								" select *, s.nome as situacao from cadastro_unico_protocolo.Protocolo p, cadastro_unico_protocolo.Tramite t, cadastro_unico_protocolo.Situacao s, cadastro_unico_protocolo.assunto a "+ 
+								" where p.id = t.protocolo_id "+
+								" and p.situacao_id = s.id "+
+								" and a.id = p.assunto_id "+
+								" and t.data_Recebimento is not null "+ 
+								" and s.tipo = 'I' "+
+								" and t.status <> 'FECHADO' "+
+								" and t.funcionario_Setor_Destino_id = 129 "
+							   
+				protocolos = sql.rows(sqlFunc)
+				
+				}
+				
+				def funcionarioSetor = FuncionarioSetor.findAll()
+							   
+				sql.close()
+				
 
 				PessoaJuridica pessoajuridica = PessoaJuridica.get(session["escid"])
 				def setor = Setor.findAllByPessoaJuridica(pessoajuridica)
@@ -96,7 +126,7 @@ class ProtocoloController {
 						+ "and f.id = " + session["pesid"])
 
 
-				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolos:protocolos ,setor:setor, funcionarioSetorLogado: funcionarioSetorLogado, perm1:perm1])
+				render(view:"/protocolo/pesquisarProtocolos.gsp", model:[protocolos:protocolos ,setor:setor, funcionarioSetorLogado: funcionarioSetorLogado, funcionarioSetor:funcionarioSetor, perm1:perm1])
 			}else{
 				render(view:"/error403.gsp")
 			}
@@ -145,6 +175,7 @@ class ProtocoloController {
 				protocolo.email = params.email
 
 				if (protocolo.save(flush:true)){
+					
 					Observacao observacao = new Observacao(params)
 					observacao.texto = params.texto
 					observacao.dataObservacao = new Date()
@@ -152,8 +183,9 @@ class ProtocoloController {
 
 					if(observacao.save(flush:true)){
 
-						println("salvou observacao ")
-						println ("observacao" + observacao)
+						EnviaEmailController envia = new EnviaEmailController()
+						envia.enviaEmail(protocolo.id)
+						
 						listarMensagem("Protocolo cadastrado com sucesso", "ok")
 
 					}else{
@@ -387,6 +419,9 @@ class ProtocoloController {
 						println("status --- " +tramite)
 						tramite.status = "FECHADO"
 						tramite.save(flush:true)
+						
+						EnviaEmailController envia = new EnviaEmailController()
+						envia.enviaEmail(protocolos.id)
 
 					}else{
 
@@ -400,6 +435,8 @@ class ProtocoloController {
 						tramite = Tramite.get(tramite1.id)
 						tramite.status = "ABERTO"
 						tramite.save(flush:true)
+						EnviaEmailController envia = new EnviaEmailController()
+						envia.enviaEmail(protocolos.id)
 
 					}
 

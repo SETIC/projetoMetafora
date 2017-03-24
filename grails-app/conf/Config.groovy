@@ -64,23 +64,24 @@ grails {
     }
 	
 	
-	 mail {
-		 
-		 host = "mail.saogoncalo.rn.gov.br"
-		 port = 25
-		 username = "setic.suporte@saogoncalo.rn.gov.br"
-		 password = "pmsga2015"
-		 props = ["mail.smtp.auth":"true",
-                       "mail.smtp.socketFactory.port":"465",
-                       "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-                       "mail.smtp.socketFactory.fallback":"false"]
-		 
-        /*host = "smtp.gmail.com"
-        port = 587
-        username = "suporte.setic@gmail.com"
-        password = "suporte@setic"
-        props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"]*/
-    }
+
+	// configuraçao de email
+	
+	mail {
+		/*host = "mail.saogoncalo.rn.gov.br"
+		port = 465
+		usarname="setic.suporte@saogoncalo.rn.gov.br"
+		password="pmsga2015"
+		props = ["mail.smtp.auth":"true",
+			  "mail.smtp.auth":"false", "mail.smtp.socketFactory.port":"465", "mail.smtp.starttls.enable": "true"]
+		*/
+		host = "smtp.gmail.com"
+		port = 587
+		username = "suporte.setic@gmail.com"
+		password = "suporte@setic"
+		props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"]
+	}
+	
 	
 	
 }
