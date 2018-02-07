@@ -431,6 +431,7 @@ function deletar(id) {
 						                 }); 
 										 
 										</script>
+										
 										<input type="file" name="arquivo[]" id="arquivo[]" class="upload-file" data-max-size="300000000" enctype="multipart/form-data" /> <br />
 										<fieldset id="inputs_adicionais" style="border: none">
 										</fieldset>

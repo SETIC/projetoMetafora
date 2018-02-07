@@ -75,11 +75,22 @@ grails {
 		props = ["mail.smtp.auth":"true",
 			  "mail.smtp.auth":"false", "mail.smtp.socketFactory.port":"465", "mail.smtp.starttls.enable": "true"]
 		*/
+		
+		/*
 		host = "smtp.gmail.com"
 		port = 587
 		username = "suporte.setic@gmail.com"
 		password = "suporte@setic"
 		props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"]
+		*/
+		
+		host = "smtp.gmail.com"
+		port = 587
+	
+		username = "suporte.setic@gmail.com"
+		password = "ssetic2017"
+		props = ["mail.smtp.auth":"true", "mail.smtp.starttls.enable":"true"]
+		
 	}
 	
 	
@@ -130,7 +141,8 @@ environments {
         grails.logging.jul.usebridge = false
 		//grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
 		//grails.serverURL = "http://189.43.7.23:8080"
-		grails.serverURL = "http://189.43.7.23:8080/projetoMetafora"
+		//grails.serverURL = "http://189.43.7.23:8080/projetoMetafora"
+		grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
 		
 		
 		

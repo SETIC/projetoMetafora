@@ -8,6 +8,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 import org.codehaus.groovy.grails.commons.GrailsApplication;
+import grails.plugin.rendering.*
 
 import br.gov.rn.saogoncalo.administracaoregistro.AdministracaoController;
 import br.gov.rn.saogoncalo.login.UsuarioController

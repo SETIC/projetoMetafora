@@ -184,12 +184,35 @@
               url: "http://"+endereco+":8080/projetoMetafora/layout/dadosDoGrafico",
               dataType: "json",
               success: function(result){
+       	      //var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+       	      
        	      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+              
               var pieChart = new Chart(pieChartCanvas);
             
-            var PieData = result[0]
+            //var PieData = result[3]
+            
+            alert([result[4]])
+            
+            var pieData = {
+      			labels  : result[4],
+			    datasets: [
+			      {
+			          label               : 'Teste',
+			          fillColor           : 'rgba(60,141,188,0.9)',
+			          strokeColor         : 'rgba(60,141,188,0.8)',
+			          pointColor          : '#3b8bba',
+			          pointStrokeColor    : 'rgba(60,141,188,1)',
+			          pointHighlightFill  : '#fff',
+			          pointHighlightStroke: 'rgba(60,141,188,1)',
+			          data                : result[4]
+			      }
+			    ]
+			  }
+
+            
                 
-            var pieOptions = {
+         /*   var pieOptions = {
                     //Boolean - Whether we should show a stroke on each segment
                     segmentShowStroke: false,
                     //String - The colour of each segment stroke
@@ -213,11 +236,48 @@
                     //String - A legend template
                     legendTemplate: "" ,
             
-                  };
+                  }; */
+
+                  var pieOptions             = {
+                	      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                	      scaleBeginAtZero        : true,
+                	      //Boolean - Whether grid lines are shown across the chart
+                	      scaleShowGridLines      : true,
+                	      //String - Colour of the grid lines
+                	      scaleGridLineColor      : 'rgba(0,0,0,.05)',
+                	      //Number - Width of the grid lines
+                	      scaleGridLineWidth      : 1,
+                	      //Boolean - Whether to show horizontal lines (except X axis)
+                	      scaleShowHorizontalLines: true,
+                	      //Boolean - Whether to show vertical lines (except Y axis)
+                	      scaleShowVerticalLines  : true,
+                	      //Boolean - If there is a stroke on each bar
+                	      barShowStroke           : true,
+                	      //Number - Pixel width of the bar stroke
+                	      barStrokeWidth          : 2,
+                	      //Number - Spacing between each of the X value sets
+                	      barValueSpacing         : 5,
+                	      //Number - Spacing between data sets within X values
+                	      barDatasetSpacing       : 1,
+                	      //String - A legend template
+                 	      //Boolean - whether to make the chart responsive
+                	      responsive              : true,
+                	      maintainAspectRatio     : true
+                	    }
+
+            
+
+            
+
+            
                   //Create pie or douhnut chart
                   // You can switch between pie and douhnut using the method below.
                  
-					pieChart.Doughnut(PieData, pieOptions);
+					//pieChart.Doughnut(PieData, pieOptions);
+                    pieOptions.datasetFill = false
+					
+            		pieChart.Bar(pieData, pieOptions);
+			
 
 									}
 								});

@@ -99,20 +99,28 @@ class LayoutController {
 		def resultAluno = []
 		def resultProfessor = []
 		def resultFuncionario = []
+		def resultAlunoBarraLabel = []
+		def resultAlunoBarraValue = []
 
+		
 		result = [];
-       
+
 		for (aluno in alunoByEscola){
 			def cor = gerarCor()
 			resultAluno[i] = ["label":aluno.escola, "value":aluno.totalaluno, "color":cor, "highlight":cor]
 			resultProfessor[i] = ["label":aluno.escola, "value":aluno.totalprofessor, "color":cor, "highlight":cor]
 			resultFuncionario[i] = ["label":aluno.escola, "value":aluno.totalfuncionario, "color":cor, "highlight":cor]
-
+			resultAlunoBarraLabel[i] = [aluno.escola]
+			resultAlunoBarraValue[i] = [aluno.totalaluno]
+						
+			
 			i++
 		}
 		result[0] = resultAluno
 		result[1] = resultProfessor
 		result[2] = resultFuncionario
+		result[3] = resultAlunoBarraLabel
+		result[4] = resultAlunoBarraValue
 		//println("result"+result[0] )
 		//println("result"+result[1] )
 		//println("result"+result[2] )
