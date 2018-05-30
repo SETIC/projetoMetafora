@@ -142,7 +142,7 @@ class UsuarioController {
 
 
 				def usuarios
-				def pessoas = Pessoa.executeQuery("select p from Pessoa as p")
+				//def pessoas = Pessoa.executeQuery("select p from Pessoa as p")
 				//def pessoas = Pessoa.findAll()
 				
 				Usuario u = Usuario.findById(session["usid"])
@@ -161,7 +161,9 @@ class UsuarioController {
 				
 				
 
-				render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, escolas:escolas, perm2:perm2])
+				//render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, pessoas:pessoas, escolas:escolas, perm2:perm2])
+				render(view:"/usuario/listarUsuario.gsp", model:[usuarios:usuarios, escolas:escolas, perm2:perm2])
+				
 			}else{
 				render(view:"/error403.gsp")
 			}

@@ -22,7 +22,7 @@
 		<ol class="breadcrumb">
 			<li class="active"><g:link controller="Layout" action="index">
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
-			<li><g:link controller="Usuario" action="listar">Alunos</g:link></li>
+			<li><g:link controller="Usuario" action="listar">Funcionarios</g:link></li>
 		</ol>
 	</section>
 	<!-- CORPO DA PÁGINA -->
@@ -182,12 +182,11 @@
 									<input type="reset" class="btn btn btn-flat" value="Limpar">
 								</div>
 							</g:form>
-							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-</body>
+ </body>
 </html>
