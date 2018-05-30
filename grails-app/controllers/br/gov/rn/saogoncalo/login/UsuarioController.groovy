@@ -53,9 +53,9 @@ class UsuarioController {
 			
 				def pessoaIdList = Pessoa.findAllByEscid(session["escid"]).id
 
-				quantAlunos = Aluno.countByIdInList(pessoaIdList)
-				quantProfessores =  Professor.countByIdInList(pessoaIdList)
-				quantFuncionarios =  Funcionario.countByIdInList(pessoaIdList)
+				//quantAlunos = Aluno.countByIdInList(pessoaIdList)
+				//quantProfessores =  Professor.countByIdInList(pessoaIdList)
+				//quantFuncionarios =  Funcionario.countByIdInList(pessoaIdList)
 			}
 
 			render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios, sessao:sessao ])
