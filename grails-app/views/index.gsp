@@ -12,14 +12,14 @@
 		</h1>
 		<ol class="breadcrumb">
 			<li><g:link controller="Layout" action="index">
-					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
+			<i class="fa fa-dashboard"></i> Inicio</g:link></li>
 			<li class="active">Painel</li>
 		</ol>
 	</section>
 	<!-- Main content -->
     <section class="content">
       <!-- Info boxes -->
-      <div class="row">
+      <div class="row"><%--
       	
      <g:if test="${sessao!=5301}">
       	      	
@@ -77,102 +77,75 @@
 	          </div><!-- /.info-box -->
 	        </div><!-- /.col -->
 	    </g:link>
-			<br>
+			--%><br>
 	    <!-- Main content -->
 	    
 	<g:if test="${sessao==0||sessao==29}">
     
             <div class="col-md-4">
-
-          
-              <!-- DONUT CHART -->
+             <!-- DONUT CHART -->
               <div class="box box-danger">
                 <div class="box-header with-border">
                   <h3 class="box-title"><b>Alunos Matriculados por Escola<b></h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <div class="col-md-4">
-               
                   </div>
                 </div>
-                <div class="box-body">
+              <div class="box-body">
                     <canvas id="pieChart" style="margin-left: ; height: 186px; width: 530px;" width="355" height="265" ></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-              
-				</div>
+             </div>
             </div><!-- /.col (LEFT) -->
-            
-         
+                     
           <br>
-			
-        
-        <!-- PROFESSORES -->
-       
-        
+	   <!-- PROFESSORES -->
+               
             <div class="col-md-4">
-
-          
-              <!-- DONUT CHART -->
+           <!-- DONUT CHART -->
               <div class="box box-danger">
                 <div class="box-header with-border">
-
                   <h3 class="box-title"><b>Professores por Escola<b></h3>
-
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <div class="col-md-4">
-               
                   </div>
                 </div>
-                <div class="box-body">
-
-                    <canvas id="pieChart2" style="margin-left: ;height: 278px; width: 530px;" width="355" height="265"></canvas>
+              <div class="box-body">
+           <canvas id="pieChart2" style="margin-left: ;height: 278px; width: 530px;" width="355" height="265"></canvas>
 
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-              
-				</div>
-            </div><!-- /.col (LEFT) -->
+             </div>
+           </div><!-- /.col (LEFT) -->
             
-         
-          <br>
-			
-   
-
+           <br>
+			   
            <!-- FUNCIONÁRIOS -->
 
-        
-            <div class="col-md-4">
-          
-              <!-- DONUT CHART -->
+           <div class="col-md-4">
+            <!-- DONUT CHART -->
               <div class="box box-danger">
                 <div class="box-header with-border">
                   <h3 class="box-title"><b>Funcionários por Escola<b></h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <div class="col-md-4">
-               
                   </div>
                 </div>
-                <div class="box-body">
+              <div class="box-body">
                     <canvas id="pieChart3" style="margin-left: ;height: 278px; width: 530px;" width="355" height="265"></canvas>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-              
-			</div>
+             </div>
             </div><!-- /.col (LEFT) -->
-            
-     
+                 
           <br>
-			
-       
-	   
-	   </g:if>     
+			    
+	    </g:if>     
 	  </div><!-- /.row -->
-	 
-    </section><!-- /.content -->	
-     
+	</section><!-- /.content -->	
     <script src="/projetoMetafora/js/jQuery/jQuery-2.1.3.min.js" type="text/javascript"></script>
 
     <script>

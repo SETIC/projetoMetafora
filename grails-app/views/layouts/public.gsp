@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@page import="br.gov.rn.saogoncalo.academico.Transferencia %>
-<%@page import="java.lang.System"%>
+<%--<%@page import="br.gov.rn.saogoncalo.academico.Transferencia %>
+--%><%@page import="java.lang.System"%>
 
 
 <html>
@@ -94,8 +94,11 @@
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
-        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link>
-        <!-- Header Navbar: style can be found in header.less -->
+        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link><%--
+                
+        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="fundo_transparente.png" style="width: 90%; margin-top: -6%;"/></g:link>
+        
+        --%><!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -151,7 +154,7 @@
                     </div>
                   </li>
                 </ul>
-              </li>
+              </li><%--
                   <!--notificaçao de transferencia-->
                   <script type="text/javascript">
                    function transferencia(){
@@ -180,7 +183,7 @@
               <label id="notTransferenciaId" style="width:7px; heigth:3px"></label></span>
             </a>
             <!-- class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" -->
-            </li>
+            </li>--%>
             </ul>
           </div>
         </nav>
@@ -256,7 +259,7 @@
           <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
           </div>
-          <strong> Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>EDUC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
+          <strong> Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>DOC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
       </footer>
 
 			<!-- Modal Senha -->

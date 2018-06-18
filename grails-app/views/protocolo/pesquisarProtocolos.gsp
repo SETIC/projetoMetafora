@@ -40,7 +40,7 @@
 			  "<button style='margin-left: 10px;' type='submit' class='btn btn-primary btn-flat'>" +
 			  "<i class='glyphicon glyphicon-search'></i> Buscar </button>"
               break;
-
+              
            case 'data':
  			  newInput.innerHTML = "<label>Data Inicial: </label/><input type='date' name ='dataInicial' id='dataInicial' " +
  	 		  "<br>   <label>Data Final: </label/><input type='date' name ='dataFinal' id='dataFinal'/>" +
@@ -94,7 +94,7 @@
            }
 			
 		}
-        
+
 		</script>
 	    <section class="content-header">
 		<h1>
@@ -105,7 +105,7 @@
 					<i class="fa fa-dashboard"></i> Inicio</g:link></li>
 		</ol>
 		<br>
-			<g:form controller="protocolo" action="pesquisarProtocolos" class="form">
+			<g:form controller="Protocolo" action="pesquisarProtocolos" class="form">
 			<div class="form-heading" style="width:150px;">
 				<label>Tipo de Busca</label>
 				<div class="controls">
@@ -118,7 +118,6 @@
 						<option value="interessado">INTERESSADO</option>
 						<option value="numeroDocumento">NUMERO DO DOCUMENTO</option>
 						<option value="funcionarioSetor">FUNCIONARIO SETOR</option>
-						
 					</select>
 				</div>
 			</div>
@@ -213,5 +212,5 @@
 			</div>
 		</div>
 	</section>
-</body>
+  </body>
 </html>

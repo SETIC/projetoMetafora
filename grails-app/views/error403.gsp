@@ -24,6 +24,7 @@
                             <h3><i class="fa fa-warning text-yellow"></i> Oops! Acesso Negado.</h3>
                             <p>
                             	A sua conta não tem permissão para acessar essa página, 
+                            	Protocolo nao encontrado.
                             	<g:link controller="Layout" action="index">retorne ao paínel</g:link> ou entre em contato com a administração do sistema.
                             </p>
                         </div><!-- /.error-content -->

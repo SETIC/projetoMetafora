@@ -22,7 +22,7 @@ class UsuarioController {
 	def static userid = null
 
 
-	def autenticar(){
+	/*def autenticar(){
 
 		def user = params.usuario
 		def pass = params.senha.encodeAsMD5()
@@ -36,7 +36,7 @@ class UsuarioController {
 			
 			def quantAlunos
 			def quantEscolas
-			def quantProfessores
+		    def quantProfessores
 			def quantFuncionarios
 			
 			def sessao = session["escid"]
@@ -60,13 +60,28 @@ class UsuarioController {
 
 			render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios, sessao:sessao ])
 			
-			
-			
-			
 		}else{
 			render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
 		}
-	}
+	}*/
+	
+	
+	def autenticar(){
+	 
+			 def user = params.usuario
+			 def pass = params.senha.encodeAsMD5()
+	 
+	 
+			 if (verificarAutenticacao(user, pass)) {
+				
+				  def sessao = session["escid"]
+				  def pessoaIdList = Pessoa.findAllByEscid(session["escid"]).id
+			      render(view:"/index.gsp", model:[sessao:sessao])
+			}else{
+				 render(view:"/usuario/login.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
+			} 
+		 }
+		
 
 	def verificarAutenticacao(user, pass) {
 
@@ -114,7 +129,7 @@ class UsuarioController {
 	def verificarLogin() {
 		def usuario = params.usuario
 		def senha = params.senha
-		def usuarioA = Usuario.findByUsernameAndSenha(usuario, senha)
+		def usuarioA = Usuario.findByUsernameAndSenha(usuario,senha)
 		if(usuarioA == null){
 
 			render(view:"/usuario/validarUsuario.gsp", model:[erro:"O usuário ou a senha inseridos estão incorretos."])
@@ -186,7 +201,7 @@ class UsuarioController {
 
 			if (perm1 || perm2){
 
-								def usuarios
+				def usuarios
 				def pessoas = Pessoa.executeQuery("select p from Pessoa as p")
 				//def pessoas = Pessoa.findAll()
 				

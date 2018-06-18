@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>SISEDUC . Entrar</title>
+    <title>SISDOC . Entrar</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link rel="shortcut icon" href="${resource(dir:'images', file:'favicon.ico')}" type="image/x-icon" />
     <!-- Bootstrap 3.3.2 -->
@@ -90,7 +90,7 @@
           <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
           </div>
-          <strong>Copyright © 2014-2016 <a style="font-weight: 400;" href="#"><b>SIS</b>EDUC</a>.</strong> Todos os direitos reservados.
+          <strong>Copyright © 2014-2016 <a style="font-weight: 400;" href="#"><b>SIS</b>DOC</a>.</strong> Todos os direitos reservados.
       </footer>
     </div>
     <!-- jQuery 2.1.3 -->

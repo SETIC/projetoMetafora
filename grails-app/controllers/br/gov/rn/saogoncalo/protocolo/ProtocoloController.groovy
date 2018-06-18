@@ -22,13 +22,17 @@ class ProtocoloController {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+			
 		}else{
 
 			def user = session["user"]
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
+			def perm2 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
 			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
+			
+			
 
 			if (perm1 || perm2){
 
@@ -112,11 +116,13 @@ class ProtocoloController {
 				
 				}
 				
+				
 				def funcionarioSetor = FuncionarioSetor.findAll()
 							   
 				sql.close()
 				
-
+				print("valores do protocolo" + protocolos)
+				
 				PessoaJuridica pessoajuridica = PessoaJuridica.get(session["escid"])
 				def setor = Setor.findAllByPessoaJuridica(pessoajuridica)
 

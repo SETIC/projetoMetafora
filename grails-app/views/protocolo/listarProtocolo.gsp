@@ -481,7 +481,6 @@ function deletar(id) {
 										    });  
 										 
 										}); 
-										 
 							</script> 
 							
 							
@@ -542,5 +541,5 @@ function deletar(id) {
 				</div>
 			</div>
 	</section>
-</body>
+  </body>
 </html>

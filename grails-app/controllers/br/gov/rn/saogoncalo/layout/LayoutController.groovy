@@ -51,7 +51,9 @@ class LayoutController {
 				quantFuncionarios =  Funcionario.countByIdInList(pessoaIdList)
 			}
 
-			render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios, sessao:sessao ])
+			//render(view:"/index.gsp", model:[quantAlunos:quantAlunos, quantEscolas:quantEscolas, quantProfessores:quantProfessores, quantFuncionarios:quantFuncionarios, sessao:sessao ])
+			render(view:"/index.gsp", model:[ sessao:sessao])
+			
 			//}else{
 			//	render(view:"/error403.gsp")
 			//}
