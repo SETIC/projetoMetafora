@@ -6,7 +6,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title><g:layoutTitle default="SISEDUC . Painel"/></title>
+    <title><g:layoutTitle default="SISDOC  . Painel"/></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     
     <!-- Bootstrap 3.3.2 -->
@@ -93,12 +93,12 @@
   	
     <div class="wrapper">
       <header class="main-header">
-        <!-- Logo -->
-        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link><%--
+        <!-- Logo --><%--
+       <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="logo-SISEDUC.png" style="width: 90%; margin-top: -6%;" class="img-circle" alt="Logo do Sistema"/></g:link>
+                --%><g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="imagem.png" style="width: 90%; margin-top: -6%;" /></g:link>
                 
-        <g:link controller="Layout" action="index" class="logo"><g:img dir="img" file="fundo_transparente.png" style="width: 90%; margin-top: -6%;"/></g:link>
         
-        --%><!-- Header Navbar: style can be found in header.less -->
+        <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -259,7 +259,7 @@
           <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
           </div>
-          <strong> Copyright © 2014-2015 <a style="font-weight: 400;" href="#"><b>SIS</b>DOC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
+          <strong> Copyright © 2017-2018 <a style="font-weight: 400;" href="#"><b>SIS</b>DOC</a>.</strong> Todos os direitos reservados. Contato SETIC: 98152-9740
       </footer>
 
 			<!-- Modal Senha -->

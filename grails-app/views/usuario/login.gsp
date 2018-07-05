@@ -50,7 +50,8 @@
     <div id="wrap">  
       <div class="login-box">
         <div class="login-logo">
-          <a href="http://192.168.1.252:8080/projetoMetafora/usuario/login"><g:img style="width: 55%" dir="images" file="logo-SISEDUC-cinza.png"/></a>
+          <a href="localhost/projetoMetafora/usuario/login"><g:img style="width: 55%" dir="img" file="sisdoc-cinza.png"/></a>
+          
         </div><!-- /.login-logo -->
         <div class="login-box-body">
           <p class="login-box-msg">Entre para iniciar a sua sessão</p>
