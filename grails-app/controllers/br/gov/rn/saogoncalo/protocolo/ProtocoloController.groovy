@@ -40,11 +40,11 @@ class ProtocoloController {
 
 				def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 				def props = new Properties()
-				props.setProperty("user", "admin_db_sr")
-				props.setProperty("password", "bgt54rfvcde3")
+				props.setProperty("user", "postgres")
+				props.setProperty("password", "p0stgr3sql")
 
-				//def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
-				def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+				//def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
+				def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
 
 				def sql = new Sql(conn)
 				def protocolos
@@ -145,15 +145,17 @@ class ProtocoloController {
 
 		if((session["user"] == null) || (session["pass"] == null) ){
 			render (view:"/usuario/login.gsp", model:[ctl:"Protocolo", act:"listar"])
+			
 		}else{
 			def user = session["user"]
 			def pass = session["pass"]
 
 			def usuario = new UsuarioController()
-
+			
+			def perm1 = usuario.getPermissoes(user, pass , "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "1")
 			def perm2 = usuario.getPermissoes(user, pass, "CADASTRO_UNICO_PROTOCOLO", "PROTOCOLO", "2")
 
-			if (perm2) {
+			if (perm1 || perm2) {
 
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
 						+ "where u.pessoa.id = f.id "
@@ -563,7 +565,7 @@ class ProtocoloController {
 				def funcionarioSetorDestino
 				def msg
 				def tipo
-
+				
 				msg = params.msg
 				tipo=params.tipo
 				def funcionarioSetorLogado = FuncionarioSetor.executeQuery("select distinct fs from Funcionario f, FuncionarioSetor fs, Usuario u, Setor s "
@@ -949,10 +951,10 @@ class ProtocoloController {
 		def result
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
-		props.setProperty("user", "admin_db_sr")
-		props.setProperty("password", "bgt54rfvcde3")
+		props.setProperty("user", "postgres")
+		props.setProperty("password", "p0stgr3sql")
 
-		def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
 
 		def sql = new Sql(conn)
 		def sqlString = " select t.id, to_char(t.data_disponibilizacao, 'dd/MM/YYYY HH:MI:ss') as data_disponibilizacao, " +

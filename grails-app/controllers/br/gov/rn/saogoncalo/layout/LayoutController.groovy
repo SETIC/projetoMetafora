@@ -64,11 +64,11 @@ class LayoutController {
 	def dadosDoGrafico(){
 		def driver = Class.forName('org.postgresql.Driver').newInstance() as Driver
 		def props = new Properties()
-		props.setProperty("user", "admin_db_sr")
-		props.setProperty("password", "bgt54rfvcde3")
+		props.setProperty("user", "postgres")
+		props.setProperty("password", "p0stgr3sql")
 
 
-		def conn = driver.connect("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes", props)
+		def conn = driver.connect("jdbc:postgresql://localhost:5667/db_sgg_testes", props)
 		def sql = new Sql(conn)
 		//dadosDoGrafico2();
 		List<String> alunoByEscola = new ArrayList();

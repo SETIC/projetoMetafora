@@ -282,14 +282,11 @@ function deletar(id) {
 										<div class="form-heading">
 											<label>Número do Documento</label>
 											<div class="controls">
-												<g:field type="text" class="form-control"
-													name="numeroDocumento" value=""/>
+												<g:field type="text" class="form-control" name="numeroDocumento" value=""/>
 											</div>
 										</div>
 										<br>
 										
-
-
 										<div class="form-heading">
 											<label>Assunto</label>
 											<div class="controls ">
@@ -449,7 +446,7 @@ function deletar(id) {
 									</div>
 								</g:form>
 			                 </g:if>
-
+                         </div>
 			<!-- ModalTramite -->
 			<div class="modal fade" id="myModalTramite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -458,11 +455,10 @@ function deletar(id) {
 							<button type="button" class="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 							</button>
-							<h4 class="modal-title" id="myModalLabel">Tramite de
-								protocolos</h4>
+							<h4 class="modal-title" id="myModalLabel">Tramite de protocolos</h4>
 						</div>
-						  <div class="modal-body">
-							<script type="text/javasript">  
+				    <div class="modal-body">
+				          <script type="text/javasript">  
 
 										function limparCampoFile(){
 											document.getElementById("arquivo[]").value = "";

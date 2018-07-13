@@ -142,7 +142,10 @@ environments {
 		//grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
 		//grails.serverURL = "http://189.43.7.23:8080"
 		//grails.serverURL = "http://189.43.7.23:8080/projetoMetafora"
-		grails.serverURL = "http://192.168.1.252:8080/projetoMetafora"
+		
+		//arquivo alterado
+		 grails.serverURL = "http://192.168.6.223:8080/projetoMetafora"
+		
 		
 		
 		

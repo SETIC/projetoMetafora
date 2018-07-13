@@ -16,7 +16,7 @@ class TabelaController {
 
 				def endereco = "${request.getRequestURL().substring(6, request.getRequestURL().indexOf(':8080/'))}";
 
-				def conexao = Sql.newInstance("jdbc:postgresql://192.168.1.252:5667/db_sgg_testes","admin_db_sr","bgt54rfvcde3","org.postgresql.Driver")
+				def conexao = Sql.newInstance("jdbc:postgresql://localhost:5667/db_sgg_testes","admin_db_sr","bgt54rfvcde3","org.postgresql.Driver")
 
 			}else{
 				render(view:"/error403.gsp")

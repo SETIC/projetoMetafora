@@ -8,11 +8,16 @@ dataSource {
    // password = "vfr43edcxsw2"
 	
 	//usando esse
-	username = "admin_db_sr"
-	password = "bgt54rfvcde3"
+	//username = "admin_db_sr"
+	//password = "bgt54rfvcde3"
 	
 	//username = "postgres"
 	//password = "123"
+	
+	
+	//usando esse mais novo
+	 username = "postgres"
+	 password  = "p0stgr3sql"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -27,23 +32,17 @@ environments {
     development {
         dataSource {
             driverClassName = "org.postgresql.Driver"
-			   //username = "admin_db_sgg"
-			   //password = "vfr43edcxsw2"
-			
-			//usando esse
-			username = "admin_db_sr"
-			password = "bgt54rfvcde3"
-			
-			
-			//username = "postgres"
-		 	//password = "123"
-		 
+			 					 
+			//usando esse mais novo
+			username = "postgres"
+			password  = "p0stgr3sql"
 			
 			dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-			
-			//url = "jdbc:postgresql://192.168.1.252:5667/db_sgg_testes"
-			//url = "jdbc:postgresql://192.168.1.252:5667/db_sgg_testes"
-			  url = "jdbc:postgresql://192.168.1.252:5667/db_sgg_testes"
+									
+			  //arquivo alterado
+			  url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
+			  // url = "jdbc:postgresql://192.168.6.223:5667/db_sgg_testes"
+			  			  
         }
     }
     test {
@@ -56,12 +55,9 @@ environments {
         dataSource {
 			
 			driverClassName = "org.postgresql.Driver"
-			//username = "admin_db_sr"
-			//password = "bgt54rfvcde3"			
-            dbCreate = "update"
-            //url = "jdbc:postgresql://192.168.1.252:5667/db_sgg_testes"
-			  url = "jdbc:postgresql://192.168.1.252:5667/db_sgg_testes"
-			
+			dbCreate = "update"
+			url = "jdbc:postgresql://localhost:5667/db_sgg_testes"
+						
 			}
 			 }
 			
